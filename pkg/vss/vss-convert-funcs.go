@@ -200,3 +200,8 @@ func ToVehicleVehicleIdentificationModel(val string) (string, error) {
 func ToVehicleVehicleIdentificationYear(val float64) (uint16, error) {
 	return convert.Float64toUint16(val), nil
 }
+
+// ToVehicleVehicleIdentificationVIN converts data as string to string
+func ToVehicleVehicleIdentificationVIN(val string) (string, error) {
+	return val, nil
+}

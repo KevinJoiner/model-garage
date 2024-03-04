@@ -22,7 +22,7 @@
         }
     },
     {
-        "vspecName": "",
+        "vspecName": "Vehicle.VehicleIdentification.VIN",
         "conversion": {
             "originalName": "data.vin",
             "originalType": "string"

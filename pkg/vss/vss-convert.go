@@ -560,6 +560,21 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		return nil, fmt.Errorf("%w, field 'data.model'", errNotFound)
 	}
 
+	// convert data.vin to VehicleVehicleIdentificationVIN
+	result = gjson.GetBytes(jsonData, "data.vin")
+	if result.Exists() {
+		valVehicleVehicleIdentificationVIN, ok := result.Value().(string)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.vin' is not of type string", errInvalidType)
+		}
+		vehicle.VehicleVehicleIdentificationVIN, err = ToVehicleVehicleIdentificationVIN(valVehicleVehicleIdentificationVIN)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.vin': %w", err)
+		}
+	} else if !skipNotFound {
+		return nil, fmt.Errorf("%w, field 'data.vin'", errNotFound)
+	}
+
 	// convert data.year to VehicleVehicleIdentificationYear
 	result = gjson.GetBytes(jsonData, "data.year")
 	if result.Exists() {

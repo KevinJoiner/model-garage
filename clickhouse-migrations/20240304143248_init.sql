@@ -1,3 +1,6 @@
+-- +goose Up
+-- +goose StatementBegin
+SELECT 'up SQL query';
 CREATE TABLE IF NOT EXISTS vss (
 	Vehicle_Chassis_Axle_Row1_Wheel_Left_Tire_Pressure UInt16 COMMENT 'Tire pressure in kilo-Pascal.',
 	Vehicle_Chassis_Axle_Row1_Wheel_Right_Tire_Pressure UInt16 COMMENT 'Tire pressure in kilo-Pascal.',
@@ -38,4 +41,11 @@ CREATE TABLE IF NOT EXISTS vss (
 	Vehicle_VehicleIdentification_Year UInt16 COMMENT 'Model year of the vehicle.',
 )
 ENGINE = MergeTree()
-ORDER BY (Vehicle_DIMO_Subject, Vehicle_DIMO_Timestamp)
+ORDER BY (Vehicle_DIMO_Subject, Vehicle_DIMO_Timestamp);
+-- +goose StatementEnd
+
+-- +goose Down
+-- +goose StatementBegin
+SELECT 'down SQL query';
+Drop TABLE IF EXISTS vss;
+-- +goose StatementEnd

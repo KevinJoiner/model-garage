@@ -10,6 +10,9 @@ func Float64Tofloat32(val float64) float32 {
 	if val > math.MaxFloat32 {
 		return math.MaxFloat32
 	}
+	if val < math.SmallestNonzeroFloat32 {
+		return math.SmallestNonzeroFloat32
+	}
 	return float32(val)
 }
 

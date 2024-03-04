@@ -16,6 +16,7 @@ func main() {
 	vspecPath := flag.String("spec", "./vspec.csv", "Path to the vspec CSV file")
 	migrationPath := flag.String("migrations", "./migrations.json", "Path to the migrations JSON file")
 	packageName := flag.String("package", "vspec", "Name of the package to generate")
+	withTest := flag.Bool("convert.with-test", true, "Generate test functions for conversion functions. Default is true.")
 	flag.Parse()
 
 	err := codegen.EnsureDir(*outputDir)
@@ -40,7 +41,7 @@ func main() {
 		log.Fatalf("failed to generate ClickHouse file: %v", err)
 	}
 
-	err = convert.Generate(&tmplData, *outputDir)
+	err = convert.Generate(&tmplData, *outputDir, *withTest)
 	if err != nil {
 		log.Fatalf("failed to generate convert file: %v", err)
 	}
