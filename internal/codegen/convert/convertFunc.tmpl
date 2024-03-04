@@ -1,0 +1,9 @@
+
+// {{ convertName . }} converts data as {{ .Conversion.OriginalType }} to {{ .GOType }}
+func {{ convertName . }}(val {{ .Conversion.OriginalType }}) ({{ .GOType }}, error) {
+    {{ if eq .Conversion.OriginalType .GOType -}}
+    return val, nil
+    {{- else -}}
+    panic("not implemented")
+    {{- end }}
+}

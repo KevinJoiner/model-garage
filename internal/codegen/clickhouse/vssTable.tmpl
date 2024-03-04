@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS vss (
+{{- range .DataSignals }}
+	{{ .CHName }} {{ .CHType }} COMMENT '{{ escapeDesc .Desc }}',
+{{- end }}
+)
+ENGINE = MergeTree()
+ORDER BY (Vehicle_DIMO_Subject, Vehicle_DIMO_Timestamp)
