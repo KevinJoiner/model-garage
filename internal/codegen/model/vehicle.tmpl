@@ -10,14 +10,14 @@ import (
 var VSSTableCreateQuery string
 
 const (
-{{- range .DataSignals}}
+{{- range .Signals}}
 	// Field{{ .GOName }} {{ .Desc }}
 	Field{{ .GOName }} = "{{ .CHName }}"
 {{- end}}
 )
 
 type Vehicle struct {
-{{- range .DataSignals }}
+{{- range .Signals }}
 	{{ if .Deprecated }}// Deprecated field{{ end -}}
 	// {{ .GOName }} {{ .Desc }}
 	{{ .GOName }} {{ .GOType }} `ch:"{{ .CHName }}" json:"{{ .CHName }},omitempty"`
@@ -26,5 +26,5 @@ type Vehicle struct {
 
 // InsertStatement for inserting a vehicle and all its fields into the table.
 {{$first := true}}
-const InsertStatment = "INSERT INTO vss ({{- range .DataSignals -}}{{if $first}}{{$first = false}}{{else}}, {{end}}{{.CHName}}{{end}})"
+const InsertStatment = "INSERT INTO vss ({{- range .Signals -}}{{if $first}}{{$first = false}}{{else}}, {{end}}{{.CHName}}{{end}})"
 const InsertStatmentValues = InsertStatment + " Values"

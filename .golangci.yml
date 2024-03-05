@@ -56,3 +56,8 @@ linters:
 issues:
   # enable issues excluded by default
   exclude-use-default: false
+  exclude-rules:
+    # Exclude some linters from running on tests files.
+    - path: convert-funcs_test\.go
+      linters:
+        - dupl

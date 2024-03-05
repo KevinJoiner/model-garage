@@ -33,29 +33,105 @@ const header = `package %s
 `
 
 type funcTmplData struct {
-	PackageName string
 	Signal      *codegen.SignalInfo
+	PackageName string
 }
 
 // Generate creates a conversion functions for each field of a vehicle struct.
 // as well as the entire vehicle struct.
 func Generate(tmplData *codegen.TemplateData, outputDir string, withTest bool) (err error) {
-	goTemplate, err := createGoTemplate()
+	err = createStructConversion(tmplData, outputDir)
 	if err != nil {
 		return err
 	}
+
+	existingFuncs, err := getDeclaredFunctions(outputDir)
+	if err != nil {
+		return fmt.Errorf("error getting declared functions: %w", err)
+	}
+
+	needsConvertFunc, needsConvertTestFunc := getConversionFunctions(tmplData.Signals, existingFuncs)
+
+	err = createConvertFuncs(tmplData, outputDir, needsConvertFunc)
+	if err != nil {
+		return err
+	}
+
+	if withTest {
+		err = createConvertTestFunc(tmplData, outputDir, needsConvertTestFunc)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func createConvertFuncs(tmplData *codegen.TemplateData, outputDir string, needsConvertFunc []*codegen.SignalInfo) error {
 	convertFuncTemplate, err := createConvertFuncTemplate()
 	if err != nil {
 		return err
 	}
+	if len(needsConvertFunc) == 0 {
+		return nil
+	}
+	filePath := filepath.Join(outputDir, codegen.ConvertFuncFileName)
+	err = writeConvertFuncs(needsConvertFunc, convertFuncTemplate, filePath, tmplData.PackageName)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// getConversionFunctions returns the signals that need conversion functions and test functions.
+func getConversionFunctions(signals []*codegen.SignalInfo, existingFuncs map[string]bool) ([]*codegen.SignalInfo, []*codegen.SignalInfo) {
+	var needsConvertFunc []*codegen.SignalInfo
+	var needsConvertTestFunc []*codegen.SignalInfo
+	for _, signal := range signals {
+		if signal.Conversion == nil {
+			continue
+		}
+		if !existingFuncs[convertName(signal)] {
+			needsConvertFunc = append(needsConvertFunc, signal)
+		}
+		if !existingFuncs[convertTestName(signal)] {
+			needsConvertTestFunc = append(needsConvertTestFunc, signal)
+		}
+	}
+	return needsConvertFunc, needsConvertTestFunc
+}
+
+// createConvertTestFunc creates test functions for the conversion functions if they do not exist.
+func createConvertTestFunc(tmplData *codegen.TemplateData, outputDir string, needsConvertTestFunc []*codegen.SignalInfo) error {
 	convertTestFuncTemplate, err := createConvertTestFuncTemplate(tmplData.PackageName)
 	if err != nil {
 		return err
 	}
 
-	// execute the struct template
+	if len(needsConvertTestFunc) == 0 {
+		return nil
+	}
+
+	ext := filepath.Ext(codegen.ConvertFuncFileName)
+	//nolint:gocritic // we want to trim the extension
+	testFileName := strings.TrimSuffix(codegen.ConvertFuncFileName, ext) + "_test.go"
+	filePath := filepath.Join(outputDir, testFileName)
+	packageName := tmplData.PackageName + "_test"
+	err = writeConvertFuncs(needsConvertTestFunc, convertTestFuncTemplate, filePath, packageName)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// createStructConversion creates the conversion function for converting JSON data to a vehicle struct.
+func createStructConversion(tmplData *codegen.TemplateData, outputDir string) error {
+	basConversionTemplate, err := createGoTemplate()
+	if err != nil {
+		return err
+	}
 	var outBuf bytes.Buffer
-	if err := goTemplate.Execute(&outBuf, &tmplData); err != nil {
+	if err = basConversionTemplate.Execute(&outBuf, &tmplData); err != nil {
 		return fmt.Errorf("error executing template: %w", err)
 	}
 
@@ -64,43 +140,6 @@ func Generate(tmplData *codegen.TemplateData, outputDir string, withTest bool) (
 	err = codegen.FormatAndWriteToFile(outBuf.Bytes(), goOutputPath)
 	if err != nil {
 		return fmt.Errorf("error formatting and writing to file: %w", err)
-	}
-
-	existingFuncs, err := getDeclaredFunctions(outputDir)
-	if err != nil {
-		return fmt.Errorf("error getting declared functions: %w", err)
-	}
-
-	// get a list of SignalInfos that need new convert functions
-	var needsConvertFunc []*codegen.SignalInfo
-	var needsConvertTestFunc []*codegen.SignalInfo
-	for _, signal := range tmplData.DataSignals {
-		if signal.Conversion != nil {
-			if !existingFuncs[convertName(signal)] {
-				needsConvertFunc = append(needsConvertFunc, signal)
-			}
-			if withTest && !existingFuncs[convertTestName(signal)] {
-				needsConvertTestFunc = append(needsConvertTestFunc, signal)
-			}
-		}
-	}
-
-	if len(needsConvertFunc) != 0 {
-		filePath := filepath.Join(outputDir, codegen.ConvertFuncFileName)
-		err = createConvertFuncs(needsConvertFunc, convertFuncTemplate, filePath, tmplData.PackageName)
-		if err != nil {
-			return err
-		}
-	}
-	if len(needsConvertTestFunc) != 0 {
-		ext := filepath.Ext(codegen.ConvertFuncFileName)
-		testFileName := strings.TrimSuffix(codegen.ConvertFuncFileName, ext) + "_test.go"
-		filePath := filepath.Join(outputDir, testFileName)
-		packageName := tmplData.PackageName + "_test"
-		err = createConvertFuncs(needsConvertTestFunc, convertTestFuncTemplate, filePath, packageName)
-		if err != nil {
-			return err
-		}
 	}
 	return nil
 }
@@ -150,20 +189,28 @@ func getDeclaredFunctions(outputPath string) (map[string]bool, error) {
 			continue
 		}
 		filename := filepath.Join(outputPath, d.Name())
-		src, err := parser.ParseFile(fset, filename, nil, parser.SkipObjectResolution|parser.ParseComments)
+		err = addFileDeclerations(fset, filename, declaredFunctions)
 		if err != nil {
-			return nil, fmt.Errorf("error parsing file: %w", err)
-		}
-		for _, decl := range src.Decls {
-			fn, ok := decl.(*ast.FuncDecl)
-			if !ok || fn.Recv != nil {
-				continue
-			}
-			declaredFunctions[fn.Name.Name] = true
+			return nil, err
 		}
 	}
 
 	return declaredFunctions, nil
+}
+
+func addFileDeclerations(fset *token.FileSet, filePath string, declaredFunctions map[string]bool) error {
+	src, err := parser.ParseFile(fset, filePath, nil, parser.SkipObjectResolution)
+	if err != nil {
+		return fmt.Errorf("error parsing file: %w", err)
+	}
+	for _, decl := range src.Decls {
+		fn, ok := decl.(*ast.FuncDecl)
+		if !ok || fn.Recv != nil {
+			continue
+		}
+		declaredFunctions[fn.Name.Name] = true
+	}
+	return nil
 }
 
 func convertName(signal *codegen.SignalInfo) string {
@@ -185,7 +232,7 @@ func ensureFuncFile(convertFuncPath string, packageName string) error {
 		return fmt.Errorf("error checking for %s file: %w", codegen.ConvertFuncFileName, err)
 	}
 	// create the convertFunc file
-	funcFile, err := os.Create(convertFuncPath)
+	funcFile, err := os.Create(filepath.Clean(convertFuncPath))
 	if err != nil {
 		return fmt.Errorf("error creating convertFunc file: %w", err)
 	}
@@ -202,14 +249,14 @@ func ensureFuncFile(convertFuncPath string, packageName string) error {
 	return nil
 }
 
-func createConvertFuncs(needsConvertFunc []*codegen.SignalInfo, tmpl *template.Template, outputPath string, packageName string) error {
+func writeConvertFuncs(needsConvertFunc []*codegen.SignalInfo, tmpl *template.Template, outputPath string, packageName string) error {
 	// check if we need to create convertFunc file
 	err := ensureFuncFile(outputPath, packageName)
 	if err != nil {
 		return err
 	}
 
-	convertData, err := os.ReadFile(outputPath)
+	convertData, err := os.ReadFile(filepath.Clean(outputPath))
 	if err != nil {
 		return fmt.Errorf("error reading convertFunc file: %w", err)
 	}
@@ -219,7 +266,7 @@ func createConvertFuncs(needsConvertFunc []*codegen.SignalInfo, tmpl *template.T
 			PackageName: packageName,
 			Signal:      signal,
 		}
-		if err := tmpl.Execute(convertBuff, &data); err != nil {
+		if err = tmpl.Execute(convertBuff, &data); err != nil {
 			return fmt.Errorf("error executing convertFunc template: %w", err)
 		}
 	}

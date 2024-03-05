@@ -5,21 +5,24 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 	"slices"
 	"strings"
 )
 
-func loadSignalsCSV(filePath string) ([]*SignalInfo, error) {
-	file, err := os.Open(filePath)
+func loadSignalsCSV(loadFilePath string) ([]*SignalInfo, error) {
+	file, err := os.Open(filepath.Clean(loadFilePath))
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to open file: %w", err)
 	}
+
+	//nolint:errcheck // we don't care about the error since we are not writing to the file
 	defer file.Close()
 
 	reader := csv.NewReader(file)
 	records, err := reader.ReadAll()
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to read vspec: %w", err)
 	}
 
 	var signals []*SignalInfo
@@ -36,11 +39,13 @@ func loadSignalsCSV(filePath string) ([]*SignalInfo, error) {
 	return signals, nil
 }
 
-func loadMigrationJSON(filePath string) (*Migrations, error) {
-	file, err := os.Open(filePath)
+func loadMigrationJSON(loadFilePath string) (*Migrations, error) {
+	file, err := os.Open(filepath.Clean(loadFilePath))
 	if err != nil {
 		return nil, fmt.Errorf("failed to open file: %w", err)
 	}
+
+	//nolint:errcheck // we don't care about the error since we are not writing to the file
 	defer file.Close()
 
 	decoder := json.NewDecoder(file)

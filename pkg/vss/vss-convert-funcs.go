@@ -1,3 +1,4 @@
+// Package vss provides a models and conversion functions for the vss vehicles.
 package vss
 
 import (

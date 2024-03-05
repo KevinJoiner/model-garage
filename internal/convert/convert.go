@@ -38,7 +38,7 @@ func Float64toUint16(val float64) uint16 {
 	return uint16(val)
 }
 
-// Float64toUint16 converts float64 to int16.
+// Float64toInt16 converts float64 to int16.
 func Float64toInt16(val float64) int16 {
 	if val > math.MaxInt16 {
 		return math.MaxInt16
@@ -49,7 +49,7 @@ func Float64toInt16(val float64) int16 {
 	return int16(val)
 }
 
-// Float64toUint8 converts float64 to uint8
+// Float64toUint8 converts float64 to uint8.
 func Float64toUint8(val float64) uint8 {
 	if val > math.MaxUint8 {
 		return math.MaxUint8

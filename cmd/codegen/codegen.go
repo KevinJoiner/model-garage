@@ -1,3 +1,4 @@
+// Package main provides the entrypoint for the code generation tool.
 package main
 
 import (
@@ -29,7 +30,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	tmplData := codegen.TemplateData{*packageName, signals}
+	tmplData := codegen.TemplateData{
+		PackageName: *packageName,
+		Signals:     signals,
+	}
 
 	err = model.Generate(&tmplData, *outputDir)
 	if err != nil {
@@ -45,5 +49,4 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to generate convert file: %v", err)
 	}
-
 }

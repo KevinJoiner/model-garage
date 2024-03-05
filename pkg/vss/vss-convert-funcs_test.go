@@ -803,7 +803,7 @@ func TestToVehiclePowertrainCombustionEngineECT(t *testing.T) {
 		expectedError bool
 	}{
 		{
-			name:          "Postive Value",
+			name:          "Positive Value",
 			input:         90.5,
 			expected:      90,
 			expectedError: false,

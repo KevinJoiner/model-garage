@@ -1,3 +1,4 @@
+// Package model provides the functionality to generate a Go struct file to represent the vehicle struct.
 package model
 
 import (
@@ -22,7 +23,7 @@ func Generate(tmplData *codegen.TemplateData, outputDir string) error {
 
 	// execute the struct template
 	var outBuf bytes.Buffer
-	if err := modelTemplate.Execute(&outBuf, &tmplData); err != nil {
+	if err = modelTemplate.Execute(&outBuf, &tmplData); err != nil {
 		return fmt.Errorf("error executing template: %w", err)
 	}
 
@@ -30,7 +31,7 @@ func Generate(tmplData *codegen.TemplateData, outputDir string) error {
 	// format and write the go file.
 	err = codegen.FormatAndWriteToFile(outBuf.Bytes(), goOutputPath)
 	if err != nil {
-		return err
+		return fmt.Errorf("error writing file: %w", err)
 	}
 
 	return nil

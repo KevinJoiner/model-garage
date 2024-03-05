@@ -1,7 +1,6 @@
 package codegen
 
 import (
-	"fmt"
 	"regexp"
 	"strings"
 )
@@ -142,33 +141,6 @@ func (s *SignalInfo) CHType() string {
 		return "Array(" + s.BaseCHType + ")"
 	}
 	return s.BaseCHType
-}
-
-// CHColType returns the clickhouse proto.Column type of the signal.
-func (s *SignalInfo) CHColType() string {
-	var builder strings.Builder
-	_, _ = builder.WriteString("new(proto.Col")
-	switch s.BaseCHType {
-	case "UInt8", "Int8", "UInt16", "Int16", "UInt32", "Int32", "UInt64", "Int64", "Float32", "Float64", "Bool", "DateTime":
-		_, _ = builder.WriteString(s.BaseCHType)
-	case "String":
-		_, _ = builder.WriteString("Str")
-	default:
-		_, _ = builder.WriteString("Auto")
-	}
-	_, _ = builder.WriteString(")")
-	if s.IsArray {
-		_, _ = builder.WriteString(".Array()")
-	}
-	return builder.String()
-}
-
-// AppendArg returns the argument to be used in the Append method of the column.
-func (s *SignalInfo) AppendArg() string {
-	if s.IsArray {
-		return fmt.Sprintf("%s{vehicle.%s}", s.GOType(), s.GOName)
-	}
-	return "vehicle." + s.GOName
 }
 
 func goName(name string) string {

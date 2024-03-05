@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS vss (
-{{- range .DataSignals }}
+{{- range .Signals }}
 	{{ .CHName }} {{ .CHType }} COMMENT '{{ escapeDesc .Desc }}',
 {{- end }}
 )

@@ -9,6 +9,7 @@ import (
 )
 
 func TestFullFromDataConversion(t *testing.T) {
+	t.Parallel()
 	vehicle, err := vss.FromData([]byte(fullInputJSON), false)
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
 	require.Equalf(t, fullVehicle, vehicle, "converted vehicle does not match expected vehicle")
@@ -57,6 +58,7 @@ var fullInputJSON = `{
 			"time": "2022-01-01T12:34:56Z",
 			"type": "DIMO"
 		}`
+
 var fullVehicle = &vss.Vehicle{
 	VehicleChassisAxleRow1WheelLeftTirePressure:          30,
 	VehicleChassisAxleRow1WheelRightTirePressure:         31,

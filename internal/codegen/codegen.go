@@ -2,25 +2,33 @@
 package codegen
 
 import (
-	_ "embed"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"golang.org/x/tools/imports"
 )
 
 const (
-	ClickhouseFileName  = "vss-table.sql"
-	StructFileName      = "vss-structs.go"
-	ConvertFileName     = "vss-convert.go"
+	// ClickhouseFileName is the name of the ClickHouse table file that will be generated.
+	ClickhouseFileName = "vss-table.sql"
+
+	// StructFileName is the name of the Go file that will contain the vehicle struct.
+	StructFileName = "vss-structs.go"
+
+	// ConvertFileName is the name of the Go file that will convert JSON data to the vehicle struct.
+	ConvertFileName = "vss-convert.go"
+
+	// ConvertFuncFileName is the name of the Go file that will contain the conversion functions.
 	ConvertFuncFileName = "vss-convert-funcs.go"
-	readAll             = 0755
+
+	readAll = 0o755
 )
 
 // TemplateData contains the data to be used during template execution.
 type TemplateData struct {
 	PackageName string
-	DataSignals []*SignalInfo
+	Signals     []*SignalInfo
 }
 
 // GetMigratedSignals reads the signals and migrations files and merges them.
@@ -61,17 +69,18 @@ func EnsureDir(dir string) error {
 }
 
 // FormatAndWriteToFile formats the go source with goimports and writes it to the output file.
-func FormatAndWriteToFile(goData []byte, outputPath string) error {
-	formatted, err := imports.Process(outputPath, goData, &imports.Options{
+func FormatAndWriteToFile(goData []byte, outputFilePath string) (err error) {
+	cleanPath := filepath.Clean(outputFilePath)
+	formatted, fmtErr := imports.Process(cleanPath, goData, &imports.Options{
 		AllErrors: true,
 		Comments:  true,
 	})
-	if err != nil {
-		// print the error and continue
-		fmt.Printf("error formatting go source: %v\n", err)
+	if fmtErr != nil {
+		// do not return early, we still want to write the file
+		fmtErr = fmt.Errorf("error formatting go source: %w", fmtErr)
 		formatted = goData
 	}
-	goOutputFile, err := os.Create(outputPath)
+	goOutputFile, err := os.Create(cleanPath)
 	if err != nil {
 		return fmt.Errorf("error creating output file: %w", err)
 	}
@@ -84,5 +93,7 @@ func FormatAndWriteToFile(goData []byte, outputPath string) error {
 	if err != nil {
 		return fmt.Errorf("error writing to file: %w", err)
 	}
-	return nil
+
+	// return the formatting error if there is one
+	return fmtErr
 }

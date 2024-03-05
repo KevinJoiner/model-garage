@@ -1,3 +1,4 @@
+// Package clickhouse provides the ClickHouse table generation functionality for converting VSPEC signals to Go structs and ClickHouse tables.
 package clickhouse
 
 import (
@@ -23,7 +24,8 @@ func Generate(tmplData *codegen.TemplateData, outputDir string) error {
 	}
 
 	// execute the ClickHouse table template directly to a file.
-	clickhouseTableOutputFile, err := os.Create(filepath.Join(outputDir, codegen.ClickhouseFileName))
+	tablePath := filepath.Clean((filepath.Join(outputDir, codegen.ClickhouseFileName)))
+	clickhouseTableOutputFile, err := os.Create(tablePath)
 	if err != nil {
 		return fmt.Errorf("error creating ClickHouse table output file: %w", err)
 	}
