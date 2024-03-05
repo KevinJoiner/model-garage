@@ -7,6 +7,13 @@
         }
     },
     {
+        "vspecName": "Vehicle.Powertrain.Type",
+        "conversion": {
+            "originalName": "data.fuelType",
+            "originalType": "string"
+        }
+    },
+    {
         "vspecName": "Vehicle.VehicleIdentification.Brand",
         "conversion": {
             "originalName": "data.make",

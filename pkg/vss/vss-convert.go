@@ -515,6 +515,21 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		return nil, fmt.Errorf("%w, field 'data.odometer'", errNotFound)
 	}
 
+	// convert data.fuelType to VehiclePowertrainType
+	result = gjson.GetBytes(jsonData, "data.fuelType")
+	if result.Exists() {
+		valVehiclePowertrainType, ok := result.Value().(string)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.fuelType' is not of type string", errInvalidType)
+		}
+		vehicle.VehiclePowertrainType, err = ToVehiclePowertrainType(valVehiclePowertrainType)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.fuelType': %w", err)
+		}
+	} else if !skipNotFound {
+		return nil, fmt.Errorf("%w, field 'data.fuelType'", errNotFound)
+	}
+
 	// convert data.speed to VehicleSpeed
 	result = gjson.GetBytes(jsonData, "data.speed")
 	if result.Exists() {

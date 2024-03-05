@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS vss (
 	Vehicle_Powertrain_TractionBattery_GrossCapacity UInt16 COMMENT 'Gross capacity of the battery.',
 	Vehicle_Powertrain_TractionBattery_StateOfCharge_Current Float32 COMMENT 'Physical state of charge of the high voltage battery, relative to net capacity. This is not necessarily the state of charge being displayed to the customer.',
 	Vehicle_Powertrain_Transmission_TravelledDistance Float32 COMMENT 'Odometer reading, total distance travelled during the lifetime of the transmission.',
+	Vehicle_Powertrain_Type String COMMENT 'Defines the powertrain type of the vehicle.',
 	Vehicle_Speed Float32 COMMENT 'Vehicle speed.',
 	Vehicle_VehicleIdentification_Brand String COMMENT 'Vehicle brand or manufacturer.',
 	Vehicle_VehicleIdentification_Model String COMMENT 'Vehicle model.',

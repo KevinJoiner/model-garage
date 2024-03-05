@@ -1,0 +1,30 @@
+
+func {{ convertTestName .Signal }}(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name          string
+		input         {{ .Signal.Conversion.OriginalType }}
+		expected      {{ .Signal.GOType }}
+		expectedError bool
+	}{
+		// Add test cases.
+	}
+
+	for i := range tests {
+		test := tests[i]
+		name := test.name
+		if name == "" {
+			name = fmt.Sprintf("Input: %v", test.input)
+		}
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			result, err := {{ convertName .Signal }}(test.input)
+			if test.expectedError {
+				require.Error(t, err, "Expected an error but got none")
+			} else {
+				require.NoError(t, err, "Unexpected error")
+				require.Equal(t, test.expected, result, "Unexpected result")
+			}
+		})
+	}
+}

@@ -1,5 +1,5 @@
 
-// {{ convertName .Signal }} converts data as {{ .Signal.Conversion.OriginalType }} to {{ .Signal.GOType }}
+// {{ convertName .Signal }} converts data as {{ .Signal.Conversion.OriginalType }} to {{ .Signal.GOType }}.
 func {{ convertName .Signal }}(val {{ .Signal.Conversion.OriginalType }}) ({{ .Signal.GOType }}, error) {
     {{ if eq .Signal.Conversion.OriginalType .Signal.GOType -}}
     return val, nil

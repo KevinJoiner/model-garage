@@ -8,7 +8,10 @@
 *.so
 *.dylib
 
+# binary only
 codegen
+!codegen/
+!codegen/*
 
 # Test binary, built with `go test -c`
 *.test
