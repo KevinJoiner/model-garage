@@ -83,32 +83,32 @@ func ToVehicleDIMOVehicleID(val string) (string, error) {
 
 // ToVehicleExteriorAirTemperature converts data as float64 to float32.
 func ToVehicleExteriorAirTemperature(val float64) (float32, error) {
-	return convert.Float64Tofloat32(val), nil
+	return convert.Float64ToFloat32(val), nil
 }
 
 // ToVehicleLowVoltageBatteryCurrentVoltage converts data as float64 to float32.
 func ToVehicleLowVoltageBatteryCurrentVoltage(val float64) (float32, error) {
-	return convert.Float64Tofloat32(val), nil
+	return convert.Float64ToFloat32(val), nil
 }
 
 // ToVehicleOBDBarometricPressure converts data as float64 to float32.
 func ToVehicleOBDBarometricPressure(val float64) (float32, error) {
-	return convert.Float64Tofloat32(val), nil
+	return convert.Float64ToFloat32(val), nil
 }
 
 // ToVehicleOBDEngineLoad converts data as float64 to float32.
 func ToVehicleOBDEngineLoad(val float64) (float32, error) {
-	return convert.Float64Tofloat32(val), nil
+	return convert.Float64ToFloat32(val), nil
 }
 
 // ToVehicleOBDIntakeTemp converts data as float64 to float32.
 func ToVehicleOBDIntakeTemp(val float64) (float32, error) {
-	return convert.Float64Tofloat32(val), nil
+	return convert.Float64ToFloat32(val), nil
 }
 
 // ToVehicleOBDRunTime converts data as float64 to float32.
 func ToVehicleOBDRunTime(val float64) (float32, error) {
-	return convert.Float64Tofloat32(val), nil
+	return convert.Float64ToFloat32(val), nil
 }
 
 // ToVehiclePowertrainCombustionEngineECT converts data as float64 to int16.
@@ -144,7 +144,7 @@ func ToVehiclePowertrainCombustionEngineTPS(val float64) (uint8, error) {
 
 // ToVehiclePowertrainFuelSystemAbsoluteLevel converts data as float64 to float32.
 func ToVehiclePowertrainFuelSystemAbsoluteLevel(val float64) (float32, error) {
-	return convert.Float64Tofloat32(val), nil
+	return convert.Float64ToFloat32(val), nil
 }
 
 // ToVehiclePowertrainFuelSystemSupportedFuelTypes converts data as string to []string.
@@ -185,17 +185,17 @@ func ToVehiclePowertrainTractionBatteryGrossCapacity(val float64) (uint16, error
 
 // ToVehiclePowertrainTractionBatteryStateOfChargeCurrent converts data as float64 to float32.
 func ToVehiclePowertrainTractionBatteryStateOfChargeCurrent(val float64) (float32, error) {
-	return convert.Float64Tofloat32(val), nil
+	return convert.Float64ToFloat32(val), nil
 }
 
 // ToVehiclePowertrainTransmissionTravelledDistance converts data as float64 to float32.
 func ToVehiclePowertrainTransmissionTravelledDistance(val float64) (float32, error) {
-	return convert.Float64Tofloat32(val), nil
+	return convert.Float64ToFloat32(val), nil
 }
 
 // ToVehicleSpeed converts data as float64 to float32.
 func ToVehicleSpeed(val float64) (float32, error) {
-	return convert.Float64Tofloat32(val), nil
+	return convert.Float64ToFloat32(val), nil
 }
 
 // ToVehicleVehicleIdentificationBrand converts data as string to string.

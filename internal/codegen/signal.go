@@ -17,8 +17,9 @@ const (
 	colLen        = 8
 )
 
-// SignalInfo contains the information for a signal.
+// SignalInfo holds information about a signal that is accessed during template execution.
 // This information comes from the combinations of the spec and migration files.
+// The Types defined by this stuct are used to determine what strings to use in the template file.
 type SignalInfo struct {
 	// From spec CSV
 	Name       string

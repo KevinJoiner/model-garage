@@ -5,8 +5,8 @@ import (
 	"math"
 )
 
-// Float64Tofloat32 converts float64 to float32.
-func Float64Tofloat32(val float64) float32 {
+// Float64ToFloat32 converts float64 to float32.
+func Float64ToFloat32(val float64) float32 {
 	if val > math.MaxFloat32 {
 		return math.MaxFloat32
 	}
