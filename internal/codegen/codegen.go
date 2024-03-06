@@ -5,34 +5,24 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 	"golang.org/x/tools/imports"
 )
 
-const (
-	// ClickhouseFileName is the name of the ClickHouse table file that will be generated.
-	ClickhouseFileName = "vss-table.sql"
-
-	// StructFileName is the name of the Go file that will contain the vehicle struct.
-	StructFileName = "vss-structs.go"
-
-	// ConvertFileName is the name of the Go file that will convert JSON data to the vehicle struct.
-	ConvertFileName = "vss-convert.go"
-
-	// ConvertFuncFileName is the name of the Go file that will contain the conversion functions.
-	ConvertFuncFileName = "vss-convert-funcs.go"
-
-	readAll = 0o755
-)
+const readAll = 0o755
 
 // TemplateData contains the data to be used during template execution.
 type TemplateData struct {
 	PackageName string
+	ModelName   string
 	Signals     []*SignalInfo
 }
 
 // GetDefinedSignals reads the signals and definitions files and merges them.
-func GetDefinedSignals(specFile, definitionFile string) ([]*SignalInfo, error) {
+func GetDefinedSignals(specFile, definitionFile string) (*TemplateData, error) {
 	signals, err := loadSignalsCSV(specFile)
 	if err != nil {
 		return nil, fmt.Errorf("error reading signals: %w", err)
@@ -42,9 +32,21 @@ func GetDefinedSignals(specFile, definitionFile string) ([]*SignalInfo, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error reading definition file: %w", err)
 	}
+	signals = definitions.DefinedSignal(signals)
+	modelName := "Model"
+	if len(signals) > 0 {
+		idx := strings.IndexByte(signals[0].Name, '.')
+		if idx > 0 {
+			modelName = signals[0].Name[:idx]
+			modelName = cases.Title(language.English).String(modelName)
+		}
+	}
+	tmplData := &TemplateData{
+		Signals:   signals,
+		ModelName: modelName,
+	}
 
-	definedSignals := definitions.DefinedSignal(signals)
-	return definedSignals, nil
+	return tmplData, nil
 }
 
 // EnsureDir ensures the output directory exists.

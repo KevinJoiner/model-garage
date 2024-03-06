@@ -5,6 +5,7 @@ go 1.22.0
 require (
 	github.com/stretchr/testify v1.9.0
 	github.com/tidwall/gjson v1.17.1
+	golang.org/x/text v0.14.0
 	golang.org/x/tools v0.18.0
 )
 

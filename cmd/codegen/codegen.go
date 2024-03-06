@@ -25,27 +25,24 @@ func main() {
 		log.Fatal(err)
 	}
 
-	signals, err := codegen.GetDefinedSignals(*vspecPath, *definitionPath)
+	tmplData, err := codegen.GetDefinedSignals(*vspecPath, *definitionPath)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	tmplData := codegen.TemplateData{
-		PackageName: *packageName,
-		Signals:     signals,
-	}
+	tmplData.PackageName = *packageName
 
-	err = model.Generate(&tmplData, *outputDir)
+	err = model.Generate(tmplData, *outputDir)
 	if err != nil {
 		log.Fatalf("failed to generate model: %v", err)
 	}
 
-	err = clickhouse.Generate(&tmplData, *outputDir)
+	err = clickhouse.Generate(tmplData, *outputDir)
 	if err != nil {
 		log.Fatalf("failed to generate ClickHouse file: %v", err)
 	}
 
-	err = convert.Generate(&tmplData, *outputDir, *withTest)
+	err = convert.Generate(tmplData, *outputDir, *withTest)
 	if err != nil {
 		log.Fatalf("failed to generate convert file: %v", err)
 	}

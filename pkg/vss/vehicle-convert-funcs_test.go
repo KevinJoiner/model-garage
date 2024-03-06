@@ -19,7 +19,7 @@ const (
 	passThroughFloat64 = 123.456
 )
 
-func TestToVehicleChassisAxleRow1WheelLeftTirePressure(t *testing.T) {
+func TestToChassisAxleRow1WheelLeftTirePressure(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -72,7 +72,7 @@ func TestToVehicleChassisAxleRow1WheelLeftTirePressure(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehicleChassisAxleRow1WheelLeftTirePressure(test.input)
+			result, err := vss.ToChassisAxleRow1WheelLeftTirePressure(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -83,72 +83,7 @@ func TestToVehicleChassisAxleRow1WheelLeftTirePressure(t *testing.T) {
 	}
 }
 
-func TestToVehicleChassisAxleRow1WheelRightTirePressure(t *testing.T) {
-	t.Parallel()
-	tests := []struct {
-		name          string
-		input         float64
-		expected      uint16
-		expectedError bool
-	}{
-		{
-			name:          "Valid value",
-			input:         32,
-			expected:      32,
-			expectedError: false,
-		},
-		{
-			name:          "Zero value",
-			input:         0,
-			expected:      0,
-			expectedError: false,
-		},
-		{
-			name:          "Negative value",
-			input:         -15.75,
-			expected:      0,
-			expectedError: false,
-		},
-		{
-			name:          "Large value",
-			input:         math.MaxFloat64,
-			expected:      math.MaxUint16,
-			expectedError: false,
-		},
-		{
-			name:          "Decimal above 0.5",
-			input:         32.9,
-			expected:      32,
-			expectedError: false,
-		},
-		{
-			name:          "Decimal below 0.5",
-			input:         32.1,
-			expected:      32,
-			expectedError: false,
-		},
-	}
-
-	for i := range tests {
-		test := tests[i]
-		name := test.name
-		if name == "" {
-			name = fmt.Sprintf("Input: %v", test.input)
-		}
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			result, err := vss.ToVehicleChassisAxleRow1WheelRightTirePressure(test.input)
-			if test.expectedError {
-				require.Error(t, err, "Expected an error but got none")
-			} else {
-				require.NoError(t, err, "Unexpected error")
-				require.Equal(t, test.expected, result, "Unexpected result")
-			}
-		})
-	}
-}
-
-func TestToVehicleChassisAxleRow2WheelLeftTirePressure(t *testing.T) {
+func TestToChassisAxleRow1WheelRightTirePressure(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -202,7 +137,7 @@ func TestToVehicleChassisAxleRow2WheelLeftTirePressure(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehicleChassisAxleRow2WheelLeftTirePressure(test.input)
+			result, err := vss.ToChassisAxleRow1WheelRightTirePressure(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -213,7 +148,7 @@ func TestToVehicleChassisAxleRow2WheelLeftTirePressure(t *testing.T) {
 	}
 }
 
-func TestToVehicleChassisAxleRow2WheelRightTirePressure(t *testing.T) {
+func TestToChassisAxleRow2WheelLeftTirePressure(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -267,7 +202,7 @@ func TestToVehicleChassisAxleRow2WheelRightTirePressure(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehicleChassisAxleRow2WheelRightTirePressure(test.input)
+			result, err := vss.ToChassisAxleRow2WheelLeftTirePressure(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -278,28 +213,93 @@ func TestToVehicleChassisAxleRow2WheelRightTirePressure(t *testing.T) {
 	}
 }
 
-func TestToVehicleCurrentLocationAltitude(t *testing.T) {
+func TestToChassisAxleRow2WheelRightTirePressure(t *testing.T) {
 	t.Parallel()
-	result, err := vss.ToVehicleCurrentLocationAltitude(passThroughFloat64)
+	tests := []struct {
+		name          string
+		input         float64
+		expected      uint16
+		expectedError bool
+	}{
+		{
+			name:          "Valid value",
+			input:         32,
+			expected:      32,
+			expectedError: false,
+		},
+		{
+			name:          "Zero value",
+			input:         0,
+			expected:      0,
+			expectedError: false,
+		},
+		{
+			name:          "Negative value",
+			input:         -15.75,
+			expected:      0,
+			expectedError: false,
+		},
+		{
+			name:          "Large value",
+			input:         math.MaxFloat64,
+			expected:      math.MaxUint16,
+			expectedError: false,
+		},
+		{
+			name:          "Decimal above 0.5",
+			input:         32.9,
+			expected:      32,
+			expectedError: false,
+		},
+		{
+			name:          "Decimal below 0.5",
+			input:         32.1,
+			expected:      32,
+			expectedError: false,
+		},
+	}
+
+	for i := range tests {
+		test := tests[i]
+		name := test.name
+		if name == "" {
+			name = fmt.Sprintf("Input: %v", test.input)
+		}
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			result, err := vss.ToChassisAxleRow2WheelRightTirePressure(test.input)
+			if test.expectedError {
+				require.Error(t, err, "Expected an error but got none")
+			} else {
+				require.NoError(t, err, "Unexpected error")
+				require.Equal(t, test.expected, result, "Unexpected result")
+			}
+		})
+	}
+}
+
+func TestToCurrentLocationAltitude(t *testing.T) {
+	t.Parallel()
+	result, err := vss.ToCurrentLocationAltitude(passThroughFloat64)
 	require.NoError(t, err, "Unexpected error")
 	require.Equal(t, passThroughFloat64, result, "Unexpected result")
 }
 
-func TestToVehicleCurrentLocationLatitude(t *testing.T) {
+func TestToCurrentLocationLatitude(t *testing.T) {
 	t.Parallel()
-	result, err := vss.ToVehicleCurrentLocationLatitude(passThroughFloat64)
+	result, err := vss.ToCurrentLocationLatitude(passThroughFloat64)
 	require.NoError(t, err, "Unexpected error")
 	require.Equal(t, passThroughFloat64, result, "Unexpected result")
 }
 
-func TestToVehicleCurrentLocationLongitude(t *testing.T) {
+func TestToCurrentLocationLongitude(t *testing.T) {
 	t.Parallel()
-	result, err := vss.ToVehicleCurrentLocationLongitude(passThroughFloat64)
+	result, err := vss.ToCurrentLocationLongitude(passThroughFloat64)
 	require.NoError(t, err, "Unexpected error")
 	require.Equal(t, passThroughFloat64, result, "Unexpected result")
 }
 
-func TestToVehicleCurrentLocationTimestamp(t *testing.T) {
+func TestToCurrentLocationTimestamp(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -341,7 +341,7 @@ func TestToVehicleCurrentLocationTimestamp(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehicleCurrentLocationTimestamp(test.input)
+			result, err := vss.ToCurrentLocationTimestamp(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -352,28 +352,28 @@ func TestToVehicleCurrentLocationTimestamp(t *testing.T) {
 	}
 }
 
-func TestToVehicleDIMODefinitionID(t *testing.T) {
+func TestToDIMODefinitionID(t *testing.T) {
 	t.Parallel()
-	result, err := vss.ToVehicleDIMODefinitionID(passThroughString)
+	result, err := vss.ToDIMODefinitionID(passThroughString)
 	require.NoError(t, err, "Unexpected error")
 	require.Equal(t, passThroughString, result, "Unexpected result")
 }
 
-func TestToVehicleDIMOSource(t *testing.T) {
+func TestToDIMOSource(t *testing.T) {
 	t.Parallel()
-	result, err := vss.ToVehicleDIMOSource(passThroughString)
+	result, err := vss.ToDIMOSource(passThroughString)
 	require.NoError(t, err, "Unexpected error")
 	require.Equal(t, passThroughString, result, "Unexpected result")
 }
 
-func TestToVehicleDIMOSubject(t *testing.T) {
+func TestToDIMOSubject(t *testing.T) {
 	t.Parallel()
-	result, err := vss.ToVehicleDIMOSubject(passThroughString)
+	result, err := vss.ToDIMOSubject(passThroughString)
 	require.NoError(t, err, "Unexpected error")
 	require.Equal(t, passThroughString, result, "Unexpected result")
 }
 
-func TestToVehicleDIMOTimestamp(t *testing.T) {
+func TestToDIMOTimestamp(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -415,7 +415,7 @@ func TestToVehicleDIMOTimestamp(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehicleDIMOTimestamp(test.input)
+			result, err := vss.ToDIMOTimestamp(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -426,21 +426,21 @@ func TestToVehicleDIMOTimestamp(t *testing.T) {
 	}
 }
 
-func TestToVehicleDIMOType(t *testing.T) {
+func TestToDIMOType(t *testing.T) {
 	t.Parallel()
-	result, err := vss.ToVehicleDIMOType(passThroughString)
+	result, err := vss.ToDIMOType(passThroughString)
 	require.NoError(t, err, "Unexpected error")
 	require.Equal(t, passThroughString, result, "Unexpected result")
 }
 
-func TestToVehicleDIMOVehicleID(t *testing.T) {
+func TestToDIMOVehicleID(t *testing.T) {
 	t.Parallel()
-	result, err := vss.ToVehicleDIMOVehicleID(passThroughString)
+	result, err := vss.ToDIMOVehicleID(passThroughString)
 	require.NoError(t, err, "Unexpected error")
 	require.Equal(t, passThroughString, result, "Unexpected result")
 }
 
-func TestToVehicleExteriorAirTemperature(t *testing.T) {
+func TestToExteriorAirTemperature(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -488,7 +488,7 @@ func TestToVehicleExteriorAirTemperature(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehicleExteriorAirTemperature(test.input)
+			result, err := vss.ToExteriorAirTemperature(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -499,7 +499,7 @@ func TestToVehicleExteriorAirTemperature(t *testing.T) {
 	}
 }
 
-func TestToVehicleLowVoltageBatteryCurrentVoltage(t *testing.T) {
+func TestToLowVoltageBatteryCurrentVoltage(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -547,7 +547,7 @@ func TestToVehicleLowVoltageBatteryCurrentVoltage(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehicleLowVoltageBatteryCurrentVoltage(test.input)
+			result, err := vss.ToLowVoltageBatteryCurrentVoltage(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -558,7 +558,7 @@ func TestToVehicleLowVoltageBatteryCurrentVoltage(t *testing.T) {
 	}
 }
 
-func TestToVehicleOBDBarometricPressure(t *testing.T) {
+func TestToOBDBarometricPressure(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -606,7 +606,7 @@ func TestToVehicleOBDBarometricPressure(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehicleOBDBarometricPressure(test.input)
+			result, err := vss.ToOBDBarometricPressure(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -617,7 +617,7 @@ func TestToVehicleOBDBarometricPressure(t *testing.T) {
 	}
 }
 
-func TestToVehicleOBDEngineLoad(t *testing.T) {
+func TestToOBDEngineLoad(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -665,7 +665,7 @@ func TestToVehicleOBDEngineLoad(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehicleOBDEngineLoad(test.input)
+			result, err := vss.ToOBDEngineLoad(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -676,7 +676,7 @@ func TestToVehicleOBDEngineLoad(t *testing.T) {
 	}
 }
 
-func TestToVehicleOBDIntakeTemp(t *testing.T) {
+func TestToOBDIntakeTemp(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -724,7 +724,7 @@ func TestToVehicleOBDIntakeTemp(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehicleOBDIntakeTemp(test.input)
+			result, err := vss.ToOBDIntakeTemp(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -735,7 +735,7 @@ func TestToVehicleOBDIntakeTemp(t *testing.T) {
 	}
 }
 
-func TestToVehicleOBDRunTime(t *testing.T) {
+func TestToOBDRunTime(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -783,7 +783,7 @@ func TestToVehicleOBDRunTime(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehicleOBDRunTime(test.input)
+			result, err := vss.ToOBDRunTime(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -794,7 +794,7 @@ func TestToVehicleOBDRunTime(t *testing.T) {
 	}
 }
 
-func TestToVehiclePowertrainCombustionEngineECT(t *testing.T) {
+func TestToPowertrainCombustionEngineECT(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -842,7 +842,7 @@ func TestToVehiclePowertrainCombustionEngineECT(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehiclePowertrainCombustionEngineECT(test.input)
+			result, err := vss.ToPowertrainCombustionEngineECT(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -853,7 +853,7 @@ func TestToVehiclePowertrainCombustionEngineECT(t *testing.T) {
 	}
 }
 
-func TestToVehiclePowertrainCombustionEngineEngineOilLevel(t *testing.T) {
+func TestToPowertrainCombustionEngineEngineOilLevel(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -913,7 +913,7 @@ func TestToVehiclePowertrainCombustionEngineEngineOilLevel(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehiclePowertrainCombustionEngineEngineOilLevel(test.input)
+			result, err := vss.ToPowertrainCombustionEngineEngineOilLevel(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -924,7 +924,7 @@ func TestToVehiclePowertrainCombustionEngineEngineOilLevel(t *testing.T) {
 	}
 }
 
-func TestToVehiclePowertrainCombustionEngineSpeed(t *testing.T) {
+func TestToPowertrainCombustionEngineSpeed(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -984,7 +984,7 @@ func TestToVehiclePowertrainCombustionEngineSpeed(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehiclePowertrainCombustionEngineSpeed(test.input)
+			result, err := vss.ToPowertrainCombustionEngineSpeed(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -995,7 +995,7 @@ func TestToVehiclePowertrainCombustionEngineSpeed(t *testing.T) {
 	}
 }
 
-func TestToVehiclePowertrainCombustionEngineTPS(t *testing.T) {
+func TestToPowertrainCombustionEngineTPS(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -1055,7 +1055,7 @@ func TestToVehiclePowertrainCombustionEngineTPS(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehiclePowertrainCombustionEngineTPS(test.input)
+			result, err := vss.ToPowertrainCombustionEngineTPS(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -1066,7 +1066,7 @@ func TestToVehiclePowertrainCombustionEngineTPS(t *testing.T) {
 	}
 }
 
-func TestToVehiclePowertrainFuelSystemAbsoluteLevel(t *testing.T) {
+func TestToPowertrainFuelSystemAbsoluteLevel(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -1114,7 +1114,7 @@ func TestToVehiclePowertrainFuelSystemAbsoluteLevel(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehiclePowertrainFuelSystemAbsoluteLevel(test.input)
+			result, err := vss.ToPowertrainFuelSystemAbsoluteLevel(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -1125,7 +1125,7 @@ func TestToVehiclePowertrainFuelSystemAbsoluteLevel(t *testing.T) {
 	}
 }
 
-func TestToVehiclePowertrainFuelSystemSupportedFuelTypes(t *testing.T) {
+func TestToPowertrainFuelSystemSupportedFuelTypes(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -1179,7 +1179,7 @@ func TestToVehiclePowertrainFuelSystemSupportedFuelTypes(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehiclePowertrainFuelSystemSupportedFuelTypes(test.input)
+			result, err := vss.ToPowertrainFuelSystemSupportedFuelTypes(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -1190,7 +1190,7 @@ func TestToVehiclePowertrainFuelSystemSupportedFuelTypes(t *testing.T) {
 	}
 }
 
-func TestToVehiclePowertrainRange(t *testing.T) {
+func TestToPowertrainRange(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -1250,7 +1250,7 @@ func TestToVehiclePowertrainRange(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehiclePowertrainRange(test.input)
+			result, err := vss.ToPowertrainRange(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -1261,7 +1261,7 @@ func TestToVehiclePowertrainRange(t *testing.T) {
 	}
 }
 
-func TestToVehiclePowertrainTractionBatteryChargingChargeLimit(t *testing.T) {
+func TestToPowertrainTractionBatteryChargingChargeLimit(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -1321,7 +1321,7 @@ func TestToVehiclePowertrainTractionBatteryChargingChargeLimit(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehiclePowertrainTractionBatteryChargingChargeLimit(test.input)
+			result, err := vss.ToPowertrainTractionBatteryChargingChargeLimit(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -1332,14 +1332,14 @@ func TestToVehiclePowertrainTractionBatteryChargingChargeLimit(t *testing.T) {
 	}
 }
 
-func TestToVehiclePowertrainTractionBatteryChargingIsCharging(t *testing.T) {
+func TestToPowertrainTractionBatteryChargingIsCharging(t *testing.T) {
 	t.Parallel()
-	result, err := vss.ToVehiclePowertrainTractionBatteryChargingIsCharging(true)
+	result, err := vss.ToPowertrainTractionBatteryChargingIsCharging(true)
 	require.NoError(t, err, "Unexpected error")
 	require.Equal(t, true, result, "Unexpected result")
 }
 
-func TestToVehiclePowertrainTractionBatteryGrossCapacity(t *testing.T) {
+func TestToPowertrainTractionBatteryGrossCapacity(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -1399,7 +1399,7 @@ func TestToVehiclePowertrainTractionBatteryGrossCapacity(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehiclePowertrainTractionBatteryGrossCapacity(test.input)
+			result, err := vss.ToPowertrainTractionBatteryGrossCapacity(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -1410,7 +1410,7 @@ func TestToVehiclePowertrainTractionBatteryGrossCapacity(t *testing.T) {
 	}
 }
 
-func TestToVehiclePowertrainTractionBatteryStateOfChargeCurrent(t *testing.T) {
+func TestToPowertrainTractionBatteryStateOfChargeCurrent(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -1458,7 +1458,7 @@ func TestToVehiclePowertrainTractionBatteryStateOfChargeCurrent(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehiclePowertrainTractionBatteryStateOfChargeCurrent(test.input)
+			result, err := vss.ToPowertrainTractionBatteryStateOfChargeCurrent(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -1469,7 +1469,7 @@ func TestToVehiclePowertrainTractionBatteryStateOfChargeCurrent(t *testing.T) {
 	}
 }
 
-func TestToVehiclePowertrainTransmissionTravelledDistance(t *testing.T) {
+func TestToPowertrainTransmissionTravelledDistance(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -1517,7 +1517,7 @@ func TestToVehiclePowertrainTransmissionTravelledDistance(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehiclePowertrainTransmissionTravelledDistance(test.input)
+			result, err := vss.ToPowertrainTransmissionTravelledDistance(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -1528,7 +1528,7 @@ func TestToVehiclePowertrainTransmissionTravelledDistance(t *testing.T) {
 	}
 }
 
-func TestToVehicleSpeed(t *testing.T) {
+func TestToSpeed(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -1576,7 +1576,7 @@ func TestToVehicleSpeed(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehicleSpeed(test.input)
+			result, err := vss.ToSpeed(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -1587,28 +1587,28 @@ func TestToVehicleSpeed(t *testing.T) {
 	}
 }
 
-func TestToVehicleVehicleIdentificationBrand(t *testing.T) {
+func TestToVehicleIdentificationBrand(t *testing.T) {
 	t.Parallel()
-	result, err := vss.ToVehicleVehicleIdentificationBrand(passThroughString)
+	result, err := vss.ToVehicleIdentificationBrand(passThroughString)
 	require.NoError(t, err, "Unexpected error")
 	require.Equal(t, passThroughString, result, "Unexpected result")
 }
 
-func TestToVehicleVehicleIdentificationModel(t *testing.T) {
+func TestToVehicleIdentificationModel(t *testing.T) {
 	t.Parallel()
-	result, err := vss.ToVehicleVehicleIdentificationModel(passThroughString)
+	result, err := vss.ToVehicleIdentificationModel(passThroughString)
 	require.NoError(t, err, "Unexpected error")
 	require.Equal(t, passThroughString, result, "Unexpected result")
 }
 
-func TestToVehicleVehicleIdentificationVIN(t *testing.T) {
+func TestToVehicleIdentificationVIN(t *testing.T) {
 	t.Parallel()
-	result, err := vss.ToVehicleVehicleIdentificationVIN(passThroughString)
+	result, err := vss.ToVehicleIdentificationVIN(passThroughString)
 	require.NoError(t, err, "Unexpected error")
 	require.Equal(t, passThroughString, result, "Unexpected result")
 }
 
-func TestToVehicleVehicleIdentificationYear(t *testing.T) {
+func TestToVehicleIdentificationYear(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -1668,7 +1668,7 @@ func TestToVehicleVehicleIdentificationYear(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehicleVehicleIdentificationYear(test.input)
+			result, err := vss.ToVehicleIdentificationYear(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -1679,7 +1679,7 @@ func TestToVehicleVehicleIdentificationYear(t *testing.T) {
 	}
 }
 
-func TestToVehiclePowertrainType(t *testing.T) {
+func TestToPowertrainType(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -1733,7 +1733,7 @@ func TestToVehiclePowertrainType(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehiclePowertrainType(test.input)
+			result, err := vss.ToPowertrainType(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {

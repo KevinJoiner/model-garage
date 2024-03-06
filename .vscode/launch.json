@@ -9,7 +9,7 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${workspaceFolder}/internal/codegen/cmd",
+            "program": "${workspaceFolder}/cmd/codegen",
             "args": [
                 "-output=${workspaceFolder}/pkg/vss",
                 "-spec=${workspaceFolder}/schema/vss_rel_4.2-DIMO.csv",

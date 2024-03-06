@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS vss (
+CREATE TABLE IF NOT EXISTS {{ lower .ModelName }} (
 {{- range .Signals }}
 	{{ .CHName }} {{ .CHType }} COMMENT '{{ escapeDesc .Desc }}',
 {{- end }}

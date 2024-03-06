@@ -17,6 +17,8 @@ const (
 	colLen        = 8
 )
 
+var nonAlphaNum = regexp.MustCompile(`[^a-zA-Z0-9]+`)
+
 // SignalInfo holds information about a signal that is accessed during template execution.
 // This information comes from the combinations of the spec and definition files.
 // The Types defined by this stuct are used to determine what strings to use in the template file.
@@ -145,13 +147,19 @@ func (s *SignalInfo) CHType() string {
 }
 
 func goName(name string) string {
-	// Remove special characters and ensure PascalCase
-	re := regexp.MustCompile("[^a-zA-Z0-9]+")
-	return re.ReplaceAllString(name, "")
+	return nonAlphaNum.ReplaceAllString(removePrefix(name), "")
 }
 
 func chName(name string) string {
-	return strings.ReplaceAll(name, ".", "_")
+	return strings.ReplaceAll(removePrefix(name), ".", "_")
+}
+
+func removePrefix(name string) string {
+	idx := strings.IndexByte(name, '.')
+	if idx != -1 {
+		return name[idx+1:]
+	}
+	return name
 }
 
 // goTypeFromVSPEC converts vspec type to golang types.

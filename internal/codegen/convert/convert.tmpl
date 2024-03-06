@@ -20,11 +20,11 @@ func IsInvalidType(err error) bool {
 }
 
 
-// FromData creates a new Vehicle from a map of data. Using defined conversion functions.
+// FromData creates a new {{ .ModelName }} from a map of data. Using defined conversion functions.
 // If skipNotFound is true, the function will not return an error if a key is not found. 
 // instead the field will be set to the zero value of the type.
-func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
-	vehicle := Vehicle{}
+func FromData(jsonData []byte, skipNotFound bool) (*{{ .ModelName }}, error) {
+	{{ lower .ModelName }} := {{ .ModelName }}{}
 
 {{ $first := true }}
 {{- range .Signals }}
