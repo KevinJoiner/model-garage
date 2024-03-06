@@ -39,7 +39,7 @@ func loadSignalsCSV(loadFilePath string) ([]*SignalInfo, error) {
 	return signals, nil
 }
 
-func loadMigrationJSON(loadFilePath string) (*Migrations, error) {
+func loadDefinitionJSON(loadFilePath string) (*Definitions, error) {
 	file, err := os.Open(filepath.Clean(loadFilePath))
 	if err != nil {
 		return nil, fmt.Errorf("failed to open file: %w", err)
@@ -49,17 +49,17 @@ func loadMigrationJSON(loadFilePath string) (*Migrations, error) {
 	defer file.Close()
 
 	decoder := json.NewDecoder(file)
-	var transInfos []*MigrationInfo
+	var transInfos []*DefinitionInfo
 	err = decoder.Decode(&transInfos)
 	if err != nil {
 		return nil, fmt.Errorf("failed to decode json: %w", err)
 	}
-	migrations := &Migrations{
-		FromName: map[string]*MigrationInfo{},
+	definitions := &Definitions{
+		FromName: map[string]*DefinitionInfo{},
 	}
 	for _, info := range transInfos {
-		migrations.FromName[info.VspecName] = info
+		definitions.FromName[info.VspecName] = info
 	}
 
-	return migrations, nil
+	return definitions, nil
 }

@@ -15,7 +15,7 @@ func main() {
 	// Command-line flags
 	outputDir := flag.String("output", ".", "Output directory for the generated Go file")
 	vspecPath := flag.String("spec", "./vspec.csv", "Path to the vspec CSV file")
-	migrationPath := flag.String("migrations", "./migrations.json", "Path to the migrations JSON file")
+	definitionPath := flag.String("definitions", "./definitions.json", "Path to the definitions JSON file")
 	packageName := flag.String("package", "vspec", "Name of the package to generate")
 	withTest := flag.Bool("convert.with-test", true, "Generate test functions for conversion functions. Default is true.")
 	flag.Parse()
@@ -25,7 +25,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	signals, err := codegen.GetMigratedSignals(*vspecPath, *migrationPath)
+	signals, err := codegen.GetDefinedSignals(*vspecPath, *definitionPath)
 	if err != nil {
 		log.Fatal(err)
 	}

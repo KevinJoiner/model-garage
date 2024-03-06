@@ -31,20 +31,20 @@ type TemplateData struct {
 	Signals     []*SignalInfo
 }
 
-// GetMigratedSignals reads the signals and migrations files and merges them.
-func GetMigratedSignals(specFile, migrationFile string) ([]*SignalInfo, error) {
+// GetDefinedSignals reads the signals and definitions files and merges them.
+func GetDefinedSignals(specFile, definitionFile string) ([]*SignalInfo, error) {
 	signals, err := loadSignalsCSV(specFile)
 	if err != nil {
 		return nil, fmt.Errorf("error reading signals: %w", err)
 	}
 
-	migrations, err := loadMigrationJSON(migrationFile)
+	definitions, err := loadDefinitionJSON(definitionFile)
 	if err != nil {
-		return nil, fmt.Errorf("error reading migration file: %w", err)
+		return nil, fmt.Errorf("error reading definition file: %w", err)
 	}
 
-	migratedSignals := migrations.MigratedSignal(signals)
-	return migratedSignals, nil
+	definedSignals := definitions.DefinedSignal(signals)
+	return definedSignals, nil
 }
 
 // EnsureDir ensures the output directory exists.

@@ -18,7 +18,7 @@ const (
 )
 
 // SignalInfo holds information about a signal that is accessed during template execution.
-// This information comes from the combinations of the spec and migration files.
+// This information comes from the combinations of the spec and definition files.
 // The Types defined by this stuct are used to determine what strings to use in the template file.
 type SignalInfo struct {
 	// From spec CSV
@@ -47,8 +47,8 @@ type ConversionInfo struct {
 	IsArray      bool   `json:"isArray"`
 }
 
-// MigrationInfo contains the migration information for a field.
-type MigrationInfo struct {
+// DefinitionInfo contains the definition information for a field.
+type DefinitionInfo struct {
 	IsArray        *bool           `json:"isArray"`
 	Conversion     *ConversionInfo `json:"conversion"`
 	VspecName      string          `json:"vspecName"`
@@ -56,20 +56,20 @@ type MigrationInfo struct {
 	GoType         string          `json:"goType"`
 }
 
-// Migrations is a map of migrations from clickhouse Name to migration info.
-type Migrations struct {
-	FromName map[string]*MigrationInfo
+// Definitions is a map of definitions from clickhouse Name to definition info.
+type Definitions struct {
+	FromName map[string]*DefinitionInfo
 	Signals  []*SignalInfo
 }
 
-// MigratedSignal returns a new slice of signals with the migration information applied.
-// excluding signals that are not in the migration file.
-func (m *Migrations) MigratedSignal(signal []*SignalInfo) []*SignalInfo {
+// DefinedSignal returns a new slice of signals with the definition information applied.
+// excluding signals that are not in the definition file.
+func (m *Definitions) DefinedSignal(signal []*SignalInfo) []*SignalInfo {
 	sigs := []*SignalInfo{}
 	for _, sig := range signal {
-		if migration, ok := m.FromName[sig.Name]; ok {
+		if definition, ok := m.FromName[sig.Name]; ok {
 			newSignal := *sig
-			newSignal.MergeWithMigration(migration)
+			newSignal.MergeWithDefinition(definition)
 			sigs = append(sigs, &newSignal)
 		}
 	}
@@ -109,19 +109,19 @@ func NewSignalInfo(record []string) *SignalInfo {
 	return sig
 }
 
-// MergeWithMigration merges the signal with the migration information.
-func (s *SignalInfo) MergeWithMigration(migration *MigrationInfo) {
-	if migration.ClickHouseType != "" {
-		s.BaseCHType = migration.ClickHouseType
+// MergeWithDefinition merges the signal with the definition information.
+func (s *SignalInfo) MergeWithDefinition(definition *DefinitionInfo) {
+	if definition.ClickHouseType != "" {
+		s.BaseCHType = definition.ClickHouseType
 	}
-	if migration.GoType != "" {
-		s.BaseGoType = migration.GoType
+	if definition.GoType != "" {
+		s.BaseGoType = definition.GoType
 	}
-	if migration.IsArray != nil {
-		s.IsArray = *migration.IsArray
+	if definition.IsArray != nil {
+		s.IsArray = *definition.IsArray
 	}
-	if migration.Conversion != nil {
-		s.Conversion = migration.Conversion
+	if definition.Conversion != nil {
+		s.Conversion = definition.Conversion
 		if s.Conversion.OriginalType == "" {
 			s.Conversion.OriginalType = s.GOType()
 		}
