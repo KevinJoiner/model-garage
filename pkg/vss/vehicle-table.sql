@@ -39,4 +39,4 @@ CREATE TABLE IF NOT EXISTS vehicle (
 	VehicleIdentification_Year UInt16 COMMENT 'Model year of the vehicle.',
 )
 ENGINE = MergeTree()
-ORDER BY (Vehicle_DIMO_Subject, Vehicle_DIMO_Timestamp)
+ORDER BY (DIMO_Subject, DIMO_Timestamp)

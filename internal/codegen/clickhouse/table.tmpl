@@ -4,4 +4,4 @@ CREATE TABLE IF NOT EXISTS {{ lower .ModelName }} (
 {{- end }}
 )
 ENGINE = MergeTree()
-ORDER BY (Vehicle_DIMO_Subject, Vehicle_DIMO_Timestamp)
+ORDER BY (DIMO_Subject, DIMO_Timestamp)
