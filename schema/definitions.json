@@ -76,7 +76,7 @@
             "originalName": "data.timestamp",
             "originalType": "string"
         },
-        "clickHouseType": "DateTime",
+        "clickHouseType": "DateTime('UTC')",
         "goType": "time.Time",
         "isArray": false
     },
@@ -250,7 +250,7 @@
     },
     {
         "vspecName": "Vehicle.DIMO.Timestamp",
-        "clickHouseType": "DateTime",
+        "clickHouseType": "DateTime('UTC')",
         "goType": "time.Time",
         "isArray": false,
         "conversion": {
