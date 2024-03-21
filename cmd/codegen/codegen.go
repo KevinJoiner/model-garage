@@ -5,10 +5,10 @@ import (
 	"flag"
 	"log"
 
-	"github.com/KevinJoiner/model-garage/internal/codegen"
-	"github.com/KevinJoiner/model-garage/internal/codegen/clickhouse"
-	"github.com/KevinJoiner/model-garage/internal/codegen/convert"
-	"github.com/KevinJoiner/model-garage/internal/codegen/model"
+	"github.com/DIMO-Network/model-garage/internal/codegen"
+	"github.com/DIMO-Network/model-garage/internal/codegen/clickhouse"
+	"github.com/DIMO-Network/model-garage/internal/codegen/convert"
+	"github.com/DIMO-Network/model-garage/internal/codegen/model"
 )
 
 func main() {

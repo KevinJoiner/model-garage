@@ -4,7 +4,7 @@ package vss
 import (
 	"time"
 
-	"github.com/KevinJoiner/model-garage/internal/convert"
+	"github.com/DIMO-Network/model-garage/internal/convert"
 )
 
 // This file is automatically populated with conversion functions for each field of a model struct.

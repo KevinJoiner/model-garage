@@ -4,15 +4,7 @@ package {{ .PackageName }}
 var (
 	// errInvalidType is returned when a field is not of the expected type or not found.
 	errInvalidType = errors.New("invalid type")
-
-	// errNotFound is returned when a field is not found.
-	errNotFound = errors.New("not found")	
 )
-
-// IsNotFound returns true if the error is of type errNotFound.
-func IsNotFound(err error) bool {
-	return errors.Is(err, errNotFound)
-}
 
 // IsInvalidType returns true if the error is of type errInvalidType.
 func IsInvalidType(err error) bool {
@@ -23,49 +15,48 @@ func IsInvalidType(err error) bool {
 // FromData creates a new {{ .ModelName }} from a map of data. Using defined conversion functions.
 // If skipNotFound is true, the function will not return an error if a key is not found. 
 // instead the field will be set to the zero value of the type.
-func FromData(jsonData []byte, skipNotFound bool) (*{{ .ModelName }}, error) {
-	{{ lower .ModelName }} := {{ .ModelName }}{}
+func FromData(jsonData []byte) (*{{ .ModelName }}, error) {
+	{{ $varName := lower .ModelName}}
+	{{ $varName }} := {{ .ModelName }}{}
 
 {{ $first := true }}
-{{- range .Signals }}
-	{{ if not .Conversion }} {{ continue }} {{ end }}
+{{- range $idx, $sig := .Signals }}
+	{{ if not $sig.Conversion }} {{ continue }} {{ end }}
 	{{ if $first }}
 	var err error
 	var result gjson.Result
 	{{ $first = false }} {{ end }}
 
-	// convert {{ .Conversion.OriginalName }} to {{ .GOName }}
-	result = gjson.GetBytes(jsonData, "{{ .Conversion.OriginalName }}")
+	// convert {{ $sig.Conversion.OriginalName }} to {{ $sig.GOName }}
+	result = gjson.GetBytes(jsonData, "{{ $sig.Conversion.OriginalName }}")
 	if result.Exists() {
-		{{ if .Conversion.IsArray -}}
+		{{ if $sig.Conversion.IsArray -}}
 		if !result.IsArray() {
-			return nil, fmt.Errorf("%w, field '{{ .Conversion.OriginalName }}' is not an array", errInvalidType)
+			return nil, fmt.Errorf("%w, field '{{ $sig.Conversion.OriginalName }}' is not an array", errInvalidType)
 		}
-		slice{{ .GOName}} := make([]{{ .Conversion.OriginalType }}, len(result.Array()))
+		slice{{ $sig.GOName}} := make([]{{ $sig.Conversion.OriginalType }}, len(result.Array()))
 		for i, res := range result.Array() {
-			v, ok := res.Value().({{ .Conversion.OriginalType }})
+			v, ok := res.Value().({{ $sig.Conversion.OriginalType }})
 			if !ok{
-				return nil, fmt.Errorf("%w, field '{{ .Conversion.OriginalName }}' array element %d is not of type {{ .Conversion.OriginalType }}", errInvalidType, i)
+				return nil, fmt.Errorf("%w, field '{{ $sig.Conversion.OriginalName }}' array element %d is not of type {{ $sig.Conversion.OriginalType }}", errInvalidType, i)
 			}
-			slice{{ .GOName}}[i] = v
+			slice{{ $sig.GOName}}[i] = v
 		}
-		vehicle.{{ .GOName }}, err = {{ convertName . }}(slice{{ .GOName}} )
+		{{ $varName }}.{{ $sig.GOName }}, err = {{ convertName $sig }}(slice{{ $sig.GOName}} )
 		if err != nil {
-			return nil, fmt.Errorf("failed to convert '{{ .Conversion.OriginalName }}': %w", err)
+			return nil, fmt.Errorf("failed to convert '{{ $sig.Conversion.OriginalName }}': %w", err)
 		}
 	{{ else -}}
-		val{{ .GOName}}, ok := result.Value().({{ .Conversion.OriginalType }})
+		val{{ $sig.GOName}}, ok := result.Value().({{ $sig.Conversion.OriginalType }})
 		if !ok {
-			return nil, fmt.Errorf("%w, field '{{ .Conversion.OriginalName }}' is not of type {{ .Conversion.OriginalType }}", errInvalidType)
+			return nil, fmt.Errorf("%w, field '{{ $sig.Conversion.OriginalName }}' is not of type {{ $sig.Conversion.OriginalType }}", errInvalidType)
 		}
-		vehicle.{{ .GOName }}, err = {{ convertName . }}(val{{ .GOName}})
+		{{ $varName }}.{{ $sig.GOName }}, err = {{ convertName $sig }}(val{{ $sig.GOName}})
 		if err != nil {
-			return nil, fmt.Errorf("failed to convert '{{ .Conversion.OriginalName }}': %w", err)
+			return nil, fmt.Errorf("failed to convert '{{ $sig.Conversion.OriginalName }}': %w", err)
 		}
 	{{ end -}}
-	} else if !skipNotFound{
-		return nil, fmt.Errorf("%w, field '{{ .Conversion.OriginalName }}'", errNotFound)
 	}
 {{- end }}
-	return &vehicle, nil
+	return &{{ $varName }}, nil
 }

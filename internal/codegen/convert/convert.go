@@ -13,7 +13,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/KevinJoiner/model-garage/internal/codegen"
+	"github.com/DIMO-Network/model-garage/internal/codegen"
 )
 
 var (

@@ -9,7 +9,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/KevinJoiner/model-garage/internal/codegen"
+	"github.com/DIMO-Network/model-garage/internal/codegen"
 )
 
 // structFileName is the name of the Go file that will contain the vehicle struct.

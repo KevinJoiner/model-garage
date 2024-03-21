@@ -11,15 +11,7 @@ import (
 var (
 	// errInvalidType is returned when a field is not of the expected type or not found.
 	errInvalidType = errors.New("invalid type")
-
-	// errNotFound is returned when a field is not found.
-	errNotFound = errors.New("not found")
 )
-
-// IsNotFound returns true if the error is of type errNotFound.
-func IsNotFound(err error) bool {
-	return errors.Is(err, errNotFound)
-}
 
 // IsInvalidType returns true if the error is of type errInvalidType.
 func IsInvalidType(err error) bool {
@@ -29,7 +21,8 @@ func IsInvalidType(err error) bool {
 // FromData creates a new Vehicle from a map of data. Using defined conversion functions.
 // If skipNotFound is true, the function will not return an error if a key is not found.
 // instead the field will be set to the zero value of the type.
-func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
+func FromData(jsonData []byte) (*Vehicle, error) {
+
 	vehicle := Vehicle{}
 
 	var err error
@@ -46,8 +39,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.tires.frontLeft': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.tires.frontLeft'", errNotFound)
 	}
 
 	// convert data.tires.frontRight to ChassisAxleRow1WheelRightTirePressure
@@ -61,8 +52,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.tires.frontRight': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.tires.frontRight'", errNotFound)
 	}
 
 	// convert data.tires.backLeft to ChassisAxleRow2WheelLeftTirePressure
@@ -76,8 +65,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.tires.backLeft': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.tires.backLeft'", errNotFound)
 	}
 
 	// convert data.tires.backRight to ChassisAxleRow2WheelRightTirePressure
@@ -91,8 +78,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.tires.backRight': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.tires.backRight'", errNotFound)
 	}
 
 	// convert data.altitude to CurrentLocationAltitude
@@ -106,8 +91,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.altitude': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.altitude'", errNotFound)
 	}
 
 	// convert data.latitude to CurrentLocationLatitude
@@ -121,8 +104,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.latitude': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.latitude'", errNotFound)
 	}
 
 	// convert data.longitude to CurrentLocationLongitude
@@ -136,8 +117,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.longitude': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.longitude'", errNotFound)
 	}
 
 	// convert data.timestamp to CurrentLocationTimestamp
@@ -151,8 +130,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.timestamp': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.timestamp'", errNotFound)
 	}
 
 	// convert data.definitionID to DIMODefinitionID
@@ -166,8 +143,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.definitionID': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.definitionID'", errNotFound)
 	}
 
 	// convert source to DIMOSource
@@ -181,8 +156,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'source': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'source'", errNotFound)
 	}
 
 	// convert subject to DIMOSubject
@@ -196,8 +169,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'subject': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'subject'", errNotFound)
 	}
 
 	// convert time to DIMOTimestamp
@@ -211,8 +182,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'time': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'time'", errNotFound)
 	}
 
 	// convert type to DIMOType
@@ -226,8 +195,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'type': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'type'", errNotFound)
 	}
 
 	// convert data.vehicleID to DIMOVehicleID
@@ -241,8 +208,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.vehicleID': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.vehicleID'", errNotFound)
 	}
 
 	// convert data.ambientTemp to ExteriorAirTemperature
@@ -256,8 +221,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.ambientTemp': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.ambientTemp'", errNotFound)
 	}
 
 	// convert data.batteryVoltage to LowVoltageBatteryCurrentVoltage
@@ -271,8 +234,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.batteryVoltage': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.batteryVoltage'", errNotFound)
 	}
 
 	// convert data.barometricPressure to OBDBarometricPressure
@@ -286,8 +247,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.barometricPressure': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.barometricPressure'", errNotFound)
 	}
 
 	// convert data.engineLoad to OBDEngineLoad
@@ -301,8 +260,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.engineLoad': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.engineLoad'", errNotFound)
 	}
 
 	// convert data.intakeTemp to OBDIntakeTemp
@@ -316,8 +273,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.intakeTemp': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.intakeTemp'", errNotFound)
 	}
 
 	// convert data.runTime to OBDRunTime
@@ -331,8 +286,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.runTime': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.runTime'", errNotFound)
 	}
 
 	// convert data.coolantTemp to PowertrainCombustionEngineECT
@@ -346,8 +299,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.coolantTemp': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.coolantTemp'", errNotFound)
 	}
 
 	// convert data.oil to PowertrainCombustionEngineEngineOilLevel
@@ -361,8 +312,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.oil': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.oil'", errNotFound)
 	}
 
 	// convert data.engineSpeed to PowertrainCombustionEngineSpeed
@@ -376,8 +325,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.engineSpeed': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.engineSpeed'", errNotFound)
 	}
 
 	// convert data.throttlePosition to PowertrainCombustionEngineTPS
@@ -391,8 +338,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.throttlePosition': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.throttlePosition'", errNotFound)
 	}
 
 	// convert data.fuelPercentRemaining to PowertrainFuelSystemAbsoluteLevel
@@ -406,8 +351,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.fuelPercentRemaining': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.fuelPercentRemaining'", errNotFound)
 	}
 
 	// convert data.fuelType to PowertrainFuelSystemSupportedFuelTypes
@@ -421,8 +364,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.fuelType': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.fuelType'", errNotFound)
 	}
 
 	// convert data.range to PowertrainRange
@@ -436,8 +377,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.range': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.range'", errNotFound)
 	}
 
 	// convert data.chargeLimit to PowertrainTractionBatteryChargingChargeLimit
@@ -451,8 +390,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.chargeLimit': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.chargeLimit'", errNotFound)
 	}
 
 	// convert data.charging to PowertrainTractionBatteryChargingIsCharging
@@ -466,8 +403,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.charging': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.charging'", errNotFound)
 	}
 
 	// convert data.batteryCapacity to PowertrainTractionBatteryGrossCapacity
@@ -481,8 +416,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.batteryCapacity': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.batteryCapacity'", errNotFound)
 	}
 
 	// convert data.soc to PowertrainTractionBatteryStateOfChargeCurrent
@@ -496,8 +429,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.soc': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.soc'", errNotFound)
 	}
 
 	// convert data.odometer to PowertrainTransmissionTravelledDistance
@@ -511,8 +442,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.odometer': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.odometer'", errNotFound)
 	}
 
 	// convert data.fuelType to PowertrainType
@@ -526,8 +455,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.fuelType': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.fuelType'", errNotFound)
 	}
 
 	// convert data.speed to Speed
@@ -541,8 +468,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.speed': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.speed'", errNotFound)
 	}
 
 	// convert data.make to VehicleIdentificationBrand
@@ -556,8 +481,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.make': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.make'", errNotFound)
 	}
 
 	// convert data.model to VehicleIdentificationModel
@@ -571,8 +494,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.model': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.model'", errNotFound)
 	}
 
 	// convert data.vin to VehicleIdentificationVIN
@@ -586,8 +507,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.vin': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.vin'", errNotFound)
 	}
 
 	// convert data.year to VehicleIdentificationYear
@@ -601,8 +520,6 @@ func FromData(jsonData []byte, skipNotFound bool) (*Vehicle, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.year': %w", err)
 		}
-	} else if !skipNotFound {
-		return nil, fmt.Errorf("%w, field 'data.year'", errNotFound)
 	}
 	return &vehicle, nil
 }

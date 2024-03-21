@@ -1,4 +1,4 @@
-module github.com/KevinJoiner/model-garage
+module github.com/DIMO-Network/model-garage
 
 go 1.22.0
 

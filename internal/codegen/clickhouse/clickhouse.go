@@ -10,7 +10,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/KevinJoiner/model-garage/internal/codegen"
+	"github.com/DIMO-Network/model-garage/internal/codegen"
 )
 
 // clickhouseFileName is the name of the ClickHouse table file that will be generated.

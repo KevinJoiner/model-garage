@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/KevinJoiner/model-garage/pkg/vss"
+	"github.com/DIMO-Network/model-garage/pkg/vss"
 	"github.com/stretchr/testify/require"
 )
 

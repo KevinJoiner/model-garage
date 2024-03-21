@@ -4,13 +4,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/KevinJoiner/model-garage/pkg/vss"
+	"github.com/DIMO-Network/model-garage/pkg/vss"
 	"github.com/stretchr/testify/require"
 )
 
 func TestFullFromDataConversion(t *testing.T) {
 	t.Parallel()
-	vehicle, err := vss.FromData([]byte(fullInputJSON), false)
+	vehicle, err := vss.FromData([]byte(fullInputJSON))
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
 	require.Equalf(t, fullVehicle, vehicle, "converted vehicle does not match expected vehicle")
 }
