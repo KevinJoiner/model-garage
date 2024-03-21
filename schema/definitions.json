@@ -1,20 +1,20 @@
 [
     {
-        "vspecName": "Vehicle.Powertrain.FuelSystem.SupportedFuelTypes",
+        "vspecName": "DIMO.Vehicle.Powertrain.FuelSystem.SupportedFuelTypes",
         "conversion": {
             "originalName": "data.fuelType",
             "originalType": "string"
         }
     },
     {
-        "vspecName": "Vehicle.Powertrain.Type",
+        "vspecName": "DIMO.Vehicle.Powertrain.Type",
         "conversion": {
             "originalName": "data.fuelType",
             "originalType": "string"
         }
     },
     {
-        "vspecName": "Vehicle.VehicleIdentification.Brand",
+        "vspecName": "DIMO.Vehicle.VehicleIdentification.Brand",
         "conversion": {
             "originalName": "data.make",
             "originalType": "string"
@@ -22,56 +22,56 @@
     },
     {
         "originalName": "data.model",
-        "vspecName": "Vehicle.VehicleIdentification.Model",
+        "vspecName": "DIMO.Vehicle.VehicleIdentification.Model",
         "conversion": {
             "originalName": "data.model",
             "originalType": "string"
         }
     },
     {
-        "vspecName": "Vehicle.VehicleIdentification.VIN",
+        "vspecName": "DIMO.Vehicle.VehicleIdentification.VIN",
         "conversion": {
             "originalName": "data.vin",
             "originalType": "string"
         }
     },
     {
-        "vspecName": "Vehicle.DIMO.VehicleID",
+        "vspecName": "DIMO.VehicleID",
         "conversion": {
             "originalName": "data.vehicleID",
             "originalType": "string"
         }
     },
     {
-        "vspecName": "Vehicle.DIMO.DefinitionID",
+        "vspecName": "DIMO.DefinitionID",
         "conversion": {
             "originalName": "data.definitionID",
             "originalType": "string"
         }
     },
     {
-        "vspecName": "Vehicle.CurrentLocation.Altitude",
+        "vspecName": "DIMO.Vehicle.CurrentLocation.Altitude",
         "conversion": {
             "originalName": "data.altitude",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.CurrentLocation.Latitude",
+        "vspecName": "DIMO.Vehicle.CurrentLocation.Latitude",
         "conversion": {
             "originalName": "data.latitude",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.CurrentLocation.Longitude",
+        "vspecName": "DIMO.Vehicle.CurrentLocation.Longitude",
         "conversion": {
             "originalName": "data.longitude",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.CurrentLocation.Timestamp",
+        "vspecName": "DIMO.Vehicle.CurrentLocation.Timestamp",
         "conversion": {
             "originalName": "data.timestamp",
             "originalType": "string"
@@ -81,175 +81,175 @@
         "isArray": false
     },
     {
-        "vspecName": "Vehicle.Exterior.AirTemperature",
+        "vspecName": "DIMO.Vehicle.Exterior.AirTemperature",
         "conversion": {
             "originalName": "data.ambientTemp",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.LowVoltageBattery.CurrentVoltage",
+        "vspecName": "DIMO.Vehicle.LowVoltageBattery.CurrentVoltage",
         "conversion": {
             "originalName": "data.batteryVoltage",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.OBD.BarometricPressure",
+        "vspecName": "DIMO.Vehicle.OBD.BarometricPressure",
         "conversion": {
             "originalName": "data.barometricPressure",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.OBD.EngineLoad",
+        "vspecName": "DIMO.Vehicle.OBD.EngineLoad",
         "conversion": {
             "originalName": "data.engineLoad",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.OBD.IntakeTemp",
+        "vspecName": "DIMO.Vehicle.OBD.IntakeTemp",
         "conversion": {
             "originalName": "data.intakeTemp",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.OBD.RunTime",
+        "vspecName": "DIMO.Vehicle.OBD.RunTime",
         "conversion": {
             "originalName": "data.runTime",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.Powertrain.CombustionEngine.ECT",
+        "vspecName": "DIMO.Vehicle.Powertrain.CombustionEngine.ECT",
         "conversion": {
             "originalName": "data.coolantTemp",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.Powertrain.CombustionEngine.EngineOilLevel",
+        "vspecName": "DIMO.Vehicle.Powertrain.CombustionEngine.EngineOilLevel",
         "conversion": {
             "originalName": "data.oil",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.Powertrain.CombustionEngine.Speed",
+        "vspecName": "DIMO.Vehicle.Powertrain.CombustionEngine.Speed",
         "conversion": {
             "originalName": "data.engineSpeed",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.Powertrain.CombustionEngine.TPS",
+        "vspecName": "DIMO.Vehicle.Powertrain.CombustionEngine.TPS",
         "conversion": {
             "originalName": "data.throttlePosition",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.Powertrain.FuelSystem.AbsoluteLevel",
+        "vspecName": "DIMO.Vehicle.Powertrain.FuelSystem.AbsoluteLevel",
         "conversion": {
             "originalName": "data.fuelPercentRemaining",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.Powertrain.Range",
+        "vspecName": "DIMO.Vehicle.Powertrain.Range",
         "conversion": {
             "originalName": "data.range",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit",
+        "vspecName": "DIMO.Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit",
         "conversion": {
             "originalName": "data.chargeLimit",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.Powertrain.TractionBattery.Charging.IsCharging",
+        "vspecName": "DIMO.Vehicle.Powertrain.TractionBattery.Charging.IsCharging",
         "conversion": {
             "originalName": "data.charging",
             "originalType": "bool"
         }
     },
     {
-        "vspecName": "Vehicle.Powertrain.TractionBattery.GrossCapacity",
+        "vspecName": "DIMO.Vehicle.Powertrain.TractionBattery.GrossCapacity",
         "conversion": {
             "originalName": "data.batteryCapacity",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.Powertrain.TractionBattery.StateOfCharge.Current",
+        "vspecName": "DIMO.Vehicle.Powertrain.TractionBattery.StateOfCharge.Current",
         "conversion": {
             "originalName": "data.soc",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.Speed",
+        "vspecName": "DIMO.Vehicle.Speed",
         "conversion": {
             "originalName": "data.speed",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.Powertrain.Transmission.TravelledDistance",
+        "vspecName": "DIMO.Vehicle.Powertrain.Transmission.TravelledDistance",
         "conversion": {
             "originalName": "data.odometer",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.VehicleIdentification.Year",
+        "vspecName": "DIMO.Vehicle.VehicleIdentification.Year",
         "conversion": {
             "originalName": "data.year",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure",
+        "vspecName": "DIMO.Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure",
         "conversion": {
             "originalName": "data.tires.frontLeft",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure",
+        "vspecName": "DIMO.Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure",
         "conversion": {
             "originalName": "data.tires.frontRight",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure",
+        "vspecName": "DIMO.Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure",
         "conversion": {
             "originalName": "data.tires.backLeft",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure",
+        "vspecName": "DIMO.Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure",
         "conversion": {
             "originalName": "data.tires.backRight",
             "originalType": "float64"
         }
     },
     {
-        "vspecName": "Vehicle.DIMO.Subject",
+        "vspecName": "DIMO.Subject",
         "conversion": {
             "originalName": "subject",
             "originalType": "string"
         }
     },
     {
-        "vspecName": "Vehicle.DIMO.Timestamp",
+        "vspecName": "DIMO.Timestamp",
         "clickHouseType": "DateTime('UTC')",
         "goType": "time.Time",
         "isArray": false,
@@ -259,14 +259,14 @@
         }
     },
     {
-        "vspecName": "Vehicle.DIMO.Type",
+        "vspecName": "DIMO.Type",
         "conversion": {
             "originalName": "type",
             "originalType": "string"
         }
     },
     {
-        "vspecName": "Vehicle.DIMO.Source",
+        "vspecName": "DIMO.Source",
         "conversion": {
             "originalName": "source",
             "originalType": "string"
