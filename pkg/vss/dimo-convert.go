@@ -93,6 +93,58 @@ func FromData(jsonData []byte) (*Dimo, error) {
 		}
 	}
 
+	// convert data.tires.frontLeft to VehicleChassisAxleRow1WheelLeftTirePressure
+	result = gjson.GetBytes(jsonData, "data.tires.frontLeft")
+	if result.Exists() {
+		valVehicleChassisAxleRow1WheelLeftTirePressure, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.tires.frontLeft' is not of type float64", errInvalidType)
+		}
+		dimo.VehicleChassisAxleRow1WheelLeftTirePressure, err = ToVehicleChassisAxleRow1WheelLeftTirePressure(valVehicleChassisAxleRow1WheelLeftTirePressure)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.tires.frontLeft': %w", err)
+		}
+	}
+
+	// convert data.tires.frontRight to VehicleChassisAxleRow1WheelRightTirePressure
+	result = gjson.GetBytes(jsonData, "data.tires.frontRight")
+	if result.Exists() {
+		valVehicleChassisAxleRow1WheelRightTirePressure, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.tires.frontRight' is not of type float64", errInvalidType)
+		}
+		dimo.VehicleChassisAxleRow1WheelRightTirePressure, err = ToVehicleChassisAxleRow1WheelRightTirePressure(valVehicleChassisAxleRow1WheelRightTirePressure)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.tires.frontRight': %w", err)
+		}
+	}
+
+	// convert data.tires.backLeft to VehicleChassisAxleRow2WheelLeftTirePressure
+	result = gjson.GetBytes(jsonData, "data.tires.backLeft")
+	if result.Exists() {
+		valVehicleChassisAxleRow2WheelLeftTirePressure, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.tires.backLeft' is not of type float64", errInvalidType)
+		}
+		dimo.VehicleChassisAxleRow2WheelLeftTirePressure, err = ToVehicleChassisAxleRow2WheelLeftTirePressure(valVehicleChassisAxleRow2WheelLeftTirePressure)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.tires.backLeft': %w", err)
+		}
+	}
+
+	// convert data.tires.backRight to VehicleChassisAxleRow2WheelRightTirePressure
+	result = gjson.GetBytes(jsonData, "data.tires.backRight")
+	if result.Exists() {
+		valVehicleChassisAxleRow2WheelRightTirePressure, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.tires.backRight' is not of type float64", errInvalidType)
+		}
+		dimo.VehicleChassisAxleRow2WheelRightTirePressure, err = ToVehicleChassisAxleRow2WheelRightTirePressure(valVehicleChassisAxleRow2WheelRightTirePressure)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.tires.backRight': %w", err)
+		}
+	}
+
 	// convert data.altitude to VehicleCurrentLocationAltitude
 	result = gjson.GetBytes(jsonData, "data.altitude")
 	if result.Exists() {
@@ -145,6 +197,19 @@ func FromData(jsonData []byte) (*Dimo, error) {
 		}
 	}
 
+	// convert data.ambientTemp to VehicleExteriorAirTemperature
+	result = gjson.GetBytes(jsonData, "data.ambientTemp")
+	if result.Exists() {
+		valVehicleExteriorAirTemperature, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.ambientTemp' is not of type float64", errInvalidType)
+		}
+		dimo.VehicleExteriorAirTemperature, err = ToVehicleExteriorAirTemperature(valVehicleExteriorAirTemperature)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.ambientTemp': %w", err)
+		}
+	}
+
 	// convert data.batteryVoltage to VehicleLowVoltageBatteryCurrentVoltage
 	result = gjson.GetBytes(jsonData, "data.batteryVoltage")
 	if result.Exists() {
@@ -155,6 +220,227 @@ func FromData(jsonData []byte) (*Dimo, error) {
 		dimo.VehicleLowVoltageBatteryCurrentVoltage, err = ToVehicleLowVoltageBatteryCurrentVoltage(valVehicleLowVoltageBatteryCurrentVoltage)
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.batteryVoltage': %w", err)
+		}
+	}
+
+	// convert data.barometricPressure to VehicleOBDBarometricPressure
+	result = gjson.GetBytes(jsonData, "data.barometricPressure")
+	if result.Exists() {
+		valVehicleOBDBarometricPressure, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.barometricPressure' is not of type float64", errInvalidType)
+		}
+		dimo.VehicleOBDBarometricPressure, err = ToVehicleOBDBarometricPressure(valVehicleOBDBarometricPressure)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.barometricPressure': %w", err)
+		}
+	}
+
+	// convert data.engineLoad to VehicleOBDEngineLoad
+	result = gjson.GetBytes(jsonData, "data.engineLoad")
+	if result.Exists() {
+		valVehicleOBDEngineLoad, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.engineLoad' is not of type float64", errInvalidType)
+		}
+		dimo.VehicleOBDEngineLoad, err = ToVehicleOBDEngineLoad(valVehicleOBDEngineLoad)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.engineLoad': %w", err)
+		}
+	}
+
+	// convert data.intakeTemp to VehicleOBDIntakeTemp
+	result = gjson.GetBytes(jsonData, "data.intakeTemp")
+	if result.Exists() {
+		valVehicleOBDIntakeTemp, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.intakeTemp' is not of type float64", errInvalidType)
+		}
+		dimo.VehicleOBDIntakeTemp, err = ToVehicleOBDIntakeTemp(valVehicleOBDIntakeTemp)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.intakeTemp': %w", err)
+		}
+	}
+
+	// convert data.runTime to VehicleOBDRunTime
+	result = gjson.GetBytes(jsonData, "data.runTime")
+	if result.Exists() {
+		valVehicleOBDRunTime, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.runTime' is not of type float64", errInvalidType)
+		}
+		dimo.VehicleOBDRunTime, err = ToVehicleOBDRunTime(valVehicleOBDRunTime)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.runTime': %w", err)
+		}
+	}
+
+	// convert data.coolantTemp to VehiclePowertrainCombustionEngineECT
+	result = gjson.GetBytes(jsonData, "data.coolantTemp")
+	if result.Exists() {
+		valVehiclePowertrainCombustionEngineECT, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.coolantTemp' is not of type float64", errInvalidType)
+		}
+		dimo.VehiclePowertrainCombustionEngineECT, err = ToVehiclePowertrainCombustionEngineECT(valVehiclePowertrainCombustionEngineECT)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.coolantTemp': %w", err)
+		}
+	}
+
+	// convert data.oil to VehiclePowertrainCombustionEngineEngineOilLevel
+	result = gjson.GetBytes(jsonData, "data.oil")
+	if result.Exists() {
+		valVehiclePowertrainCombustionEngineEngineOilLevel, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.oil' is not of type float64", errInvalidType)
+		}
+		dimo.VehiclePowertrainCombustionEngineEngineOilLevel, err = ToVehiclePowertrainCombustionEngineEngineOilLevel(valVehiclePowertrainCombustionEngineEngineOilLevel)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.oil': %w", err)
+		}
+	}
+
+	// convert data.engineSpeed to VehiclePowertrainCombustionEngineSpeed
+	result = gjson.GetBytes(jsonData, "data.engineSpeed")
+	if result.Exists() {
+		valVehiclePowertrainCombustionEngineSpeed, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.engineSpeed' is not of type float64", errInvalidType)
+		}
+		dimo.VehiclePowertrainCombustionEngineSpeed, err = ToVehiclePowertrainCombustionEngineSpeed(valVehiclePowertrainCombustionEngineSpeed)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.engineSpeed': %w", err)
+		}
+	}
+
+	// convert data.throttlePosition to VehiclePowertrainCombustionEngineTPS
+	result = gjson.GetBytes(jsonData, "data.throttlePosition")
+	if result.Exists() {
+		valVehiclePowertrainCombustionEngineTPS, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.throttlePosition' is not of type float64", errInvalidType)
+		}
+		dimo.VehiclePowertrainCombustionEngineTPS, err = ToVehiclePowertrainCombustionEngineTPS(valVehiclePowertrainCombustionEngineTPS)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.throttlePosition': %w", err)
+		}
+	}
+
+	// convert data.fuelPercentRemaining to VehiclePowertrainFuelSystemAbsoluteLevel
+	result = gjson.GetBytes(jsonData, "data.fuelPercentRemaining")
+	if result.Exists() {
+		valVehiclePowertrainFuelSystemAbsoluteLevel, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.fuelPercentRemaining' is not of type float64", errInvalidType)
+		}
+		dimo.VehiclePowertrainFuelSystemAbsoluteLevel, err = ToVehiclePowertrainFuelSystemAbsoluteLevel(valVehiclePowertrainFuelSystemAbsoluteLevel)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.fuelPercentRemaining': %w", err)
+		}
+	}
+
+	// convert data.fuelType to VehiclePowertrainFuelSystemSupportedFuelTypes
+	result = gjson.GetBytes(jsonData, "data.fuelType")
+	if result.Exists() {
+		valVehiclePowertrainFuelSystemSupportedFuelTypes, ok := result.Value().(string)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.fuelType' is not of type string", errInvalidType)
+		}
+		dimo.VehiclePowertrainFuelSystemSupportedFuelTypes, err = ToVehiclePowertrainFuelSystemSupportedFuelTypes(valVehiclePowertrainFuelSystemSupportedFuelTypes)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.fuelType': %w", err)
+		}
+	}
+
+	// convert data.range to VehiclePowertrainRange
+	result = gjson.GetBytes(jsonData, "data.range")
+	if result.Exists() {
+		valVehiclePowertrainRange, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.range' is not of type float64", errInvalidType)
+		}
+		dimo.VehiclePowertrainRange, err = ToVehiclePowertrainRange(valVehiclePowertrainRange)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.range': %w", err)
+		}
+	}
+
+	// convert data.chargeLimit to VehiclePowertrainTractionBatteryChargingChargeLimit
+	result = gjson.GetBytes(jsonData, "data.chargeLimit")
+	if result.Exists() {
+		valVehiclePowertrainTractionBatteryChargingChargeLimit, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.chargeLimit' is not of type float64", errInvalidType)
+		}
+		dimo.VehiclePowertrainTractionBatteryChargingChargeLimit, err = ToVehiclePowertrainTractionBatteryChargingChargeLimit(valVehiclePowertrainTractionBatteryChargingChargeLimit)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.chargeLimit': %w", err)
+		}
+	}
+
+	// convert data.charging to VehiclePowertrainTractionBatteryChargingIsCharging
+	result = gjson.GetBytes(jsonData, "data.charging")
+	if result.Exists() {
+		valVehiclePowertrainTractionBatteryChargingIsCharging, ok := result.Value().(bool)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.charging' is not of type bool", errInvalidType)
+		}
+		dimo.VehiclePowertrainTractionBatteryChargingIsCharging, err = ToVehiclePowertrainTractionBatteryChargingIsCharging(valVehiclePowertrainTractionBatteryChargingIsCharging)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.charging': %w", err)
+		}
+	}
+
+	// convert data.batteryCapacity to VehiclePowertrainTractionBatteryGrossCapacity
+	result = gjson.GetBytes(jsonData, "data.batteryCapacity")
+	if result.Exists() {
+		valVehiclePowertrainTractionBatteryGrossCapacity, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.batteryCapacity' is not of type float64", errInvalidType)
+		}
+		dimo.VehiclePowertrainTractionBatteryGrossCapacity, err = ToVehiclePowertrainTractionBatteryGrossCapacity(valVehiclePowertrainTractionBatteryGrossCapacity)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.batteryCapacity': %w", err)
+		}
+	}
+
+	// convert data.soc to VehiclePowertrainTractionBatteryStateOfChargeCurrent
+	result = gjson.GetBytes(jsonData, "data.soc")
+	if result.Exists() {
+		valVehiclePowertrainTractionBatteryStateOfChargeCurrent, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.soc' is not of type float64", errInvalidType)
+		}
+		dimo.VehiclePowertrainTractionBatteryStateOfChargeCurrent, err = ToVehiclePowertrainTractionBatteryStateOfChargeCurrent(valVehiclePowertrainTractionBatteryStateOfChargeCurrent)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.soc': %w", err)
+		}
+	}
+
+	// convert data.odometer to VehiclePowertrainTransmissionTravelledDistance
+	result = gjson.GetBytes(jsonData, "data.odometer")
+	if result.Exists() {
+		valVehiclePowertrainTransmissionTravelledDistance, ok := result.Value().(float64)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.odometer' is not of type float64", errInvalidType)
+		}
+		dimo.VehiclePowertrainTransmissionTravelledDistance, err = ToVehiclePowertrainTransmissionTravelledDistance(valVehiclePowertrainTransmissionTravelledDistance)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.odometer': %w", err)
+		}
+	}
+
+	// convert data.fuelType to VehiclePowertrainType
+	result = gjson.GetBytes(jsonData, "data.fuelType")
+	if result.Exists() {
+		valVehiclePowertrainType, ok := result.Value().(string)
+		if !ok {
+			return nil, fmt.Errorf("%w, field 'data.fuelType' is not of type string", errInvalidType)
+		}
+		dimo.VehiclePowertrainType, err = ToVehiclePowertrainType(valVehiclePowertrainType)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert 'data.fuelType': %w", err)
 		}
 	}
 
@@ -194,19 +480,6 @@ func FromData(jsonData []byte) (*Dimo, error) {
 		dimo.VehicleVehicleIdentificationModel, err = ToVehicleVehicleIdentificationModel(valVehicleVehicleIdentificationModel)
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert 'data.model': %w", err)
-		}
-	}
-
-	// convert data.vin to VehicleVehicleIdentificationVIN
-	result = gjson.GetBytes(jsonData, "data.vin")
-	if result.Exists() {
-		valVehicleVehicleIdentificationVIN, ok := result.Value().(string)
-		if !ok {
-			return nil, fmt.Errorf("%w, field 'data.vin' is not of type string", errInvalidType)
-		}
-		dimo.VehicleVehicleIdentificationVIN, err = ToVehicleVehicleIdentificationVIN(valVehicleVehicleIdentificationVIN)
-		if err != nil {
-			return nil, fmt.Errorf("failed to convert 'data.vin': %w", err)
 		}
 	}
 

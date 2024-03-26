@@ -12,6 +12,6 @@ type {{ .ModelName }} struct {
 {{- range .Signals }}
 	{{ if .Deprecated }}// Deprecated field{{ end -}}
 	// {{ .GOName }} {{ .Desc }}
-	{{ .GOName }} {{ .GOType }} `ch:"{{ .CHName }}" json:"{{ .CHName }},omitempty"`
+	{{ .GOName }} {{ .GOType }} `ch:"{{ .CHName }}" json:"{{ .JSONName }},omitempty"`
 {{- end }}
 }

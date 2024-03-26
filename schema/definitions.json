@@ -29,13 +29,6 @@
         }
     },
     {
-        "vspecName": "DIMO.Vehicle.VehicleIdentification.VIN",
-        "conversion": {
-            "originalName": "data.vin",
-            "originalType": "string"
-        }
-    },
-    {
         "vspecName": "DIMO.VehicleID",
         "conversion": {
             "originalName": "data.vehicleID",
@@ -78,6 +71,7 @@
         },
         "clickHouseType": "DateTime('UTC')",
         "goType": "time.Time",
+        "gqlType": "Time",
         "isArray": false
     },
     {
@@ -252,6 +246,7 @@
         "vspecName": "DIMO.Timestamp",
         "clickHouseType": "DateTime('UTC')",
         "goType": "time.Time",
+        "gqlType": "Time",
         "isArray": false,
         "conversion": {
             "originalName": "time",

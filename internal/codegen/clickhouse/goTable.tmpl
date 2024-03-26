@@ -29,3 +29,9 @@ func {{ .ModelName }}ColNames() []string {
 {{- end }}
 	}
 }
+// {{ .ModelName }}JSONName2CHName maps the JSON field names to the Clickhouse column names.
+var {{ .ModelName }}JSONName2CHName = map[string]string{
+{{- range .Signals }}
+	"{{ .JSONName }}": "{{ .CHName }}",
+{{- end }}
+}

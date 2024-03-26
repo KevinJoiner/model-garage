@@ -1,0 +1,9 @@
+type {{ lower .ModelName }} implments Node {
+  {{- range .Signals }}
+  """
+  {{ .Desc }}
+  """
+  {{ .JSONName }}: {{ .GQLType }}
+    @requiresPrivilege(privileges: {VehicleNonLocationData: null})
+  {{- end }}
+}

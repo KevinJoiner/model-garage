@@ -8,6 +8,7 @@ import (
 	"github.com/DIMO-Network/model-garage/internal/codegen"
 	"github.com/DIMO-Network/model-garage/internal/codegen/clickhouse"
 	"github.com/DIMO-Network/model-garage/internal/codegen/convert"
+	"github.com/DIMO-Network/model-garage/internal/codegen/graphql"
 	"github.com/DIMO-Network/model-garage/internal/codegen/model"
 )
 
@@ -45,5 +46,10 @@ func main() {
 	err = convert.Generate(tmplData, *outputDir, *withTest)
 	if err != nil {
 		log.Fatalf("failed to generate convert file: %v", err)
+	}
+
+	err = graphql.Generate(tmplData, *outputDir)
+	if err != nil {
+		log.Fatalf("failed to generate graphql file: %v", err)
 	}
 }

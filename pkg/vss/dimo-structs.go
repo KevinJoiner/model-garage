@@ -14,6 +14,14 @@ const (
 	FieldTimestamp = "Timestamp"
 	// FieldType type of data collected
 	FieldType = "Type"
+	// FieldVehicleChassisAxleRow1WheelLeftTirePressure Tire pressure in kilo-Pascal.
+	FieldVehicleChassisAxleRow1WheelLeftTirePressure = "Vehicle_Chassis_Axle_Row1_Wheel_Left_Tire_Pressure"
+	// FieldVehicleChassisAxleRow1WheelRightTirePressure Tire pressure in kilo-Pascal.
+	FieldVehicleChassisAxleRow1WheelRightTirePressure = "Vehicle_Chassis_Axle_Row1_Wheel_Right_Tire_Pressure"
+	// FieldVehicleChassisAxleRow2WheelLeftTirePressure Tire pressure in kilo-Pascal.
+	FieldVehicleChassisAxleRow2WheelLeftTirePressure = "Vehicle_Chassis_Axle_Row2_Wheel_Left_Tire_Pressure"
+	// FieldVehicleChassisAxleRow2WheelRightTirePressure Tire pressure in kilo-Pascal.
+	FieldVehicleChassisAxleRow2WheelRightTirePressure = "Vehicle_Chassis_Axle_Row2_Wheel_Right_Tire_Pressure"
 	// FieldVehicleCurrentLocationAltitude Current altitude relative to WGS 84 reference ellipsoid, as measured at the position of GNSS receiver antenna.
 	FieldVehicleCurrentLocationAltitude = "Vehicle_CurrentLocation_Altitude"
 	// FieldVehicleCurrentLocationLatitude Current latitude of vehicle in WGS 84 geodetic coordinates, as measured at the position of GNSS receiver antenna.
@@ -22,16 +30,50 @@ const (
 	FieldVehicleCurrentLocationLongitude = "Vehicle_CurrentLocation_Longitude"
 	// FieldVehicleCurrentLocationTimestamp Timestamp from GNSS system for current location, formatted according to ISO 8601 with UTC time zone.
 	FieldVehicleCurrentLocationTimestamp = "Vehicle_CurrentLocation_Timestamp"
+	// FieldVehicleExteriorAirTemperature Air temperature outside the vehicle.
+	FieldVehicleExteriorAirTemperature = "Vehicle_Exterior_AirTemperature"
 	// FieldVehicleLowVoltageBatteryCurrentVoltage Current Voltage of the low voltage battery.
 	FieldVehicleLowVoltageBatteryCurrentVoltage = "Vehicle_LowVoltageBattery_CurrentVoltage"
+	// FieldVehicleOBDBarometricPressure PID 33 - Barometric pressure
+	FieldVehicleOBDBarometricPressure = "Vehicle_OBD_BarometricPressure"
+	// FieldVehicleOBDEngineLoad PID 04 - Engine load in percent - 0 = no load, 100 = full load
+	FieldVehicleOBDEngineLoad = "Vehicle_OBD_EngineLoad"
+	// FieldVehicleOBDIntakeTemp PID 0F - Intake temperature
+	FieldVehicleOBDIntakeTemp = "Vehicle_OBD_IntakeTemp"
+	// FieldVehicleOBDRunTime PID 1F - Engine run time
+	FieldVehicleOBDRunTime = "Vehicle_OBD_RunTime"
+	// FieldVehiclePowertrainCombustionEngineECT Engine coolant temperature.
+	FieldVehiclePowertrainCombustionEngineECT = "Vehicle_Powertrain_CombustionEngine_ECT"
+	// FieldVehiclePowertrainCombustionEngineEngineOilLevel Engine oil level.
+	FieldVehiclePowertrainCombustionEngineEngineOilLevel = "Vehicle_Powertrain_CombustionEngine_EngineOilLevel"
+	// FieldVehiclePowertrainCombustionEngineSpeed Engine speed measured as rotations per minute.
+	FieldVehiclePowertrainCombustionEngineSpeed = "Vehicle_Powertrain_CombustionEngine_Speed"
+	// FieldVehiclePowertrainCombustionEngineTPS Current throttle position.
+	FieldVehiclePowertrainCombustionEngineTPS = "Vehicle_Powertrain_CombustionEngine_TPS"
+	// FieldVehiclePowertrainFuelSystemAbsoluteLevel Current available fuel in the fuel tank expressed in liters.
+	FieldVehiclePowertrainFuelSystemAbsoluteLevel = "Vehicle_Powertrain_FuelSystem_AbsoluteLevel"
+	// FieldVehiclePowertrainFuelSystemSupportedFuelTypes High level information of fuel types supported
+	FieldVehiclePowertrainFuelSystemSupportedFuelTypes = "Vehicle_Powertrain_FuelSystem_SupportedFuelTypes"
+	// FieldVehiclePowertrainRange Remaining range in meters using all energy sources available in the vehicle.
+	FieldVehiclePowertrainRange = "Vehicle_Powertrain_Range"
+	// FieldVehiclePowertrainTractionBatteryChargingChargeLimit Target charge limit (state of charge) for battery.
+	FieldVehiclePowertrainTractionBatteryChargingChargeLimit = "Vehicle_Powertrain_TractionBattery_Charging_ChargeLimit"
+	// FieldVehiclePowertrainTractionBatteryChargingIsCharging True if charging is ongoing. Charging is considered to be ongoing if energy is flowing from charger to vehicle.
+	FieldVehiclePowertrainTractionBatteryChargingIsCharging = "Vehicle_Powertrain_TractionBattery_Charging_IsCharging"
+	// FieldVehiclePowertrainTractionBatteryGrossCapacity Gross capacity of the battery.
+	FieldVehiclePowertrainTractionBatteryGrossCapacity = "Vehicle_Powertrain_TractionBattery_GrossCapacity"
+	// FieldVehiclePowertrainTractionBatteryStateOfChargeCurrent Physical state of charge of the high voltage battery, relative to net capacity. This is not necessarily the state of charge being displayed to the customer.
+	FieldVehiclePowertrainTractionBatteryStateOfChargeCurrent = "Vehicle_Powertrain_TractionBattery_StateOfCharge_Current"
+	// FieldVehiclePowertrainTransmissionTravelledDistance Odometer reading, total distance travelled during the lifetime of the transmission.
+	FieldVehiclePowertrainTransmissionTravelledDistance = "Vehicle_Powertrain_Transmission_TravelledDistance"
+	// FieldVehiclePowertrainType Defines the powertrain type of the vehicle.
+	FieldVehiclePowertrainType = "Vehicle_Powertrain_Type"
 	// FieldVehicleSpeed Vehicle speed.
 	FieldVehicleSpeed = "Vehicle_Speed"
 	// FieldVehicleVehicleIdentificationBrand Vehicle brand or manufacturer.
 	FieldVehicleVehicleIdentificationBrand = "Vehicle_VehicleIdentification_Brand"
 	// FieldVehicleVehicleIdentificationModel Vehicle model.
 	FieldVehicleVehicleIdentificationModel = "Vehicle_VehicleIdentification_Model"
-	// FieldVehicleVehicleIdentificationVIN 17-character Vehicle Identification Number (VIN) as defined by ISO 3779.
-	FieldVehicleVehicleIdentificationVIN = "Vehicle_VehicleIdentification_VIN"
 	// FieldVehicleVehicleIdentificationYear Model year of the vehicle.
 	FieldVehicleVehicleIdentificationYear = "Vehicle_VehicleIdentification_Year"
 	// FieldVehicleID unque DIMO ID for the vehicle
@@ -40,35 +82,77 @@ const (
 
 type Dimo struct {
 	// DefinitionID ID for the vehicles definition
-	DefinitionID string `ch:"DefinitionID" json:"DefinitionID,omitempty"`
+	DefinitionID string `ch:"DefinitionID" json:"definitionID,omitempty"`
 	// Source where the data was sourced from
-	Source string `ch:"Source" json:"Source,omitempty"`
+	Source string `ch:"Source" json:"source,omitempty"`
 	// Subject subjet of this vehicle data
-	Subject string `ch:"Subject" json:"Subject,omitempty"`
+	Subject string `ch:"Subject" json:"subject,omitempty"`
 	// Timestamp timestamp of when this data was colllected
-	Timestamp time.Time `ch:"Timestamp" json:"Timestamp,omitempty"`
+	Timestamp time.Time `ch:"Timestamp" json:"timestamp,omitempty"`
 	// Type type of data collected
-	Type string `ch:"Type" json:"Type,omitempty"`
+	Type string `ch:"Type" json:"type,omitempty"`
+	// VehicleChassisAxleRow1WheelLeftTirePressure Tire pressure in kilo-Pascal.
+	VehicleChassisAxleRow1WheelLeftTirePressure uint16 `ch:"Vehicle_Chassis_Axle_Row1_Wheel_Left_Tire_Pressure" json:"vehicleChassisAxleRow1WheelLeftTirePressure,omitempty"`
+	// VehicleChassisAxleRow1WheelRightTirePressure Tire pressure in kilo-Pascal.
+	VehicleChassisAxleRow1WheelRightTirePressure uint16 `ch:"Vehicle_Chassis_Axle_Row1_Wheel_Right_Tire_Pressure" json:"vehicleChassisAxleRow1WheelRightTirePressure,omitempty"`
+	// VehicleChassisAxleRow2WheelLeftTirePressure Tire pressure in kilo-Pascal.
+	VehicleChassisAxleRow2WheelLeftTirePressure uint16 `ch:"Vehicle_Chassis_Axle_Row2_Wheel_Left_Tire_Pressure" json:"vehicleChassisAxleRow2WheelLeftTirePressure,omitempty"`
+	// VehicleChassisAxleRow2WheelRightTirePressure Tire pressure in kilo-Pascal.
+	VehicleChassisAxleRow2WheelRightTirePressure uint16 `ch:"Vehicle_Chassis_Axle_Row2_Wheel_Right_Tire_Pressure" json:"vehicleChassisAxleRow2WheelRightTirePressure,omitempty"`
 	// VehicleCurrentLocationAltitude Current altitude relative to WGS 84 reference ellipsoid, as measured at the position of GNSS receiver antenna.
-	VehicleCurrentLocationAltitude float64 `ch:"Vehicle_CurrentLocation_Altitude" json:"Vehicle_CurrentLocation_Altitude,omitempty"`
+	VehicleCurrentLocationAltitude float64 `ch:"Vehicle_CurrentLocation_Altitude" json:"vehicleCurrentLocationAltitude,omitempty"`
 	// VehicleCurrentLocationLatitude Current latitude of vehicle in WGS 84 geodetic coordinates, as measured at the position of GNSS receiver antenna.
-	VehicleCurrentLocationLatitude float64 `ch:"Vehicle_CurrentLocation_Latitude" json:"Vehicle_CurrentLocation_Latitude,omitempty"`
+	VehicleCurrentLocationLatitude float64 `ch:"Vehicle_CurrentLocation_Latitude" json:"vehicleCurrentLocationLatitude,omitempty"`
 	// VehicleCurrentLocationLongitude Current longitude of vehicle in WGS 84 geodetic coordinates, as measured at the position of GNSS receiver antenna.
-	VehicleCurrentLocationLongitude float64 `ch:"Vehicle_CurrentLocation_Longitude" json:"Vehicle_CurrentLocation_Longitude,omitempty"`
+	VehicleCurrentLocationLongitude float64 `ch:"Vehicle_CurrentLocation_Longitude" json:"vehicleCurrentLocationLongitude,omitempty"`
 	// VehicleCurrentLocationTimestamp Timestamp from GNSS system for current location, formatted according to ISO 8601 with UTC time zone.
-	VehicleCurrentLocationTimestamp time.Time `ch:"Vehicle_CurrentLocation_Timestamp" json:"Vehicle_CurrentLocation_Timestamp,omitempty"`
+	VehicleCurrentLocationTimestamp time.Time `ch:"Vehicle_CurrentLocation_Timestamp" json:"vehicleCurrentLocationTimestamp,omitempty"`
+	// VehicleExteriorAirTemperature Air temperature outside the vehicle.
+	VehicleExteriorAirTemperature float32 `ch:"Vehicle_Exterior_AirTemperature" json:"vehicleExteriorAirTemperature,omitempty"`
 	// VehicleLowVoltageBatteryCurrentVoltage Current Voltage of the low voltage battery.
-	VehicleLowVoltageBatteryCurrentVoltage float32 `ch:"Vehicle_LowVoltageBattery_CurrentVoltage" json:"Vehicle_LowVoltageBattery_CurrentVoltage,omitempty"`
+	VehicleLowVoltageBatteryCurrentVoltage float32 `ch:"Vehicle_LowVoltageBattery_CurrentVoltage" json:"vehicleLowVoltageBatteryCurrentVoltage,omitempty"`
+	// VehicleOBDBarometricPressure PID 33 - Barometric pressure
+	VehicleOBDBarometricPressure float32 `ch:"Vehicle_OBD_BarometricPressure" json:"vehicleOBDBarometricPressure,omitempty"`
+	// VehicleOBDEngineLoad PID 04 - Engine load in percent - 0 = no load, 100 = full load
+	VehicleOBDEngineLoad float32 `ch:"Vehicle_OBD_EngineLoad" json:"vehicleOBDEngineLoad,omitempty"`
+	// VehicleOBDIntakeTemp PID 0F - Intake temperature
+	VehicleOBDIntakeTemp float32 `ch:"Vehicle_OBD_IntakeTemp" json:"vehicleOBDIntakeTemp,omitempty"`
+	// VehicleOBDRunTime PID 1F - Engine run time
+	VehicleOBDRunTime float32 `ch:"Vehicle_OBD_RunTime" json:"vehicleOBDRunTime,omitempty"`
+	// VehiclePowertrainCombustionEngineECT Engine coolant temperature.
+	VehiclePowertrainCombustionEngineECT int16 `ch:"Vehicle_Powertrain_CombustionEngine_ECT" json:"vehiclePowertrainCombustionEngineECT,omitempty"`
+	// VehiclePowertrainCombustionEngineEngineOilLevel Engine oil level.
+	VehiclePowertrainCombustionEngineEngineOilLevel string `ch:"Vehicle_Powertrain_CombustionEngine_EngineOilLevel" json:"vehiclePowertrainCombustionEngineEngineOilLevel,omitempty"`
+	// VehiclePowertrainCombustionEngineSpeed Engine speed measured as rotations per minute.
+	VehiclePowertrainCombustionEngineSpeed uint16 `ch:"Vehicle_Powertrain_CombustionEngine_Speed" json:"vehiclePowertrainCombustionEngineSpeed,omitempty"`
+	// VehiclePowertrainCombustionEngineTPS Current throttle position.
+	VehiclePowertrainCombustionEngineTPS uint8 `ch:"Vehicle_Powertrain_CombustionEngine_TPS" json:"vehiclePowertrainCombustionEngineTPS,omitempty"`
+	// VehiclePowertrainFuelSystemAbsoluteLevel Current available fuel in the fuel tank expressed in liters.
+	VehiclePowertrainFuelSystemAbsoluteLevel float32 `ch:"Vehicle_Powertrain_FuelSystem_AbsoluteLevel" json:"vehiclePowertrainFuelSystemAbsoluteLevel,omitempty"`
+	// VehiclePowertrainFuelSystemSupportedFuelTypes High level information of fuel types supported
+	VehiclePowertrainFuelSystemSupportedFuelTypes []string `ch:"Vehicle_Powertrain_FuelSystem_SupportedFuelTypes" json:"vehiclePowertrainFuelSystemSupportedFuelTypes,omitempty"`
+	// VehiclePowertrainRange Remaining range in meters using all energy sources available in the vehicle.
+	VehiclePowertrainRange uint32 `ch:"Vehicle_Powertrain_Range" json:"vehiclePowertrainRange,omitempty"`
+	// VehiclePowertrainTractionBatteryChargingChargeLimit Target charge limit (state of charge) for battery.
+	VehiclePowertrainTractionBatteryChargingChargeLimit uint8 `ch:"Vehicle_Powertrain_TractionBattery_Charging_ChargeLimit" json:"vehiclePowertrainTractionBatteryChargingChargeLimit,omitempty"`
+	// VehiclePowertrainTractionBatteryChargingIsCharging True if charging is ongoing. Charging is considered to be ongoing if energy is flowing from charger to vehicle.
+	VehiclePowertrainTractionBatteryChargingIsCharging bool `ch:"Vehicle_Powertrain_TractionBattery_Charging_IsCharging" json:"vehiclePowertrainTractionBatteryChargingIsCharging,omitempty"`
+	// VehiclePowertrainTractionBatteryGrossCapacity Gross capacity of the battery.
+	VehiclePowertrainTractionBatteryGrossCapacity uint16 `ch:"Vehicle_Powertrain_TractionBattery_GrossCapacity" json:"vehiclePowertrainTractionBatteryGrossCapacity,omitempty"`
+	// VehiclePowertrainTractionBatteryStateOfChargeCurrent Physical state of charge of the high voltage battery, relative to net capacity. This is not necessarily the state of charge being displayed to the customer.
+	VehiclePowertrainTractionBatteryStateOfChargeCurrent float32 `ch:"Vehicle_Powertrain_TractionBattery_StateOfCharge_Current" json:"vehiclePowertrainTractionBatteryStateOfChargeCurrent,omitempty"`
+	// VehiclePowertrainTransmissionTravelledDistance Odometer reading, total distance travelled during the lifetime of the transmission.
+	VehiclePowertrainTransmissionTravelledDistance float32 `ch:"Vehicle_Powertrain_Transmission_TravelledDistance" json:"vehiclePowertrainTransmissionTravelledDistance,omitempty"`
+	// VehiclePowertrainType Defines the powertrain type of the vehicle.
+	VehiclePowertrainType string `ch:"Vehicle_Powertrain_Type" json:"vehiclePowertrainType,omitempty"`
 	// VehicleSpeed Vehicle speed.
-	VehicleSpeed float32 `ch:"Vehicle_Speed" json:"Vehicle_Speed,omitempty"`
+	VehicleSpeed float32 `ch:"Vehicle_Speed" json:"vehicleSpeed,omitempty"`
 	// VehicleVehicleIdentificationBrand Vehicle brand or manufacturer.
-	VehicleVehicleIdentificationBrand string `ch:"Vehicle_VehicleIdentification_Brand" json:"Vehicle_VehicleIdentification_Brand,omitempty"`
+	VehicleVehicleIdentificationBrand string `ch:"Vehicle_VehicleIdentification_Brand" json:"vehicleVehicleIdentificationBrand,omitempty"`
 	// VehicleVehicleIdentificationModel Vehicle model.
-	VehicleVehicleIdentificationModel string `ch:"Vehicle_VehicleIdentification_Model" json:"Vehicle_VehicleIdentification_Model,omitempty"`
-	// VehicleVehicleIdentificationVIN 17-character Vehicle Identification Number (VIN) as defined by ISO 3779.
-	VehicleVehicleIdentificationVIN string `ch:"Vehicle_VehicleIdentification_VIN" json:"Vehicle_VehicleIdentification_VIN,omitempty"`
+	VehicleVehicleIdentificationModel string `ch:"Vehicle_VehicleIdentification_Model" json:"vehicleVehicleIdentificationModel,omitempty"`
 	// VehicleVehicleIdentificationYear Model year of the vehicle.
-	VehicleVehicleIdentificationYear uint16 `ch:"Vehicle_VehicleIdentification_Year" json:"Vehicle_VehicleIdentification_Year,omitempty"`
+	VehicleVehicleIdentificationYear uint16 `ch:"Vehicle_VehicleIdentification_Year" json:"vehicleVehicleIdentificationYear,omitempty"`
 	// VehicleID unque DIMO ID for the vehicle
-	VehicleID string `ch:"VehicleID" json:"VehicleID,omitempty"`
+	VehicleID string `ch:"VehicleID" json:"vehicleID,omitempty"`
 }

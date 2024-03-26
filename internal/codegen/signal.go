@@ -34,12 +34,14 @@ type SignalInfo struct {
 	Deprecated bool
 
 	// Derived
-	IsArray    bool
-	GOName     string
-	BaseGoType string
-	BaseCHType string
-	CHName     string
-	Conversion *ConversionInfo
+	IsArray     bool
+	GOName      string
+	CHName      string
+	JSONName    string
+	BaseGoType  string
+	BaseCHType  string
+	BaseGQLType string
+	Conversion  *ConversionInfo
 }
 
 // ConversionInfo contains the conversion information for a field.
@@ -56,6 +58,7 @@ type DefinitionInfo struct {
 	VspecName      string          `json:"vspecName"`
 	ClickHouseType string          `json:"clickHouseType"`
 	GoType         string          `json:"goType"`
+	GQLType        string          `json:"gqlType"`
 }
 
 // Definitions is a map of definitions from clickhouse Name to definition info.
@@ -104,9 +107,11 @@ func NewSignalInfo(record []string) *SignalInfo {
 		//  if this is not a branch type, we can convert it to default golang and clickhouse types
 		sig.BaseGoType = goTypeFromVSPEC(baseType)
 		sig.BaseCHType = chTypeFromVSPEC(baseType)
+		sig.BaseGQLType = gqlTypeFromVSPEC(baseType)
 	}
 	sig.GOName = goName(sig.Name)
 	sig.CHName = chName(sig.Name)
+	sig.JSONName = JSONName(sig.Name)
 
 	return sig
 }
@@ -118,6 +123,9 @@ func (s *SignalInfo) MergeWithDefinition(definition *DefinitionInfo) {
 	}
 	if definition.GoType != "" {
 		s.BaseGoType = definition.GoType
+	}
+	if definition.GQLType != "" {
+		s.BaseGQLType = definition.GQLType
 	}
 	if definition.IsArray != nil {
 		s.IsArray = *definition.IsArray
@@ -146,6 +154,14 @@ func (s *SignalInfo) CHType() string {
 	return s.BaseCHType
 }
 
+// GQLType returns the graphql type of the signal.
+func (s *SignalInfo) GQLType() string {
+	if s.IsArray {
+		return "[" + s.BaseGQLType + "]"
+	}
+	return s.BaseGQLType
+}
+
 func goName(name string) string {
 	return nonAlphaNum.ReplaceAllString(removePrefix(name), "")
 }
@@ -154,6 +170,11 @@ func chName(name string) string {
 	return strings.ReplaceAll(removePrefix(name), ".", "_")
 }
 
+func JSONName(name string) string {
+	n := goName(name)
+	// lowercase the first letter
+	return strings.ToLower(n[:1]) + n[1:]
+}
 func removePrefix(name string) string {
 	idx := strings.IndexByte(name, '.')
 	if idx != -1 {
@@ -205,6 +226,22 @@ func chTypeFromVSPEC(baseType string) string {
 		return "Float32"
 	case "double":
 		return "Float64"
+	default:
+		return "String"
+	}
+}
+
+// gqlTypeFromVSPEC converts vspec type to graphql types.
+func gqlTypeFromVSPEC(baseType string) string {
+	switch baseType {
+	case "uint8", "int8", "uint16", "int16", "uint32", "int32":
+		return "Int"
+	case "string":
+		return "String"
+	case "boolean":
+		return "Boolean"
+	case "float", "double", "uint64", "int64":
+		return "Float"
 	default:
 		return "String"
 	}
