@@ -13,7 +13,7 @@ import (
 )
 
 // graphqlFileName is the name of the Graphql table file that will be generated.
-var graphqlFileName = "%s-gql.graphql"
+var graphqlFileName = "%s-gql.graphqls"
 
 //go:embed gql.tmpl
 var graphqlTableTemplate string

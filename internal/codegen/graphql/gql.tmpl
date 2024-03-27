@@ -1,4 +1,4 @@
-extend type {{ lower .ModelName }} implments Node {
+extend type {{ lower .ModelName }} implements Node {
   {{- range .Signals }}
   """
   {{ .Desc }}
