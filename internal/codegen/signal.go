@@ -42,23 +42,25 @@ type SignalInfo struct {
 	BaseCHType  string
 	BaseGQLType string
 	Conversion  *ConversionInfo
+	Privileges  []string
 }
 
 // ConversionInfo contains the conversion information for a field.
 type ConversionInfo struct {
-	OriginalName string `json:"originalName"`
-	OriginalType string `json:"originalType"`
-	IsArray      bool   `json:"isArray"`
+	OriginalName string `json:"originalName" yaml:"originalName"`
+	OriginalType string `json:"originalType" yaml:"originalType"`
+	IsArray      bool   `json:"isArray"      yaml:"isArray"`
 }
 
 // DefinitionInfo contains the definition information for a field.
 type DefinitionInfo struct {
-	IsArray        *bool           `json:"isArray"`
-	Conversion     *ConversionInfo `json:"conversion"`
-	VspecName      string          `json:"vspecName"`
-	ClickHouseType string          `json:"clickHouseType"`
-	GoType         string          `json:"goType"`
-	GQLType        string          `json:"gqlType"`
+	VspecName          string          `json:"vspecName"          yaml:"vspecName"`
+	IsArray            *bool           `json:"isArray"            yaml:"isArray"`
+	ClickHouseType     string          `json:"clickHouseType"     yaml:"clickHouseType"`
+	GoType             string          `json:"goType"             yaml:"goType"`
+	GQLType            string          `json:"gqlType"            yaml:"gqlType"`
+	Conversion         *ConversionInfo `json:"conversion"         yaml:"conversion"`
+	RequiredPrivileges []string        `json:"requiredPrivileges" yaml:"requiredPrivileges"`
 }
 
 // Definitions is a map of definitions from clickhouse Name to definition info.
@@ -136,6 +138,7 @@ func (s *SignalInfo) MergeWithDefinition(definition *DefinitionInfo) {
 			s.Conversion.OriginalType = s.GOType()
 		}
 	}
+	s.Privileges = definition.RequiredPrivileges
 }
 
 // GOType returns the golang type of the signal.

@@ -1,9 +1,10 @@
-type {{ lower .ModelName }} implments Node {
+extend type {{ lower .ModelName }} implments Node {
   {{- range .Signals }}
   """
   {{ .Desc }}
+  Required Privlieges: {{ .Privileges }}
   """
   {{ .JSONName }}: {{ .GQLType }}
-    @requiresPrivilege(privileges: {VehicleNonLocationData: null})
+    @requiresPrivilege(privileges: {{ .Privileges }})
   {{- end }}
 }

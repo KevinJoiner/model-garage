@@ -27,8 +27,6 @@ go.work
 *.code-workspace
 .history/
 
-# allow launch.json
-!.vscode/launch.json
 
 # GoLand 
 .idea/

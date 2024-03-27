@@ -3,6 +3,7 @@ package codegen
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -22,13 +23,13 @@ type TemplateData struct {
 }
 
 // GetDefinedSignals reads the signals and definitions files and merges them.
-func GetDefinedSignals(specFile, definitionFile string) (*TemplateData, error) {
-	signals, err := loadSignalsCSV(specFile)
+func GetDefinedSignals(specReader, definitionReader io.Reader) (*TemplateData, error) {
+	signals, err := loadSignalsCSV(specReader)
 	if err != nil {
 		return nil, fmt.Errorf("error reading signals: %w", err)
 	}
 
-	definitions, err := loadDefinitionJSON(definitionFile)
+	definitions, err := loadDefinitionFile(definitionReader)
 	if err != nil {
 		return nil, fmt.Errorf("error reading definition file: %w", err)
 	}

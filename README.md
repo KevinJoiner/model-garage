@@ -40,7 +40,7 @@ The `codegen` directory contains the code generation tool for creating models fr
 Example usage:
 
 ```bash
-go run ./cmd/codegen -output=./pkg/vss -spec=./schema/vss_rel_4.2-DIMO.csv -definitions=./schema/definitions.json -package=vss
+go run ./cmd/codegen -output=./pkg/vss -spec=./schema/vss_rel_4.2-DIMO.csv -definitions=./schema/definitions.yaml -package=vss
 package main
 ```
 

@@ -2,24 +2,16 @@ package codegen
 
 import (
 	"encoding/csv"
-	"encoding/json"
 	"fmt"
-	"os"
-	"path/filepath"
+	"io"
 	"slices"
 	"strings"
+
+	"gopkg.in/yaml.v3"
 )
 
-func loadSignalsCSV(loadFilePath string) ([]*SignalInfo, error) {
-	file, err := os.Open(filepath.Clean(loadFilePath))
-	if err != nil {
-		return nil, fmt.Errorf("failed to open file: %w", err)
-	}
-
-	//nolint:errcheck // we don't care about the error since we are not writing to the file
-	defer file.Close()
-
-	reader := csv.NewReader(file)
+func loadSignalsCSV(r io.Reader) ([]*SignalInfo, error) {
+	reader := csv.NewReader(r)
 	records, err := reader.ReadAll()
 	if err != nil {
 		return nil, fmt.Errorf("failed to read vspec: %w", err)
@@ -39,18 +31,10 @@ func loadSignalsCSV(loadFilePath string) ([]*SignalInfo, error) {
 	return signals, nil
 }
 
-func loadDefinitionJSON(loadFilePath string) (*Definitions, error) {
-	file, err := os.Open(filepath.Clean(loadFilePath))
-	if err != nil {
-		return nil, fmt.Errorf("failed to open file: %w", err)
-	}
-
-	//nolint:errcheck // we don't care about the error since we are not writing to the file
-	defer file.Close()
-
-	decoder := json.NewDecoder(file)
+func loadDefinitionFile(r io.Reader) (*Definitions, error) {
+	decoder := yaml.NewDecoder(r)
 	var transInfos []*DefinitionInfo
-	err = decoder.Decode(&transInfos)
+	err := decoder.Decode(&transInfos)
 	if err != nil {
 		return nil, fmt.Errorf("failed to decode json: %w", err)
 	}
