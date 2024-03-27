@@ -46,19 +46,45 @@ package main
 
 #### Generation Info
 
-The Model generation is handled by packages in `internal/codegen`. They are responsible for creating Go structs, Clickhouse tables, and conversion functions from the vspec CSV schema and definitions file.
+The Model generation is handled by packages in `internal/codegen`. They are responsible for creating Go structs, Clickhouse tables, and conversion functions from the vspec CSV schema and definitions file. definitions file is a YAML file that specifies the conversions for each field in the vspec schema. The conversion functions are meant to be overridden with custom logic as needed. When generation is re-run, the conversion functions are not overwritten. Below is an example of a definitions file:
 
-**Vspec Schema** The vspec schema is a CSV file that contains the signal definitions for the model. This schema is generated using vss-tools in this https://github.com/DIMO-Network/DIMO-VSS repository.
+````yaml
+  # vspecName: The name of the VSpec field in the VSS schema
+- vspecName: DIMO.DefinitionID
 
-**Definitions File** The definitions file is a JSON file that contains the signal definitions that are to be included in the model. This file is manually created. With the following structure:
+  # isArray: Whether the field is an array or not
+  # if null then the value is inferred from the vspec definition
+  isArray: null
 
-- **vspecName**: The name of the signal field in the vspec. Only fields specified in the vspec will be included in the model.
+  # clickHouseType: The data type to use for ClickHouse Database.
+  #if empty then the type is inferred from the vspec definition
+  clickHouseType: ""
 
-- **conversion**: (optional) Details about the conversion from the original data to the vspec field. If not specified, the conversion is assumed to be a direct copy.
+  # goType: The data type to use for Golang struct.
+  # if empty then the type is inferred from the vspec definition
+  goType: ""
 
-  - **originalName**: The original name of the field in the data.
+  # gqlType: The data type to use for GraphQL schema.
+  # if empty then the type is inferred from the vspec definition
+  gqlType: ""
 
-  - **originalType**: (optional) The original data type of the field. If not specified, the original type is assumed to be the same as the vspec type.
+  # conversion: The mapping of the original data to the VSpec field
+  conversion:
+    # originalName: The name of the field in the original data
+    originalName: data.definitionID
+
+    # originalType: The data type of the field in the original data
+    originalType: string
+
+    # isArray: Whether the field is an array or not
+    isArray: false
+
+  # requiredPrivileges: The list of privileges required to access the field
+  requiredPrivileges:
+    - VehicleNonLocationData
+```
+
+
 
 ##### Generation Process
 
@@ -69,3 +95,4 @@ The Model generation is handled by packages in `internal/codegen`. They are resp
 
 **Conversion Functions**
 For each field, a conversion function is created. If a conversion is specified in the definitions file, the conversion function will use the specified conversion. If no conversion is specified, the conversion info function will assume a direct copy. The conversion functions are meant to be overridden with custom logic as needed. When generation is re-run, the conversion functions are not overwritten.
+````
