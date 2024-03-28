@@ -131,7 +131,7 @@
     originalType: float64
     isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VehicleAllTimeLocation
 - vspecName: DIMO.Vehicle.CurrentLocation.Latitude
   isArray: null
   clickHouseType: ""
@@ -142,7 +142,7 @@
     originalType: float64
     isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VehicleAllTimeLocation
 - vspecName: DIMO.Vehicle.CurrentLocation.Longitude
   isArray: null
   clickHouseType: ""
@@ -153,7 +153,7 @@
     originalType: float64
     isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VehicleAllTimeLocation
 - vspecName: DIMO.Vehicle.CurrentLocation.Timestamp
   isArray: false
   clickHouseType: DateTime('UTC')
@@ -164,7 +164,7 @@
     originalType: string
     isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VehicleAllTimeLocation
 - vspecName: DIMO.Vehicle.Exterior.AirTemperature
   isArray: null
   clickHouseType: ""

@@ -16,13 +16,12 @@ func IsInvalidType(err error) bool {
 // If skipNotFound is true, the function will not return an error if a key is not found. 
 // instead the field will be set to the zero value of the type.
 func FromData(jsonData []byte) (*{{ .ModelName }}, error) {
-	{{ $varName := lower .ModelName}}
-	{{ $varName }} := {{ .ModelName }}{}
-
-{{ $first := true }}
+	{{ $varName := lower .ModelName -}}
+	var {{ $varName }} {{ .ModelName -}}
+{{ $first := true -}}
 {{- range $idx, $sig := .Signals }}
-	{{ if not $sig.Conversion }} {{ continue }} {{ end }}
-	{{ if $first }}
+	{{ if not $sig.Conversion }} {{ continue }} {{ end -}}
+	{{ if $first -}}
 	var err error
 	var result gjson.Result
 	{{ $first = false }} {{ end }}
@@ -30,33 +29,37 @@ func FromData(jsonData []byte) (*{{ .ModelName }}, error) {
 	// convert {{ $sig.Conversion.OriginalName }} to {{ $sig.GOName }}
 	result = gjson.GetBytes(jsonData, "{{ $sig.Conversion.OriginalName }}")
 	if result.Exists() {
-		{{ if $sig.Conversion.IsArray -}}
-		if !result.IsArray() {
-			return nil, fmt.Errorf("%w, field '{{ $sig.Conversion.OriginalName }}' is not an array", errInvalidType)
-		}
-		slice{{ $sig.GOName}} := make([]{{ $sig.Conversion.OriginalType }}, len(result.Array()))
-		for i, res := range result.Array() {
-			v, ok := res.Value().({{ $sig.Conversion.OriginalType }})
-			if !ok{
-				return nil, fmt.Errorf("%w, field '{{ $sig.Conversion.OriginalName }}' array element %d is not of type {{ $sig.Conversion.OriginalType }}", errInvalidType, i)
+	{{ if $sig.Conversion.IsArray -}}
+		if result.IsArray() {
+			slice{{ $sig.GOName}} := make([]{{ $sig.Conversion.OriginalType }}, len(result.Array()))
+			for i, res := range result.Array() {
+				v, ok := res.Value().({{ $sig.Conversion.OriginalType }})
+				if ok{
+					slice{{ $sig.GOName}}[i] = v
+				} else {
+					err = errors.Join(fmt.Errorf("%w, field '{{ $sig.Conversion.OriginalName }}' array element %d is not of type '{{ $sig.Conversion.OriginalType }}' got '%v' of type '%T'", errInvalidType, i, res.Value(), res.Value()))
+				}
 			}
-			slice{{ $sig.GOName}}[i] = v
+			{{ $varName }}.{{ $sig.GOName }}, err = {{ convertName $sig }}(slice{{ $sig.GOName}} )
+			if err != nil {
+				err = errors.Join(fmt.Errorf("failed to convert '{{ $sig.Conversion.OriginalName }}': %w", err))
+			}
+		} else {
+			err = errros.Join(err, fmt.Errorf("%w, field '{{ $sig.Conversion.OriginalName }}' is not an array", errInvalidType))
 		}
-		{{ $varName }}.{{ $sig.GOName }}, err = {{ convertName $sig }}(slice{{ $sig.GOName}} )
-		if err != nil {
-			return nil, fmt.Errorf("failed to convert '{{ $sig.Conversion.OriginalName }}': %w", err)
-		}
+
 	{{ else -}}
 		val{{ $sig.GOName}}, ok := result.Value().({{ $sig.Conversion.OriginalType }})
-		if !ok {
-			return nil, fmt.Errorf("%w, field '{{ $sig.Conversion.OriginalName }}' is not of type {{ $sig.Conversion.OriginalType }}", errInvalidType)
-		}
-		{{ $varName }}.{{ $sig.GOName }}, err = {{ convertName $sig }}(val{{ $sig.GOName}})
-		if err != nil {
-			return nil, fmt.Errorf("failed to convert '{{ $sig.Conversion.OriginalName }}': %w", err)
+		if ok {
+			{{ $varName }}.{{ $sig.GOName }}, err = {{ convertName $sig }}(val{{ $sig.GOName}})
+			if err != nil {
+				err = errors.Join(fmt.Errorf("failed to convert '{{ $sig.Conversion.OriginalName }}': %w", err))
+			}
+		}else {
+			err = errors.Join(fmt.Errorf("%w, field '{{ $sig.Conversion.OriginalName }}' is not of type '{{ $sig.Conversion.OriginalType }}' got '%v' of type '%T'", errInvalidType, result.Value(),result.Value()))
 		}
 	{{ end -}}
 	}
 {{- end }}
-	return &{{ $varName }}, nil
+	return &{{ $varName }}, err
 }
