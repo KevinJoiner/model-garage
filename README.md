@@ -24,8 +24,7 @@ The `codegen` directory contains the code generation tool for creating models fr
 Example usage:
 
 ```bash
-go run ./cmd/codegen -output=./pkg/vss -spec=./schema/vss_rel_4.2-DIMO.csv -definitions=./schema/definitions.yaml -package=vss
-package main
+go run github.com/DIMO-Network/model-garage/cmd/codegen -output=pkg/vss  -generators=all
 ```
 
 #### Generation Info
