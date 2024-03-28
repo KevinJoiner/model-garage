@@ -48,7 +48,7 @@ package main
 
 The Model generation is handled by packages in `internal/codegen`. They are responsible for creating Go structs, Clickhouse tables, and conversion functions from the vspec CSV schema and definitions file. definitions file is a YAML file that specifies the conversions for each field in the vspec schema. The conversion functions are meant to be overridden with custom logic as needed. When generation is re-run, the conversion functions are not overwritten. Below is an example of a definitions file:
 
-````yaml
+```yaml
   # vspecName: The name of the VSpec field in the VSS schema
 - vspecName: DIMO.DefinitionID
 
@@ -85,7 +85,6 @@ The Model generation is handled by packages in `internal/codegen`. They are resp
 ```
 
 
-
 ##### Generation Process
 
 1. First, the vspec CSV schema and definitions file are parsed.
@@ -95,4 +94,4 @@ The Model generation is handled by packages in `internal/codegen`. They are resp
 
 **Conversion Functions**
 For each field, a conversion function is created. If a conversion is specified in the definitions file, the conversion function will use the specified conversion. If no conversion is specified, the conversion info function will assume a direct copy. The conversion functions are meant to be overridden with custom logic as needed. When generation is re-run, the conversion functions are not overwritten.
-````
+
