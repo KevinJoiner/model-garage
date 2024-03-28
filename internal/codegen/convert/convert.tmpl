@@ -22,6 +22,7 @@ func FromData(jsonData []byte) (*{{ .ModelName }}, error) {
 {{- range $idx, $sig := .Signals }}
 	{{ if not $sig.Conversion }} {{ continue }} {{ end -}}
 	{{ if $first -}}
+	var errs error
 	var err error
 	var result gjson.Result
 	{{ $first = false }} {{ end }}
@@ -37,15 +38,15 @@ func FromData(jsonData []byte) (*{{ .ModelName }}, error) {
 				if ok{
 					slice{{ $sig.GOName}}[i] = v
 				} else {
-					err = errors.Join(fmt.Errorf("%w, field '{{ $sig.Conversion.OriginalName }}' array element %d is not of type '{{ $sig.Conversion.OriginalType }}' got '%v' of type '%T'", errInvalidType, i, res.Value(), res.Value()))
+					errs = errors.Join(errs, fmt.Errorf("%w, field '{{ $sig.Conversion.OriginalName }}' array element %d is not of type '{{ $sig.Conversion.OriginalType }}' got '%v' of type '%T'", errInvalidType, i, res.Value(), res.Value()))
 				}
 			}
 			{{ $varName }}.{{ $sig.GOName }}, err = {{ convertName $sig }}(slice{{ $sig.GOName}} )
 			if err != nil {
-				err = errors.Join(fmt.Errorf("failed to convert '{{ $sig.Conversion.OriginalName }}': %w", err))
+				errs = errors.Join(errs, fmt.Errorf("failed to convert '{{ $sig.Conversion.OriginalName }}': %w", err))
 			}
 		} else {
-			err = errros.Join(err, fmt.Errorf("%w, field '{{ $sig.Conversion.OriginalName }}' is not an array", errInvalidType))
+			errs = errros.Join(errs, fmt.Errorf("%w, field '{{ $sig.Conversion.OriginalName }}' is not an array", errInvalidType))
 		}
 
 	{{ else -}}
@@ -53,13 +54,13 @@ func FromData(jsonData []byte) (*{{ .ModelName }}, error) {
 		if ok {
 			{{ $varName }}.{{ $sig.GOName }}, err = {{ convertName $sig }}(val{{ $sig.GOName}})
 			if err != nil {
-				err = errors.Join(fmt.Errorf("failed to convert '{{ $sig.Conversion.OriginalName }}': %w", err))
+				errs = errors.Join(errs, fmt.Errorf("failed to convert '{{ $sig.Conversion.OriginalName }}': %w", err))
 			}
 		}else {
-			err = errors.Join(fmt.Errorf("%w, field '{{ $sig.Conversion.OriginalName }}' is not of type '{{ $sig.Conversion.OriginalType }}' got '%v' of type '%T'", errInvalidType, result.Value(),result.Value()))
+			errs = errors.Join(errs, fmt.Errorf("%w, field '{{ $sig.Conversion.OriginalName }}' is not of type '{{ $sig.Conversion.OriginalType }}' got '%v' of type '%T'", errInvalidType, result.Value(),result.Value()))
 		}
 	{{ end -}}
 	}
 {{- end }}
-	return &{{ $varName }}, err
+	return &{{ $varName }}, errs
 }
