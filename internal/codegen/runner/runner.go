@@ -26,7 +26,9 @@ const (
 )
 
 // Execute runs the code generation tool.
-func Execute(outputDir, packageName string, vspecReader, definitionsReader io.Reader, withTest bool, generators []string) error {
+func Execute(outputDir, packageName string, vspecReader, definitionsReader io.Reader, withTest bool, gqlModelname string, generators []string) error {
+	// TODO move params to a config struct.
+
 	if len(generators) == 0 {
 		generators = []string{AllGenerator}
 	}
@@ -63,7 +65,7 @@ func Execute(outputDir, packageName string, vspecReader, definitionsReader io.Re
 	}
 
 	if slices.Contains(generators, AllGenerator) || slices.Contains(generators, GraphqlGenerator) {
-		err = graphql.Generate(tmplData, outputDir)
+		err = graphql.Generate(tmplData, outputDir, gqlModelname)
 		if err != nil {
 			return fmt.Errorf("failed to generate graphql file: %w", err)
 		}

@@ -19,11 +19,15 @@ var graphqlFileName = "%s-gql.graphqls"
 var graphqlTableTemplate string
 
 // Generate creates a new Graphql table file.
-func Generate(tmplData *codegen.TemplateData, outputDir string) error {
-	setFileNamesFrom(tmplData.ModelName)
+func Generate(tmplData *codegen.TemplateData, outputDir, gqlModelName string) error {
+	if gqlModelName == "" {
+		gqlModelName = tmplData.ModelName
+	}
+
+	setFileNamesFrom(gqlModelName)
 
 	// create a new Graphql table template.
-	graphqlTableTmpl, err := createGraphqlTableTemplate()
+	graphqlTableTmpl, err := createGraphqlTableTemplate(gqlModelName)
 	if err != nil {
 		return err
 	}
@@ -53,10 +57,9 @@ func setFileNamesFrom(modelName string) {
 	graphqlFileName = fmt.Sprintf(graphqlFileName, lowerName)
 }
 
-func createGraphqlTableTemplate() (*template.Template, error) {
+func createGraphqlTableTemplate(gqlmodelName string) (*template.Template, error) {
 	tmpl, err := template.New("graphqlTableTemplate").Funcs(template.FuncMap{
-		"escapeDesc": func(desc string) string { return strings.ReplaceAll(desc, `'`, `\'`) },
-		"lower":      strings.ToLower,
+		"GQLModelName": func() string { return gqlmodelName },
 	}).Parse(graphqlTableTemplate)
 	if err != nil {
 		return nil, fmt.Errorf("error parsing Graphql table template: %w", err)
