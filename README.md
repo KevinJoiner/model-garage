@@ -14,22 +14,6 @@ Welcome to the **Model Garage**, a Golang toolkit for managing and working with 
 
 3. **Random Data Generation**: [**Coming Soon**] Quickly generate models populated with random data for testing or sample data.
 
-## Getting Started
-
-1. **Installation**:
-
-   ```bash
-   go get github.com/your-username/model-garage
-   ```
-
-2. **Import in Your Code**:
-
-   ```go
-   import "github.com/your-username/model-garage"
-   ```
-
-3. **Usage**:
-   Explore the documentation to start using Model Garage in your project.
 
 ## Repo structure
 
