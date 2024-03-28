@@ -46,9 +46,9 @@ func ToVehicleCurrentLocationLongitude(val float64) (float64, error) {
 	return val, nil
 }
 
-// ToVehicleCurrentLocationTimestamp converts data as string to time.Time.
-func ToVehicleCurrentLocationTimestamp(val string) (time.Time, error) {
-	return time.Parse(time.RFC3339, val)
+// ToVehicleCurrentLocationTimestamp converts data as float64 to time.Time.
+func ToVehicleCurrentLocationTimestamp(val float64) (time.Time, error) {
+	return time.Unix(int64(val), 0), nil
 }
 
 // ToDefinitionID converts data as string to string.

@@ -198,14 +198,14 @@ func FromData(jsonData []byte) (*Dimo, error) {
 	// convert data.timestamp to VehicleCurrentLocationTimestamp
 	result = gjson.GetBytes(jsonData, "data.timestamp")
 	if result.Exists() {
-		valVehicleCurrentLocationTimestamp, ok := result.Value().(string)
+		valVehicleCurrentLocationTimestamp, ok := result.Value().(float64)
 		if ok {
 			dimo.VehicleCurrentLocationTimestamp, err = ToVehicleCurrentLocationTimestamp(valVehicleCurrentLocationTimestamp)
 			if err != nil {
 				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.timestamp': %w", err))
 			}
 		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.timestamp' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.timestamp' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 

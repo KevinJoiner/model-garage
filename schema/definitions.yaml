@@ -161,7 +161,7 @@
   gqlType: Time
   conversion:
     originalName: data.timestamp
-    originalType: string
+    originalType: float64
     isArray: false
   requiredPrivileges:
     - VehicleAllTimeLocation
