@@ -163,6 +163,9 @@
     - originalName: data.timestamp
       originalType: string
       isArray: false
+    - originalName: data.timestamp
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleAllTimeLocation
 - vspecName: DIMO.Vehicle.Exterior.AirTemperature

@@ -480,6 +480,19 @@ func VehicleCurrentLocationTimestampFromData(jsonData []byte) (ret time.Time, er
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.timestamp' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.timestamp")
+	if result.Exists() {
+		val, ok := result.Value().(float64)
+		if ok {
+			ret, err = ToVehicleCurrentLocationTimestamp1(val)
+			if err == nil {
+				return ret, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.timestamp': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.timestamp' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
 
 	return ret, errs
 }

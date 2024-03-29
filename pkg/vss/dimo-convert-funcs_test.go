@@ -1743,3 +1743,50 @@ func TestToVehiclePowertrainType0(t *testing.T) {
 		})
 	}
 }
+
+func TestToVehicleCurrentLocationTimestamp1(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name          string
+		input         float64
+		expected      time.Time
+		expectedError bool
+	}{
+		{
+			name:          "Valid Value",
+			input:         1611312000,
+			expected:      time.Date(2021, 1, 22, 10, 40, 0, 0, time.UTC),
+			expectedError: false,
+		},
+		{
+			name:          "Zero Value",
+			input:         0.0,
+			expected:      time.Date(1970, 1, 1, 0, 0, 0, 0, time.UTC),
+			expectedError: false,
+		},
+		{
+			name:          "Negative Value",
+			input:         -10.8,
+			expected:      time.Date(1969, 12, 31, 23, 59, 50, 0, time.UTC),
+			expectedError: false,
+		},
+	}
+
+	for i := range tests {
+		test := tests[i]
+		name := test.name
+		if name == "" {
+			name = fmt.Sprintf("Input: %v", test.input)
+		}
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			result, err := vss.ToVehicleCurrentLocationTimestamp1(test.input)
+			if test.expectedError {
+				require.Error(t, err, "Expected an error but got none")
+			} else {
+				require.NoError(t, err, "Unexpected error")
+				require.Equal(t, test.expected, result, "Unexpected result")
+			}
+		})
+	}
+}

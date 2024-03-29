@@ -227,3 +227,8 @@ func ToVehiclePowertrainType0(val string) (string, error) {
 	}
 	return "COMBUSTION", nil
 }
+
+// ToVehicleCurrentLocationTimestamp1 converts data as float64 to time.Time.
+func ToVehicleCurrentLocationTimestamp1(val float64) (time.Time, error) {
+	return time.Unix(int64(val), 0).UTC(), nil
+}
