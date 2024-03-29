@@ -19,16 +19,16 @@
   # if empty then the type is inferred from the vspec definition
   gqlType: ""
 
-  # conversion: The mapping of the original data to the VSpec field
-  conversion:
-    # originalName: The name of the field in the original data
-    originalName: data.definitionID
+  # conversions: The mapping of the original data to the VSpec field
+  conversions:
+    # - originalName: The name of the field in the original data
+    - originalName: data.definitionID
 
-    # originalType: The data type of the field in the original data
-    originalType: string
+    #   originalType: The data type of the field in the original data
+      originalType: string
 
     # isArray: Whether the field is an array or not
-    isArray: false
+      isArray: false
   
   # requiredPrivileges: The list of privileges required to access the field
   requiredPrivileges:
@@ -38,10 +38,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: source
-    originalType: string
-    isArray: false
+  conversions:
+    - originalName: source
+      originalType: string
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Subject
@@ -49,10 +49,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: subject
-    originalType: string
-    isArray: false
+  conversions:
+    - originalName: subject
+      originalType: string
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Timestamp
@@ -60,10 +60,10 @@
   clickHouseType: DateTime('UTC')
   goType: time.Time
   gqlType: Time
-  conversion:
-    originalName: time
-    originalType: string
-    isArray: false
+  conversions:
+    - originalName: time
+      originalType: string
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Type
@@ -71,10 +71,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: type
-    originalType: string
-    isArray: false
+  conversions:
+    - originalName: type
+      originalType: string
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure
@@ -82,10 +82,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.tires.frontLeft
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.tires.frontLeft
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure
@@ -93,10 +93,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.tires.frontRight
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.tires.frontRight
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure
@@ -104,10 +104,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.tires.backLeft
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.tires.backLeft
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure
@@ -115,10 +115,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.tires.backRight
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.tires.backRight
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.CurrentLocation.Altitude
@@ -126,10 +126,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.altitude
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.altitude
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleAllTimeLocation
 - vspecName: DIMO.Vehicle.CurrentLocation.Latitude
@@ -137,10 +137,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.latitude
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.latitude
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleAllTimeLocation
 - vspecName: DIMO.Vehicle.CurrentLocation.Longitude
@@ -148,10 +148,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.longitude
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.longitude
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleAllTimeLocation
 - vspecName: DIMO.Vehicle.CurrentLocation.Timestamp
@@ -159,10 +159,10 @@
   clickHouseType: DateTime('UTC')
   goType: time.Time
   gqlType: Time
-  conversion:
-    originalName: data.timestamp
-    originalType: float64
-    isArray: false
+  conversions: 
+    - originalName: data.timestamp
+      originalType: string
+      isArray: false
   requiredPrivileges:
     - VehicleAllTimeLocation
 - vspecName: DIMO.Vehicle.Exterior.AirTemperature
@@ -170,10 +170,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.ambientTemp
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.ambientTemp
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.LowVoltageBattery.CurrentVoltage
@@ -181,10 +181,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.batteryVoltage
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.batteryVoltage
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.OBD.BarometricPressure
@@ -192,10 +192,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.barometricPressure
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.barometricPressure
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.OBD.EngineLoad
@@ -203,10 +203,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.engineLoad
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.engineLoad
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.OBD.IntakeTemp
@@ -214,10 +214,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.intakeTemp
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.intakeTemp
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.OBD.RunTime
@@ -225,10 +225,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.runTime
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.runTime
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Powertrain.CombustionEngine.ECT
@@ -236,10 +236,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.coolantTemp
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.coolantTemp
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Powertrain.CombustionEngine.EngineOilLevel
@@ -247,10 +247,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.oil
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.oil
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Powertrain.CombustionEngine.Speed
@@ -258,10 +258,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.engineSpeed
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.engineSpeed
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Powertrain.CombustionEngine.TPS
@@ -269,10 +269,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.throttlePosition
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.throttlePosition
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Powertrain.FuelSystem.AbsoluteLevel
@@ -280,10 +280,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.fuelPercentRemaining
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.fuelPercentRemaining
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Powertrain.FuelSystem.SupportedFuelTypes
@@ -291,10 +291,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.fuelType
-    originalType: string
-    isArray: false
+  conversions:
+    - originalName: data.fuelType
+      originalType: string
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Powertrain.Range
@@ -302,10 +302,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.range
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.range
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit
@@ -313,10 +313,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.chargeLimit
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.chargeLimit
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Powertrain.TractionBattery.Charging.IsCharging
@@ -324,10 +324,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.charging
-    originalType: bool
-    isArray: false
+  conversions:
+    - originalName: data.charging
+      originalType: bool
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Powertrain.TractionBattery.GrossCapacity
@@ -335,10 +335,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.batteryCapacity
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.batteryCapacity
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Powertrain.TractionBattery.StateOfCharge.Current
@@ -346,10 +346,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.soc
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.soc
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Powertrain.Transmission.TravelledDistance
@@ -357,10 +357,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.odometer
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.odometer
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Powertrain.Type
@@ -368,10 +368,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.fuelType
-    originalType: string
-    isArray: false
+  conversions:
+    - originalName: data.fuelType
+      originalType: string
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Speed
@@ -379,10 +379,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.speed
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.speed
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.VehicleIdentification.Brand
@@ -390,10 +390,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.make
-    originalType: string
-    isArray: false
+  conversions:
+    - originalName: data.make
+      originalType: string
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.VehicleIdentification.Model
@@ -401,10 +401,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.model
-    originalType: string
-    isArray: false
+  conversions:
+    - originalName: data.model
+      originalType: string
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.VehicleIdentification.Year
@@ -412,10 +412,10 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.year
-    originalType: float64
-    isArray: false
+  conversions:
+    - originalName: data.year
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.VehicleID
@@ -423,9 +423,9 @@
   clickHouseType: ""
   goType: ""
   gqlType: ""
-  conversion:
-    originalName: data.vehicleID
-    originalType: string
-    isArray: false
+  conversions:
+    - originalName: data.vehicleID
+      originalType: string
+      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData

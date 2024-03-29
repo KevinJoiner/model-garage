@@ -10,6 +10,7 @@ import (
 	"go/token"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"text/template"
 
@@ -24,6 +25,11 @@ var (
 	// convertTestFuncFileName is the name of the Go file that will contain the conversion test functions.
 	convertTestFuncFileName = "%s-convert-funcs_test.go"
 )
+
+type ConversionData struct {
+	Signal  *codegen.SignalInfo
+	convIdx int
+}
 
 //go:embed convert.tmpl
 var convertTemplateStr string
@@ -43,7 +49,9 @@ const header = `package %s
 
 type funcTmplData struct {
 	Signal      *codegen.SignalInfo
+	ConvIdx     int
 	PackageName string
+	Conversion  *codegen.ConversionInfo
 }
 
 // Generate creates a conversion functions for each field of a model struct.
@@ -85,7 +93,7 @@ func setFileNamesFrom(modelName string) {
 	convertTestFuncFileName = fmt.Sprintf(convertTestFuncFileName, lowerModelName)
 }
 
-func createConvertFuncs(tmplData *codegen.TemplateData, outputDir string, needsConvertFunc []*codegen.SignalInfo) error {
+func createConvertFuncs(tmplData *codegen.TemplateData, outputDir string, needsConvertFunc []ConversionData) error {
 	convertFuncTemplate, err := createConvertFuncTemplate()
 	if err != nil {
 		return err
@@ -102,25 +110,31 @@ func createConvertFuncs(tmplData *codegen.TemplateData, outputDir string, needsC
 }
 
 // getConversionFunctions returns the signals that need conversion functions and test functions.
-func getConversionFunctions(signals []*codegen.SignalInfo, existingFuncs map[string]bool) ([]*codegen.SignalInfo, []*codegen.SignalInfo) {
-	var needsConvertFunc []*codegen.SignalInfo
-	var needsConvertTestFunc []*codegen.SignalInfo
+func getConversionFunctions(signals []*codegen.SignalInfo, existingFuncs map[string]bool) ([]ConversionData, []ConversionData) {
+	var needsConvertFunc []ConversionData
+	var needsConvertTestFunc []ConversionData
 	for _, signal := range signals {
-		if signal.Conversion == nil {
+		if len(signal.Conversions) == 0 {
 			continue
 		}
-		if !existingFuncs[convertName(signal)] {
-			needsConvertFunc = append(needsConvertFunc, signal)
-		}
-		if !existingFuncs[convertTestName(signal)] {
-			needsConvertTestFunc = append(needsConvertTestFunc, signal)
+		for i, _ := range signal.Conversions {
+			funcName := convertName(signal) + strconv.Itoa(i)
+			if !existingFuncs[funcName] {
+				convData := ConversionData{Signal: signal, convIdx: i}
+				needsConvertFunc = append(needsConvertFunc, convData)
+			}
+			funcName = convertTestName(signal) + strconv.Itoa(i)
+			if !existingFuncs[funcName] {
+				convData := ConversionData{Signal: signal, convIdx: i}
+				needsConvertTestFunc = append(needsConvertTestFunc, convData)
+			}
 		}
 	}
 	return needsConvertFunc, needsConvertTestFunc
 }
 
 // createConvertTestFunc creates test functions for the conversion functions if they do not exist.
-func createConvertTestFunc(tmplData *codegen.TemplateData, outputDir string, needsConvertTestFunc []*codegen.SignalInfo) error {
+func createConvertTestFunc(tmplData *codegen.TemplateData, outputDir string, needsConvertTestFunc []ConversionData) error {
 	convertTestFuncTemplate, err := createConvertTestFuncTemplate(tmplData.PackageName)
 	if err != nil {
 		return err
@@ -265,7 +279,7 @@ func ensureFuncFile(convertFuncPath string, packageName string) error {
 	return nil
 }
 
-func writeConvertFuncs(needsConvertFunc []*codegen.SignalInfo, tmpl *template.Template, outputPath string, packageName string) error {
+func writeConvertFuncs(needsConvertFunc []ConversionData, tmpl *template.Template, outputPath string, packageName string) error {
 	// check if we need to create convertFunc file
 	err := ensureFuncFile(outputPath, packageName)
 	if err != nil {
@@ -277,10 +291,12 @@ func writeConvertFuncs(needsConvertFunc []*codegen.SignalInfo, tmpl *template.Te
 		return fmt.Errorf("error reading convertFunc file: %w", err)
 	}
 	convertBuff := bytes.NewBuffer(convertData)
-	for _, signal := range needsConvertFunc {
+	for _, convData := range needsConvertFunc {
 		data := funcTmplData{
 			PackageName: packageName,
-			Signal:      signal,
+			Signal:      convData.Signal,
+			ConvIdx:     convData.convIdx,
+			Conversion:  convData.Signal.Conversions[convData.convIdx],
 		}
 		if err = tmpl.Execute(convertBuff, &data); err != nil {
 			return fmt.Errorf("error executing convertFunc template: %w", err)

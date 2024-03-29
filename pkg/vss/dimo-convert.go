@@ -4,545 +4,986 @@ package vss
 import (
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/tidwall/gjson"
 )
 
-var (
-	// errInvalidType is returned when a field is not of the expected type or not found.
-	errInvalidType = errors.New("invalid type")
-)
+// errInvalidType is returned when a field is not of the expected type or not found.
+var errInvalidType = errors.New("invalid type")
 
 // IsInvalidType returns true if the error is of type errInvalidType.
 func IsInvalidType(err error) bool {
 	return errors.Is(err, errInvalidType)
 }
 
-// FromData creates a new Dimo from a map of data. Using defined conversion functions.
-// If skipNotFound is true, the function will not return an error if a key is not found.
-// instead the field will be set to the zero value of the type.
+// FromData creates a new Dimo from JSON data. Using defined conversion functions.
+// if a filed is not found it will not be set
 func FromData(jsonData []byte) (*Dimo, error) {
 	var dimo Dimo
 	var errs error
 	var err error
-	var result gjson.Result
 
-	// convert data.definitionID to DefinitionID
+	dimo.DefinitionID, err = DefinitionIDFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'DefinitionID': %w", err))
+	}
+
+	dimo.Source, err = SourceFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'Source': %w", err))
+	}
+
+	dimo.Subject, err = SubjectFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'Subject': %w", err))
+	}
+
+	dimo.Timestamp, err = TimestampFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'Timestamp': %w", err))
+	}
+
+	dimo.Type, err = TypeFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'Type': %w", err))
+	}
+
+	dimo.VehicleChassisAxleRow1WheelLeftTirePressure, err = VehicleChassisAxleRow1WheelLeftTirePressureFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleChassisAxleRow1WheelLeftTirePressure': %w", err))
+	}
+
+	dimo.VehicleChassisAxleRow1WheelRightTirePressure, err = VehicleChassisAxleRow1WheelRightTirePressureFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleChassisAxleRow1WheelRightTirePressure': %w", err))
+	}
+
+	dimo.VehicleChassisAxleRow2WheelLeftTirePressure, err = VehicleChassisAxleRow2WheelLeftTirePressureFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleChassisAxleRow2WheelLeftTirePressure': %w", err))
+	}
+
+	dimo.VehicleChassisAxleRow2WheelRightTirePressure, err = VehicleChassisAxleRow2WheelRightTirePressureFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleChassisAxleRow2WheelRightTirePressure': %w", err))
+	}
+
+	dimo.VehicleCurrentLocationAltitude, err = VehicleCurrentLocationAltitudeFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleCurrentLocationAltitude': %w", err))
+	}
+
+	dimo.VehicleCurrentLocationLatitude, err = VehicleCurrentLocationLatitudeFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleCurrentLocationLatitude': %w", err))
+	}
+
+	dimo.VehicleCurrentLocationLongitude, err = VehicleCurrentLocationLongitudeFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleCurrentLocationLongitude': %w", err))
+	}
+
+	dimo.VehicleCurrentLocationTimestamp, err = VehicleCurrentLocationTimestampFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleCurrentLocationTimestamp': %w", err))
+	}
+
+	dimo.VehicleExteriorAirTemperature, err = VehicleExteriorAirTemperatureFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleExteriorAirTemperature': %w", err))
+	}
+
+	dimo.VehicleLowVoltageBatteryCurrentVoltage, err = VehicleLowVoltageBatteryCurrentVoltageFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleLowVoltageBatteryCurrentVoltage': %w", err))
+	}
+
+	dimo.VehicleOBDBarometricPressure, err = VehicleOBDBarometricPressureFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleOBDBarometricPressure': %w", err))
+	}
+
+	dimo.VehicleOBDEngineLoad, err = VehicleOBDEngineLoadFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleOBDEngineLoad': %w", err))
+	}
+
+	dimo.VehicleOBDIntakeTemp, err = VehicleOBDIntakeTempFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleOBDIntakeTemp': %w", err))
+	}
+
+	dimo.VehicleOBDRunTime, err = VehicleOBDRunTimeFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleOBDRunTime': %w", err))
+	}
+
+	dimo.VehiclePowertrainCombustionEngineECT, err = VehiclePowertrainCombustionEngineECTFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainCombustionEngineECT': %w", err))
+	}
+
+	dimo.VehiclePowertrainCombustionEngineEngineOilLevel, err = VehiclePowertrainCombustionEngineEngineOilLevelFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainCombustionEngineEngineOilLevel': %w", err))
+	}
+
+	dimo.VehiclePowertrainCombustionEngineSpeed, err = VehiclePowertrainCombustionEngineSpeedFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainCombustionEngineSpeed': %w", err))
+	}
+
+	dimo.VehiclePowertrainCombustionEngineTPS, err = VehiclePowertrainCombustionEngineTPSFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainCombustionEngineTPS': %w", err))
+	}
+
+	dimo.VehiclePowertrainFuelSystemAbsoluteLevel, err = VehiclePowertrainFuelSystemAbsoluteLevelFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainFuelSystemAbsoluteLevel': %w", err))
+	}
+
+	dimo.VehiclePowertrainFuelSystemSupportedFuelTypes, err = VehiclePowertrainFuelSystemSupportedFuelTypesFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainFuelSystemSupportedFuelTypes': %w", err))
+	}
+
+	dimo.VehiclePowertrainRange, err = VehiclePowertrainRangeFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainRange': %w", err))
+	}
+
+	dimo.VehiclePowertrainTractionBatteryChargingChargeLimit, err = VehiclePowertrainTractionBatteryChargingChargeLimitFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainTractionBatteryChargingChargeLimit': %w", err))
+	}
+
+	dimo.VehiclePowertrainTractionBatteryChargingIsCharging, err = VehiclePowertrainTractionBatteryChargingIsChargingFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainTractionBatteryChargingIsCharging': %w", err))
+	}
+
+	dimo.VehiclePowertrainTractionBatteryGrossCapacity, err = VehiclePowertrainTractionBatteryGrossCapacityFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainTractionBatteryGrossCapacity': %w", err))
+	}
+
+	dimo.VehiclePowertrainTractionBatteryStateOfChargeCurrent, err = VehiclePowertrainTractionBatteryStateOfChargeCurrentFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainTractionBatteryStateOfChargeCurrent': %w", err))
+	}
+
+	dimo.VehiclePowertrainTransmissionTravelledDistance, err = VehiclePowertrainTransmissionTravelledDistanceFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainTransmissionTravelledDistance': %w", err))
+	}
+
+	dimo.VehiclePowertrainType, err = VehiclePowertrainTypeFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainType': %w", err))
+	}
+
+	dimo.VehicleSpeed, err = VehicleSpeedFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleSpeed': %w", err))
+	}
+
+	dimo.VehicleVehicleIdentificationBrand, err = VehicleVehicleIdentificationBrandFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleVehicleIdentificationBrand': %w", err))
+	}
+
+	dimo.VehicleVehicleIdentificationModel, err = VehicleVehicleIdentificationModelFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleVehicleIdentificationModel': %w", err))
+	}
+
+	dimo.VehicleVehicleIdentificationYear, err = VehicleVehicleIdentificationYearFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleVehicleIdentificationYear': %w", err))
+	}
+
+	dimo.VehicleID, err = VehicleIDFromData(jsonData)
+	if err != nil {
+		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleID': %w", err))
+	}
+	return &dimo, errs
+}
+
+// DefinitionIDFromData converts the given JSON data to a string.
+func DefinitionIDFromData(jsonData []byte) (ret string, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.definitionID")
 	if result.Exists() {
-		valDefinitionID, ok := result.Value().(string)
+		val, ok := result.Value().(string)
 		if ok {
-			dimo.DefinitionID, err = ToDefinitionID(valDefinitionID)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.definitionID': %w", err))
+			ret, err = ToDefinitionID0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.definitionID': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.definitionID' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert source to Source
+	return ret, errs
+}
+
+// SourceFromData converts the given JSON data to a string.
+func SourceFromData(jsonData []byte) (ret string, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "source")
 	if result.Exists() {
-		valSource, ok := result.Value().(string)
+		val, ok := result.Value().(string)
 		if ok {
-			dimo.Source, err = ToSource(valSource)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'source': %w", err))
+			ret, err = ToSource0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'source': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'source' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert subject to Subject
+	return ret, errs
+}
+
+// SubjectFromData converts the given JSON data to a string.
+func SubjectFromData(jsonData []byte) (ret string, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "subject")
 	if result.Exists() {
-		valSubject, ok := result.Value().(string)
+		val, ok := result.Value().(string)
 		if ok {
-			dimo.Subject, err = ToSubject(valSubject)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'subject': %w", err))
+			ret, err = ToSubject0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'subject': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'subject' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert time to Timestamp
+	return ret, errs
+}
+
+// TimestampFromData converts the given JSON data to a time.Time.
+func TimestampFromData(jsonData []byte) (ret time.Time, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "time")
 	if result.Exists() {
-		valTimestamp, ok := result.Value().(string)
+		val, ok := result.Value().(string)
 		if ok {
-			dimo.Timestamp, err = ToTimestamp(valTimestamp)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'time': %w", err))
+			ret, err = ToTimestamp0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'time': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'time' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert type to Type
+	return ret, errs
+}
+
+// TypeFromData converts the given JSON data to a string.
+func TypeFromData(jsonData []byte) (ret string, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "type")
 	if result.Exists() {
-		valType, ok := result.Value().(string)
+		val, ok := result.Value().(string)
 		if ok {
-			dimo.Type, err = ToType(valType)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'type': %w", err))
+			ret, err = ToType0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'type': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'type' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.tires.frontLeft to VehicleChassisAxleRow1WheelLeftTirePressure
+	return ret, errs
+}
+
+// VehicleChassisAxleRow1WheelLeftTirePressureFromData converts the given JSON data to a uint16.
+func VehicleChassisAxleRow1WheelLeftTirePressureFromData(jsonData []byte) (ret uint16, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.tires.frontLeft")
 	if result.Exists() {
-		valVehicleChassisAxleRow1WheelLeftTirePressure, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehicleChassisAxleRow1WheelLeftTirePressure, err = ToVehicleChassisAxleRow1WheelLeftTirePressure(valVehicleChassisAxleRow1WheelLeftTirePressure)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tires.frontLeft': %w", err))
+			ret, err = ToVehicleChassisAxleRow1WheelLeftTirePressure0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tires.frontLeft': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.tires.frontLeft' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.tires.frontRight to VehicleChassisAxleRow1WheelRightTirePressure
+	return ret, errs
+}
+
+// VehicleChassisAxleRow1WheelRightTirePressureFromData converts the given JSON data to a uint16.
+func VehicleChassisAxleRow1WheelRightTirePressureFromData(jsonData []byte) (ret uint16, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.tires.frontRight")
 	if result.Exists() {
-		valVehicleChassisAxleRow1WheelRightTirePressure, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehicleChassisAxleRow1WheelRightTirePressure, err = ToVehicleChassisAxleRow1WheelRightTirePressure(valVehicleChassisAxleRow1WheelRightTirePressure)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tires.frontRight': %w", err))
+			ret, err = ToVehicleChassisAxleRow1WheelRightTirePressure0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tires.frontRight': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.tires.frontRight' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.tires.backLeft to VehicleChassisAxleRow2WheelLeftTirePressure
+	return ret, errs
+}
+
+// VehicleChassisAxleRow2WheelLeftTirePressureFromData converts the given JSON data to a uint16.
+func VehicleChassisAxleRow2WheelLeftTirePressureFromData(jsonData []byte) (ret uint16, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.tires.backLeft")
 	if result.Exists() {
-		valVehicleChassisAxleRow2WheelLeftTirePressure, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehicleChassisAxleRow2WheelLeftTirePressure, err = ToVehicleChassisAxleRow2WheelLeftTirePressure(valVehicleChassisAxleRow2WheelLeftTirePressure)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tires.backLeft': %w", err))
+			ret, err = ToVehicleChassisAxleRow2WheelLeftTirePressure0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tires.backLeft': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.tires.backLeft' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.tires.backRight to VehicleChassisAxleRow2WheelRightTirePressure
+	return ret, errs
+}
+
+// VehicleChassisAxleRow2WheelRightTirePressureFromData converts the given JSON data to a uint16.
+func VehicleChassisAxleRow2WheelRightTirePressureFromData(jsonData []byte) (ret uint16, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.tires.backRight")
 	if result.Exists() {
-		valVehicleChassisAxleRow2WheelRightTirePressure, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehicleChassisAxleRow2WheelRightTirePressure, err = ToVehicleChassisAxleRow2WheelRightTirePressure(valVehicleChassisAxleRow2WheelRightTirePressure)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tires.backRight': %w", err))
+			ret, err = ToVehicleChassisAxleRow2WheelRightTirePressure0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tires.backRight': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.tires.backRight' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.altitude to VehicleCurrentLocationAltitude
+	return ret, errs
+}
+
+// VehicleCurrentLocationAltitudeFromData converts the given JSON data to a float64.
+func VehicleCurrentLocationAltitudeFromData(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.altitude")
 	if result.Exists() {
-		valVehicleCurrentLocationAltitude, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehicleCurrentLocationAltitude, err = ToVehicleCurrentLocationAltitude(valVehicleCurrentLocationAltitude)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.altitude': %w", err))
+			ret, err = ToVehicleCurrentLocationAltitude0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.altitude': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.altitude' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.latitude to VehicleCurrentLocationLatitude
+	return ret, errs
+}
+
+// VehicleCurrentLocationLatitudeFromData converts the given JSON data to a float64.
+func VehicleCurrentLocationLatitudeFromData(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.latitude")
 	if result.Exists() {
-		valVehicleCurrentLocationLatitude, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehicleCurrentLocationLatitude, err = ToVehicleCurrentLocationLatitude(valVehicleCurrentLocationLatitude)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.latitude': %w", err))
+			ret, err = ToVehicleCurrentLocationLatitude0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.latitude': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.latitude' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.longitude to VehicleCurrentLocationLongitude
+	return ret, errs
+}
+
+// VehicleCurrentLocationLongitudeFromData converts the given JSON data to a float64.
+func VehicleCurrentLocationLongitudeFromData(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.longitude")
 	if result.Exists() {
-		valVehicleCurrentLocationLongitude, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehicleCurrentLocationLongitude, err = ToVehicleCurrentLocationLongitude(valVehicleCurrentLocationLongitude)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.longitude': %w", err))
+			ret, err = ToVehicleCurrentLocationLongitude0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.longitude': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.longitude' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.timestamp to VehicleCurrentLocationTimestamp
+	return ret, errs
+}
+
+// VehicleCurrentLocationTimestampFromData converts the given JSON data to a time.Time.
+func VehicleCurrentLocationTimestampFromData(jsonData []byte) (ret time.Time, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.timestamp")
 	if result.Exists() {
-		valVehicleCurrentLocationTimestamp, ok := result.Value().(float64)
+		val, ok := result.Value().(string)
 		if ok {
-			dimo.VehicleCurrentLocationTimestamp, err = ToVehicleCurrentLocationTimestamp(valVehicleCurrentLocationTimestamp)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.timestamp': %w", err))
+			ret, err = ToVehicleCurrentLocationTimestamp0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.timestamp': %w", err))
 		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.timestamp' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.timestamp' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.ambientTemp to VehicleExteriorAirTemperature
+	return ret, errs
+}
+
+// VehicleExteriorAirTemperatureFromData converts the given JSON data to a float32.
+func VehicleExteriorAirTemperatureFromData(jsonData []byte) (ret float32, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.ambientTemp")
 	if result.Exists() {
-		valVehicleExteriorAirTemperature, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehicleExteriorAirTemperature, err = ToVehicleExteriorAirTemperature(valVehicleExteriorAirTemperature)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.ambientTemp': %w", err))
+			ret, err = ToVehicleExteriorAirTemperature0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.ambientTemp': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.ambientTemp' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.batteryVoltage to VehicleLowVoltageBatteryCurrentVoltage
+	return ret, errs
+}
+
+// VehicleLowVoltageBatteryCurrentVoltageFromData converts the given JSON data to a float32.
+func VehicleLowVoltageBatteryCurrentVoltageFromData(jsonData []byte) (ret float32, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.batteryVoltage")
 	if result.Exists() {
-		valVehicleLowVoltageBatteryCurrentVoltage, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehicleLowVoltageBatteryCurrentVoltage, err = ToVehicleLowVoltageBatteryCurrentVoltage(valVehicleLowVoltageBatteryCurrentVoltage)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.batteryVoltage': %w", err))
+			ret, err = ToVehicleLowVoltageBatteryCurrentVoltage0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.batteryVoltage': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.batteryVoltage' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.barometricPressure to VehicleOBDBarometricPressure
+	return ret, errs
+}
+
+// VehicleOBDBarometricPressureFromData converts the given JSON data to a float32.
+func VehicleOBDBarometricPressureFromData(jsonData []byte) (ret float32, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.barometricPressure")
 	if result.Exists() {
-		valVehicleOBDBarometricPressure, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehicleOBDBarometricPressure, err = ToVehicleOBDBarometricPressure(valVehicleOBDBarometricPressure)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.barometricPressure': %w", err))
+			ret, err = ToVehicleOBDBarometricPressure0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.barometricPressure': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.barometricPressure' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.engineLoad to VehicleOBDEngineLoad
+	return ret, errs
+}
+
+// VehicleOBDEngineLoadFromData converts the given JSON data to a float32.
+func VehicleOBDEngineLoadFromData(jsonData []byte) (ret float32, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.engineLoad")
 	if result.Exists() {
-		valVehicleOBDEngineLoad, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehicleOBDEngineLoad, err = ToVehicleOBDEngineLoad(valVehicleOBDEngineLoad)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.engineLoad': %w", err))
+			ret, err = ToVehicleOBDEngineLoad0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.engineLoad': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.engineLoad' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.intakeTemp to VehicleOBDIntakeTemp
+	return ret, errs
+}
+
+// VehicleOBDIntakeTempFromData converts the given JSON data to a float32.
+func VehicleOBDIntakeTempFromData(jsonData []byte) (ret float32, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.intakeTemp")
 	if result.Exists() {
-		valVehicleOBDIntakeTemp, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehicleOBDIntakeTemp, err = ToVehicleOBDIntakeTemp(valVehicleOBDIntakeTemp)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.intakeTemp': %w", err))
+			ret, err = ToVehicleOBDIntakeTemp0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.intakeTemp': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.intakeTemp' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.runTime to VehicleOBDRunTime
+	return ret, errs
+}
+
+// VehicleOBDRunTimeFromData converts the given JSON data to a float32.
+func VehicleOBDRunTimeFromData(jsonData []byte) (ret float32, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.runTime")
 	if result.Exists() {
-		valVehicleOBDRunTime, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehicleOBDRunTime, err = ToVehicleOBDRunTime(valVehicleOBDRunTime)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.runTime': %w", err))
+			ret, err = ToVehicleOBDRunTime0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.runTime': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.runTime' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.coolantTemp to VehiclePowertrainCombustionEngineECT
+	return ret, errs
+}
+
+// VehiclePowertrainCombustionEngineECTFromData converts the given JSON data to a int16.
+func VehiclePowertrainCombustionEngineECTFromData(jsonData []byte) (ret int16, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.coolantTemp")
 	if result.Exists() {
-		valVehiclePowertrainCombustionEngineECT, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehiclePowertrainCombustionEngineECT, err = ToVehiclePowertrainCombustionEngineECT(valVehiclePowertrainCombustionEngineECT)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.coolantTemp': %w", err))
+			ret, err = ToVehiclePowertrainCombustionEngineECT0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.coolantTemp': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.coolantTemp' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.oil to VehiclePowertrainCombustionEngineEngineOilLevel
+	return ret, errs
+}
+
+// VehiclePowertrainCombustionEngineEngineOilLevelFromData converts the given JSON data to a string.
+func VehiclePowertrainCombustionEngineEngineOilLevelFromData(jsonData []byte) (ret string, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.oil")
 	if result.Exists() {
-		valVehiclePowertrainCombustionEngineEngineOilLevel, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehiclePowertrainCombustionEngineEngineOilLevel, err = ToVehiclePowertrainCombustionEngineEngineOilLevel(valVehiclePowertrainCombustionEngineEngineOilLevel)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.oil': %w", err))
+			ret, err = ToVehiclePowertrainCombustionEngineEngineOilLevel0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.oil': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.oil' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.engineSpeed to VehiclePowertrainCombustionEngineSpeed
+	return ret, errs
+}
+
+// VehiclePowertrainCombustionEngineSpeedFromData converts the given JSON data to a uint16.
+func VehiclePowertrainCombustionEngineSpeedFromData(jsonData []byte) (ret uint16, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.engineSpeed")
 	if result.Exists() {
-		valVehiclePowertrainCombustionEngineSpeed, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehiclePowertrainCombustionEngineSpeed, err = ToVehiclePowertrainCombustionEngineSpeed(valVehiclePowertrainCombustionEngineSpeed)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.engineSpeed': %w", err))
+			ret, err = ToVehiclePowertrainCombustionEngineSpeed0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.engineSpeed': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.engineSpeed' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.throttlePosition to VehiclePowertrainCombustionEngineTPS
+	return ret, errs
+}
+
+// VehiclePowertrainCombustionEngineTPSFromData converts the given JSON data to a uint8.
+func VehiclePowertrainCombustionEngineTPSFromData(jsonData []byte) (ret uint8, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.throttlePosition")
 	if result.Exists() {
-		valVehiclePowertrainCombustionEngineTPS, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehiclePowertrainCombustionEngineTPS, err = ToVehiclePowertrainCombustionEngineTPS(valVehiclePowertrainCombustionEngineTPS)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.throttlePosition': %w", err))
+			ret, err = ToVehiclePowertrainCombustionEngineTPS0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.throttlePosition': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.throttlePosition' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.fuelPercentRemaining to VehiclePowertrainFuelSystemAbsoluteLevel
+	return ret, errs
+}
+
+// VehiclePowertrainFuelSystemAbsoluteLevelFromData converts the given JSON data to a float32.
+func VehiclePowertrainFuelSystemAbsoluteLevelFromData(jsonData []byte) (ret float32, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.fuelPercentRemaining")
 	if result.Exists() {
-		valVehiclePowertrainFuelSystemAbsoluteLevel, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehiclePowertrainFuelSystemAbsoluteLevel, err = ToVehiclePowertrainFuelSystemAbsoluteLevel(valVehiclePowertrainFuelSystemAbsoluteLevel)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.fuelPercentRemaining': %w", err))
+			ret, err = ToVehiclePowertrainFuelSystemAbsoluteLevel0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.fuelPercentRemaining': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.fuelPercentRemaining' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.fuelType to VehiclePowertrainFuelSystemSupportedFuelTypes
+	return ret, errs
+}
+
+// VehiclePowertrainFuelSystemSupportedFuelTypesFromData converts the given JSON data to a []string.
+func VehiclePowertrainFuelSystemSupportedFuelTypesFromData(jsonData []byte) (ret []string, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.fuelType")
 	if result.Exists() {
-		valVehiclePowertrainFuelSystemSupportedFuelTypes, ok := result.Value().(string)
+		val, ok := result.Value().(string)
 		if ok {
-			dimo.VehiclePowertrainFuelSystemSupportedFuelTypes, err = ToVehiclePowertrainFuelSystemSupportedFuelTypes(valVehiclePowertrainFuelSystemSupportedFuelTypes)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.fuelType': %w", err))
+			ret, err = ToVehiclePowertrainFuelSystemSupportedFuelTypes0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.fuelType': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.fuelType' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.range to VehiclePowertrainRange
+	return ret, errs
+}
+
+// VehiclePowertrainRangeFromData converts the given JSON data to a uint32.
+func VehiclePowertrainRangeFromData(jsonData []byte) (ret uint32, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.range")
 	if result.Exists() {
-		valVehiclePowertrainRange, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehiclePowertrainRange, err = ToVehiclePowertrainRange(valVehiclePowertrainRange)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.range': %w", err))
+			ret, err = ToVehiclePowertrainRange0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.range': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.range' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.chargeLimit to VehiclePowertrainTractionBatteryChargingChargeLimit
+	return ret, errs
+}
+
+// VehiclePowertrainTractionBatteryChargingChargeLimitFromData converts the given JSON data to a uint8.
+func VehiclePowertrainTractionBatteryChargingChargeLimitFromData(jsonData []byte) (ret uint8, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.chargeLimit")
 	if result.Exists() {
-		valVehiclePowertrainTractionBatteryChargingChargeLimit, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehiclePowertrainTractionBatteryChargingChargeLimit, err = ToVehiclePowertrainTractionBatteryChargingChargeLimit(valVehiclePowertrainTractionBatteryChargingChargeLimit)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.chargeLimit': %w", err))
+			ret, err = ToVehiclePowertrainTractionBatteryChargingChargeLimit0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.chargeLimit': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.chargeLimit' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.charging to VehiclePowertrainTractionBatteryChargingIsCharging
+	return ret, errs
+}
+
+// VehiclePowertrainTractionBatteryChargingIsChargingFromData converts the given JSON data to a bool.
+func VehiclePowertrainTractionBatteryChargingIsChargingFromData(jsonData []byte) (ret bool, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.charging")
 	if result.Exists() {
-		valVehiclePowertrainTractionBatteryChargingIsCharging, ok := result.Value().(bool)
+		val, ok := result.Value().(bool)
 		if ok {
-			dimo.VehiclePowertrainTractionBatteryChargingIsCharging, err = ToVehiclePowertrainTractionBatteryChargingIsCharging(valVehiclePowertrainTractionBatteryChargingIsCharging)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.charging': %w", err))
+			ret, err = ToVehiclePowertrainTractionBatteryChargingIsCharging0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.charging': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.charging' is not of type 'bool' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.batteryCapacity to VehiclePowertrainTractionBatteryGrossCapacity
+	return ret, errs
+}
+
+// VehiclePowertrainTractionBatteryGrossCapacityFromData converts the given JSON data to a uint16.
+func VehiclePowertrainTractionBatteryGrossCapacityFromData(jsonData []byte) (ret uint16, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.batteryCapacity")
 	if result.Exists() {
-		valVehiclePowertrainTractionBatteryGrossCapacity, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehiclePowertrainTractionBatteryGrossCapacity, err = ToVehiclePowertrainTractionBatteryGrossCapacity(valVehiclePowertrainTractionBatteryGrossCapacity)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.batteryCapacity': %w", err))
+			ret, err = ToVehiclePowertrainTractionBatteryGrossCapacity0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.batteryCapacity': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.batteryCapacity' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.soc to VehiclePowertrainTractionBatteryStateOfChargeCurrent
+	return ret, errs
+}
+
+// VehiclePowertrainTractionBatteryStateOfChargeCurrentFromData converts the given JSON data to a float32.
+func VehiclePowertrainTractionBatteryStateOfChargeCurrentFromData(jsonData []byte) (ret float32, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.soc")
 	if result.Exists() {
-		valVehiclePowertrainTractionBatteryStateOfChargeCurrent, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehiclePowertrainTractionBatteryStateOfChargeCurrent, err = ToVehiclePowertrainTractionBatteryStateOfChargeCurrent(valVehiclePowertrainTractionBatteryStateOfChargeCurrent)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.soc': %w", err))
+			ret, err = ToVehiclePowertrainTractionBatteryStateOfChargeCurrent0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.soc': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.soc' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.odometer to VehiclePowertrainTransmissionTravelledDistance
+	return ret, errs
+}
+
+// VehiclePowertrainTransmissionTravelledDistanceFromData converts the given JSON data to a float32.
+func VehiclePowertrainTransmissionTravelledDistanceFromData(jsonData []byte) (ret float32, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.odometer")
 	if result.Exists() {
-		valVehiclePowertrainTransmissionTravelledDistance, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehiclePowertrainTransmissionTravelledDistance, err = ToVehiclePowertrainTransmissionTravelledDistance(valVehiclePowertrainTransmissionTravelledDistance)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.odometer': %w", err))
+			ret, err = ToVehiclePowertrainTransmissionTravelledDistance0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.odometer': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.odometer' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.fuelType to VehiclePowertrainType
+	return ret, errs
+}
+
+// VehiclePowertrainTypeFromData converts the given JSON data to a string.
+func VehiclePowertrainTypeFromData(jsonData []byte) (ret string, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.fuelType")
 	if result.Exists() {
-		valVehiclePowertrainType, ok := result.Value().(string)
+		val, ok := result.Value().(string)
 		if ok {
-			dimo.VehiclePowertrainType, err = ToVehiclePowertrainType(valVehiclePowertrainType)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.fuelType': %w", err))
+			ret, err = ToVehiclePowertrainType0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.fuelType': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.fuelType' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.speed to VehicleSpeed
+	return ret, errs
+}
+
+// VehicleSpeedFromData converts the given JSON data to a float32.
+func VehicleSpeedFromData(jsonData []byte) (ret float32, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.speed")
 	if result.Exists() {
-		valVehicleSpeed, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehicleSpeed, err = ToVehicleSpeed(valVehicleSpeed)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.speed': %w", err))
+			ret, err = ToVehicleSpeed0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.speed': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.speed' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.make to VehicleVehicleIdentificationBrand
+	return ret, errs
+}
+
+// VehicleVehicleIdentificationBrandFromData converts the given JSON data to a string.
+func VehicleVehicleIdentificationBrandFromData(jsonData []byte) (ret string, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.make")
 	if result.Exists() {
-		valVehicleVehicleIdentificationBrand, ok := result.Value().(string)
+		val, ok := result.Value().(string)
 		if ok {
-			dimo.VehicleVehicleIdentificationBrand, err = ToVehicleVehicleIdentificationBrand(valVehicleVehicleIdentificationBrand)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.make': %w", err))
+			ret, err = ToVehicleVehicleIdentificationBrand0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.make': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.make' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.model to VehicleVehicleIdentificationModel
+	return ret, errs
+}
+
+// VehicleVehicleIdentificationModelFromData converts the given JSON data to a string.
+func VehicleVehicleIdentificationModelFromData(jsonData []byte) (ret string, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.model")
 	if result.Exists() {
-		valVehicleVehicleIdentificationModel, ok := result.Value().(string)
+		val, ok := result.Value().(string)
 		if ok {
-			dimo.VehicleVehicleIdentificationModel, err = ToVehicleVehicleIdentificationModel(valVehicleVehicleIdentificationModel)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.model': %w", err))
+			ret, err = ToVehicleVehicleIdentificationModel0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.model': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.model' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.year to VehicleVehicleIdentificationYear
+	return ret, errs
+}
+
+// VehicleVehicleIdentificationYearFromData converts the given JSON data to a uint16.
+func VehicleVehicleIdentificationYearFromData(jsonData []byte) (ret uint16, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.year")
 	if result.Exists() {
-		valVehicleVehicleIdentificationYear, ok := result.Value().(float64)
+		val, ok := result.Value().(float64)
 		if ok {
-			dimo.VehicleVehicleIdentificationYear, err = ToVehicleVehicleIdentificationYear(valVehicleVehicleIdentificationYear)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.year': %w", err))
+			ret, err = ToVehicleVehicleIdentificationYear0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.year': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.year' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
-	// convert data.vehicleID to VehicleID
+	return ret, errs
+}
+
+// VehicleIDFromData converts the given JSON data to a string.
+func VehicleIDFromData(jsonData []byte) (ret string, err error) {
+	var errs error
+	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.vehicleID")
 	if result.Exists() {
-		valVehicleID, ok := result.Value().(string)
+		val, ok := result.Value().(string)
 		if ok {
-			dimo.VehicleID, err = ToVehicleID(valVehicleID)
-			if err != nil {
-				errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.vehicleID': %w", err))
+			ret, err = ToVehicleID0(val)
+			if err == nil {
+				return ret, nil
 			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.vehicleID': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.vehicleID' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
-	return &dimo, errs
+
+	return ret, errs
 }

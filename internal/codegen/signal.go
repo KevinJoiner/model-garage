@@ -41,7 +41,7 @@ type SignalInfo struct {
 	BaseGoType  string
 	BaseCHType  string
 	BaseGQLType string
-	Conversion  *ConversionInfo
+	Conversions []*ConversionInfo
 	Privileges  []string
 }
 
@@ -54,13 +54,13 @@ type ConversionInfo struct {
 
 // DefinitionInfo contains the definition information for a field.
 type DefinitionInfo struct {
-	VspecName          string          `json:"vspecName"          yaml:"vspecName"`
-	IsArray            *bool           `json:"isArray"            yaml:"isArray"`
-	ClickHouseType     string          `json:"clickHouseType"     yaml:"clickHouseType"`
-	GoType             string          `json:"goType"             yaml:"goType"`
-	GQLType            string          `json:"gqlType"            yaml:"gqlType"`
-	Conversion         *ConversionInfo `json:"conversion"         yaml:"conversion"`
-	RequiredPrivileges []string        `json:"requiredPrivileges" yaml:"requiredPrivileges"`
+	VspecName          string            `json:"vspecName"          yaml:"vspecName"`
+	IsArray            *bool             `json:"isArray"            yaml:"isArray"`
+	ClickHouseType     string            `json:"clickHouseType"     yaml:"clickHouseType"`
+	GoType             string            `json:"goType"             yaml:"goType"`
+	GQLType            string            `json:"gqlType"            yaml:"gqlType"`
+	Conversions        []*ConversionInfo `json:"conversions"        yaml:"conversions"`
+	RequiredPrivileges []string          `json:"requiredPrivileges" yaml:"requiredPrivileges"`
 }
 
 // Definitions is a map of definitions from clickhouse Name to definition info.
@@ -132,10 +132,12 @@ func (s *SignalInfo) MergeWithDefinition(definition *DefinitionInfo) {
 	if definition.IsArray != nil {
 		s.IsArray = *definition.IsArray
 	}
-	if definition.Conversion != nil {
-		s.Conversion = definition.Conversion
-		if s.Conversion.OriginalType == "" {
-			s.Conversion.OriginalType = s.GOType()
+	if len(definition.Conversions) != 0 {
+		s.Conversions = definition.Conversions
+		for _, conv := range s.Conversions {
+			if conv.OriginalType == "" {
+				conv.OriginalType = s.GOType()
+			}
 		}
 	}
 	s.Privileges = definition.RequiredPrivileges

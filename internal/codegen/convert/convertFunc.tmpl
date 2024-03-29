@@ -1,7 +1,7 @@
 
-// {{ convertName .Signal }} converts data as {{ .Signal.Conversion.OriginalType }} to {{ .Signal.GOType }}.
-func {{ convertName .Signal }}(val {{ .Signal.Conversion.OriginalType }}) ({{ .Signal.GOType }}, error) {
-    {{ if eq .Signal.Conversion.OriginalType .Signal.GOType -}}
+// {{ convertName .Signal }}{{ .ConvIdx }} converts data as {{ .Conversion.OriginalType }} to {{ .Signal.GOType }}.
+func {{ convertName .Signal }}{{ .ConvIdx }}(val {{ .Conversion.OriginalType }}) ({{ .Signal.GOType }}, error) {
+    {{ if eq .Conversion.OriginalType .Signal.GOType -}}
     return val, nil
     {{- else -}}
     panic("not implemented")
