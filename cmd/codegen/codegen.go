@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/DIMO-Network/model-garage/internal/codegen/runner"
+	"github.com/DIMO-Network/model-garage/pkg/runner"
 	"github.com/DIMO-Network/model-garage/schema"
 )
 
