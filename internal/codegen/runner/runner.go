@@ -32,6 +32,17 @@ func Execute(outputDir, packageName string, vspecReader, definitionsReader io.Re
 	if len(generators) == 0 {
 		generators = []string{AllGenerator}
 	}
+	// if none of the generators are selected, return an error.
+	switch {
+	case slices.Contains(generators, AllGenerator):
+	case slices.Contains(generators, ModelGenerator):
+	case slices.Contains(generators, ClickhouseGenerator):
+	case slices.Contains(generators, ConvertGenerator):
+	case slices.Contains(generators, GraphqlGenerator):
+	default:
+		return fmt.Errorf("no generator selected")
+	}
+
 	err := codegen.EnsureDir(outputDir)
 	if err != nil {
 		return fmt.Errorf("failed to ensure output directory: %w", err)
