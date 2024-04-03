@@ -1,0 +1,47 @@
+package {{ .PackageName }}
+
+import (
+	"context"
+	"database/sql"
+
+	"github.com/pressly/goose/v3"
+)
+
+func init() {
+	_, filename, _, _ := runtime.Caller(0)
+	addFunc := func() { goose.AddNamedMigrationContext(filename, upCommand{{ version }}, downCommand{{ version }}) }
+	addFuncs = append(addFuncs, addFunc)
+	addFunc()
+}
+
+func upCommand{{ version }}(ctx context.Context, tx *sql.Tx) error {
+	// This code is executed when the migration is applied.
+	upStatements  := []string{ 
+	{{- range upStatements }}
+		"{{ . }}",
+	{{ end -}}
+	}
+	for _, upStatement := range upStatements {
+		_, err := tx.ExecContext(ctx, upStatement)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func downCommand{{ version }}(ctx context.Context, tx *sql.Tx) error {
+	// This code is executed when the migration is rolled back.
+	downStatements  :=[]string{ 
+	{{- range downStatements }}
+		"{{ . }}",
+	{{ end }}
+	}
+	for _, downStatement := range downStatements {
+		_, err := tx.ExecContext(ctx, downStatement)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
