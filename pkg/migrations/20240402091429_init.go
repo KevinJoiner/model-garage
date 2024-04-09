@@ -13,7 +13,7 @@ import (
 func init() {
 	_, filename, _, _ := runtime.Caller(0)
 	addFunc := func() { goose.AddNamedMigrationContext(filename, upInit, downInit) }
-	addFuncs = append(addFuncs, addFunc)
+	registerFuncs = append(registerFuncs, addFunc)
 	addFunc()
 }
 

@@ -166,7 +166,6 @@ func skipCol(colName string) bool {
 func SignalToSlice(obj Signal) []any {
 	return []any{
 		obj.TokenID,
-		obj.Subject,
 		obj.Timestamp,
 		obj.SignalName,
 		obj.ValueString,
