@@ -148,7 +148,7 @@ func (s *SignalInfo) GOType() string {
 	if s.IsArray {
 		return "[]" + s.BaseGoType
 	}
-	return s.BaseGoType
+	return "*" + s.BaseGoType
 }
 
 // CHType returns the clickhouse type of the signal.
