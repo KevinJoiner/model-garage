@@ -2,13 +2,14 @@ package migration
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"strings"
 
 	"github.com/ClickHouse/clickhouse-go/v2"
 	"github.com/DIMO-Network/model-garage/internal/codegen"
 	"github.com/DIMO-Network/model-garage/pkg/container"
-	_ "github.com/DIMO-Network/model-garage/pkg/migrations"
+	"github.com/DIMO-Network/model-garage/pkg/migrations"
 	"github.com/pressly/goose/v3"
 )
 
@@ -32,10 +33,9 @@ func getAlterStatements(ctx context.Context, tmplData *codegen.TemplateData) ([]
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to get clickhouse db: %w", err)
 	}
-	goose.SetDialect("clickhouse")
-	err = goose.RunContext(ctx, "up", db, ".")
+	err = RunDBMigration(ctx, db)
 	if err != nil {
-		return nil, nil, fmt.Errorf("failed to apply migrations: %w", err)
+		return nil, nil, fmt.Errorf("failed to run db migration: %w", err)
 	}
 
 	chConn, err := container.GetClickHouseAsConn(chcontainer)
@@ -50,6 +50,17 @@ func getAlterStatements(ctx context.Context, tmplData *codegen.TemplateData) ([]
 	alterStms := calculateStatements(cols, newCols, strings.ToLower(tmplData.ModelName))
 	downStms := calculateStatements(newCols, cols, strings.ToLower(tmplData.ModelName))
 	return alterStms, downStms, nil
+}
+
+func RunDBMigration(ctx context.Context, db *sql.DB) error {
+	// set the migrations.
+	migrations.SetMigrations()
+	goose.SetDialect("clickhouse")
+	err := goose.RunContext(ctx, "up", db, ".")
+	if err != nil {
+		return fmt.Errorf("failed to apply migrations: %w", err)
+	}
+	return nil
 }
 
 func Equal(oldCol, newCol colInfo) bool {
