@@ -45,9 +45,6 @@ func RunGoose(ctx context.Context, gooseArgs []string, chConfig ClickhouseConfig
 		return fmt.Errorf("command not provided")
 	}
 	db := GetClickhouseDB(chConfig)
-	if err := db.Ping(); err != nil {
-		return fmt.Errorf("failed to ping clickhouse: %w", err)
-	}
 	cmd := gooseArgs[0]
 	var args []string
 	if len(gooseArgs) > 1 {
