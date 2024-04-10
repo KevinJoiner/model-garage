@@ -23,6 +23,7 @@ type ClickhouseConfig struct {
 	Port     string `yaml:"CLICKHOUSE_PORT"`
 	User     string `yaml:"CLICKHOUSE_USER"`
 	Password string `yaml:"CLICKHOUSE_PASSWORD"`
+	DataBase string `yaml:"CLICKHOUSE_DATABASE"`
 }
 
 // SetMigrations sets the migrations for the goose tool.
@@ -72,6 +73,7 @@ func GetClickhouseDB(config ClickhouseConfig) *sql.DB {
 		Auth: clickhouse.Auth{
 			Username: config.User,
 			Password: config.Password,
+			Database: config.DataBase,
 		},
 		DialTimeout: time.Minute * 30,
 	})
