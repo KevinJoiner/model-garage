@@ -39,12 +39,11 @@ func SetMigrations() {
 
 // RunGoose runs the goose command with the provided arguments.
 // args should be the command and the arguments to pass to goose.
-// eg RunGoose(ctx, []string{"up", "-v"}, chConfig)
-func RunGoose(ctx context.Context, gooseArgs []string, chConfig ClickhouseConfig) error {
+// eg RunGoose(ctx, []string{"up", "-v"}, db).
+func RunGoose(ctx context.Context, gooseArgs []string, db *sql.DB) error {
 	if len(gooseArgs) == 0 {
 		return fmt.Errorf("command not provided")
 	}
-	db := GetClickhouseDB(chConfig)
 	cmd := gooseArgs[0]
 	var args []string
 	if len(gooseArgs) > 1 {

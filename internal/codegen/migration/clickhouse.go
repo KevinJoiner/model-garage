@@ -2,7 +2,6 @@ package migration
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 	"strings"
 
@@ -10,7 +9,6 @@ import (
 	"github.com/DIMO-Network/model-garage/internal/codegen"
 	"github.com/DIMO-Network/model-garage/pkg/container"
 	"github.com/DIMO-Network/model-garage/pkg/migrations"
-	"github.com/pressly/goose/v3"
 )
 
 type colInfo struct {
@@ -33,7 +31,7 @@ func getAlterStatements(ctx context.Context, tmplData *codegen.TemplateData) ([]
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to get clickhouse db: %w", err)
 	}
-	err = RunDBMigration(ctx, db)
+	err = migrations.RunGoose(ctx, []string{"up", "-v"}, db)
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to run db migration: %w", err)
 	}
@@ -50,17 +48,6 @@ func getAlterStatements(ctx context.Context, tmplData *codegen.TemplateData) ([]
 	alterStms := calculateStatements(cols, newCols, strings.ToLower(tmplData.ModelName))
 	downStms := calculateStatements(newCols, cols, strings.ToLower(tmplData.ModelName))
 	return alterStms, downStms, nil
-}
-
-func RunDBMigration(ctx context.Context, db *sql.DB) error {
-	// set the migrations.
-	migrations.SetMigrations()
-	goose.SetDialect("clickhouse")
-	err := goose.RunContext(ctx, "up", db, ".")
-	if err != nil {
-		return fmt.Errorf("failed to apply migrations: %w", err)
-	}
-	return nil
 }
 
 func Equal(oldCol, newCol colInfo) bool {
