@@ -1,4 +1,4 @@
-package container
+package clickhouseinfra
 
 import (
 	"context"
@@ -11,6 +11,13 @@ import (
 	"github.com/testcontainers/testcontainers-go"
 	chmodule "github.com/testcontainers/testcontainers-go/modules/clickhouse"
 )
+
+// ColInfo is a struct that holds the column meta information.
+type ColInfo struct {
+	Name    string
+	Type    string
+	Comment string
+}
 
 // CreateClickHouseContainer function starts and testcontainer for clickhouse.
 // The caller is responsible for terminating the container.
@@ -76,4 +83,26 @@ func Terminate(ctx context.Context, container *chmodule.ClickHouseContainer) {
 	if err := container.Terminate(ctx); err != nil {
 		_, _ = fmt.Fprintf(os.Stderr, "failed to terminate clickhouse container: %v", err)
 	}
+}
+
+// GetCurrentCols returns the current columns of the table.
+func GetCurrentCols(ctx context.Context, chConn clickhouse.Conn, tableName string) ([]ColInfo, error) {
+	selectStm := fmt.Sprintf("SELECT name, type, comment FROM system.columns where table='%s'", tableName)
+	rows, err := chConn.Query(ctx, selectStm)
+	if err != nil {
+		return nil, fmt.Errorf("failed to show table: %w", err)
+	}
+	defer rows.Close()
+	colInfos := []ColInfo{}
+	count := 0
+	for rows.Next() {
+		count++
+		var info ColInfo
+		err := rows.Scan(&info.Name, &info.Type, &info.Comment)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan table: %w", err)
+		}
+		colInfos = append(colInfos, info)
+	}
+	return colInfos, nil
 }

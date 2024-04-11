@@ -6,23 +6,6 @@ import (
 	"time"
 )
 
-type Signal struct {
-	// TokenID is the unique identifier of the device.
-	TokenID uint32 `ch:"TokenId" json:"tokenId"`
-
-	// Timestamp is when this data was collected.
-	Timestamp time.Time `ch:"Timestamp" json:"timestamp"`
-
-	// SignalName is the name of the signal collected.
-	SignalName string `ch:"SignalName" json:"signalName"`
-
-	// ValueString is the value of the signal collected.
-	ValueString []string `ch:"ValueString" json:"valueString"`
-
-	// ValueNumber is the value of the signal collected.
-	ValueNumber []float64 `ch:"ValueNumber" json:"valueNumber"`
-}
-
 // DIMOToSignals converts a slice of DIMO values to a slice of Signals.
 func DIMOToSignals(tokenID uint32, timestamp time.Time, dimos []any) []Signal {
 	retSignals := make([]Signal, 0, len(dimos))
@@ -43,27 +26,17 @@ func DIMOToSignals(tokenID uint32, timestamp time.Time, dimos []any) []Signal {
 			if num == nil {
 				continue
 			}
-			sig.ValueNumber = []float64{*num}
-		case []int, []int8, []int16, []int32, []int64, []uint, []uint8, []uint16, []uint32, []uint64, []float32, []float64:
-			valSlice := val.([]any)
-			if len(valSlice) == 0 {
-				continue
-			}
-			vals := make([]float64, len(valSlice))
-			for j, v := range valSlice {
-				vals[j] = *numToFloat64(&v)
-			}
-			sig.ValueNumber = vals
+			sig.ValueNumber = *num
 		case *string:
 			if val == nil {
 				continue
 			}
-			sig.ValueString = []string{*val}
+			sig.ValueString = *val
 		case []string:
 			if len(val) == 0 {
 				continue
 			}
-			sig.ValueString = val
+			sig.ValueStringArray = val
 		case []any:
 			if len(val) == 0 {
 				continue
@@ -72,7 +45,7 @@ func DIMOToSignals(tokenID uint32, timestamp time.Time, dimos []any) []Signal {
 			for j, v := range val {
 				vals[j] = fmt.Sprintf("%v", v)
 			}
-			sig.ValueString = vals
+			sig.ValueStringArray = vals
 		default:
 			// reflect to see if val is nil
 			rVal := reflect.ValueOf(val)
@@ -80,9 +53,9 @@ func DIMOToSignals(tokenID uint32, timestamp time.Time, dimos []any) []Signal {
 				continue
 			}
 			if str, ok := val.(fmt.Stringer); ok {
-				sig.ValueString = []string{str.String()}
+				sig.ValueString = str.String()
 			} else {
-				sig.ValueString = []string{fmt.Sprintf("%v", val)}
+				sig.ValueString = fmt.Sprintf("%v", val)
 			}
 		}
 		retSignals = append(retSignals, sig)
@@ -159,18 +132,6 @@ func numToFloat64(num any) *float64 {
 func skipCol(colName string) bool {
 	return colName == FieldSubject || colName == FieldTimestamp ||
 		colName == FieldType || colName == FieldDefinitionID || colName == FieldSource
-}
-
-// SignalToSlice converts a Signal to an array of any for Clickhouse insertion.
-// The order of the elements in the array is guaranteed to match the order of elements in the `SignalColNames`.
-func SignalToSlice(obj Signal) []any {
-	return []any{
-		obj.TokenID,
-		obj.Timestamp,
-		obj.SignalName,
-		obj.ValueString,
-		obj.ValueNumber,
-	}
 }
 
 func ref[T any](t T) *T {

@@ -5,29 +5,22 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/ClickHouse/clickhouse-go/v2"
 	"github.com/DIMO-Network/model-garage/internal/codegen"
-	"github.com/DIMO-Network/model-garage/pkg/container"
+	"github.com/DIMO-Network/model-garage/pkg/clickhouseinfra"
 	"github.com/DIMO-Network/model-garage/pkg/migrations"
 )
-
-type colInfo struct {
-	Name    string
-	Type    string
-	Comment string
-}
 
 // getAlterStatements generates the alter statements for the migration.
 // it creates a clickhouse database applies the current migrations and then diffs the current table with the new table.
 func getAlterStatements(ctx context.Context, tmplData *codegen.TemplateData) ([]string, []string, error) {
-	// start clickhouse test container.
-	chcontainer, err := container.CreateClickHouseContainer(ctx, "", "")
+	// start clickhouse test clickhouseinfra.
+	chcontainer, err := clickhouseinfra.CreateClickHouseContainer(ctx, "", "")
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to create clickhouse container: %w", err)
 	}
-	defer container.Terminate(ctx, chcontainer)
+	defer clickhouseinfra.Terminate(ctx, chcontainer)
 
-	db, err := container.GetClickhouseAsDB(chcontainer)
+	db, err := clickhouseinfra.GetClickhouseAsDB(chcontainer)
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to get clickhouse db: %w", err)
 	}
@@ -36,11 +29,11 @@ func getAlterStatements(ctx context.Context, tmplData *codegen.TemplateData) ([]
 		return nil, nil, fmt.Errorf("failed to run db migration: %w", err)
 	}
 
-	chConn, err := container.GetClickHouseAsConn(chcontainer)
+	chConn, err := clickhouseinfra.GetClickHouseAsConn(chcontainer)
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to get clickhouse connection: %w", err)
 	}
-	cols, err := GetCurrentCols(ctx, chConn, strings.ToLower(tmplData.ModelName))
+	cols, err := clickhouseinfra.GetCurrentCols(ctx, chConn, strings.ToLower(tmplData.ModelName))
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to get current cols: %w", err)
 	}
@@ -50,36 +43,14 @@ func getAlterStatements(ctx context.Context, tmplData *codegen.TemplateData) ([]
 	return alterStms, downStms, nil
 }
 
-func Equal(oldCol, newCol colInfo) bool {
+func Equal(oldCol, newCol clickhouseinfra.ColInfo) bool {
 	return oldCol.Name == newCol.Name && oldCol.Type == newCol.Type && oldCol.Comment == newCol.Comment
 }
 
-// GetCurrentCols  returns the current columns of the table.
-func GetCurrentCols(ctx context.Context, chConn clickhouse.Conn, tableName string) ([]colInfo, error) {
-	selectStm := fmt.Sprintf("SELECT name, type, comment  FROM system.columns where table='%s'", tableName)
-	rows, err := chConn.Query(ctx, selectStm)
-	if err != nil {
-		return nil, fmt.Errorf("failed to show table: %w", err)
-	}
-	defer rows.Close()
-	colInfos := []colInfo{}
-	count := 0
-	for rows.Next() {
-		count++
-		var info colInfo
-		err := rows.Scan(&info.Name, &info.Type, &info.Comment)
-		if err != nil {
-			return nil, fmt.Errorf("failed to scan table: %w", err)
-		}
-		colInfos = append(colInfos, info)
-	}
-	return colInfos, nil
-}
-
-func signalsToColInfo(signals []*codegen.SignalInfo) []colInfo {
-	colInfos := make([]colInfo, len(signals))
+func signalsToColInfo(signals []*codegen.SignalInfo) []clickhouseinfra.ColInfo {
+	colInfos := make([]clickhouseinfra.ColInfo, len(signals))
 	for i, sig := range signals {
-		colInfos[i] = colInfo{
+		colInfos[i] = clickhouseinfra.ColInfo{
 			Name:    sig.CHName,
 			Type:    sig.CHType(),
 			Comment: sig.Desc,
@@ -88,7 +59,7 @@ func signalsToColInfo(signals []*codegen.SignalInfo) []colInfo {
 	return colInfos
 }
 
-func calculateStatements(oldCols, newCols []colInfo, dbName string) []string {
+func calculateStatements(oldCols, newCols []clickhouseinfra.ColInfo, dbName string) []string {
 	alterStms := []string{}
 	i := len(oldCols) - 1
 	j := len(newCols) - 1
