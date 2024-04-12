@@ -2,7 +2,6 @@ package migration
 
 import (
 	"bytes"
-	"context"
 	_ "embed"
 	"fmt"
 	"path/filepath"
@@ -22,15 +21,8 @@ var migrationFileTemplate string
 
 // Generate creates a new ClickHouse table file.
 func Generate(tmplData *codegen.TemplateData, outputDir string) error {
-	ctx := context.TODO()
-	// create Alter statements for the migration.
-	upStatement, downStatement, err := getAlterStatements(ctx, tmplData)
-	if err != nil {
-		return err
-	}
-
 	version := time.Now().UTC().Format(timestampFormat)
-	migrationTempl, err := createMigrationTemplate(upStatement, downStatement, version)
+	migrationTempl, err := createMigrationTemplate(version)
 	if err != nil {
 		return err
 	}
@@ -49,13 +41,11 @@ func Generate(tmplData *codegen.TemplateData, outputDir string) error {
 	return nil
 }
 
-func createMigrationTemplate(upStatement, downStatement []string, version string) (*template.Template, error) {
+func createMigrationTemplate(version string) (*template.Template, error) {
 	tmpl, err := template.New("migrationTemplate").Funcs(template.FuncMap{
-		"escapeDesc":     func(desc string) string { return strings.ReplaceAll(desc, `'`, `\'`) },
-		"lower":          strings.ToLower,
-		"upStatements":   func() []string { return upStatement },
-		"downStatements": func() []string { return downStatement },
-		"version":        func() string { return version },
+		"escapeDesc": func(desc string) string { return strings.ReplaceAll(desc, `'`, `\'`) },
+		"lower":      strings.ToLower,
+		"version":    func() string { return version },
 	}).Parse(migrationFileTemplate)
 	if err != nil {
 		return nil, fmt.Errorf("error parsing ClickHouse table template: %w", err)

@@ -1,6 +1,6 @@
 .PHONY: clean run build install dep test lint format docker gql tools tools-golangci-lint tools-gotestsum
 export PATH := $(abspath bin/):${PATH}
-BIN_NAME					?= model-garage
+BIN_NAME					?= codegen
 DEFAULT_INSTALL_DIR			:= $(go env GOPATH)/bin
 DEFAULT_ARCH				:= $(shell go env GOARCH)
 DEFAULT_GOOS				:= $(shell go env GOOS)
@@ -29,7 +29,7 @@ clean:
 	
 install: build
 	@install -d $(INSTALL_DIR)
-	@rm -f $(INSTALL_DIR)/benthos
+	@rm -f $(INSTALL_DIR)/$(BIN_NAME)
 	@cp bin/* $(INSTALL_DIR)/
 
 dep: 
@@ -44,6 +44,8 @@ lint:
 format:
 	@golangci-lint run --fix
 
+migration: build
+	./bin/codegen -output=./pkg/migrations -package=migrations -generators=migration
 
 tools-golangci-lint:
 	@mkdir -p bin

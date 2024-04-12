@@ -15,15 +15,15 @@ func TestMigration(t *testing.T) {
 	chcontainer, err := clickhouseinfra.CreateClickHouseContainer(ctx, "", "")
 	require.NoError(t, err, "Failed to create clickhouse container")
 
-	defer clickhouseinfra.Terminate(ctx, chcontainer)
+	defer chcontainer.Terminate(ctx)
 
-	db, err := clickhouseinfra.GetClickhouseAsDB(chcontainer)
+	db, err := clickhouseinfra.GetClickhouseAsDB(chcontainer.ClickHouseContainer)
 	require.NoError(t, err, "Failed to get clickhouse db")
 
 	err = migrations.RunGoose(ctx, []string{"up", "-v"}, db)
 	require.NoError(t, err, "Failed to run migration")
 
-	conn, err := clickhouseinfra.GetClickHouseAsConn(chcontainer)
+	conn, err := clickhouseinfra.GetClickHouseAsConn(chcontainer.ClickHouseContainer)
 	require.NoError(t, err, "Failed to get clickhouse connection")
 
 	// Iterate over the rows and check the column names
@@ -47,4 +47,7 @@ func TestMigration(t *testing.T) {
 	assert.NoError(t, err, "Failed to close DB connection")
 	err = conn.Close()
 	assert.NoError(t, err, "Failed to close clickhouse connection")
+
+	c := make(chan struct{})
+	<-c
 }

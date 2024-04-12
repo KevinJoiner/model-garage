@@ -9,6 +9,7 @@ import (
 	"github.com/DIMO-Network/model-garage/internal/codegen/clickhouse"
 	"github.com/DIMO-Network/model-garage/internal/codegen/convert"
 	"github.com/DIMO-Network/model-garage/internal/codegen/graphql"
+	"github.com/DIMO-Network/model-garage/internal/codegen/migration"
 	"github.com/DIMO-Network/model-garage/internal/codegen/model"
 )
 
@@ -23,6 +24,8 @@ const (
 	ConvertGenerator = "convert"
 	// GraphqlGenerator is a constant to run the graphql generator.
 	GraphqlGenerator = "graphql"
+	// MigrationGenerator is a constant to run the migration generator.
+	MigrationGenerator = "migration"
 )
 
 // Execute runs the code generation tool.
@@ -39,6 +42,7 @@ func Execute(outputDir, packageName string, vspecReader, definitionsReader io.Re
 	case slices.Contains(generators, ClickhouseGenerator):
 	case slices.Contains(generators, ConvertGenerator):
 	case slices.Contains(generators, GraphqlGenerator):
+	case slices.Contains(generators, MigrationGenerator):
 	default:
 		return fmt.Errorf("no generator selected")
 	}
@@ -79,6 +83,13 @@ func Execute(outputDir, packageName string, vspecReader, definitionsReader io.Re
 		err = graphql.Generate(tmplData, outputDir, gqlModelname)
 		if err != nil {
 			return fmt.Errorf("failed to generate graphql file: %w", err)
+		}
+	}
+
+	if slices.Contains(generators, AllGenerator) || slices.Contains(generators, MigrationGenerator) {
+		err = migration.Generate(tmplData, outputDir)
+		if err != nil {
+			return fmt.Errorf("failed to generate migration file: %w", err)
 		}
 	}
 	return nil

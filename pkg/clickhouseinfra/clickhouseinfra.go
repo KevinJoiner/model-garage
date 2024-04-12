@@ -8,8 +8,10 @@ import (
 
 	"github.com/ClickHouse/ch-go"
 	"github.com/ClickHouse/clickhouse-go/v2"
+	"github.com/docker/go-connections/nat"
 	"github.com/testcontainers/testcontainers-go"
 	chmodule "github.com/testcontainers/testcontainers-go/modules/clickhouse"
+	"github.com/testcontainers/testcontainers-go/wait"
 )
 
 // ColInfo is a struct that holds the column meta information.
@@ -18,23 +20,38 @@ type ColInfo struct {
 	Type    string
 	Comment string
 }
+type Container struct {
+	*chmodule.ClickHouseContainer
+	ZooKeeperContainer testcontainers.Container
+}
 
 // CreateClickHouseContainer function starts and testcontainer for clickhouse.
 // The caller is responsible for terminating the container.
-func CreateClickHouseContainer(ctx context.Context, userName, password string) (*chmodule.ClickHouseContainer, error) {
+func CreateClickHouseContainer(ctx context.Context, userName, password string) (*Container, error) {
 	if userName == "" {
 		userName = ch.DefaultUser
+	}
+	zkcontainer, zkPort, err := StartZooKeeperContainer(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("failed to start zookeeper container: %w", err)
+	}
+	ipaddr, err := zkcontainer.ContainerIP(ctx)
+	if err != nil {
+		zkcontainer.Terminate(ctx)
+		return nil, fmt.Errorf("failed to get zookeeper container IP: %w", err)
 	}
 	clickHouseContainer, err := chmodule.RunContainer(ctx,
 		testcontainers.WithImage("clickhouse/clickhouse-server:23.3.8.21-alpine"),
 		chmodule.WithDatabase(ch.DefaultDatabase),
 		chmodule.WithUsername(userName),
 		chmodule.WithPassword(password),
+		chmodule.WithZookeeper(ipaddr, zkPort),
 	)
 	if err != nil {
-		return clickHouseContainer, fmt.Errorf("failed to run clickhouse container: %w", err)
+		zkcontainer.Terminate(ctx)
+		return nil, fmt.Errorf("failed to start clickhouse container: %w", err)
 	}
-	return clickHouseContainer, nil
+	return &Container{clickHouseContainer, zkcontainer}, nil
 }
 
 // GetClickHouseAsConn function returns a clickhouse.Conn connection which uses native ClickHouse protocol.
@@ -79,8 +96,11 @@ func GetClickhouseAsDB(container *chmodule.ClickHouseContainer) (*sql.DB, error)
 
 // Terminate function terminates the clickhouse container.
 // If an error occurs, it will be printed to stderr.
-func Terminate(ctx context.Context, container *chmodule.ClickHouseContainer) {
-	if err := container.Terminate(ctx); err != nil {
+func (c *Container) Terminate(ctx context.Context) {
+	if err := c.ClickHouseContainer.Terminate(ctx); err != nil {
+		_, _ = fmt.Fprintf(os.Stderr, "failed to terminate clickhouse container: %v", err)
+	}
+	if err := c.ZooKeeperContainer.Terminate(ctx); err != nil {
 		_, _ = fmt.Fprintf(os.Stderr, "failed to terminate clickhouse container: %v", err)
 	}
 }
@@ -105,4 +125,21 @@ func GetCurrentCols(ctx context.Context, chConn clickhouse.Conn, tableName strin
 		colInfos = append(colInfos, info)
 	}
 	return colInfos, nil
+}
+
+func StartZooKeeperContainer(ctx context.Context) (testcontainers.Container, string, error) {
+	zkPort := nat.Port("2181/tcp")
+
+	zkcontainer, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{
+		ContainerRequest: testcontainers.ContainerRequest{
+			ExposedPorts: []string{zkPort.Port()},
+			Image:        "zookeeper:3.7",
+			WaitingFor:   wait.ForListeningPort(zkPort),
+		},
+		Started: true,
+	})
+	if err != nil {
+		return zkcontainer, "", fmt.Errorf("failed to start zookeeper container: %w", err)
+	}
+	return zkcontainer, zkPort.Port(), nil
 }
