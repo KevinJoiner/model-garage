@@ -32,7 +32,7 @@ func Generate(tmplData *codegen.TemplateData, outputDir string) error {
 	if err != nil {
 		return fmt.Errorf("error executing ClickHouse table template: %w", err)
 	}
-	migrationFilePath := getFilePath(tmplData.ModelName, outputDir, version)
+	migrationFilePath := getFilePath(strings.ToLower(tmplData.ModelName), outputDir, version)
 	err = codegen.FormatAndWriteToFile(outBuf.Bytes(), migrationFilePath)
 	if err != nil {
 		return fmt.Errorf("error writing file: %w", err)
