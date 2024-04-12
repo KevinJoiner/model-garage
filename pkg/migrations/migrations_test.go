@@ -47,7 +47,4 @@ func TestMigration(t *testing.T) {
 	assert.NoError(t, err, "Failed to close DB connection")
 	err = conn.Close()
 	assert.NoError(t, err, "Failed to close clickhouse connection")
-
-	c := make(chan struct{})
-	<-c
 }
