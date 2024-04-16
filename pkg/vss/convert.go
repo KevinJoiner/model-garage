@@ -14,9 +14,9 @@ func DIMOToSignals(tokenID uint32, timestamp time.Time, dimos []any) []Signal {
 			continue
 		}
 		sig := Signal{
-			TokenID:    tokenID,
-			Timestamp:  timestamp,
-			SignalName: colName,
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+			Name:      colName,
 		}
 
 		switch val := dimos[i].(type) {

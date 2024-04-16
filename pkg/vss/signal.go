@@ -11,13 +11,13 @@ const (
 // This is the data format that is stored in the database.
 type Signal struct {
 	// TokenID is the unique identifier of the device.
-	TokenID uint32 `ch:"TokenId" json:"tokenId"`
+	TokenID uint32 `ch:"TokenID" json:"tokenID"`
 
 	// Timestamp is when this data was collected.
 	Timestamp time.Time `ch:"Timestamp" json:"timestamp"`
 
-	// SignalName is the name of the signal collected.
-	SignalName string `ch:"SignalName" json:"signalName"`
+	// Name is the name of the signal collected.
+	Name string `ch:"Name" json:"Name"`
 
 	// ValueNumber is the value of the signal collected.
 	ValueNumber float64 `ch:"ValueNumber" json:"valueNumber"`
@@ -35,7 +35,7 @@ func SignalToSlice(obj Signal) []any {
 	return []any{
 		obj.TokenID,
 		obj.Timestamp,
-		obj.SignalName,
+		obj.Name,
 		obj.ValueNumber,
 		obj.ValueString,
 		obj.ValueStringArray,
@@ -47,7 +47,7 @@ func SignalColNames() []string {
 	return []string{
 		"TokenID",
 		"Timestamp",
-		"SignalName",
+		"Name",
 		"ValueNumber",
 		"ValueString",
 		"ValueStringArray",
