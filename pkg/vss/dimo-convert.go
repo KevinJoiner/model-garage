@@ -24,31 +24,6 @@ func FromData(jsonData []byte) (*Dimo, error) {
 	var errs error
 	var err error
 
-	dimo.DefinitionID, err = DefinitionIDFromData(jsonData)
-	if err != nil {
-		errs = errors.Join(errs, fmt.Errorf("failed to get 'DefinitionID': %w", err))
-	}
-
-	dimo.Source, err = SourceFromData(jsonData)
-	if err != nil {
-		errs = errors.Join(errs, fmt.Errorf("failed to get 'Source': %w", err))
-	}
-
-	dimo.Subject, err = SubjectFromData(jsonData)
-	if err != nil {
-		errs = errors.Join(errs, fmt.Errorf("failed to get 'Subject': %w", err))
-	}
-
-	dimo.Timestamp, err = TimestampFromData(jsonData)
-	if err != nil {
-		errs = errors.Join(errs, fmt.Errorf("failed to get 'Timestamp': %w", err))
-	}
-
-	dimo.Type, err = TypeFromData(jsonData)
-	if err != nil {
-		errs = errors.Join(errs, fmt.Errorf("failed to get 'Type': %w", err))
-	}
-
 	dimo.VehicleChassisAxleRow1WheelLeftTirePressure, err = VehicleChassisAxleRow1WheelLeftTirePressureFromData(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleChassisAxleRow1WheelLeftTirePressure': %w", err))
@@ -203,117 +178,7 @@ func FromData(jsonData []byte) (*Dimo, error) {
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleVehicleIdentificationYear': %w", err))
 	}
-
-	dimo.VehicleID, err = VehicleIDFromData(jsonData)
-	if err != nil {
-		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleID': %w", err))
-	}
 	return &dimo, errs
-}
-
-// DefinitionIDFromData converts the given JSON data to a *string.
-func DefinitionIDFromData(jsonData []byte) (ret *string, err error) {
-	var errs error
-	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.definitionID")
-	if result.Exists() {
-		val, ok := result.Value().(string)
-		if ok {
-			retVal, err := ToDefinitionID0(val)
-			if err == nil {
-				return &retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.definitionID': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.definitionID' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-		}
-	}
-
-	return ret, errs
-}
-
-// SourceFromData converts the given JSON data to a *string.
-func SourceFromData(jsonData []byte) (ret *string, err error) {
-	var errs error
-	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "source")
-	if result.Exists() {
-		val, ok := result.Value().(string)
-		if ok {
-			retVal, err := ToSource0(val)
-			if err == nil {
-				return &retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'source': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'source' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-		}
-	}
-
-	return ret, errs
-}
-
-// SubjectFromData converts the given JSON data to a *string.
-func SubjectFromData(jsonData []byte) (ret *string, err error) {
-	var errs error
-	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "subject")
-	if result.Exists() {
-		val, ok := result.Value().(string)
-		if ok {
-			retVal, err := ToSubject0(val)
-			if err == nil {
-				return &retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'subject': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'subject' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-		}
-	}
-
-	return ret, errs
-}
-
-// TimestampFromData converts the given JSON data to a *time.Time.
-func TimestampFromData(jsonData []byte) (ret *time.Time, err error) {
-	var errs error
-	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "time")
-	if result.Exists() {
-		val, ok := result.Value().(string)
-		if ok {
-			retVal, err := ToTimestamp0(val)
-			if err == nil {
-				return &retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'time': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'time' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-		}
-	}
-
-	return ret, errs
-}
-
-// TypeFromData converts the given JSON data to a *string.
-func TypeFromData(jsonData []byte) (ret *string, err error) {
-	var errs error
-	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "type")
-	if result.Exists() {
-		val, ok := result.Value().(string)
-		if ok {
-			retVal, err := ToType0(val)
-			if err == nil {
-				return &retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'type': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'type' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-		}
-	}
-
-	return ret, errs
 }
 
 // VehicleChassisAxleRow1WheelLeftTirePressureFromData converts the given JSON data to a *uint16.
@@ -974,27 +839,6 @@ func VehicleVehicleIdentificationYearFromData(jsonData []byte) (ret *uint16, err
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.year': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.year' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-		}
-	}
-
-	return ret, errs
-}
-
-// VehicleIDFromData converts the given JSON data to a *string.
-func VehicleIDFromData(jsonData []byte) (ret *string, err error) {
-	var errs error
-	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.vehicleID")
-	if result.Exists() {
-		val, ok := result.Value().(string)
-		if ok {
-			retVal, err := ToVehicleID0(val)
-			if err == nil {
-				return &retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.vehicleID': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.vehicleID' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 

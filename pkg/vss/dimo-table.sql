@@ -1,9 +1,4 @@
 CREATE TABLE IF NOT EXISTS dimo (
-	DefinitionID String COMMENT 'ID for the vehicles definition',
-	Source String COMMENT 'where the data was sourced from',
-	Subject String COMMENT 'subjet of this vehicle data',
-	Timestamp DateTime('UTC') COMMENT 'timestamp of when this data was colllected',
-	Type String COMMENT 'type of data collected',
 	Vehicle_Chassis_Axle_Row1_Wheel_Left_Tire_Pressure UInt16 COMMENT 'Tire pressure in kilo-Pascal.',
 	Vehicle_Chassis_Axle_Row1_Wheel_Right_Tire_Pressure UInt16 COMMENT 'Tire pressure in kilo-Pascal.',
 	Vehicle_Chassis_Axle_Row2_Wheel_Left_Tire_Pressure UInt16 COMMENT 'Tire pressure in kilo-Pascal.',
@@ -35,7 +30,6 @@ CREATE TABLE IF NOT EXISTS dimo (
 	Vehicle_VehicleIdentification_Brand String COMMENT 'Vehicle brand or manufacturer.',
 	Vehicle_VehicleIdentification_Model String COMMENT 'Vehicle model.',
 	Vehicle_VehicleIdentification_Year UInt16 COMMENT 'Model year of the vehicle.',
-	VehicleID String COMMENT 'unque DIMO ID for the vehicle',
 )
 ENGINE = MergeTree()
 ORDER BY (Subject, Timestamp)

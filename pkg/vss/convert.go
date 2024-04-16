@@ -10,9 +10,6 @@ import (
 func DIMOToSignals(tokenID uint32, timestamp time.Time, dimos []any) []Signal {
 	retSignals := make([]Signal, 0, len(dimos))
 	for i, colName := range DimoColNames() {
-		if skipCol(colName) {
-			continue
-		}
 		sig := Signal{
 			TokenID:   tokenID,
 			Timestamp: timestamp,
@@ -126,12 +123,6 @@ func numToFloat64(num any) *float64 {
 	default:
 		return nil
 	}
-}
-
-// skipCol returns true if the column should be skipped.
-func skipCol(colName string) bool {
-	return colName == FieldSubject || colName == FieldTimestamp ||
-		colName == FieldType || colName == FieldDefinitionID || colName == FieldSource
 }
 
 func ref[T any](t T) *T {

@@ -4,16 +4,6 @@ package vss
 import "time"
 
 const (
-	// FieldDefinitionID ID for the vehicles definition
-	FieldDefinitionID = "DefinitionID"
-	// FieldSource where the data was sourced from
-	FieldSource = "Source"
-	// FieldSubject subjet of this vehicle data
-	FieldSubject = "Subject"
-	// FieldTimestamp timestamp of when this data was colllected
-	FieldTimestamp = "Timestamp"
-	// FieldType type of data collected
-	FieldType = "Type"
 	// FieldVehicleChassisAxleRow1WheelLeftTirePressure Tire pressure in kilo-Pascal.
 	FieldVehicleChassisAxleRow1WheelLeftTirePressure = "Vehicle_Chassis_Axle_Row1_Wheel_Left_Tire_Pressure"
 	// FieldVehicleChassisAxleRow1WheelRightTirePressure Tire pressure in kilo-Pascal.
@@ -76,21 +66,9 @@ const (
 	FieldVehicleVehicleIdentificationModel = "Vehicle_VehicleIdentification_Model"
 	// FieldVehicleVehicleIdentificationYear Model year of the vehicle.
 	FieldVehicleVehicleIdentificationYear = "Vehicle_VehicleIdentification_Year"
-	// FieldVehicleID unque DIMO ID for the vehicle
-	FieldVehicleID = "VehicleID"
 )
 
 type Dimo struct {
-	// DefinitionID ID for the vehicles definition
-	DefinitionID *string `ch:"DefinitionID" json:"definitionID,omitempty"`
-	// Source where the data was sourced from
-	Source *string `ch:"Source" json:"source,omitempty"`
-	// Subject subjet of this vehicle data
-	Subject *string `ch:"Subject" json:"subject,omitempty"`
-	// Timestamp timestamp of when this data was colllected
-	Timestamp *time.Time `ch:"Timestamp" json:"timestamp,omitempty"`
-	// Type type of data collected
-	Type *string `ch:"Type" json:"type,omitempty"`
 	// VehicleChassisAxleRow1WheelLeftTirePressure Tire pressure in kilo-Pascal.
 	VehicleChassisAxleRow1WheelLeftTirePressure *uint16 `ch:"Vehicle_Chassis_Axle_Row1_Wheel_Left_Tire_Pressure" json:"vehicleChassisAxleRow1WheelLeftTirePressure,omitempty"`
 	// VehicleChassisAxleRow1WheelRightTirePressure Tire pressure in kilo-Pascal.
@@ -153,6 +131,4 @@ type Dimo struct {
 	VehicleVehicleIdentificationModel *string `ch:"Vehicle_VehicleIdentification_Model" json:"vehicleVehicleIdentificationModel,omitempty"`
 	// VehicleVehicleIdentificationYear Model year of the vehicle.
 	VehicleVehicleIdentificationYear *uint16 `ch:"Vehicle_VehicleIdentification_Year" json:"vehicleVehicleIdentificationYear,omitempty"`
-	// VehicleID unque DIMO ID for the vehicle
-	VehicleID *string `ch:"VehicleID" json:"vehicleID,omitempty"`
 }

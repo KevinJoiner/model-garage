@@ -14,11 +14,6 @@ var VSSTableCreateQuery string
 // The order of the elements in the array is guaranteed to match the order of elements in the `DimoColNames`.
 func DimoToSlice(obj *Dimo) []any {
 	return []any{
-		obj.DefinitionID,
-		obj.Source,
-		obj.Subject,
-		obj.Timestamp,
-		obj.Type,
 		obj.VehicleChassisAxleRow1WheelLeftTirePressure,
 		obj.VehicleChassisAxleRow1WheelRightTirePressure,
 		obj.VehicleChassisAxleRow2WheelLeftTirePressure,
@@ -50,7 +45,6 @@ func DimoToSlice(obj *Dimo) []any {
 		obj.VehicleVehicleIdentificationBrand,
 		obj.VehicleVehicleIdentificationModel,
 		obj.VehicleVehicleIdentificationYear,
-		obj.VehicleID,
 	}
 }
 
@@ -58,11 +52,6 @@ func DimoToSlice(obj *Dimo) []any {
 // The order of the elements in the array is guaranteed to match the order of elements in the `DimoToSlice`.
 func DimoColNames() []string {
 	return []string{
-		"DefinitionID",
-		"Source",
-		"Subject",
-		"Timestamp",
-		"Type",
 		"Vehicle_Chassis_Axle_Row1_Wheel_Left_Tire_Pressure",
 		"Vehicle_Chassis_Axle_Row1_Wheel_Right_Tire_Pressure",
 		"Vehicle_Chassis_Axle_Row2_Wheel_Left_Tire_Pressure",
@@ -94,17 +83,11 @@ func DimoColNames() []string {
 		"Vehicle_VehicleIdentification_Brand",
 		"Vehicle_VehicleIdentification_Model",
 		"Vehicle_VehicleIdentification_Year",
-		"VehicleID",
 	}
 }
 
 // DimoJSONName2CHName maps the JSON field names to the Clickhouse column names.
 var DimoJSONName2CHName = map[string]string{
-	"definitionID": "DefinitionID",
-	"source":       "Source",
-	"subject":      "Subject",
-	"timestamp":    "Timestamp",
-	"type":         "Type",
 	"vehicleChassisAxleRow1WheelLeftTirePressure":          "Vehicle_Chassis_Axle_Row1_Wheel_Left_Tire_Pressure",
 	"vehicleChassisAxleRow1WheelRightTirePressure":         "Vehicle_Chassis_Axle_Row1_Wheel_Right_Tire_Pressure",
 	"vehicleChassisAxleRow2WheelLeftTirePressure":          "Vehicle_Chassis_Axle_Row2_Wheel_Left_Tire_Pressure",
@@ -136,5 +119,4 @@ var DimoJSONName2CHName = map[string]string{
 	"vehicleVehicleIdentificationBrand":                    "Vehicle_VehicleIdentification_Brand",
 	"vehicleVehicleIdentificationModel":                    "Vehicle_VehicleIdentification_Model",
 	"vehicleVehicleIdentificationYear":                     "Vehicle_VehicleIdentification_Year",
-	"vehicleID":                                            "VehicleID",
 }

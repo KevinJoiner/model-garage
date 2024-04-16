@@ -51,36 +51,6 @@ func ToVehicleCurrentLocationTimestamp0(val string) (time.Time, error) {
 	return time.Parse(time.RFC3339, val)
 }
 
-// ToDefinitionID converts data as string to string.
-func ToDefinitionID0(val string) (string, error) {
-	return val, nil
-}
-
-// ToSource converts data as string to string.
-func ToSource0(val string) (string, error) {
-	return val, nil
-}
-
-// ToSubject converts data as string to string.
-func ToSubject0(val string) (string, error) {
-	return val, nil
-}
-
-// ToTimestamp converts data as string to time.Time.
-func ToTimestamp0(val string) (time.Time, error) {
-	return time.Parse(time.RFC3339, val)
-}
-
-// ToType converts data as string to string.
-func ToType0(val string) (string, error) {
-	return val, nil
-}
-
-// ToVehicleID converts data as string to string.
-func ToVehicleID0(val string) (string, error) {
-	return val, nil
-}
-
 // ToVehicleExteriorAirTemperature converts data as float64 to float32.
 func ToVehicleExteriorAirTemperature0(val float64) (float32, error) {
 	return convert.Float64ToFloat32(val), nil

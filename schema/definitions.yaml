@@ -1,7 +1,7 @@
 # This file contains the mapping of the vehicle data to the VSpecs
 
   # vspecName: The name of the VSpec field in the VSS schema 
-- vspecName: DIMO.DefinitionID
+- vspecName: DIMO.Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure
 
   # isArray: Whether the field is an array or not 
   # if null then the value is inferred from the vspec definition
@@ -22,70 +22,15 @@
   # conversions: The mapping of the original data to the VSpec field
   conversions:
     # - originalName: The name of the field in the original data
-    - originalName: data.definitionID
+    - originalName: data.tires.frontLeft
 
     #   originalType: The data type of the field in the original data
-      originalType: string
+      originalType: float64
 
     # isArray: Whether the field is an array or not
       isArray: false
   
   # requiredPrivileges: The list of privileges required to access the field
-  requiredPrivileges:
-    - VehicleNonLocationData
-- vspecName: DIMO.Source
-  isArray: null
-  clickHouseType: ""
-  goType: ""
-  gqlType: ""
-  conversions:
-    - originalName: source
-      originalType: string
-      isArray: false
-  requiredPrivileges:
-    - VehicleNonLocationData
-- vspecName: DIMO.Subject
-  isArray: null
-  clickHouseType: ""
-  goType: ""
-  gqlType: ""
-  conversions:
-    - originalName: subject
-      originalType: string
-      isArray: false
-  requiredPrivileges:
-    - VehicleNonLocationData
-- vspecName: DIMO.Timestamp
-  isArray: false
-  clickHouseType: DateTime('UTC')
-  goType: time.Time
-  gqlType: Time
-  conversions:
-    - originalName: time
-      originalType: string
-      isArray: false
-  requiredPrivileges:
-    - VehicleNonLocationData
-- vspecName: DIMO.Type
-  isArray: null
-  clickHouseType: ""
-  goType: ""
-  gqlType: ""
-  conversions:
-    - originalName: type
-      originalType: string
-      isArray: false
-  requiredPrivileges:
-    - VehicleNonLocationData
-- vspecName: DIMO.Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure
-  isArray: null
-  clickHouseType: ""
-  goType: ""
-  gqlType: ""
-  conversions:
-    - originalName: data.tires.frontLeft
-      originalType: float64
-      isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure
@@ -418,17 +363,6 @@
   conversions:
     - originalName: data.year
       originalType: float64
-      isArray: false
-  requiredPrivileges:
-    - VehicleNonLocationData
-- vspecName: DIMO.VehicleID
-  isArray: null
-  clickHouseType: ""
-  goType: ""
-  gqlType: ""
-  conversions:
-    - originalName: data.vehicleID
-      originalType: string
       isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
