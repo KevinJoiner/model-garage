@@ -2,6 +2,11 @@ package vss
 
 import "time"
 
+const (
+	// TableName is the name of the distributed table in Clickhouse.
+	TableName = "signal"
+)
+
 // Signal represents a single signal collected from a device.
 // This is the data format that is stored in the database.
 type Signal struct {

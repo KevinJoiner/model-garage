@@ -239,13 +239,7 @@ func chTypeFromVSPEC(baseType string) string {
 // gqlTypeFromVSPEC converts vspec type to graphql types.
 func gqlTypeFromVSPEC(baseType string) string {
 	switch baseType {
-	case "uint8", "int8", "uint16", "int16", "uint32", "int32":
-		return "Int"
-	case "string":
-		return "String"
-	case "boolean":
-		return "Boolean"
-	case "float", "double", "uint64", "int64":
+	case "uint8", "int8", "uint16", "int16", "uint32", "int32", "float", "double", "uint64", "int64", "Boolean":
 		return "Float"
 	default:
 		return "String"
