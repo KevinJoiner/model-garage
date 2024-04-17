@@ -5,6 +5,7 @@ import (
 	_ "embed"
 	"fmt"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 	"text/template"
@@ -12,28 +13,35 @@ import (
 	"github.com/DIMO-Network/model-garage/internal/codegen"
 )
 
-// graphqlFileName is the name of the Graphql table file that will be generated.
-var graphqlFileName = "%s-gql.graphqls"
+var graphqlFileFormat = "%s.graphqls"
 
 //go:embed gql.tmpl
 var graphqlTableTemplate string
 
+type Config struct {
+	// OutputFile is the name of the model to generate the graphql table.
+	OutputFile string
+
+	// TemplateFile is the path to the template file.
+	TemplateFile string
+}
+
 // Generate creates a new Graphql table file.
-func Generate(tmplData *codegen.TemplateData, outputDir, gqlModelName string) error {
-	if gqlModelName == "" {
-		gqlModelName = tmplData.ModelName
+func Generate(tmplData *codegen.TemplateData, outputDir string, cfg Config) error {
+	outFile := cfg.OutputFile
+	if outFile == "" {
+		lowerName := strings.ToLower(tmplData.ModelName)
+		outFile = fmt.Sprintf(graphqlFileFormat, lowerName)
 	}
 
-	setFileNamesFrom(gqlModelName)
-
 	// create a new Graphql table template.
-	graphqlTableTmpl, err := createGraphqlTableTemplate(gqlModelName)
+	graphqlTableTmpl, err := createGraphqlTableTemplate(outFile, cfg.TemplateFile)
 	if err != nil {
 		return err
 	}
 
 	// execute the Graphql table template directly to a file.
-	tablePath := filepath.Clean((filepath.Join(outputDir, graphqlFileName)))
+	tablePath := filepath.Clean((filepath.Join(outputDir, outFile)))
 	graphqlTableOutputFile, err := os.Create(tablePath)
 	if err != nil {
 		return fmt.Errorf("error creating Graphql table output file: %w", err)
@@ -52,15 +60,11 @@ func Generate(tmplData *codegen.TemplateData, outputDir, gqlModelName string) er
 	return nil
 }
 
-func setFileNamesFrom(modelName string) {
-	lowerName := strings.ToLower(modelName)
-	graphqlFileName = fmt.Sprintf(graphqlFileName, lowerName)
-}
-
-func createGraphqlTableTemplate(gqlmodelName string) (*template.Template, error) {
-	tmpl, err := template.New("graphqlTableTemplate").Funcs(template.FuncMap{
+func createGraphqlTableTemplate(gqlmodelName, templateFile string) (*template.Template, error) {
+	tmplName := path.Base(templateFile)
+	tmpl, err := template.New(tmplName).Funcs(template.FuncMap{
 		"GQLModelName": func() string { return gqlmodelName },
-	}).Parse(graphqlTableTemplate)
+	}).ParseFiles(templateFile)
 	if err != nil {
 		return nil, fmt.Errorf("error parsing Graphql table template: %w", err)
 	}

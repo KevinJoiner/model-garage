@@ -28,8 +28,15 @@ const (
 	MigrationGenerator = "migration"
 )
 
+type Config struct {
+	PackageName string
+	OutputDir   string
+	GraphQL     graphql.Config
+	Convert     convert.Config
+}
+
 // Execute runs the code generation tool.
-func Execute(outputDir, packageName string, vspecReader, definitionsReader io.Reader, withTest bool, gqlModelname string, generators []string) error {
+func Execute(vspecReader, definitionsReader io.Reader, generators []string, cfg Config) error {
 	// TODO move params to a config struct.
 
 	if len(generators) == 0 {
@@ -47,7 +54,7 @@ func Execute(outputDir, packageName string, vspecReader, definitionsReader io.Re
 		return fmt.Errorf("no generator selected")
 	}
 
-	err := codegen.EnsureDir(outputDir)
+	err := codegen.EnsureDir(cfg.OutputDir)
 	if err != nil {
 		return fmt.Errorf("failed to ensure output directory: %w", err)
 	}
@@ -57,37 +64,37 @@ func Execute(outputDir, packageName string, vspecReader, definitionsReader io.Re
 		return fmt.Errorf("failed to get defined signals: %w", err)
 	}
 
-	tmplData.PackageName = packageName
+	tmplData.PackageName = cfg.PackageName
 
 	if slices.Contains(generators, AllGenerator) || slices.Contains(generators, ModelGenerator) {
-		err = model.Generate(tmplData, outputDir)
+		err = model.Generate(tmplData, cfg.OutputDir)
 		if err != nil {
 			return fmt.Errorf("failed to generate model file: %w", err)
 		}
 	}
 	if slices.Contains(generators, AllGenerator) || slices.Contains(generators, ClickhouseGenerator) {
-		err = clickhouse.Generate(tmplData, outputDir)
+		err = clickhouse.Generate(tmplData, cfg.OutputDir)
 		if err != nil {
 			return fmt.Errorf("failed to generate clickhouse file: %w", err)
 		}
 	}
 
 	if slices.Contains(generators, AllGenerator) || slices.Contains(generators, ConvertGenerator) {
-		err = convert.Generate(tmplData, outputDir, withTest)
+		err = convert.Generate(tmplData, cfg.OutputDir, cfg.Convert)
 		if err != nil {
 			return fmt.Errorf("failed to generate convert file: %w", err)
 		}
 	}
 
 	if slices.Contains(generators, AllGenerator) || slices.Contains(generators, GraphqlGenerator) {
-		err = graphql.Generate(tmplData, outputDir, gqlModelname)
+		err = graphql.Generate(tmplData, cfg.OutputDir, cfg.GraphQL)
 		if err != nil {
 			return fmt.Errorf("failed to generate graphql file: %w", err)
 		}
 	}
 
 	if slices.Contains(generators, AllGenerator) || slices.Contains(generators, MigrationGenerator) {
-		err = migration.Generate(tmplData, outputDir)
+		err = migration.Generate(tmplData, cfg.OutputDir)
 		if err != nil {
 			return fmt.Errorf("failed to generate migration file: %w", err)
 		}

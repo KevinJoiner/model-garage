@@ -10,6 +10,8 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/DIMO-Network/model-garage/internal/codegen/convert"
+	"github.com/DIMO-Network/model-garage/internal/codegen/graphql"
 	"github.com/DIMO-Network/model-garage/pkg/runner"
 	"github.com/DIMO-Network/model-garage/schema"
 )
@@ -24,7 +26,8 @@ func main() {
 	// Convert flags
 	withTest := flag.Bool("convert.with-test", true, "Generate test functions for conversion functions. Default is true.")
 	// GQL flags
-	gqlModelname := flag.String("graphql.model-name", "", "Name of the model to generate the graphql table if empty, the model name will be infered.")
+	gqlOutFile := flag.String("graphql.output-file", "", "Path of the generate gql file that is appened to the outputDir.")
+	gqlTemplateFile := flag.String("graphql.template-file", "", "Path to the template file. Which is executed with codegen.TemplateData data.")
 	flag.Parse()
 
 	var vspecReader io.Reader
@@ -53,7 +56,19 @@ func main() {
 	}
 	gens := strings.Split(*generators, ",")
 
-	err := runner.Execute(*outputDir, *packageName, vspecReader, definitionReader, *withTest, *gqlModelname, gens)
+	cfg := runner.Config{
+		PackageName: *packageName,
+		OutputDir:   *outputDir,
+		GraphQL: graphql.Config{
+			OutputFile:   *gqlOutFile,
+			TemplateFile: *gqlTemplateFile,
+		},
+		Convert: convert.Config{
+			WithTest: *withTest,
+		},
+	}
+
+	err := runner.Execute(vspecReader, definitionReader, gens, cfg)
 	if err != nil {
 		log.Fatal(err)
 	}

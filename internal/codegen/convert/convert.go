@@ -54,9 +54,14 @@ type funcTmplData struct {
 	Conversion  *codegen.ConversionInfo
 }
 
+type Config struct {
+	// WithTest determines if test functions should be generated.
+	WithTest bool
+}
+
 // Generate creates a conversion functions for each field of a model struct.
 // as well as the entire model struct.
-func Generate(tmplData *codegen.TemplateData, outputDir string, withTest bool) (err error) {
+func Generate(tmplData *codegen.TemplateData, outputDir string, cfg Config) (err error) {
 	setFileNamesFrom(tmplData.ModelName)
 
 	err = createStructConversion(tmplData, outputDir)
@@ -76,7 +81,7 @@ func Generate(tmplData *codegen.TemplateData, outputDir string, withTest bool) (
 		return err
 	}
 
-	if withTest {
+	if cfg.WithTest {
 		err = createConvertTestFunc(tmplData, outputDir, needsConvertTestFunc)
 		if err != nil {
 			return err
