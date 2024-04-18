@@ -1,6 +1,9 @@
 package vss
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 const (
 	// TableName is the name of the distributed table in Clickhouse.
@@ -27,6 +30,18 @@ type Signal struct {
 
 	// ValueStringArray is the value of the signal collected.
 	ValueStringArray []string `ch:"ValueStringArray" json:"ValueStringArray"`
+}
+
+// SetValue dynamically set the appropriate value field based on the type of the value.
+func (s *Signal) SetValue(val any) {
+	switch typedVal := val.(type) {
+	case float64:
+		s.ValueNumber = typedVal
+	case string:
+		s.ValueString = typedVal
+	default:
+		s.ValueString = fmt.Sprintf("%v", val)
+	}
 }
 
 // SignalToSlice converts a Signal to an array of any for Clickhouse insertion.

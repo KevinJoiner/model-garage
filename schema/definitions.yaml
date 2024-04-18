@@ -102,8 +102,8 @@
 - vspecName: DIMO.Vehicle.CurrentLocation.Timestamp
   isArray: false
   clickHouseType: DateTime('UTC')
-  goType: time.Time
-  gqlType: Time
+  goType: "float64"
+  gqlType: ""
   conversions: 
     - originalName: data.timestamp
       originalType: string
@@ -235,7 +235,7 @@
   requiredPrivileges:
     - VehicleNonLocationData
 - vspecName: DIMO.Vehicle.Powertrain.FuelSystem.SupportedFuelTypes
-  isArray: null
+  isArray: false
   clickHouseType: ""
   goType: ""
   gqlType: ""

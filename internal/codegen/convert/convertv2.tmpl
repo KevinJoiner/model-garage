@@ -11,77 +11,75 @@ func IsInvalidType(err error) bool {
 }
 
 
-// FromData creates a new {{ .ModelName }} from JSON data. Using defined conversion functions.
-// if a filed is not found it will not be set
-func FromData(jsonData []byte) (*{{ .ModelName }}, error) {
-	{{ $varName := lower .ModelName -}}
-	var {{ $varName }} {{ .ModelName -}}
-{{ $first := true -}}
-{{- range $idx, $sig := .Signals }}
-	{{ if eq (len $sig.Conversions) 0 }} {{ continue }} {{ end -}}
-	{{ if $first -}}
-	var errs error
-	var err error
-	{{ $first = false }} {{ end }}
-
-	{{ $varName }}.{{ $sig.GOName }}, err = {{ $sig.GOName }}FromData(jsonData)
-	if err != nil {
-		errs = errors.Join(errs, fmt.Errorf("failed to get '{{ $sig.GOName }}': %w", err))
+// SignalsFromData converts the given JSON data to a slice of signals.
+func SignalsFromV2Data(tokenID uint32, timestamp time.Time, signalName string, sigResult gjson.Result) ([]Signal, error) {
+	valResult := sigResult.Get("value")
+	if !valResult.Exists() {
+		return nil, errors.New("value field not found")
 	}
-{{- end }}
-	return &{{ $varName }}, errs
+	ret := make([]Signal, 0)
+	var retErrs error
+	switch signalName {
+	{{- range $i, $convs := .Conversions }}
+	case "{{ (index $convs 0).Conversion.OriginalName }}":
+		{{- range $j, $conv := $convs }}
+		val{{ $j }}, err := {{ $conv.Signal.GOName }}FromV2Data(valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert '{{ $conv.Conversion.OriginalName }}': %w", err))
+		} else {
+			sig := Signal{
+				TokenID: tokenID,
+				Timestamp: timestamp,
+				Name: "{{ $conv.Signal.CHName }}",
+			}
+			sig.SetValue(val{{ $j }})
+			ret = append(ret, sig)
+		}
+		{{- end }}
+	{{- end }}
+	default:
+		return nil, errors.New("unknown signal name")
+	}
+	return ret, retErrs
 }
 
 
 {{- range $i, $sig := .Signals }}
 // {{ $sig.GOName }}FromData converts the given JSON data to a {{ $sig.GOType }}.
-func {{ .GOName }}FromV2Data(jsonData []byte) (ret {{ .GOType }}, err error) {
+func {{ .GOName }}FromV2Data(result gjson.Result) (ret {{ .BaseGoType }}, err error) {
     var errs error
-    var result gjson.Result
-
 	{{- range $j, $conv := .Conversions }}
-    result = gjson.GetBytes(jsonData, "{{ $conv.OriginalName }}")
-    if result.Exists() {
-		{{ if $conv.IsArray -}}
-		if result.IsArray() {
-			slice{{ $sig.GOName}} := make([]{{ $conv.OriginalType }}, len(result.Array()))
-			for i, res := range result.Array() {
-				v, ok := res.Value().({{ $conv.OriginalType }})
-				if ok{
-					slice{{ $sig.GOName}}[i] = v
-				} else {
-					errs = errors.Join(errs, fmt.Errorf("%w, field '{{ $conv.OriginalName }}' array element %d is not of type '{{ $conv.OriginalType }}' got '%v' of type '%T'", errInvalidType, i, res.Value(), res.Value()))
-				}
+	{{ if $conv.IsArray -}}
+	if result.IsArray() {
+		slice{{ $sig.GOName}} := make([]{{ $conv.OriginalType }}, len(result.Array()))
+		for i, res := range result.Array() {
+			v, ok := res.Value().({{ $conv.OriginalType }})
+			if ok{
+				slice{{ $sig.GOName}}[i] = v
+			} else {
+				errs = errors.Join(errs, fmt.Errorf("%w, field '{{ $conv.OriginalName }}' array element %d is not of type '{{ $conv.OriginalType }}' got '%v' of type '%T'", errInvalidType, i, res.Value(), res.Value()))
 			}
-			retVal, err = {{ convertName $sig }}{{ $j }}(slice{{ $sig.GOName}})
-			if err == nil {
-				{{ if $sig.IsArray -}}
-				return retVal, nil
-				{{ else -}}
-				return &retVal, nil
-				{{ end -}}
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert '{{ $sig.Conversion.OriginalName }}': %w", err))
-		} else {
-			errs = errros.Join(errs, fmt.Errorf("%w, field '{{ $conv.OriginalName }}' is not an array", errInvalidType))
 		}
-		{{ else -}}
-        val, ok := result.Value().({{ $conv.OriginalType }})
-        if ok {
-            retVal, err := {{ convertName $sig }}{{ $j }}(val)
-            if err == nil {
-				{{ if $sig.IsArray -}}
-				return retVal, nil
-				{{ else -}}
-				return &retVal, nil
-				{{ end -}}
-            }
-            errs = errors.Join(errs, fmt.Errorf("failed to convert '{{ $conv.OriginalName }}': %w", err))
-        } else {
-            errs = errors.Join(errs, fmt.Errorf("%w, field '{{ $conv.OriginalName }}' is not of type '{{ $conv.OriginalType }}' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-        }
-		{{- end }}
-    }
+		ret, err = {{ convertName $sig }}{{ $j }}(slice{{ $sig.GOName}})
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert '{{ $sig.Conversion.OriginalName }}': %w", err))
+	} else {
+		errs = errros.Join(errs, fmt.Errorf("%w, field '{{ $conv.OriginalName }}' is not an array", errInvalidType))
+	}
+	{{ else -}}
+	val{{ $j }}, ok := result.Value().({{ $conv.OriginalType }})
+	if ok {
+		ret, err = {{ convertName $sig }}{{ $j }}(val{{ $j }})
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert '{{ $conv.OriginalName }}': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field '{{ $conv.OriginalName }}' is not of type '{{ $conv.OriginalType }}' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+	{{- end }}
 	{{- end }}
 
     return ret, errs

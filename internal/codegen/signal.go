@@ -148,7 +148,7 @@ func (s *SignalInfo) GOType() string {
 	if s.IsArray {
 		return "[]" + s.BaseGoType
 	}
-	return "*" + s.BaseGoType
+	return s.BaseGoType
 }
 
 // CHType returns the clickhouse type of the signal.
@@ -191,16 +191,10 @@ func removePrefix(name string) string {
 // goTypeFromVSPEC converts vspec type to golang types.
 func goTypeFromVSPEC(dataType string) string {
 	switch dataType {
-	case "uint8", "int8", "uint16", "int16", "uint32", "int32", "uint64", "int64", "string":
-		return dataType
-	case "boolean":
-		return "bool"
-	case "float":
-		return "float32"
-	case "double":
+	case "uint8", "int8", "uint16", "int16", "uint32", "int32", "uint64", "int64", "float", "double", "boolean":
 		return "float64"
 	default:
-		return "any"
+		return "string"
 	}
 }
 

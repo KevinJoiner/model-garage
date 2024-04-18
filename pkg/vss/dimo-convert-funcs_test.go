@@ -1513,13 +1513,6 @@ func TestToVehicleVehicleIdentificationModel0(t *testing.T) {
 	require.Equal(t, passThroughString, result, "Unexpected result")
 }
 
-func TestToVehicleVehicleIdentificationVIN0(t *testing.T) {
-	t.Parallel()
-	result, err := vss.ToVehicleVehicleIdentificationVIN0(passThroughString)
-	require.NoError(t, err, "Unexpected error")
-	require.Equal(t, passThroughString, result, "Unexpected result")
-}
-
 func TestToVehicleVehicleIdentificationYear0(t *testing.T) {
 	t.Parallel()
 	tests := []struct {

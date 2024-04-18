@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS dimo (
 	Vehicle_Powertrain_CombustionEngine_Speed UInt16 COMMENT 'Engine speed measured as rotations per minute.',
 	Vehicle_Powertrain_CombustionEngine_TPS UInt8 COMMENT 'Current throttle position.',
 	Vehicle_Powertrain_FuelSystem_AbsoluteLevel Float32 COMMENT 'Current available fuel in the fuel tank expressed in liters.',
-	Vehicle_Powertrain_FuelSystem_SupportedFuelTypes Array(String) COMMENT 'High level information of fuel types supported',
+	Vehicle_Powertrain_FuelSystem_SupportedFuelTypes String COMMENT 'High level information of fuel types supported',
 	Vehicle_Powertrain_Range UInt32 COMMENT 'Remaining range in meters using all energy sources available in the vehicle.',
 	Vehicle_Powertrain_TractionBattery_Charging_ChargeLimit UInt8 COMMENT 'Target charge limit (state of charge) for battery.',
 	Vehicle_Powertrain_TractionBattery_Charging_IsCharging Bool COMMENT 'True if charging is ongoing. Charging is considered to be ongoing if energy is flowing from charger to vehicle.',

@@ -9,180 +9,422 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-// errInvalidType is returned when a field is not of the expected type or not found.
-var errInvalidType = errors.New("invalid type")
+// SignalsFromV1Data creates a slice of Signal from the given v1 status JSON data.
+// On error, partial results may be returned.
+func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]Signal, error) {
+	var retSignals []Signal
 
-// IsInvalidType returns true if the error is of type errInvalidType.
-func IsInvalidType(err error) bool {
-	return errors.Is(err, errInvalidType)
-}
-
-// FromData creates a new Dimo from JSON data. Using defined conversion functions.
-// if a filed is not found it will not be set
-func FromData(jsonData []byte) (*Dimo, error) {
-	var dimo Dimo
-	var errs error
+	var val any
 	var err error
+	var errs error
 
-	dimo.VehicleChassisAxleRow1WheelLeftTirePressure, err = VehicleChassisAxleRow1WheelLeftTirePressureFromData(jsonData)
+	val, err = VehicleChassisAxleRow1WheelLeftTirePressureFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleChassisAxleRow1WheelLeftTirePressure': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Chassis_Axle_Row1_Wheel_Left_Tire_Pressure",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehicleChassisAxleRow1WheelRightTirePressure, err = VehicleChassisAxleRow1WheelRightTirePressureFromData(jsonData)
+	val, err = VehicleChassisAxleRow1WheelRightTirePressureFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleChassisAxleRow1WheelRightTirePressure': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Chassis_Axle_Row1_Wheel_Right_Tire_Pressure",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehicleChassisAxleRow2WheelLeftTirePressure, err = VehicleChassisAxleRow2WheelLeftTirePressureFromData(jsonData)
+	val, err = VehicleChassisAxleRow2WheelLeftTirePressureFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleChassisAxleRow2WheelLeftTirePressure': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Chassis_Axle_Row2_Wheel_Left_Tire_Pressure",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehicleChassisAxleRow2WheelRightTirePressure, err = VehicleChassisAxleRow2WheelRightTirePressureFromData(jsonData)
+	val, err = VehicleChassisAxleRow2WheelRightTirePressureFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleChassisAxleRow2WheelRightTirePressure': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Chassis_Axle_Row2_Wheel_Right_Tire_Pressure",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehicleCurrentLocationAltitude, err = VehicleCurrentLocationAltitudeFromData(jsonData)
+	val, err = VehicleCurrentLocationAltitudeFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleCurrentLocationAltitude': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_CurrentLocation_Altitude",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehicleCurrentLocationLatitude, err = VehicleCurrentLocationLatitudeFromData(jsonData)
+	val, err = VehicleCurrentLocationLatitudeFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleCurrentLocationLatitude': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_CurrentLocation_Latitude",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehicleCurrentLocationLongitude, err = VehicleCurrentLocationLongitudeFromData(jsonData)
+	val, err = VehicleCurrentLocationLongitudeFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleCurrentLocationLongitude': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_CurrentLocation_Longitude",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehicleCurrentLocationTimestamp, err = VehicleCurrentLocationTimestampFromData(jsonData)
+	val, err = VehicleCurrentLocationTimestampFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleCurrentLocationTimestamp': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_CurrentLocation_Timestamp",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehicleExteriorAirTemperature, err = VehicleExteriorAirTemperatureFromData(jsonData)
+	val, err = VehicleExteriorAirTemperatureFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleExteriorAirTemperature': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Exterior_AirTemperature",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehicleLowVoltageBatteryCurrentVoltage, err = VehicleLowVoltageBatteryCurrentVoltageFromData(jsonData)
+	val, err = VehicleLowVoltageBatteryCurrentVoltageFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleLowVoltageBatteryCurrentVoltage': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_LowVoltageBattery_CurrentVoltage",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehicleOBDBarometricPressure, err = VehicleOBDBarometricPressureFromData(jsonData)
+	val, err = VehicleOBDBarometricPressureFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleOBDBarometricPressure': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_OBD_BarometricPressure",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehicleOBDEngineLoad, err = VehicleOBDEngineLoadFromData(jsonData)
+	val, err = VehicleOBDEngineLoadFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleOBDEngineLoad': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_OBD_EngineLoad",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehicleOBDIntakeTemp, err = VehicleOBDIntakeTempFromData(jsonData)
+	val, err = VehicleOBDIntakeTempFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleOBDIntakeTemp': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_OBD_IntakeTemp",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehicleOBDRunTime, err = VehicleOBDRunTimeFromData(jsonData)
+	val, err = VehicleOBDRunTimeFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleOBDRunTime': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_OBD_RunTime",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehiclePowertrainCombustionEngineECT, err = VehiclePowertrainCombustionEngineECTFromData(jsonData)
+	val, err = VehiclePowertrainCombustionEngineECTFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainCombustionEngineECT': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Powertrain_CombustionEngine_ECT",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehiclePowertrainCombustionEngineEngineOilLevel, err = VehiclePowertrainCombustionEngineEngineOilLevelFromData(jsonData)
+	val, err = VehiclePowertrainCombustionEngineEngineOilLevelFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainCombustionEngineEngineOilLevel': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Powertrain_CombustionEngine_EngineOilLevel",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehiclePowertrainCombustionEngineSpeed, err = VehiclePowertrainCombustionEngineSpeedFromData(jsonData)
+	val, err = VehiclePowertrainCombustionEngineSpeedFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainCombustionEngineSpeed': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Powertrain_CombustionEngine_Speed",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehiclePowertrainCombustionEngineTPS, err = VehiclePowertrainCombustionEngineTPSFromData(jsonData)
+	val, err = VehiclePowertrainCombustionEngineTPSFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainCombustionEngineTPS': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Powertrain_CombustionEngine_TPS",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehiclePowertrainFuelSystemAbsoluteLevel, err = VehiclePowertrainFuelSystemAbsoluteLevelFromData(jsonData)
+	val, err = VehiclePowertrainFuelSystemAbsoluteLevelFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainFuelSystemAbsoluteLevel': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Powertrain_FuelSystem_AbsoluteLevel",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehiclePowertrainFuelSystemSupportedFuelTypes, err = VehiclePowertrainFuelSystemSupportedFuelTypesFromData(jsonData)
+	val, err = VehiclePowertrainFuelSystemSupportedFuelTypesFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainFuelSystemSupportedFuelTypes': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Powertrain_FuelSystem_SupportedFuelTypes",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehiclePowertrainRange, err = VehiclePowertrainRangeFromData(jsonData)
+	val, err = VehiclePowertrainRangeFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainRange': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Powertrain_Range",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehiclePowertrainTractionBatteryChargingChargeLimit, err = VehiclePowertrainTractionBatteryChargingChargeLimitFromData(jsonData)
+	val, err = VehiclePowertrainTractionBatteryChargingChargeLimitFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainTractionBatteryChargingChargeLimit': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Powertrain_TractionBattery_Charging_ChargeLimit",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehiclePowertrainTractionBatteryChargingIsCharging, err = VehiclePowertrainTractionBatteryChargingIsChargingFromData(jsonData)
+	val, err = VehiclePowertrainTractionBatteryChargingIsChargingFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainTractionBatteryChargingIsCharging': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Powertrain_TractionBattery_Charging_IsCharging",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehiclePowertrainTractionBatteryGrossCapacity, err = VehiclePowertrainTractionBatteryGrossCapacityFromData(jsonData)
+	val, err = VehiclePowertrainTractionBatteryGrossCapacityFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainTractionBatteryGrossCapacity': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Powertrain_TractionBattery_GrossCapacity",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehiclePowertrainTractionBatteryStateOfChargeCurrent, err = VehiclePowertrainTractionBatteryStateOfChargeCurrentFromData(jsonData)
+	val, err = VehiclePowertrainTractionBatteryStateOfChargeCurrentFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainTractionBatteryStateOfChargeCurrent': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Powertrain_TractionBattery_StateOfCharge_Current",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehiclePowertrainTransmissionTravelledDistance, err = VehiclePowertrainTransmissionTravelledDistanceFromData(jsonData)
+	val, err = VehiclePowertrainTransmissionTravelledDistanceFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainTransmissionTravelledDistance': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Powertrain_Transmission_TravelledDistance",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehiclePowertrainType, err = VehiclePowertrainTypeFromData(jsonData)
+	val, err = VehiclePowertrainTypeFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehiclePowertrainType': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Powertrain_Type",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehicleSpeed, err = VehicleSpeedFromData(jsonData)
+	val, err = VehicleSpeedFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleSpeed': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_Speed",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehicleVehicleIdentificationBrand, err = VehicleVehicleIdentificationBrandFromData(jsonData)
+	val, err = VehicleVehicleIdentificationBrandFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleVehicleIdentificationBrand': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_VehicleIdentification_Brand",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehicleVehicleIdentificationModel, err = VehicleVehicleIdentificationModelFromData(jsonData)
+	val, err = VehicleVehicleIdentificationModelFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleVehicleIdentificationModel': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_VehicleIdentification_Model",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
 
-	dimo.VehicleVehicleIdentificationYear, err = VehicleVehicleIdentificationYearFromData(jsonData)
+	val, err = VehicleVehicleIdentificationYearFromV1Data(jsonData)
 	if err != nil {
 		errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleVehicleIdentificationYear': %w", err))
+	} else {
+		sig := Signal{
+			Name:      "Vehicle_VehicleIdentification_Year",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
 	}
-	return &dimo, errs
+	return retSignals, errs
 }
 
-// VehicleChassisAxleRow1WheelLeftTirePressureFromData converts the given JSON data to a *uint16.
-func VehicleChassisAxleRow1WheelLeftTirePressureFromData(jsonData []byte) (ret *uint16, err error) {
+// VehicleChassisAxleRow1WheelLeftTirePressureFromData converts the given JSON data to a float64.
+func VehicleChassisAxleRow1WheelLeftTirePressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.tires.frontLeft")
@@ -191,7 +433,7 @@ func VehicleChassisAxleRow1WheelLeftTirePressureFromData(jsonData []byte) (ret *
 		if ok {
 			retVal, err := ToVehicleChassisAxleRow1WheelLeftTirePressure0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tires.frontLeft': %w", err))
 		} else {
@@ -202,8 +444,8 @@ func VehicleChassisAxleRow1WheelLeftTirePressureFromData(jsonData []byte) (ret *
 	return ret, errs
 }
 
-// VehicleChassisAxleRow1WheelRightTirePressureFromData converts the given JSON data to a *uint16.
-func VehicleChassisAxleRow1WheelRightTirePressureFromData(jsonData []byte) (ret *uint16, err error) {
+// VehicleChassisAxleRow1WheelRightTirePressureFromData converts the given JSON data to a float64.
+func VehicleChassisAxleRow1WheelRightTirePressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.tires.frontRight")
@@ -212,7 +454,7 @@ func VehicleChassisAxleRow1WheelRightTirePressureFromData(jsonData []byte) (ret 
 		if ok {
 			retVal, err := ToVehicleChassisAxleRow1WheelRightTirePressure0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tires.frontRight': %w", err))
 		} else {
@@ -223,8 +465,8 @@ func VehicleChassisAxleRow1WheelRightTirePressureFromData(jsonData []byte) (ret 
 	return ret, errs
 }
 
-// VehicleChassisAxleRow2WheelLeftTirePressureFromData converts the given JSON data to a *uint16.
-func VehicleChassisAxleRow2WheelLeftTirePressureFromData(jsonData []byte) (ret *uint16, err error) {
+// VehicleChassisAxleRow2WheelLeftTirePressureFromData converts the given JSON data to a float64.
+func VehicleChassisAxleRow2WheelLeftTirePressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.tires.backLeft")
@@ -233,7 +475,7 @@ func VehicleChassisAxleRow2WheelLeftTirePressureFromData(jsonData []byte) (ret *
 		if ok {
 			retVal, err := ToVehicleChassisAxleRow2WheelLeftTirePressure0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tires.backLeft': %w", err))
 		} else {
@@ -244,8 +486,8 @@ func VehicleChassisAxleRow2WheelLeftTirePressureFromData(jsonData []byte) (ret *
 	return ret, errs
 }
 
-// VehicleChassisAxleRow2WheelRightTirePressureFromData converts the given JSON data to a *uint16.
-func VehicleChassisAxleRow2WheelRightTirePressureFromData(jsonData []byte) (ret *uint16, err error) {
+// VehicleChassisAxleRow2WheelRightTirePressureFromData converts the given JSON data to a float64.
+func VehicleChassisAxleRow2WheelRightTirePressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.tires.backRight")
@@ -254,7 +496,7 @@ func VehicleChassisAxleRow2WheelRightTirePressureFromData(jsonData []byte) (ret 
 		if ok {
 			retVal, err := ToVehicleChassisAxleRow2WheelRightTirePressure0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tires.backRight': %w", err))
 		} else {
@@ -265,8 +507,8 @@ func VehicleChassisAxleRow2WheelRightTirePressureFromData(jsonData []byte) (ret 
 	return ret, errs
 }
 
-// VehicleCurrentLocationAltitudeFromData converts the given JSON data to a *float64.
-func VehicleCurrentLocationAltitudeFromData(jsonData []byte) (ret *float64, err error) {
+// VehicleCurrentLocationAltitudeFromData converts the given JSON data to a float64.
+func VehicleCurrentLocationAltitudeFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.altitude")
@@ -275,7 +517,7 @@ func VehicleCurrentLocationAltitudeFromData(jsonData []byte) (ret *float64, err 
 		if ok {
 			retVal, err := ToVehicleCurrentLocationAltitude0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.altitude': %w", err))
 		} else {
@@ -286,8 +528,8 @@ func VehicleCurrentLocationAltitudeFromData(jsonData []byte) (ret *float64, err 
 	return ret, errs
 }
 
-// VehicleCurrentLocationLatitudeFromData converts the given JSON data to a *float64.
-func VehicleCurrentLocationLatitudeFromData(jsonData []byte) (ret *float64, err error) {
+// VehicleCurrentLocationLatitudeFromData converts the given JSON data to a float64.
+func VehicleCurrentLocationLatitudeFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.latitude")
@@ -296,7 +538,7 @@ func VehicleCurrentLocationLatitudeFromData(jsonData []byte) (ret *float64, err 
 		if ok {
 			retVal, err := ToVehicleCurrentLocationLatitude0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.latitude': %w", err))
 		} else {
@@ -307,8 +549,8 @@ func VehicleCurrentLocationLatitudeFromData(jsonData []byte) (ret *float64, err 
 	return ret, errs
 }
 
-// VehicleCurrentLocationLongitudeFromData converts the given JSON data to a *float64.
-func VehicleCurrentLocationLongitudeFromData(jsonData []byte) (ret *float64, err error) {
+// VehicleCurrentLocationLongitudeFromData converts the given JSON data to a float64.
+func VehicleCurrentLocationLongitudeFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.longitude")
@@ -317,7 +559,7 @@ func VehicleCurrentLocationLongitudeFromData(jsonData []byte) (ret *float64, err
 		if ok {
 			retVal, err := ToVehicleCurrentLocationLongitude0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.longitude': %w", err))
 		} else {
@@ -328,8 +570,8 @@ func VehicleCurrentLocationLongitudeFromData(jsonData []byte) (ret *float64, err
 	return ret, errs
 }
 
-// VehicleCurrentLocationTimestampFromData converts the given JSON data to a *time.Time.
-func VehicleCurrentLocationTimestampFromData(jsonData []byte) (ret *time.Time, err error) {
+// VehicleCurrentLocationTimestampFromData converts the given JSON data to a float64.
+func VehicleCurrentLocationTimestampFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.timestamp")
@@ -338,7 +580,7 @@ func VehicleCurrentLocationTimestampFromData(jsonData []byte) (ret *time.Time, e
 		if ok {
 			retVal, err := ToVehicleCurrentLocationTimestamp0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.timestamp': %w", err))
 		} else {
@@ -351,7 +593,7 @@ func VehicleCurrentLocationTimestampFromData(jsonData []byte) (ret *time.Time, e
 		if ok {
 			retVal, err := ToVehicleCurrentLocationTimestamp1(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.timestamp': %w", err))
 		} else {
@@ -362,8 +604,8 @@ func VehicleCurrentLocationTimestampFromData(jsonData []byte) (ret *time.Time, e
 	return ret, errs
 }
 
-// VehicleExteriorAirTemperatureFromData converts the given JSON data to a *float32.
-func VehicleExteriorAirTemperatureFromData(jsonData []byte) (ret *float32, err error) {
+// VehicleExteriorAirTemperatureFromData converts the given JSON data to a float64.
+func VehicleExteriorAirTemperatureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.ambientTemp")
@@ -372,7 +614,7 @@ func VehicleExteriorAirTemperatureFromData(jsonData []byte) (ret *float32, err e
 		if ok {
 			retVal, err := ToVehicleExteriorAirTemperature0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.ambientTemp': %w", err))
 		} else {
@@ -383,8 +625,8 @@ func VehicleExteriorAirTemperatureFromData(jsonData []byte) (ret *float32, err e
 	return ret, errs
 }
 
-// VehicleLowVoltageBatteryCurrentVoltageFromData converts the given JSON data to a *float32.
-func VehicleLowVoltageBatteryCurrentVoltageFromData(jsonData []byte) (ret *float32, err error) {
+// VehicleLowVoltageBatteryCurrentVoltageFromData converts the given JSON data to a float64.
+func VehicleLowVoltageBatteryCurrentVoltageFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.batteryVoltage")
@@ -393,7 +635,7 @@ func VehicleLowVoltageBatteryCurrentVoltageFromData(jsonData []byte) (ret *float
 		if ok {
 			retVal, err := ToVehicleLowVoltageBatteryCurrentVoltage0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.batteryVoltage': %w", err))
 		} else {
@@ -404,8 +646,8 @@ func VehicleLowVoltageBatteryCurrentVoltageFromData(jsonData []byte) (ret *float
 	return ret, errs
 }
 
-// VehicleOBDBarometricPressureFromData converts the given JSON data to a *float32.
-func VehicleOBDBarometricPressureFromData(jsonData []byte) (ret *float32, err error) {
+// VehicleOBDBarometricPressureFromData converts the given JSON data to a float64.
+func VehicleOBDBarometricPressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.barometricPressure")
@@ -414,7 +656,7 @@ func VehicleOBDBarometricPressureFromData(jsonData []byte) (ret *float32, err er
 		if ok {
 			retVal, err := ToVehicleOBDBarometricPressure0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.barometricPressure': %w", err))
 		} else {
@@ -425,8 +667,8 @@ func VehicleOBDBarometricPressureFromData(jsonData []byte) (ret *float32, err er
 	return ret, errs
 }
 
-// VehicleOBDEngineLoadFromData converts the given JSON data to a *float32.
-func VehicleOBDEngineLoadFromData(jsonData []byte) (ret *float32, err error) {
+// VehicleOBDEngineLoadFromData converts the given JSON data to a float64.
+func VehicleOBDEngineLoadFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.engineLoad")
@@ -435,7 +677,7 @@ func VehicleOBDEngineLoadFromData(jsonData []byte) (ret *float32, err error) {
 		if ok {
 			retVal, err := ToVehicleOBDEngineLoad0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.engineLoad': %w", err))
 		} else {
@@ -446,8 +688,8 @@ func VehicleOBDEngineLoadFromData(jsonData []byte) (ret *float32, err error) {
 	return ret, errs
 }
 
-// VehicleOBDIntakeTempFromData converts the given JSON data to a *float32.
-func VehicleOBDIntakeTempFromData(jsonData []byte) (ret *float32, err error) {
+// VehicleOBDIntakeTempFromData converts the given JSON data to a float64.
+func VehicleOBDIntakeTempFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.intakeTemp")
@@ -456,7 +698,7 @@ func VehicleOBDIntakeTempFromData(jsonData []byte) (ret *float32, err error) {
 		if ok {
 			retVal, err := ToVehicleOBDIntakeTemp0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.intakeTemp': %w", err))
 		} else {
@@ -467,8 +709,8 @@ func VehicleOBDIntakeTempFromData(jsonData []byte) (ret *float32, err error) {
 	return ret, errs
 }
 
-// VehicleOBDRunTimeFromData converts the given JSON data to a *float32.
-func VehicleOBDRunTimeFromData(jsonData []byte) (ret *float32, err error) {
+// VehicleOBDRunTimeFromData converts the given JSON data to a float64.
+func VehicleOBDRunTimeFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.runTime")
@@ -477,7 +719,7 @@ func VehicleOBDRunTimeFromData(jsonData []byte) (ret *float32, err error) {
 		if ok {
 			retVal, err := ToVehicleOBDRunTime0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.runTime': %w", err))
 		} else {
@@ -488,8 +730,8 @@ func VehicleOBDRunTimeFromData(jsonData []byte) (ret *float32, err error) {
 	return ret, errs
 }
 
-// VehiclePowertrainCombustionEngineECTFromData converts the given JSON data to a *int16.
-func VehiclePowertrainCombustionEngineECTFromData(jsonData []byte) (ret *int16, err error) {
+// VehiclePowertrainCombustionEngineECTFromData converts the given JSON data to a float64.
+func VehiclePowertrainCombustionEngineECTFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.coolantTemp")
@@ -498,7 +740,7 @@ func VehiclePowertrainCombustionEngineECTFromData(jsonData []byte) (ret *int16, 
 		if ok {
 			retVal, err := ToVehiclePowertrainCombustionEngineECT0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.coolantTemp': %w", err))
 		} else {
@@ -509,8 +751,8 @@ func VehiclePowertrainCombustionEngineECTFromData(jsonData []byte) (ret *int16, 
 	return ret, errs
 }
 
-// VehiclePowertrainCombustionEngineEngineOilLevelFromData converts the given JSON data to a *string.
-func VehiclePowertrainCombustionEngineEngineOilLevelFromData(jsonData []byte) (ret *string, err error) {
+// VehiclePowertrainCombustionEngineEngineOilLevelFromData converts the given JSON data to a string.
+func VehiclePowertrainCombustionEngineEngineOilLevelFromV1Data(jsonData []byte) (ret string, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.oil")
@@ -519,7 +761,7 @@ func VehiclePowertrainCombustionEngineEngineOilLevelFromData(jsonData []byte) (r
 		if ok {
 			retVal, err := ToVehiclePowertrainCombustionEngineEngineOilLevel0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.oil': %w", err))
 		} else {
@@ -530,8 +772,8 @@ func VehiclePowertrainCombustionEngineEngineOilLevelFromData(jsonData []byte) (r
 	return ret, errs
 }
 
-// VehiclePowertrainCombustionEngineSpeedFromData converts the given JSON data to a *uint16.
-func VehiclePowertrainCombustionEngineSpeedFromData(jsonData []byte) (ret *uint16, err error) {
+// VehiclePowertrainCombustionEngineSpeedFromData converts the given JSON data to a float64.
+func VehiclePowertrainCombustionEngineSpeedFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.engineSpeed")
@@ -540,7 +782,7 @@ func VehiclePowertrainCombustionEngineSpeedFromData(jsonData []byte) (ret *uint1
 		if ok {
 			retVal, err := ToVehiclePowertrainCombustionEngineSpeed0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.engineSpeed': %w", err))
 		} else {
@@ -551,8 +793,8 @@ func VehiclePowertrainCombustionEngineSpeedFromData(jsonData []byte) (ret *uint1
 	return ret, errs
 }
 
-// VehiclePowertrainCombustionEngineTPSFromData converts the given JSON data to a *uint8.
-func VehiclePowertrainCombustionEngineTPSFromData(jsonData []byte) (ret *uint8, err error) {
+// VehiclePowertrainCombustionEngineTPSFromData converts the given JSON data to a float64.
+func VehiclePowertrainCombustionEngineTPSFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.throttlePosition")
@@ -561,7 +803,7 @@ func VehiclePowertrainCombustionEngineTPSFromData(jsonData []byte) (ret *uint8, 
 		if ok {
 			retVal, err := ToVehiclePowertrainCombustionEngineTPS0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.throttlePosition': %w", err))
 		} else {
@@ -572,8 +814,8 @@ func VehiclePowertrainCombustionEngineTPSFromData(jsonData []byte) (ret *uint8, 
 	return ret, errs
 }
 
-// VehiclePowertrainFuelSystemAbsoluteLevelFromData converts the given JSON data to a *float32.
-func VehiclePowertrainFuelSystemAbsoluteLevelFromData(jsonData []byte) (ret *float32, err error) {
+// VehiclePowertrainFuelSystemAbsoluteLevelFromData converts the given JSON data to a float64.
+func VehiclePowertrainFuelSystemAbsoluteLevelFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.fuelPercentRemaining")
@@ -582,7 +824,7 @@ func VehiclePowertrainFuelSystemAbsoluteLevelFromData(jsonData []byte) (ret *flo
 		if ok {
 			retVal, err := ToVehiclePowertrainFuelSystemAbsoluteLevel0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.fuelPercentRemaining': %w", err))
 		} else {
@@ -593,8 +835,8 @@ func VehiclePowertrainFuelSystemAbsoluteLevelFromData(jsonData []byte) (ret *flo
 	return ret, errs
 }
 
-// VehiclePowertrainFuelSystemSupportedFuelTypesFromData converts the given JSON data to a []string.
-func VehiclePowertrainFuelSystemSupportedFuelTypesFromData(jsonData []byte) (ret []string, err error) {
+// VehiclePowertrainFuelSystemSupportedFuelTypesFromData converts the given JSON data to a string.
+func VehiclePowertrainFuelSystemSupportedFuelTypesFromV1Data(jsonData []byte) (ret string, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.fuelType")
@@ -614,8 +856,8 @@ func VehiclePowertrainFuelSystemSupportedFuelTypesFromData(jsonData []byte) (ret
 	return ret, errs
 }
 
-// VehiclePowertrainRangeFromData converts the given JSON data to a *uint32.
-func VehiclePowertrainRangeFromData(jsonData []byte) (ret *uint32, err error) {
+// VehiclePowertrainRangeFromData converts the given JSON data to a float64.
+func VehiclePowertrainRangeFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.range")
@@ -624,7 +866,7 @@ func VehiclePowertrainRangeFromData(jsonData []byte) (ret *uint32, err error) {
 		if ok {
 			retVal, err := ToVehiclePowertrainRange0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.range': %w", err))
 		} else {
@@ -635,8 +877,8 @@ func VehiclePowertrainRangeFromData(jsonData []byte) (ret *uint32, err error) {
 	return ret, errs
 }
 
-// VehiclePowertrainTractionBatteryChargingChargeLimitFromData converts the given JSON data to a *uint8.
-func VehiclePowertrainTractionBatteryChargingChargeLimitFromData(jsonData []byte) (ret *uint8, err error) {
+// VehiclePowertrainTractionBatteryChargingChargeLimitFromData converts the given JSON data to a float64.
+func VehiclePowertrainTractionBatteryChargingChargeLimitFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.chargeLimit")
@@ -645,7 +887,7 @@ func VehiclePowertrainTractionBatteryChargingChargeLimitFromData(jsonData []byte
 		if ok {
 			retVal, err := ToVehiclePowertrainTractionBatteryChargingChargeLimit0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.chargeLimit': %w", err))
 		} else {
@@ -656,8 +898,8 @@ func VehiclePowertrainTractionBatteryChargingChargeLimitFromData(jsonData []byte
 	return ret, errs
 }
 
-// VehiclePowertrainTractionBatteryChargingIsChargingFromData converts the given JSON data to a *bool.
-func VehiclePowertrainTractionBatteryChargingIsChargingFromData(jsonData []byte) (ret *bool, err error) {
+// VehiclePowertrainTractionBatteryChargingIsChargingFromData converts the given JSON data to a float64.
+func VehiclePowertrainTractionBatteryChargingIsChargingFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.charging")
@@ -666,7 +908,7 @@ func VehiclePowertrainTractionBatteryChargingIsChargingFromData(jsonData []byte)
 		if ok {
 			retVal, err := ToVehiclePowertrainTractionBatteryChargingIsCharging0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.charging': %w", err))
 		} else {
@@ -677,8 +919,8 @@ func VehiclePowertrainTractionBatteryChargingIsChargingFromData(jsonData []byte)
 	return ret, errs
 }
 
-// VehiclePowertrainTractionBatteryGrossCapacityFromData converts the given JSON data to a *uint16.
-func VehiclePowertrainTractionBatteryGrossCapacityFromData(jsonData []byte) (ret *uint16, err error) {
+// VehiclePowertrainTractionBatteryGrossCapacityFromData converts the given JSON data to a float64.
+func VehiclePowertrainTractionBatteryGrossCapacityFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.batteryCapacity")
@@ -687,7 +929,7 @@ func VehiclePowertrainTractionBatteryGrossCapacityFromData(jsonData []byte) (ret
 		if ok {
 			retVal, err := ToVehiclePowertrainTractionBatteryGrossCapacity0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.batteryCapacity': %w", err))
 		} else {
@@ -698,8 +940,8 @@ func VehiclePowertrainTractionBatteryGrossCapacityFromData(jsonData []byte) (ret
 	return ret, errs
 }
 
-// VehiclePowertrainTractionBatteryStateOfChargeCurrentFromData converts the given JSON data to a *float32.
-func VehiclePowertrainTractionBatteryStateOfChargeCurrentFromData(jsonData []byte) (ret *float32, err error) {
+// VehiclePowertrainTractionBatteryStateOfChargeCurrentFromData converts the given JSON data to a float64.
+func VehiclePowertrainTractionBatteryStateOfChargeCurrentFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.soc")
@@ -708,7 +950,7 @@ func VehiclePowertrainTractionBatteryStateOfChargeCurrentFromData(jsonData []byt
 		if ok {
 			retVal, err := ToVehiclePowertrainTractionBatteryStateOfChargeCurrent0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.soc': %w", err))
 		} else {
@@ -719,8 +961,8 @@ func VehiclePowertrainTractionBatteryStateOfChargeCurrentFromData(jsonData []byt
 	return ret, errs
 }
 
-// VehiclePowertrainTransmissionTravelledDistanceFromData converts the given JSON data to a *float32.
-func VehiclePowertrainTransmissionTravelledDistanceFromData(jsonData []byte) (ret *float32, err error) {
+// VehiclePowertrainTransmissionTravelledDistanceFromData converts the given JSON data to a float64.
+func VehiclePowertrainTransmissionTravelledDistanceFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.odometer")
@@ -729,7 +971,7 @@ func VehiclePowertrainTransmissionTravelledDistanceFromData(jsonData []byte) (re
 		if ok {
 			retVal, err := ToVehiclePowertrainTransmissionTravelledDistance0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.odometer': %w", err))
 		} else {
@@ -740,8 +982,8 @@ func VehiclePowertrainTransmissionTravelledDistanceFromData(jsonData []byte) (re
 	return ret, errs
 }
 
-// VehiclePowertrainTypeFromData converts the given JSON data to a *string.
-func VehiclePowertrainTypeFromData(jsonData []byte) (ret *string, err error) {
+// VehiclePowertrainTypeFromData converts the given JSON data to a string.
+func VehiclePowertrainTypeFromV1Data(jsonData []byte) (ret string, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.fuelType")
@@ -750,7 +992,7 @@ func VehiclePowertrainTypeFromData(jsonData []byte) (ret *string, err error) {
 		if ok {
 			retVal, err := ToVehiclePowertrainType0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.fuelType': %w", err))
 		} else {
@@ -761,8 +1003,8 @@ func VehiclePowertrainTypeFromData(jsonData []byte) (ret *string, err error) {
 	return ret, errs
 }
 
-// VehicleSpeedFromData converts the given JSON data to a *float32.
-func VehicleSpeedFromData(jsonData []byte) (ret *float32, err error) {
+// VehicleSpeedFromData converts the given JSON data to a float64.
+func VehicleSpeedFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.speed")
@@ -771,7 +1013,7 @@ func VehicleSpeedFromData(jsonData []byte) (ret *float32, err error) {
 		if ok {
 			retVal, err := ToVehicleSpeed0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.speed': %w", err))
 		} else {
@@ -782,8 +1024,8 @@ func VehicleSpeedFromData(jsonData []byte) (ret *float32, err error) {
 	return ret, errs
 }
 
-// VehicleVehicleIdentificationBrandFromData converts the given JSON data to a *string.
-func VehicleVehicleIdentificationBrandFromData(jsonData []byte) (ret *string, err error) {
+// VehicleVehicleIdentificationBrandFromData converts the given JSON data to a string.
+func VehicleVehicleIdentificationBrandFromV1Data(jsonData []byte) (ret string, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.make")
@@ -792,7 +1034,7 @@ func VehicleVehicleIdentificationBrandFromData(jsonData []byte) (ret *string, er
 		if ok {
 			retVal, err := ToVehicleVehicleIdentificationBrand0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.make': %w", err))
 		} else {
@@ -803,8 +1045,8 @@ func VehicleVehicleIdentificationBrandFromData(jsonData []byte) (ret *string, er
 	return ret, errs
 }
 
-// VehicleVehicleIdentificationModelFromData converts the given JSON data to a *string.
-func VehicleVehicleIdentificationModelFromData(jsonData []byte) (ret *string, err error) {
+// VehicleVehicleIdentificationModelFromData converts the given JSON data to a string.
+func VehicleVehicleIdentificationModelFromV1Data(jsonData []byte) (ret string, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.model")
@@ -813,7 +1055,7 @@ func VehicleVehicleIdentificationModelFromData(jsonData []byte) (ret *string, er
 		if ok {
 			retVal, err := ToVehicleVehicleIdentificationModel0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.model': %w", err))
 		} else {
@@ -824,8 +1066,8 @@ func VehicleVehicleIdentificationModelFromData(jsonData []byte) (ret *string, er
 	return ret, errs
 }
 
-// VehicleVehicleIdentificationYearFromData converts the given JSON data to a *uint16.
-func VehicleVehicleIdentificationYearFromData(jsonData []byte) (ret *uint16, err error) {
+// VehicleVehicleIdentificationYearFromData converts the given JSON data to a float64.
+func VehicleVehicleIdentificationYearFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.year")
@@ -834,7 +1076,7 @@ func VehicleVehicleIdentificationYearFromData(jsonData []byte) (ret *uint16, err
 		if ok {
 			retVal, err := ToVehicleVehicleIdentificationYear0(val)
 			if err == nil {
-				return &retVal, nil
+				return retVal, nil
 			}
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.year': %w", err))
 		} else {
