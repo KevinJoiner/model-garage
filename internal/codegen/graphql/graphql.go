@@ -15,9 +15,7 @@ import (
 
 var graphqlFileFormat = "%s.graphqls"
 
-//go:embed gql.tmpl
-var graphqlTableTemplate string
-
+// Config is the configuration for the Graphql generator.
 type Config struct {
 	// OutputFile is the name of the model to generate the graphql table.
 	OutputFile string

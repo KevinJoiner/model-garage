@@ -35,7 +35,7 @@ func FromData(jsonData []byte) (*{{ .ModelName }}, error) {
 
 {{- range $i, $sig := .Signals }}
 // {{ $sig.GOName }}FromData converts the given JSON data to a {{ $sig.GOType }}.
-func {{ .GOName }}FromData(jsonData []byte) (ret {{ .GOType }}, err error) {
+func {{ .GOName }}FromV2Data(jsonData []byte) (ret {{ .GOType }}, err error) {
     var errs error
     var result gjson.Result
 
