@@ -21,7 +21,7 @@ func (*tokenGetter) TokenIDFromSubject(context.Context, string) (uint32, error) 
 func TestFullFromDataConversion(t *testing.T) {
 	t.Parallel()
 	getter := &tokenGetter{}
-	actualSignals, err := convert.SignalsFromV1Payload(context.Background(), getter, []byte(fullInputJSON))
+	actualSignals, err := convert.SignalsFromPayload(context.Background(), getter, []byte(fullInputJSON))
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
 	slices.SortFunc(expectedSignals, func(i, j vss.Signal) int {
 		return cmp.Compare(i.Name, j.Name)

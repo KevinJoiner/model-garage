@@ -13,7 +13,7 @@ const tokenID = uint32(123)
 
 func TestFullFromV2DataConversion(t *testing.T) {
 	t.Parallel()
-	actualSignals, err := convert.SignalsFromV2Payload([]byte(fullV2InputJSON))
+	actualSignals, err := convert.SignalsFromPayload(nil, nil, []byte(fullV2InputJSON))
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
 	require.Equalf(t, expectedV2Signals, actualSignals, "converted vehicle does not match expected vehicle")
 }
@@ -21,7 +21,7 @@ func TestFullFromV2DataConversion(t *testing.T) {
 var fullV2InputJSON = `{
     "id": "2fHbFXPWzrVActDb7WqWCfqeiYe",
     "source": "aftermarket/device/status",
-    "specversion": "1.0",
+    "specversion": "2.0",
     "subject": "0x98D78d711C0ec544F6fb5d54fcf6559CF41546a9",
     "time": "2024-04-18T17:20:46.436008782Z",
     "type": "com.dimo.device.status",
@@ -122,7 +122,7 @@ var fullV2InputJSON = `{
             ]
         }
     },
-    "tokenId": 123,
+    "vehicleTokenID": 123,
     "make": "",
     "model": "",
     "year": 0

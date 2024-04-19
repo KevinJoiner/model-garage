@@ -1,6 +1,7 @@
 package convert
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"math"
@@ -9,6 +10,29 @@ import (
 	"github.com/DIMO-Network/model-garage/pkg/vss"
 	"github.com/tidwall/gjson"
 )
+
+const (
+	specV1 = "1.0"
+	specV2 = "2.0"
+)
+
+// SignalsFromPayload extracts signals from a payload.
+// It detects the payload version and calls the appropriate function.
+func SignalsFromPayload(ctx context.Context, tokenGetter TokenIDGetter, jsonData []byte) ([]vss.Signal, error) {
+	specVersion := gjson.GetBytes(jsonData, "specversion").String()
+	switch {
+	case specVersion == specV1:
+		return SignalsFromV1Payload(ctx, tokenGetter, jsonData)
+	case specVersion == specV2:
+		return SignalsFromV2Payload(jsonData)
+	default:
+		return nil, errors.New("unsupported specversion")
+	}
+}
+
+func isV1Payload(jsonData []byte) bool {
+	return gjson.GetBytes(jsonData, "specversion").String() == "1.0"
+}
 
 // SignalsFromV2Payload extracts signals from a V2 payload.
 func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
@@ -49,13 +73,13 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 }
 
 func tokenIDFromV2Data(jsonData []byte) (uint32, error) {
-	tokenID := gjson.GetBytes(jsonData, "tokenId")
+	tokenID := gjson.GetBytes(jsonData, "vehicleTokenID")
 	if !tokenID.Exists() {
-		return 0, errors.New("tokenID field not found")
+		return 0, errors.New("vehicleTokenID field not found")
 	}
 	id, ok := tokenID.Value().(float64)
 	if !ok {
-		return 0, errors.New("tokenID field is not a number")
+		return 0, errors.New("vehicleTokenID field is not a number")
 	}
 	return float64toUint32(id), nil
 }
