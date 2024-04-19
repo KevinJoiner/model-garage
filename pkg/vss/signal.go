@@ -1,3 +1,4 @@
+// Package vss holds the data structures and functions for working with signals from DIMOs VSS schema.
 package vss
 
 import (

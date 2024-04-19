@@ -2,7 +2,6 @@
 package graphql
 
 import (
-	_ "embed"
 	"fmt"
 	"os"
 	"path"

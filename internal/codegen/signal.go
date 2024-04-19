@@ -175,11 +175,13 @@ func chName(name string) string {
 	return strings.ReplaceAll(removePrefix(name), ".", "_")
 }
 
+// JSONName returns the json name of the signal.
 func JSONName(name string) string {
 	n := goName(name)
 	// lowercase the first letter
 	return strings.ToLower(n[:1]) + n[1:]
 }
+
 func removePrefix(name string) string {
 	idx := strings.IndexByte(name, '.')
 	if idx != -1 {

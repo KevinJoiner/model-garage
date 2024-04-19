@@ -1,3 +1,4 @@
+// Package migration provides a function for migrating a clickhouse database to a schema.
 package migration
 
 import (

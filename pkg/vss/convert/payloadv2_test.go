@@ -13,7 +13,7 @@ const tokenID = uint32(123)
 
 func TestFullFromV2DataConversion(t *testing.T) {
 	t.Parallel()
-	actualSignals, err := convert.SignalsFromPayload(nil, nil, []byte(fullV2InputJSON))
+	actualSignals, err := convert.SignalsFromPayload(nil, nil, []byte(fullV2InputJSON)) //nolint:staticcheck // we want this to fail not v2
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
 	require.Equalf(t, expectedV2Signals, actualSignals, "converted vehicle does not match expected vehicle")
 }
@@ -127,8 +127,9 @@ var fullV2InputJSON = `{
     "model": "",
     "year": 0
 }`
+
 var expectedV2Signals = []vss.Signal{
-	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 26, 633000000, time.UTC), Name: "Powertrain_CombustionEngine_ECT", ValueNumber: 107, ValueString: ""},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 26, 633000000, time.UTC), Name: "Powertrain_CombustionEngine_ECT", ValueNumber: 107, ValueString: ""}, //nolint // false positive
 	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 27, 173000000, time.UTC), Name: "Powertrain_CombustionEngine_MAF", ValueNumber: 475.79, ValueString: ""},
 	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 29, 314000000, time.UTC), Name: "OBD_EngineLoad", ValueNumber: 12.54912, ValueString: ""},
 	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 29, 844000000, time.UTC), Name: "Powertrain_CombustionEngine_TPS", ValueNumber: 23.529600000000002, ValueString: ""},

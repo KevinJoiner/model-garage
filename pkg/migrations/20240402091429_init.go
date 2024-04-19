@@ -35,6 +35,7 @@ func downInit(ctx context.Context, tx *sql.Tx) error {
 	return nil
 }
 
+//nolint:misspell // false positive
 const createDIMOtableStatement = `CREATE TABLE IF NOT EXISTS dimo (
 	DefinitionID String COMMENT 'ID for the vehicles definition',
 	Source String COMMENT 'where the data was sourced from',

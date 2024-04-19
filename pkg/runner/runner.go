@@ -1,3 +1,4 @@
+// Package runner is a package that provides a programmatic interface to the code generation tool.
 package runner
 
 import (
@@ -25,6 +26,7 @@ const (
 	MigrationGenerator = "migration"
 )
 
+// Config is the configuration for the code generation tool.
 type Config struct {
 	PackageName string
 	OutputDir   string

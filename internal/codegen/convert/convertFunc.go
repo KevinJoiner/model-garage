@@ -15,7 +15,7 @@ import (
 	"github.com/DIMO-Network/model-garage/internal/codegen"
 )
 
-func createConvertFuncs(tmplData *codegen.TemplateData, outputDir string, needsConvertFunc []ConversionData) error {
+func createConvertFuncs(tmplData *codegen.TemplateData, outputDir string, needsConvertFunc []conversionData) error {
 	convertFuncTemplate, err := createConvertFuncTemplate()
 	if err != nil {
 		return err
@@ -34,22 +34,22 @@ func createConvertFuncs(tmplData *codegen.TemplateData, outputDir string, needsC
 }
 
 // getConversionFunctions returns the signals that need conversion functions and test functions.
-func getConversionFunctions(signals []*codegen.SignalInfo, existingFuncs map[string]bool) ([]ConversionData, []ConversionData) {
-	var needsConvertFunc []ConversionData
-	var needsConvertTestFunc []ConversionData
+func getConversionFunctions(signals []*codegen.SignalInfo, existingFuncs map[string]bool) ([]conversionData, []conversionData) {
+	var needsConvertFunc []conversionData
+	var needsConvertTestFunc []conversionData
 	for _, signal := range signals {
 		if len(signal.Conversions) == 0 {
 			continue
 		}
-		for i, _ := range signal.Conversions {
+		for i := range signal.Conversions {
 			funcName := convertName(signal) + strconv.Itoa(i)
 			if !existingFuncs[funcName] {
-				convData := ConversionData{Signal: signal, convIdx: i}
+				convData := conversionData{Signal: signal, convIdx: i}
 				needsConvertFunc = append(needsConvertFunc, convData)
 			}
 			funcName = convertTestName(signal) + strconv.Itoa(i)
 			if !existingFuncs[funcName] {
-				convData := ConversionData{Signal: signal, convIdx: i}
+				convData := conversionData{Signal: signal, convIdx: i}
 				needsConvertTestFunc = append(needsConvertTestFunc, convData)
 			}
 		}
@@ -58,7 +58,7 @@ func getConversionFunctions(signals []*codegen.SignalInfo, existingFuncs map[str
 }
 
 // createConvertTestFunc creates test functions for the conversion functions if they do not exist.
-func createConvertTestFunc(tmplData *codegen.TemplateData, outputDir string, needsConvertTestFunc []ConversionData) error {
+func createConvertTestFunc(tmplData *codegen.TemplateData, outputDir string, needsConvertTestFunc []conversionData) error {
 	convertTestFuncTemplate, err := createConvertTestFuncTemplate(tmplData.PackageName)
 	if err != nil {
 		return err
@@ -173,7 +173,7 @@ func ensureFuncFile(convertFuncPath string, packageName string) error {
 	return nil
 }
 
-func writeConvertFuncs(needsConvertFunc []ConversionData, tmpl *template.Template, outputPath string, packageName string) error {
+func writeConvertFuncs(needsConvertFunc []conversionData, tmpl *template.Template, outputPath string, packageName string) error {
 	// check if we need to create convertFunc file
 	err := ensureFuncFile(outputPath, packageName)
 	if err != nil {

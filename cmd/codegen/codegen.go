@@ -46,7 +46,8 @@ func main() {
 	if *definitionPath != "" {
 		f, err := os.Open(filepath.Clean(*definitionPath))
 		if err != nil {
-			log.Fatalf("failed to open file: %v", err)
+			defer log.Fatalf("failed to open file: %v", err)
+			return
 		}
 		definitionReader = f
 		//nolint:errcheck // we don't care about the error since we are not writing to the file
@@ -70,6 +71,7 @@ func main() {
 
 	err := runner.Execute(vspecReader, definitionReader, gens, cfg)
 	if err != nil {
-		log.Fatal(err)
+		defer log.Fatal(err)
+		return
 	}
 }

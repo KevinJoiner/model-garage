@@ -23,14 +23,11 @@ linters:
   disable-all: true
   enable:
     - bodyclose
-    - dogsled
     - dupl
     - errcheck
     - exportloopref
     - funlen
     - gocritic
-    - goconst
-    - gocyclo
     - gofumpt
     - goimports
     - revive

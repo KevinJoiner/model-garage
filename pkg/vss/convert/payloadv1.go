@@ -1,3 +1,4 @@
+// Package convert provides a function to generate conversion functions for a vehicle struct.
 package convert
 
 import (

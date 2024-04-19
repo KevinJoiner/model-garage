@@ -1,3 +1,4 @@
+// Package clickhouseinfra provides a set of functions to interact with ClickHouse containers.
 package clickhouseinfra
 
 import (
@@ -20,6 +21,8 @@ type ColInfo struct {
 	Type    string
 	Comment string
 }
+
+// Container is a struct that holds the clickhouse and zookeeper containers.
 type Container struct {
 	*chmodule.ClickHouseContainer
 	ZooKeeperContainer testcontainers.Container
@@ -37,7 +40,7 @@ func CreateClickHouseContainer(ctx context.Context, userName, password string) (
 	}
 	ipaddr, err := zkcontainer.ContainerIP(ctx)
 	if err != nil {
-		zkcontainer.Terminate(ctx)
+		_ = zkcontainer.Terminate(ctx)
 		return nil, fmt.Errorf("failed to get zookeeper container IP: %w", err)
 	}
 	clickHouseContainer, err := chmodule.RunContainer(ctx,
@@ -48,7 +51,7 @@ func CreateClickHouseContainer(ctx context.Context, userName, password string) (
 		chmodule.WithZookeeper(ipaddr, zkPort),
 	)
 	if err != nil {
-		zkcontainer.Terminate(ctx)
+		_ = zkcontainer.Terminate(ctx)
 		return nil, fmt.Errorf("failed to start clickhouse container: %w", err)
 	}
 	return &Container{clickHouseContainer, zkcontainer}, nil
@@ -94,7 +97,7 @@ func GetClickhouseAsDB(ctx context.Context, container *chmodule.ClickHouseContai
 	return dbConn, nil
 }
 
-// Terminate function terminates the clickhouse container.
+// Terminate function terminates the clickhouse and zookeeper containers.
 // If an error occurs, it will be printed to stderr.
 func (c *Container) Terminate(ctx context.Context) {
 	if err := c.ClickHouseContainer.Terminate(ctx); err != nil {
@@ -112,7 +115,7 @@ func GetCurrentCols(ctx context.Context, chConn clickhouse.Conn, tableName strin
 	if err != nil {
 		return nil, fmt.Errorf("failed to show table: %w", err)
 	}
-	defer rows.Close()
+	defer rows.Close() //nolint // we are not interested in the error here
 	colInfos := []ColInfo{}
 	count := 0
 	for rows.Next() {
@@ -127,6 +130,7 @@ func GetCurrentCols(ctx context.Context, chConn clickhouse.Conn, tableName strin
 	return colInfos, nil
 }
 
+// StartZooKeeperContainer function starts a zookeeper container. The caller is responsible for terminating the container.
 func StartZooKeeperContainer(ctx context.Context) (testcontainers.Container, string, error) {
 	zkPort := nat.Port("2181/tcp")
 

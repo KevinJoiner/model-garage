@@ -30,10 +30,6 @@ func SignalsFromPayload(ctx context.Context, tokenGetter TokenIDGetter, jsonData
 	}
 }
 
-func isV1Payload(jsonData []byte) bool {
-	return gjson.GetBytes(jsonData, "specversion").String() == "1.0"
-}
-
 // SignalsFromV2Payload extracts signals from a V2 payload.
 func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 	var errs error
