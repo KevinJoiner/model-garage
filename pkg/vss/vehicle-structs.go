@@ -18,6 +18,14 @@ const (
 	FieldCurrentLocationLongitude = "CurrentLocation_Longitude"
 	// FieldCurrentLocationTimestamp Timestamp from GNSS system for current location, formatted according to ISO 8601 with UTC time zone.
 	FieldCurrentLocationTimestamp = "CurrentLocation_Timestamp"
+	// FieldDIMOAftermarketHDOP Horizontal dilution of precision of GPS
+	FieldDIMOAftermarketHDOP = "DIMO_Aftermarket_HDOP"
+	// FieldDIMOAftermarketNSAT Number of sync satellites for GPS
+	FieldDIMOAftermarketNSAT = "DIMO_Aftermarket_NSAT"
+	// FieldDIMOAftermarketSSID Service Set Ientifier for the wifi.
+	FieldDIMOAftermarketSSID = "DIMO_Aftermarket_SSID"
+	// FieldDIMOAftermarketWPAState Indicate the current wpa state for the devices wifi
+	FieldDIMOAftermarketWPAState = "DIMO_Aftermarket_WPAState"
 	// FieldExteriorAirTemperature Air temperature outside the vehicle.
 	FieldExteriorAirTemperature = "Exterior_AirTemperature"
 	// FieldLowVoltageBatteryCurrentVoltage Current Voltage of the low voltage battery.
@@ -78,6 +86,10 @@ var JSONName2CHName = map[string]string{
 	"currentLocationLatitude":                       "CurrentLocation_Latitude",
 	"currentLocationLongitude":                      "CurrentLocation_Longitude",
 	"currentLocationTimestamp":                      "CurrentLocation_Timestamp",
+	"dIMOAftermarketHDOP":                           "DIMO_Aftermarket_HDOP",
+	"dIMOAftermarketNSAT":                           "DIMO_Aftermarket_NSAT",
+	"dIMOAftermarketSSID":                           "DIMO_Aftermarket_SSID",
+	"dIMOAftermarketWPAState":                       "DIMO_Aftermarket_WPAState",
 	"exteriorAirTemperature":                        "Exterior_AirTemperature",
 	"lowVoltageBatteryCurrentVoltage":               "LowVoltageBattery_CurrentVoltage",
 	"oBDBarometricPressure":                         "OBD_BarometricPressure",

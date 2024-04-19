@@ -38,7 +38,7 @@ func SignalsFromV2Data(tokenID uint32, timestamp time.Time, signalName string, s
 		{{- end }}
 	{{- end }}
 	default:
-		return nil, fmt.Errorf("unknown signal name: %s", signalName)
+		// do nothing
 	}
 	return ret, retErrs
 }

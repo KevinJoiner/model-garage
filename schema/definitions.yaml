@@ -377,3 +377,47 @@
       isArray: false
   requiredPrivileges:
     - VehicleNonLocationData
+- vspecName: Vehicle.DIMO.Aftermarket.HDOP
+  isArray: null
+  clickHouseType: ""
+  goType: ""
+  gqlType: ""
+  conversions:
+    - originalName: hdop
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VehicleNonLocationData
+- vspecName: Vehicle.DIMO.Aftermarket.NSAT
+  isArray: null
+  clickHouseType: ""
+  goType: ""
+  gqlType: ""
+  conversions:
+    - originalName: nsat
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VehicleNonLocationData
+- vspecName: Vehicle.DIMO.Aftermarket.WPAState
+  isArray: null
+  clickHouseType: ""
+  goType: ""
+  gqlType: ""
+  conversions:
+    - originalName: wpa_state
+      originalType: string
+      isArray: false
+  requiredPrivileges:
+    - VehicleNonLocationData
+- vspecName: Vehicle.DIMO.Aftermarket.SSID
+  isArray: null
+  clickHouseType: ""
+  goType: ""
+  gqlType: ""
+  conversions:
+    - originalName: ssid
+      originalType: string
+      isArray: false
+  requiredPrivileges:
+    - VehicleNonLocationData

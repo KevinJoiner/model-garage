@@ -207,3 +207,23 @@ func ToVehicleIdentificationYear0(val float64) (float64, error) {
 func ToPowertrainCombustionEngineMAF0(val float64) (float64, error) {
 	return val, nil
 }
+
+// ToDIMOAftermarketHDOP0 converts data as float64 to float64.
+func ToDIMOAftermarketHDOP0(val float64) (float64, error) {
+	return val, nil
+}
+
+// ToDIMOAftermarketNSAT0 converts data as float64 to float64.
+func ToDIMOAftermarketNSAT0(val float64) (float64, error) {
+	return val, nil
+}
+
+// ToDIMOAftermarketSSID0 converts data as string to string.
+func ToDIMOAftermarketSSID0(val string) (string, error) {
+	return val, nil
+}
+
+// ToDIMOAftermarketWPAState0 converts data as string to string.
+func ToDIMOAftermarketWPAState0(val string) (string, error) {
+	return val, nil
+}

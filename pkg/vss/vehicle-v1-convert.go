@@ -140,6 +140,66 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 		retSignals = append(retSignals, sig)
 	}
 
+	val, err = DIMOAftermarketHDOPFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = errors.Join(errs, fmt.Errorf("failed to get 'DIMOAftermarketHDOP': %w", err))
+		}
+	} else {
+		sig := Signal{
+			Name:      "DIMO_Aftermarket_HDOP",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = DIMOAftermarketNSATFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = errors.Join(errs, fmt.Errorf("failed to get 'DIMOAftermarketNSAT': %w", err))
+		}
+	} else {
+		sig := Signal{
+			Name:      "DIMO_Aftermarket_NSAT",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = DIMOAftermarketSSIDFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = errors.Join(errs, fmt.Errorf("failed to get 'DIMOAftermarketSSID': %w", err))
+		}
+	} else {
+		sig := Signal{
+			Name:      "DIMO_Aftermarket_SSID",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = DIMOAftermarketWPAStateFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = errors.Join(errs, fmt.Errorf("failed to get 'DIMOAftermarketWPAState': %w", err))
+		}
+	} else {
+		sig := Signal{
+			Name:      "DIMO_Aftermarket_WPAState",
+			TokenID:   tokenID,
+			Timestamp: timestamp,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
 	val, err = ExteriorAirTemperatureFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -710,6 +770,106 @@ func CurrentLocationTimestampFromV1Data(jsonData []byte) (ret float64, err error
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'CurrentLocationTimestamp'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// DIMOAftermarketHDOPFromData converts the given JSON data to a float64.
+func DIMOAftermarketHDOPFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.hdop")
+	if result.Exists() {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToDIMOAftermarketHDOP0(val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.hdop': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.hdop' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'DIMOAftermarketHDOP'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// DIMOAftermarketNSATFromData converts the given JSON data to a float64.
+func DIMOAftermarketNSATFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.nsat")
+	if result.Exists() {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToDIMOAftermarketNSAT0(val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.nsat': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.nsat' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'DIMOAftermarketNSAT'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// DIMOAftermarketSSIDFromData converts the given JSON data to a string.
+func DIMOAftermarketSSIDFromV1Data(jsonData []byte) (ret string, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.ssid")
+	if result.Exists() {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToDIMOAftermarketSSID0(val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.ssid': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.ssid' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'DIMOAftermarketSSID'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// DIMOAftermarketWPAStateFromData converts the given JSON data to a string.
+func DIMOAftermarketWPAStateFromV1Data(jsonData []byte) (ret string, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.wpa_state")
+	if result.Exists() {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToDIMOAftermarketWPAState0(val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.wpa_state': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.wpa_state' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'DIMOAftermarketWPAState'", errNotFound)
 	}
 
 	return ret, errs
