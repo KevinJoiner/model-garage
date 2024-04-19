@@ -1,6 +1,7 @@
 package convert
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"time"
@@ -11,11 +12,11 @@ import (
 
 // TokenIDGetter is an interface to get a tokenID from a subject.
 type TokenIDGetter interface {
-	TokenIDFromSubject(subject string) (uint32, error)
+	TokenIDFromSubject(ctx context.Context, subject string) (uint32, error)
 }
 
 // SignalsFromV1Payload gets a slice signals from a v1 payload.
-func SignalsFromV1Payload(tokenGetter TokenIDGetter, jsonData []byte) ([]vss.Signal, error) {
+func SignalsFromV1Payload(ctx context.Context, tokenGetter TokenIDGetter, jsonData []byte) ([]vss.Signal, error) {
 	ts, err := timestampFromV1Data(jsonData)
 	if err != nil {
 		return nil, fmt.Errorf("error getting timestamp: %w", err)
@@ -24,7 +25,7 @@ func SignalsFromV1Payload(tokenGetter TokenIDGetter, jsonData []byte) ([]vss.Sig
 	if err != nil {
 		return nil, fmt.Errorf("error getting subject: %w", err)
 	}
-	tokenID, err := tokenGetter.TokenIDFromSubject(sub)
+	tokenID, err := tokenGetter.TokenIDFromSubject(ctx, sub)
 	if err != nil {
 		return nil, fmt.Errorf("error getting tokenID from subject: %w", err)
 	}

@@ -2,6 +2,7 @@ package convert_test
 
 import (
 	"cmp"
+	"context"
 	"slices"
 	"testing"
 	"time"
@@ -13,14 +14,14 @@ import (
 
 type tokenGetter struct{}
 
-func (*tokenGetter) TokenIDFromSubject(string) (uint32, error) {
+func (*tokenGetter) TokenIDFromSubject(context.Context, string) (uint32, error) {
 	return 123, nil
 }
 
 func TestFullFromDataConversion(t *testing.T) {
 	t.Parallel()
 	getter := &tokenGetter{}
-	actualSignals, err := convert.SignalsFromV1Payload(getter, []byte(fullInputJSON))
+	actualSignals, err := convert.SignalsFromV1Payload(context.Background(), getter, []byte(fullInputJSON))
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
 	slices.SortFunc(expectedSignals, func(i, j vss.Signal) int {
 		return cmp.Compare(i.Name, j.Name)
@@ -29,48 +30,50 @@ func TestFullFromDataConversion(t *testing.T) {
 }
 
 var fullInputJSON = `{
-			"data": {
-				"tires": {
-					"frontLeft": 30.5,
-					"frontRight": 31.0,
-					"backLeft": 32.2,
-					"backRight": 33.1
-				},
-				"altitude": 100.0,
-				"latitude": 37.7749,
-				"longitude": -122.4194,
-				"timestamp": "2022-01-01T12:34:56Z",
-				"definitionID": "123",
-				"iD": "456",
-				"ambientTemp": 25.0,
-				"batteryVoltage": 12.5,
-				"barometricPressure": 1013.25,
-				"engineLoad": 75.0,
-				"intakeTemp": 30.0,
-				"runTime": 1200.0,
-				"coolantTemp": 90.0,
-				"oil": 0.10,
-				"engineSpeed": 3000.0,
-				"throttlePosition": 50.0,
-				"fuelPercentRemaining": 60.0,
-				"fuelType": "Gasoline",
-				"range": 300.0,
-				"chargeLimit": 80.0,
-				"charging": true,
-				"batteryCapacity": 60.0,
-				"soc": 70.0,
-				"odometer": 50000.0,
-				"speed": 60.0,
-				"make": "Toyota",
-				"model": "Camry",
-				"year": 2020
+	"id": "randomIDnumber",
+	"specversion": "1.0",
+	"source": "SensorXYZ",
+	"subject": "Vehicle123",
+	"time": "2022-01-01T12:34:56Z",
+	"type": "DIMO"
+	"data": {
+		"tires": {
+			"frontLeft": 30.5,
+			"frontRight": 31.0,
+			"backLeft": 32.2,
+			"backRight": 33.1
+		},
+		"altitude": 100.0,
+		"latitude": 37.7749,
+		"longitude": -122.4194,
+		"timestamp": "2022-01-01T12:34:56Z",
+		"definitionID": "123",
+		"iD": "456",
+		"ambientTemp": 25.0,
+		"batteryVoltage": 12.5,
+		"barometricPressure": 1013.25,
+		"engineLoad": 75.0,
+		"intakeTemp": 30.0,
+		"runTime": 1200.0,
+		"coolantTemp": 90.0,
+		"oil": 0.10,
+		"engineSpeed": 3000.0,
+		"throttlePosition": 50.0,
+		"fuelPercentRemaining": 60.0,
+		"fuelType": "Gasoline",
+		"range": 300.0,
+		"chargeLimit": 80.0,
+		"charging": true,
+		"batteryCapacity": 60.0,
+		"soc": 70.0,
+		"odometer": 50000.0,
+		"speed": 60.0,
+		"make": "Toyota",
+		"model": "Camry",
+		"year": 2020
 				"vin": "1234567890"
-			},
-			"source": "SensorXYZ",
-			"subject": "Vehicle123",
-			"time": "2022-01-01T12:34:56Z",
-			"type": "DIMO"
-		}`
+	},
+}`
 
 var ts = time.Date(2022, 1, 1, 12, 34, 56, 0, time.UTC)
 var expectedSignals = []vss.Signal{
