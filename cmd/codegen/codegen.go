@@ -22,9 +22,9 @@ func main() {
 	vspecPath := flag.String("spec", "", "Path to the vspec CSV file if empty, the embedded vspec will be used")
 	definitionPath := flag.String("definitions", "", "Path to the definitions file if empty, the definitions will be used")
 	packageName := flag.String("package", "vspec", "Name of the package to generate")
-	generators := flag.String("generators", "all", "Comma separated list of generators to run. Options: all, model, clickhouse, convert, graphql.")
+	generators := flag.String("generators", "all", "Comma separated list of generators to run. Options: all, model, convert, graphql.")
 	// Convert flags
-	withTest := flag.Bool("convert.with-test", true, "Generate test functions for conversion functions. Default is true.")
+	withTest := flag.Bool("convert.with-test", false, "Generate test functions for conversion functions. Default is true.")
 	// GQL flags
 	gqlOutFile := flag.String("graphql.output-file", "", "Path of the generate gql file that is appened to the outputDir.")
 	gqlTemplateFile := flag.String("graphql.template-file", "", "Path to the template file. Which is executed with codegen.TemplateData data.")

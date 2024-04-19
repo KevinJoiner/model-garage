@@ -130,13 +130,13 @@ func ToVehiclePowertrainFuelSystemSupportedFuelTypes0(val string) (string, error
 	case "Gasoline":
 		return "GASOLINE", nil
 	case "Ethanol":
-		return "ETHANOL", nil
+		return "E85", nil
 	case "Diesel":
 		return "DIESEL", nil
 	case "LPG":
 		return "LPG", nil
 	default:
-		return "UNKNOWN", nil
+		return "OTHER", nil
 	}
 }
 

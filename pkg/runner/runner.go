@@ -6,7 +6,6 @@ import (
 	"slices"
 
 	"github.com/DIMO-Network/model-garage/internal/codegen"
-	"github.com/DIMO-Network/model-garage/internal/codegen/clickhouse"
 	"github.com/DIMO-Network/model-garage/internal/codegen/convert"
 	"github.com/DIMO-Network/model-garage/internal/codegen/graphql"
 	"github.com/DIMO-Network/model-garage/internal/codegen/migration"
@@ -18,8 +17,6 @@ const (
 	AllGenerator = "all"
 	// ModelGenerator is a constant to run the model generator.
 	ModelGenerator = "model"
-	// ClickhouseGenerator is a constant to run the clickhouse generator.
-	ClickhouseGenerator = "clickhouse"
 	// ConvertGenerator is a constant to run the convert generator.
 	ConvertGenerator = "convert"
 	// GraphqlGenerator is a constant to run the graphql generator.
@@ -46,7 +43,6 @@ func Execute(vspecReader, definitionsReader io.Reader, generators []string, cfg 
 	switch {
 	case slices.Contains(generators, AllGenerator):
 	case slices.Contains(generators, ModelGenerator):
-	case slices.Contains(generators, ClickhouseGenerator):
 	case slices.Contains(generators, ConvertGenerator):
 	case slices.Contains(generators, GraphqlGenerator):
 	case slices.Contains(generators, MigrationGenerator):
@@ -70,12 +66,6 @@ func Execute(vspecReader, definitionsReader io.Reader, generators []string, cfg 
 		err = model.Generate(tmplData, cfg.OutputDir)
 		if err != nil {
 			return fmt.Errorf("failed to generate model file: %w", err)
-		}
-	}
-	if slices.Contains(generators, AllGenerator) || slices.Contains(generators, ClickhouseGenerator) {
-		err = clickhouse.Generate(tmplData, cfg.OutputDir)
-		if err != nil {
-			return fmt.Errorf("failed to generate clickhouse file: %w", err)
 		}
 	}
 
