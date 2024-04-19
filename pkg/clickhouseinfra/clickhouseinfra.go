@@ -75,8 +75,8 @@ func GetClickHouseAsConn(container *chmodule.ClickHouseContainer) (clickhouse.Co
 }
 
 // GetClickhouseAsDB function returns a sql.DB connection which allows interfaceing with the stdlib database/sql package.
-func GetClickhouseAsDB(container *chmodule.ClickHouseContainer) (*sql.DB, error) {
-	host, err := container.ConnectionHost(context.TODO())
+func GetClickhouseAsDB(ctx context.Context, container *chmodule.ClickHouseContainer) (*sql.DB, error) {
+	host, err := container.ConnectionHost(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get clickhouse host: %w", err)
 	}

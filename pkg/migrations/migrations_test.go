@@ -17,7 +17,7 @@ func TestMigration(t *testing.T) {
 
 	defer chcontainer.Terminate(ctx)
 
-	db, err := clickhouseinfra.GetClickhouseAsDB(chcontainer.ClickHouseContainer)
+	db, err := clickhouseinfra.GetClickhouseAsDB(ctx, chcontainer.ClickHouseContainer)
 	require.NoError(t, err, "Failed to get clickhouse db")
 
 	err = migrations.RunGoose(ctx, []string{"up", "-v"}, db)
