@@ -89,7 +89,7 @@ func timestampFromV2Data(sigResult gjson.Result) (time.Time, error) {
 	if !timestamp.Exists() {
 		return time.Time{}, errors.New("timestamp field not found")
 	}
-	return time.UnixMilli(int64(timestamp.Uint())), nil
+	return time.UnixMilli(int64(timestamp.Uint())).UTC(), nil
 }
 
 func signalNameFromV2Data(sigResult gjson.Result) (string, error) {

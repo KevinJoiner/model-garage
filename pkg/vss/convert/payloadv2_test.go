@@ -128,89 +128,18 @@ var fullV2InputJSON = `{
     "year": 0
 }`
 var expectedV2Signals = []vss.Signal{
-	{
-		TokenID:     tokenID,
-		Timestamp:   time.Date(2024, time.April, 18, 13, 20, 26, 633000000, time.Local),
-		Name:        "Powertrain_CombustionEngine_ECT",
-		ValueNumber: 107,
-	},
-	{
-		TokenID:     tokenID,
-		Timestamp:   time.Date(2024, time.April, 18, 13, 20, 27, 173000000, time.Local),
-		Name:        "Powertrain_CombustionEngine_MAF",
-		ValueNumber: 475.79,
-	},
-
-	{
-		TokenID:     tokenID,
-		Timestamp:   time.Date(2024, time.April, 18, 13, 20, 29, 314000000, time.Local),
-		Name:        "OBD_EngineLoad",
-		ValueNumber: 12.54912,
-	},
-	{
-		TokenID:     tokenID,
-		Timestamp:   time.Date(2024, time.April, 18, 13, 20, 29, 844000000, time.Local),
-		Name:        "Powertrain_CombustionEngine_TPS",
-		ValueNumber: 23.529600000000002,
-	},
-	{
-		TokenID:     tokenID,
-		Timestamp:   time.Date(2024, time.April, 18, 13, 20, 37, 235000000, time.Local),
-		Name:        "Powertrain_CombustionEngine_TPS",
-		ValueNumber: 23.529600000000002,
-	},
-	{
-		TokenID:     tokenID,
-		Timestamp:   time.Date(2024, time.April, 18, 13, 20, 42, 256000000, time.Local),
-		Name:        "Powertrain_CombustionEngine_MAF",
-		ValueNumber: 475.79,
-	},
-	{
-		TokenID:     tokenID,
-		Timestamp:   time.Date(2024, time.April, 18, 13, 20, 44, 422000000, time.Local),
-		Name:        "OBD_EngineLoad",
-		ValueNumber: 12.54912,
-	},
-	{
-		TokenID:     tokenID,
-		Timestamp:   time.Date(2024, time.April, 18, 13, 20, 44, 962000000, time.Local),
-		Name:        "Powertrain_CombustionEngine_TPS",
-		ValueNumber: 23.529600000000002,
-	},
-	{
-		TokenID:     tokenID,
-		Timestamp:   time.Date(2024, time.April, 18, 13, 20, 46, 435000000, time.Local),
-		Name:        "CurrentLocation_Longitude",
-		ValueNumber: -56.50151833333334,
-	},
-	{
-		TokenID:     tokenID,
-		Timestamp:   time.Date(2024, time.April, 18, 13, 20, 46, 435000000, time.Local),
-		Name:        "CurrentLocation_Latitude",
-		ValueNumber: 56.27014,
-	},
-	{
-		TokenID:     tokenID,
-		Timestamp:   time.Date(2024, time.April, 18, 13, 20, 46, 435000000, time.Local),
-		Name:        "DIMO_Aftermarket_HDOP",
-		ValueNumber: 1.4,
-	},
-	{
-		TokenID:     tokenID,
-		Timestamp:   time.Date(2024, time.April, 18, 13, 20, 46, 435000000, time.Local),
-		Name:        "DIMO_Aftermarket_NSAT",
-		ValueNumber: 6,
-	},
-	{
-		TokenID:     tokenID,
-		Timestamp:   time.Date(2024, time.April, 18, 13, 20, 46, 435000000, time.Local),
-		Name:        "DIMO_Aftermarket_WPAState",
-		ValueString: "COMPLETED",
-	},
-	{
-		TokenID:     tokenID,
-		Timestamp:   time.Date(2024, time.April, 18, 13, 20, 46, 435000000, time.Local),
-		Name:        "DIMO_Aftermarket_SSID",
-		ValueString: "foo",
-	},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 26, 633000000, time.UTC), Name: "Powertrain_CombustionEngine_ECT", ValueNumber: 107, ValueString: ""},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 27, 173000000, time.UTC), Name: "Powertrain_CombustionEngine_MAF", ValueNumber: 475.79, ValueString: ""},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 29, 314000000, time.UTC), Name: "OBD_EngineLoad", ValueNumber: 12.54912, ValueString: ""},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 29, 844000000, time.UTC), Name: "Powertrain_CombustionEngine_TPS", ValueNumber: 23.529600000000002, ValueString: ""},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 37, 235000000, time.UTC), Name: "Powertrain_CombustionEngine_TPS", ValueNumber: 23.529600000000002, ValueString: ""},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 42, 256000000, time.UTC), Name: "Powertrain_CombustionEngine_MAF", ValueNumber: 475.79, ValueString: ""},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 44, 422000000, time.UTC), Name: "OBD_EngineLoad", ValueNumber: 12.54912, ValueString: ""},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 44, 962000000, time.UTC), Name: "Powertrain_CombustionEngine_TPS", ValueNumber: 23.529600000000002, ValueString: ""},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "CurrentLocation_Longitude", ValueNumber: -56.50151833333334, ValueString: ""},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "CurrentLocation_Latitude", ValueNumber: 56.27014, ValueString: ""},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "DIMO_Aftermarket_HDOP", ValueNumber: 1.4, ValueString: ""},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "DIMO_Aftermarket_NSAT", ValueNumber: 6, ValueString: ""},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "DIMO_Aftermarket_WPAState", ValueNumber: 0, ValueString: "COMPLETED"},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "DIMO_Aftermarket_SSID", ValueNumber: 0, ValueString: "foo"},
 }
