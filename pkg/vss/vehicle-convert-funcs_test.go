@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestToVehiclePowertrainFuelSystemSupportedFuelTypes0(t *testing.T) {
+func TestToPowertrainFuelSystemSupportedFuelTypes0(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -62,7 +62,7 @@ func TestToVehiclePowertrainFuelSystemSupportedFuelTypes0(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehiclePowertrainFuelSystemSupportedFuelTypes0(test.input)
+			result, err := vss.ToPowertrainFuelSystemSupportedFuelTypes0(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -73,7 +73,7 @@ func TestToVehiclePowertrainFuelSystemSupportedFuelTypes0(t *testing.T) {
 	}
 }
 
-func TestToVehiclePowertrainType0(t *testing.T) {
+func TestToPowertrainType0(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -127,7 +127,7 @@ func TestToVehiclePowertrainType0(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehiclePowertrainType0(test.input)
+			result, err := vss.ToPowertrainType0(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -138,7 +138,7 @@ func TestToVehiclePowertrainType0(t *testing.T) {
 	}
 }
 
-func TestToVehiclePowertrainCombustionEngineEngineOilLevel0(t *testing.T) {
+func TestToPowertrainCombustionEngineEngineOilLevel0(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -198,7 +198,7 @@ func TestToVehiclePowertrainCombustionEngineEngineOilLevel0(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehiclePowertrainCombustionEngineEngineOilLevel0(test.input)
+			result, err := vss.ToPowertrainCombustionEngineEngineOilLevel0(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -209,7 +209,7 @@ func TestToVehiclePowertrainCombustionEngineEngineOilLevel0(t *testing.T) {
 	}
 }
 
-func TestToVehicleCurrentLocationTimestamp1(t *testing.T) {
+func TestToCurrentLocationTimestamp1(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -245,7 +245,7 @@ func TestToVehicleCurrentLocationTimestamp1(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToVehicleCurrentLocationTimestamp0(test.input)
+			result, err := vss.ToCurrentLocationTimestamp0(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {

@@ -3,17 +3,18 @@ package convert
 import (
 	"errors"
 	"fmt"
+	"math"
 	"time"
 
-	"github.com/DIMO-Network/model-garage/internal/convert"
 	"github.com/DIMO-Network/model-garage/pkg/vss"
 	"github.com/tidwall/gjson"
 )
 
+// SignalsFromV2Payload extracts signals from a V2 payload.
 func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 	var errs error
 
-	signals := gjson.GetBytes(jsonData, "data.signals")
+	signals := gjson.GetBytes(jsonData, "data.vehicle.signals")
 	if !signals.Exists() {
 		return nil, errors.New("signals field not found")
 	}
@@ -26,13 +27,14 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 	}
 	retSignals := []vss.Signal{}
 	for _, sigData := range signals.Array() {
-		ts, err := timestampFromV2Data(sigData)
+		originalName, err := signalNameFromV2Data(sigData)
 		if err != nil {
 			errs = errors.Join(errs, err)
 			continue
 		}
-		originalName, err := signalNameFromV2Data(sigData)
+		ts, err := timestampFromV2Data(sigData)
 		if err != nil {
+			err = fmt.Errorf("error for '%s': %w", originalName, err)
 			errs = errors.Join(errs, err)
 			continue
 		}
@@ -47,7 +49,7 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 }
 
 func tokenIDFromV2Data(jsonData []byte) (uint32, error) {
-	tokenID := gjson.GetBytes(jsonData, "data.tokenId")
+	tokenID := gjson.GetBytes(jsonData, "tokenId")
 	if !tokenID.Exists() {
 		return 0, errors.New("tokenID field not found")
 	}
@@ -55,7 +57,7 @@ func tokenIDFromV2Data(jsonData []byte) (uint32, error) {
 	if !ok {
 		return 0, errors.New("tokenID field is not a number")
 	}
-	return convert.Float64toUint32(id), nil
+	return float64toUint32(id), nil
 }
 
 func timestampFromV2Data(sigResult gjson.Result) (time.Time, error) {
@@ -63,7 +65,7 @@ func timestampFromV2Data(sigResult gjson.Result) (time.Time, error) {
 	if !timestamp.Exists() {
 		return time.Time{}, errors.New("timestamp field not found")
 	}
-	return time.Parse(time.RFC3339, timestamp.String())
+	return time.UnixMilli(int64(timestamp.Uint())), nil
 }
 
 func signalNameFromV2Data(sigResult gjson.Result) (string, error) {
@@ -72,4 +74,15 @@ func signalNameFromV2Data(sigResult gjson.Result) (string, error) {
 		return "", errors.New("signalName field not found")
 	}
 	return signalName.String(), nil
+}
+
+// float64toUint32 converts float64 to uint32.
+func float64toUint32(val float64) uint32 {
+	if val > math.MaxUint32 {
+		return math.MaxUint32
+	}
+	if val < 0 {
+		return 0
+	}
+	return uint32(val)
 }
