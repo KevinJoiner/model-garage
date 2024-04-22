@@ -13,7 +13,7 @@ VERSION   := $(shell git describe --tags || echo "v0.0.0")
 VER_CUT   := $(shell echo $(VERSION) | cut -c2-)
 
 # Dependency versions
-GOLANGCI_VERSION   = v1.56.2
+GOLANGCI_VERSION   = v1.57.2
 
 build:
 	@CGO_ENABLED=0 GOOS=$(GOOS) GOARCH=$(ARCH) \
@@ -39,6 +39,7 @@ test:
 	@go test ./...
 
 lint:
+	@golangci-lint version
 	@golangci-lint run
 
 format:

@@ -6,8 +6,6 @@ linters-settings:
     min-complexity: 15
   goimports:
     local-prefixes: github.com/DIMO-Network/mnemonic
-  govet:
-    check-shadowing: true
   misspell:
     locale: US
     ignore-words:

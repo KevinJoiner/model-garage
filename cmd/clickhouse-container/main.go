@@ -34,7 +34,7 @@ func run(ctx context.Context) error {
 	defer chcontainer.Terminate(ctx)
 
 	if *migrate {
-		db, err := clickhouseinfra.GetClickhouseAsDB(ctx, chcontainer.ClickHouseContainer) //nolint: govet // false positive
+		db, err := clickhouseinfra.GetClickhouseAsDB(ctx, chcontainer.ClickHouseContainer)
 		if err != nil {
 			return fmt.Errorf("failed to get clickhouse db: %w", err)
 		}
