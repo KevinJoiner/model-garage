@@ -32,6 +32,7 @@ type Config struct {
 	OutputDir   string
 	GraphQL     graphql.Config
 	Convert     convert.Config
+	Migration   migration.Config
 }
 
 // Execute runs the code generation tool.
@@ -86,7 +87,7 @@ func Execute(vspecReader, definitionsReader io.Reader, generators []string, cfg 
 	}
 
 	if slices.Contains(generators, AllGenerator) || slices.Contains(generators, MigrationGenerator) {
-		err = migration.Generate(tmplData, cfg.OutputDir)
+		err = migration.Generate(tmplData, cfg.OutputDir, cfg.Migration)
 		if err != nil {
 			return fmt.Errorf("failed to generate migration file: %w", err)
 		}

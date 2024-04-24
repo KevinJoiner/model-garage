@@ -12,6 +12,7 @@ import (
 
 	"github.com/DIMO-Network/model-garage/internal/codegen/convert"
 	"github.com/DIMO-Network/model-garage/internal/codegen/graphql"
+	"github.com/DIMO-Network/model-garage/internal/codegen/migration"
 	"github.com/DIMO-Network/model-garage/pkg/runner"
 	"github.com/DIMO-Network/model-garage/schema"
 )
@@ -28,6 +29,9 @@ func main() {
 	// GQL flags
 	gqlOutFile := flag.String("graphql.output-file", "", "Path of the generate gql file that is appened to the outputDir.")
 	gqlTemplateFile := flag.String("graphql.template-file", "", "Path to the template file. Which is executed with codegen.TemplateData data.")
+	// Migration flags
+	migrationFileName := flag.String("migration.file-name", "", "Name of the migration file. Default is the model name.")
+
 	flag.Parse()
 
 	var vspecReader io.Reader
@@ -66,6 +70,9 @@ func main() {
 		},
 		Convert: convert.Config{
 			WithTest: *withTest,
+		},
+		Migration: migration.Config{
+			FileName: *migrationFileName,
 		},
 	}
 

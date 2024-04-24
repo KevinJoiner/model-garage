@@ -49,7 +49,10 @@ func RunGoose(ctx context.Context, gooseArgs []string, db *sql.DB) error {
 	if len(gooseArgs) > 1 {
 		args = os.Args[1:]
 	}
-
+	// err := initMigrations(ctx, db)
+	// if err != nil {
+	// 	return fmt.Errorf("failed to init migrations for clickhouse cluster: %w", err)
+	// }
 	SetMigrations()
 	if err := goose.SetDialect("clickhouse"); err != nil {
 		return fmt.Errorf("failed to set dialect: %w", err)

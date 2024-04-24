@@ -11,19 +11,38 @@ import (
 	"time"
 
 	"github.com/DIMO-Network/model-garage/internal/codegen"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
-var migrationFileFormat = "%s_%s_migration.go"
+var (
+	delemReplacer = strings.NewReplacer("_", " ", "-", " ", ".", " ")
+	titleCaser    = cases.Title(language.AmericanEnglish, cases.NoLower)
+	lowerCaser    = cases.Lower(language.AmericanEnglish)
+)
 
-const timestampFormat = "20060102150405"
+const (
+	migrationFileFormat = "%s_%s_migration.go"
+	timestampFormat     = "20060102150405"
+)
 
 //go:embed migration.tmpl
 var migrationFileTemplate string
 
+// Config is the configuration for the migration generator.
+type Config struct {
+	// fileName is the name of the migration file.
+	FileName string
+}
+
 // Generate creates a new ClickHouse table file.
-func Generate(tmplData *codegen.TemplateData, outputDir string) error {
+func Generate(tmplData *codegen.TemplateData, outputDir string, cfg Config) error {
 	version := time.Now().UTC().Format(timestampFormat)
-	migrationTempl, err := createMigrationTemplate(version)
+	fileName := cfg.FileName
+	if fileName == "" {
+		fileName = tmplData.ModelName
+	}
+	migrationTempl, err := createMigrationTemplate(fileName)
 	if err != nil {
 		return err
 	}
@@ -33,7 +52,9 @@ func Generate(tmplData *codegen.TemplateData, outputDir string) error {
 	if err != nil {
 		return fmt.Errorf("error executing ClickHouse table template: %w", err)
 	}
-	migrationFilePath := getFilePath(strings.ToLower(tmplData.ModelName), outputDir, version)
+
+	fileName = delemReplacer.Replace(fileName)
+	migrationFilePath := getFilePath(fileName, outputDir, version)
 	err = codegen.FormatAndWriteToFile(outBuf.Bytes(), migrationFilePath)
 	if err != nil {
 		return fmt.Errorf("error writing file: %w", err)
@@ -42,11 +63,10 @@ func Generate(tmplData *codegen.TemplateData, outputDir string) error {
 	return nil
 }
 
-func createMigrationTemplate(version string) (*template.Template, error) {
+func createMigrationTemplate(fileName string) (*template.Template, error) {
+	funcName := strings.ReplaceAll(titleCaser.String(fileName), " ", "")
 	tmpl, err := template.New("migrationTemplate").Funcs(template.FuncMap{
-		"escapeDesc": func(desc string) string { return strings.ReplaceAll(desc, `'`, `\'`) },
-		"lower":      strings.ToLower,
-		"version":    func() string { return version },
+		"funcName": func() string { return funcName },
 	}).Parse(migrationFileTemplate)
 	if err != nil {
 		return nil, fmt.Errorf("error parsing ClickHouse table template: %w", err)
@@ -54,7 +74,8 @@ func createMigrationTemplate(version string) (*template.Template, error) {
 	return tmpl, nil
 }
 
-func getFilePath(modelName, outputDir string, version string) string {
-	migrationFileName := fmt.Sprintf(migrationFileFormat, version, modelName)
+func getFilePath(fileName, outputDir string, version string) string {
+	noSpaceName := lowerCaser.String(strings.ReplaceAll(fileName, " ", "_"))
+	migrationFileName := fmt.Sprintf(migrationFileFormat, version, noSpaceName)
 	return filepath.Clean(filepath.Join(outputDir, migrationFileName))
 }

@@ -46,7 +46,7 @@ format:
 	@golangci-lint run --fix
 
 migration: build
-	./bin/codegen -output=./pkg/migrations -package=migrations -generators=migration
+	./bin/codegen -output=./pkg/migrations -package=migrations -generators=migration -migration.file-name="${name}"
 
 tools-golangci-lint:
 	@mkdir -p bin

@@ -3,7 +3,6 @@ package migrations
 import (
 	"context"
 	"database/sql"
-	"fmt"
 	"runtime"
 
 	"github.com/pressly/goose/v3"
@@ -11,34 +10,31 @@ import (
 
 func init() {
 	_, filename, _, _ := runtime.Caller(0)
-	registerFunc := func() { goose.AddNamedMigrationContext(filename, upCommand20240423004039, downCommand20240423004039) }
+	registerFunc := func() { goose.AddNamedMigrationContext(filename, upSignalTable, downSignalTable) }
 	registerFuncs = append(registerFuncs, registerFunc)
 	registerFunc()
 }
 
-func upCommand20240423004039(ctx context.Context, tx *sql.Tx) error {
+func upSignalTable(ctx context.Context, tx *sql.Tx) error {
 	// This code is executed when the migration is applied.
 	upStatements := []string{
-		"DROP TABLE default.signal ON CLUSTER '{cluster}'",
-		"RENAME TABLE default.signal_shard TO default.signal_shard_old ON CLUSTER '{cluster}'",
 		createSignalShardStmt,
-		"INSERT INTO default.signal_shard SELECT TokenID, Timestamp, Name, ValueNumber, ValueString FROM default.signal_shard_old",
 		distributedSignalCreateStmt,
-		"DROP TABLE default.signal_shard_old ON CLUSTER '{cluster}'",
 	}
 	for _, upStatement := range upStatements {
 		_, err := tx.ExecContext(ctx, upStatement)
 		if err != nil {
-			return fmt.Errorf("failed to execute statment %s: %w", upStatement, err)
+			return err
 		}
 	}
 	return nil
 }
 
-func downCommand20240423004039(ctx context.Context, tx *sql.Tx) error {
+func downSignalTable(ctx context.Context, tx *sql.Tx) error {
 	// This code is executed when the migration is rolled back.
 	downStatements := []string{
-		"ALTER TABLE signal MODIFY COLUMN Timestamp Datetime('UTC')",
+		"DROP TABLE signal ON CLUSTER '{cluster}'",
+		"DROP TABLE signal_shard ON CLUSTER '{cluster}'",
 	}
 	for _, downStatement := range downStatements {
 		_, err := tx.ExecContext(ctx, downStatement)
@@ -49,9 +45,9 @@ func downCommand20240423004039(ctx context.Context, tx *sql.Tx) error {
 	return nil
 }
 
-var (
+const (
 	createSignalShardStmt = `
-CREATE TABLE default.signal_shard ON CLUSTER '{cluster}'
+CREATE TABLE IF NOT EXISTS signal_shard ON CLUSTER '{cluster}'
 (
     TokenID UInt32 COMMENT 'tokenID of this device data.',
     Timestamp DateTime64(6, 'UTC') COMMENT 'timestamp of when this data was colllected.',
@@ -64,7 +60,7 @@ ORDER BY (TokenID, Timestamp, Name)
 `
 
 	distributedSignalCreateStmt = `
-CREATE TABLE signal ON CLUSTER '{cluster}' AS signal_shard 
+CREATE TABLE IF NOT EXISTS signal ON CLUSTER '{cluster}' AS signal_shard 
 ENGINE = Distributed('{cluster}', default, signal_shard, TokenID)
 `
 )
