@@ -54,13 +54,19 @@ func timestampFromV1Data(jsonData []byte) (time.Time, error) {
 	if !result.Exists() {
 		return time.Time{}, errors.New("time field not found")
 	}
-	t, ok := result.Value().(string)
+
+	timeStr, ok := result.Value().(string)
 	if !ok {
-		return time.Time{}, errors.New("time field is not a string")
+		ms, ok := result.Value().(float64)
+		if ok {
+			return time.UnixMilli(int64(ms)), nil
+		}
+		return time.Time{}, errors.New("time field is not a string or float64")
 	}
-	ts, err := time.Parse(time.RFC3339, t)
+	ts, err := time.Parse(time.RFC3339, timeStr)
 	if err != nil {
 		return time.Time{}, fmt.Errorf("error parsing time: %w", err)
 	}
 	return ts, nil
+
 }

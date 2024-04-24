@@ -6,6 +6,7 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/ClickHouse/ch-go"
 	"github.com/ClickHouse/clickhouse-go/v2"
@@ -91,10 +92,17 @@ func GetClickhouseAsDB(ctx context.Context, container *chmodule.ClickHouseContai
 			Database: container.DbName,
 		},
 	})
-	if err := dbConn.Ping(); err != nil {
-		return nil, fmt.Errorf("failed to ping clickhouse: %w", err)
+	const retries = 3
+	for i := 0; i < retries; i++ {
+		err = dbConn.Ping()
+		if err != nil {
+			time.Sleep(500 * time.Millisecond)
+			continue
+		}
+		return dbConn, nil
 	}
-	return dbConn, nil
+
+	return nil, fmt.Errorf("failed to ping clickhouse after %d retries: %w", retries, err)
 }
 
 // Terminate function terminates the clickhouse and zookeeper containers.

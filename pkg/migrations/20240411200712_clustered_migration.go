@@ -48,5 +48,3 @@ func downCommand20240411200712(ctx context.Context, tx *sql.Tx) error {
 var clusterSignalCreateStmt = `CREATE table signal_shard on CLUSTER '{cluster}' as local_signal
 ENGINE = ReplicatedReplacingMergeTree('/clickhouse/tables/{shard}/{database}/{table}', '{replica}') 
 ORDER BY (TokenID, Timestamp, Name)`
-
-var distributedSignalCreateStmt = `CREATE TABLE signal ON CLUSTER '{cluster}' AS signal_shard ENGINE = Distributed('{cluster}', default, signal_shard, TokenID)`
