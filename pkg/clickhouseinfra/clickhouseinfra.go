@@ -8,12 +8,16 @@ import (
 	"os"
 	"time"
 
-	"github.com/ClickHouse/ch-go"
 	"github.com/ClickHouse/clickhouse-go/v2"
 	"github.com/docker/go-connections/nat"
 	"github.com/testcontainers/testcontainers-go"
 	chmodule "github.com/testcontainers/testcontainers-go/modules/clickhouse"
 	"github.com/testcontainers/testcontainers-go/wait"
+)
+
+const (
+	defaultUser = "default"
+	defaultDB   = "default"
 )
 
 // ColInfo is a struct that holds the column meta information.
@@ -33,7 +37,7 @@ type Container struct {
 // The caller is responsible for terminating the container.
 func CreateClickHouseContainer(ctx context.Context, userName, password string) (*Container, error) {
 	if userName == "" {
-		userName = ch.DefaultUser
+		userName = defaultUser
 	}
 	zkcontainer, zkPort, err := StartZooKeeperContainer(ctx)
 	if err != nil {
@@ -46,7 +50,7 @@ func CreateClickHouseContainer(ctx context.Context, userName, password string) (
 	}
 	clickHouseContainer, err := chmodule.RunContainer(ctx,
 		testcontainers.WithImage("clickhouse/clickhouse-server:23.3.8.21-alpine"),
-		chmodule.WithDatabase(ch.DefaultDatabase),
+		chmodule.WithDatabase(defaultDB),
 		chmodule.WithUsername(userName),
 		chmodule.WithPassword(password),
 		chmodule.WithZookeeper(ipaddr, zkPort),
