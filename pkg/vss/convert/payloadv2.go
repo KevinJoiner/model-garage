@@ -69,29 +69,32 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 }
 
 func tokenIDFromV2Data(jsonData []byte) (uint32, error) {
-	tokenID := gjson.GetBytes(jsonData, "vehicleTokenID")
+	lookupKey := "vehicleTokenId"
+	tokenID := gjson.GetBytes(jsonData, lookupKey)
 	if !tokenID.Exists() {
-		return 0, FieldNotFoundError{Field: "tokenID", Lookup: "vehicleTokenID"}
+		return 0, FieldNotFoundError{Field: "tokenID", Lookup: lookupKey}
 	}
 	id, ok := tokenID.Value().(float64)
 	if !ok {
-		return 0, errors.New("vehicleTokenID field is not a number")
+		return 0, fmt.Errorf("%s field is not a number", lookupKey)
 	}
 	return float64toUint32(id), nil
 }
 
 func timestampFromV2Data(sigResult gjson.Result) (time.Time, error) {
-	timestamp := sigResult.Get("timestamp")
+	lookupKey := "timestamp"
+	timestamp := sigResult.Get(lookupKey)
 	if !timestamp.Exists() {
-		return time.Time{}, FieldNotFoundError{Field: "timestamp", Lookup: "timestamp"}
+		return time.Time{}, FieldNotFoundError{Field: "timestamp", Lookup: lookupKey}
 	}
 	return time.UnixMilli(int64(timestamp.Uint())).UTC(), nil
 }
 
 func signalNameFromV2Data(sigResult gjson.Result) (string, error) {
-	signalName := sigResult.Get("name")
+	lookupKey := "name"
+	signalName := sigResult.Get(lookupKey)
 	if !signalName.Exists() {
-		return "", FieldNotFoundError{Field: "signalName", Lookup: "name"}
+		return "", FieldNotFoundError{Field: "name", Lookup: lookupKey}
 	}
 	return signalName.String(), nil
 }

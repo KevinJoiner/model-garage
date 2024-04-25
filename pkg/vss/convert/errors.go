@@ -20,5 +20,5 @@ type FieldNotFoundError struct {
 
 // Error returns the error message.
 func (e FieldNotFoundError) Error() string {
-	return fmt.Sprintf("field not found: %s", e.Field)
+	return fmt.Sprintf("field not found: %s (lookupKey: %s)", e.Field, e.Lookup)
 }
