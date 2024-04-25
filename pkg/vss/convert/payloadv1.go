@@ -40,7 +40,7 @@ func SignalsFromV1Payload(ctx context.Context, tokenGetter TokenIDGetter, jsonDa
 func subjectFromV1Data(jsonData []byte) (string, error) {
 	result := gjson.GetBytes(jsonData, "subject")
 	if !result.Exists() {
-		return "", errors.New("subject field not found")
+		return "", FieldNotFoundError{Field: "subject", Lookup: "subject"}
 	}
 	sub, ok := result.Value().(string)
 	if !ok {
@@ -52,7 +52,7 @@ func subjectFromV1Data(jsonData []byte) (string, error) {
 func timestampFromV1Data(jsonData []byte) (time.Time, error) {
 	result := gjson.GetBytes(jsonData, "time")
 	if !result.Exists() {
-		return time.Time{}, errors.New("time field not found")
+		return time.Time{}, FieldNotFoundError{Field: "timestamp", Lookup: "time"}
 	}
 
 	timeStr, ok := result.Value().(string)

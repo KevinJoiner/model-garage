@@ -26,7 +26,7 @@ func SignalsFromPayload(ctx context.Context, tokenGetter TokenIDGetter, jsonData
 	case specVersion == specV2:
 		return SignalsFromV2Payload(jsonData)
 	default:
-		return nil, errors.New("unsupported specversion")
+		return nil, VersionError{Version: specVersion}
 	}
 }
 
@@ -36,7 +36,7 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 
 	signals := gjson.GetBytes(jsonData, "data.vehicle.signals")
 	if !signals.Exists() {
-		return nil, errors.New("signals field not found")
+		return nil, FieldNotFoundError{Field: "signals", Lookup: "data.vehicle.signals"}
 	}
 	if !signals.IsArray() {
 		return nil, errors.New("signals field is not an array")
@@ -71,7 +71,7 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 func tokenIDFromV2Data(jsonData []byte) (uint32, error) {
 	tokenID := gjson.GetBytes(jsonData, "vehicleTokenID")
 	if !tokenID.Exists() {
-		return 0, errors.New("vehicleTokenID field not found")
+		return 0, FieldNotFoundError{Field: "tokenID", Lookup: "vehicleTokenID"}
 	}
 	id, ok := tokenID.Value().(float64)
 	if !ok {
@@ -83,7 +83,7 @@ func tokenIDFromV2Data(jsonData []byte) (uint32, error) {
 func timestampFromV2Data(sigResult gjson.Result) (time.Time, error) {
 	timestamp := sigResult.Get("timestamp")
 	if !timestamp.Exists() {
-		return time.Time{}, errors.New("timestamp field not found")
+		return time.Time{}, FieldNotFoundError{Field: "timestamp", Lookup: "timestamp"}
 	}
 	return time.UnixMilli(int64(timestamp.Uint())).UTC(), nil
 }
@@ -91,7 +91,7 @@ func timestampFromV2Data(sigResult gjson.Result) (time.Time, error) {
 func signalNameFromV2Data(sigResult gjson.Result) (string, error) {
 	signalName := sigResult.Get("name")
 	if !signalName.Exists() {
-		return "", errors.New("signalName field not found")
+		return "", FieldNotFoundError{Field: "signalName", Lookup: "name"}
 	}
 	return signalName.String(), nil
 }
