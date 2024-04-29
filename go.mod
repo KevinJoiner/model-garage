@@ -3,7 +3,7 @@ module github.com/DIMO-Network/model-garage
 go 1.22.0
 
 require (
-	github.com/ClickHouse/clickhouse-go/v2 v2.23.1
+	github.com/ClickHouse/clickhouse-go/v2 v2.23.2
 	github.com/docker/go-connections v0.5.0
 	github.com/pressly/goose/v3 v3.20.0
 	github.com/stretchr/testify v1.9.0
