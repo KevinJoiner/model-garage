@@ -122,7 +122,7 @@ var fullV2InputJSON = `{
             ]
         }
     },
-    "vehicleTokenID": 123,
+    "vehicleTokenId": 123,
     "make": "",
     "model": "",
     "year": 0
