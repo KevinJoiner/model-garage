@@ -39,6 +39,7 @@ func TestMigration(t *testing.T) {
 		{Name: "Name", Type: "LowCardinality(String)", Comment: "name of the signal collected."},
 		{Name: "ValueNumber", Type: "Float64", Comment: "float64 value of the signal collected."},
 		{Name: "ValueString", Type: "String", Comment: "string value of the signal collected."},
+		{Name: "Source", Type: "String", Comment: "source of the signal collected."},
 	}
 
 	// Check if the actual columns match the expected columns

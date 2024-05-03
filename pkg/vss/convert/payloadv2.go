@@ -45,7 +45,15 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error getting tokenID: %w", err)
 	}
+	source, err := sourceFromV2Data(jsonData)
+	if err != nil {
+		return nil, fmt.Errorf("error getting source: %w", err)
+	}
 	retSignals := []vss.Signal{}
+	signalMeta := vss.Signal{
+		TokenID: tokenID,
+		Source:  source,
+	}
 	for _, sigData := range signals.Array() {
 		originalName, err := signalNameFromV2Data(sigData)
 		if err != nil {
@@ -58,7 +66,8 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 			errs = errors.Join(errs, err)
 			continue
 		}
-		sigs, err := vss.SignalsFromV2Data(tokenID, ts, originalName, sigData)
+		signalMeta.Timestamp = ts
+		sigs, err := vss.SignalsFromV2Data(signalMeta, originalName, sigData)
 		if err != nil {
 			errs = errors.Join(errs, err)
 			continue
@@ -97,6 +106,19 @@ func signalNameFromV2Data(sigResult gjson.Result) (string, error) {
 		return "", FieldNotFoundError{Field: "name", Lookup: lookupKey}
 	}
 	return signalName.String(), nil
+}
+
+func sourceFromV2Data(jsonData []byte) (string, error) {
+	lookupKey := "source"
+	source := gjson.GetBytes(jsonData, lookupKey)
+	if !source.Exists() {
+		return "", FieldNotFoundError{Field: "source", Lookup: lookupKey}
+	}
+	src, ok := source.Value().(string)
+	if !ok {
+		return "", errors.New("source field is not a string")
+	}
+	return src, nil
 }
 
 // float64toUint32 converts float64 to uint32.

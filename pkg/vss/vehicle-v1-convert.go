@@ -4,7 +4,6 @@ package vss
 import (
 	"errors"
 	"fmt"
-	"time"
 
 	"github.com/tidwall/gjson"
 )
@@ -13,7 +12,7 @@ var errNotFound = errors.New("field not found")
 
 // SignalsFromV1Data creates a slice of Signal from the given v1 status JSON data.
 // On error, partial results may be returned.
-func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]Signal, error) {
+func SignalsFromV1Data(baseSignal Signal, jsonData []byte) ([]Signal, error) {
 	var retSignals []Signal
 
 	var val any
@@ -28,8 +27,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Chassis_Axle_Row1_Wheel_Left_Tire_Pressure",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -43,8 +43,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Chassis_Axle_Row1_Wheel_Right_Tire_Pressure",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -58,8 +59,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Chassis_Axle_Row2_Wheel_Left_Tire_Pressure",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -73,8 +75,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Chassis_Axle_Row2_Wheel_Right_Tire_Pressure",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -88,8 +91,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "CurrentLocation_Altitude",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -103,8 +107,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "CurrentLocation_Latitude",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -118,8 +123,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "CurrentLocation_Longitude",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -133,8 +139,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "CurrentLocation_Timestamp",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -148,8 +155,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "DIMO_Aftermarket_HDOP",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -163,8 +171,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "DIMO_Aftermarket_NSAT",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -178,8 +187,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "DIMO_Aftermarket_SSID",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -193,8 +203,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "DIMO_Aftermarket_WPAState",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -208,8 +219,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Exterior_AirTemperature",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -223,8 +235,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "LowVoltageBattery_CurrentVoltage",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -238,8 +251,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "OBD_BarometricPressure",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -253,8 +267,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "OBD_EngineLoad",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -268,8 +283,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "OBD_IntakeTemp",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -283,8 +299,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "OBD_RunTime",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -298,8 +315,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Powertrain_CombustionEngine_ECT",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -313,8 +331,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Powertrain_CombustionEngine_EngineOilLevel",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -328,8 +347,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Powertrain_CombustionEngine_MAF",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -343,8 +363,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Powertrain_CombustionEngine_Speed",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -358,8 +379,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Powertrain_CombustionEngine_TPS",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -373,8 +395,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Powertrain_FuelSystem_AbsoluteLevel",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -388,8 +411,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Powertrain_FuelSystem_SupportedFuelTypes",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -403,8 +427,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Powertrain_Range",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -418,8 +443,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Powertrain_TractionBattery_Charging_ChargeLimit",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -433,8 +459,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Powertrain_TractionBattery_Charging_IsCharging",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -448,8 +475,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Powertrain_TractionBattery_GrossCapacity",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -463,8 +491,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Powertrain_TractionBattery_StateOfCharge_Current",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -478,8 +507,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Powertrain_Transmission_TravelledDistance",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -493,8 +523,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Powertrain_Type",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -508,8 +539,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "Speed",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -523,8 +555,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "VehicleIdentification_Brand",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -538,8 +571,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "VehicleIdentification_Model",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -553,8 +587,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	} else {
 		sig := Signal{
 			Name:      "VehicleIdentification_Year",
-			TokenID:   tokenID,
-			Timestamp: timestamp,
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)

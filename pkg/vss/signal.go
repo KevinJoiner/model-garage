@@ -28,6 +28,9 @@ type Signal struct {
 
 	// ValueString is the value of the signal collected.
 	ValueString string `ch:"ValueString" json:"valueString"`
+
+	// Source is the source of the signal collected.
+	Source string `ch:"Source" json:"source"`
 }
 
 // SetValue dynamically set the appropriate value field based on the type of the value.
@@ -51,6 +54,7 @@ func SignalToSlice(obj Signal) []any {
 		obj.Name,
 		obj.ValueNumber,
 		obj.ValueString,
+		obj.Source,
 	}
 }
 
@@ -62,5 +66,6 @@ func SignalColNames() []string {
 		"Name",
 		"ValueNumber",
 		"ValueString",
+		"Source",
 	}
 }

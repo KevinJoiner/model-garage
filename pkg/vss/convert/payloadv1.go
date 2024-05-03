@@ -30,7 +30,14 @@ func SignalsFromV1Payload(ctx context.Context, tokenGetter TokenIDGetter, jsonDa
 	if err != nil {
 		return nil, fmt.Errorf("error getting tokenID from subject: %w", err)
 	}
-	sigs, err := vss.SignalsFromV1Data(tokenID, ts, jsonData)
+
+	source, err := sourceFromV1Data(jsonData)
+	baseSignal := vss.Signal{
+		TokenID:   tokenID,
+		Timestamp: ts,
+		Source:    source,
+	}
+	sigs, err := vss.SignalsFromV1Data(baseSignal, jsonData)
 	if err != nil {
 		return nil, fmt.Errorf("error getting signals from v1 data: %w", err)
 	}
@@ -68,5 +75,16 @@ func timestampFromV1Data(jsonData []byte) (time.Time, error) {
 		return time.Time{}, fmt.Errorf("error parsing time: %w", err)
 	}
 	return ts, nil
+}
 
+func sourceFromV1Data(jsonData []byte) (string, error) {
+	result := gjson.GetBytes(jsonData, "source")
+	if !result.Exists() {
+		return "", FieldNotFoundError{Field: "source", Lookup: "source"}
+	}
+	source, ok := result.Value().(string)
+	if !ok {
+		return "", errors.New("source field is not a string")
+	}
+	return source, nil
 }

@@ -5,7 +5,7 @@ var errNotFound = errors.New("field not found")
 
 // SignalsFromV1Data creates a slice of Signal from the given v1 status JSON data.
 // On error, partial results may be returned.
-func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]Signal, error) {
+func SignalsFromV1Data(baseSignal Signal, jsonData []byte) ([]Signal, error) {
 	var retSignals []Signal
 {{ $first := true -}}
 {{- range $idx, $sig := .Signals }}
@@ -24,8 +24,9 @@ func SignalsFromV1Data(tokenID uint32, timestamp time.Time, jsonData []byte) ([]
 	}else {
 		sig := Signal{
 			Name: "{{ $sig.CHName }}",
-			TokenID: tokenID,
-			Timestamp: timestamp,
+			TokenID: baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source: baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
