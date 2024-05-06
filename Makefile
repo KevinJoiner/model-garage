@@ -53,3 +53,6 @@ tools-golangci-lint:
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | BINARY=golangci-lint bash -s -- ${GOLANGCI_VERSION}
 
 tools: tools-golangci-lint
+
+clickhouse:
+	go run ./cmd/clickhouse-container
