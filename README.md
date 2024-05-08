@@ -71,7 +71,7 @@ The Model generation is handled by packages in `internal/codegen`. They are resp
 
   # requiredPrivileges: The list of privileges required to access the field
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 ```
 
 ##### Generation Process

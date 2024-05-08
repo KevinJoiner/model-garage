@@ -32,7 +32,7 @@
   
   # requiredPrivileges: The list of privileges required to access the field
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure
   isArray: null
   clickHouseType: ""
@@ -43,7 +43,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure
   isArray: null
   clickHouseType: ""
@@ -54,7 +54,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure
   isArray: null
   clickHouseType: ""
@@ -65,7 +65,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.CurrentLocation.Altitude
   isArray: null
   clickHouseType: ""
@@ -76,7 +76,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleAllTimeLocation
+    - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.CurrentLocation.Latitude
   isArray: null
   clickHouseType: ""
@@ -87,7 +87,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleAllTimeLocation
+    - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.CurrentLocation.Longitude
   isArray: null
   clickHouseType: ""
@@ -98,7 +98,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleAllTimeLocation
+    - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.CurrentLocation.Timestamp
   isArray: false
   clickHouseType: DateTime('UTC')
@@ -112,7 +112,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleAllTimeLocation
+    - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.Exterior.AirTemperature
   isArray: null
   clickHouseType: ""
@@ -123,7 +123,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.LowVoltageBattery.CurrentVoltage
   isArray: null
   clickHouseType: ""
@@ -134,7 +134,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.BarometricPressure
   isArray: null
   clickHouseType: ""
@@ -145,7 +145,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.EngineLoad
   isArray: null
   clickHouseType: ""
@@ -156,7 +156,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.IntakeTemp
   isArray: null
   clickHouseType: ""
@@ -167,7 +167,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.RunTime
   isArray: null
   clickHouseType: ""
@@ -178,7 +178,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.ECT
   isArray: null
   clickHouseType: ""
@@ -189,7 +189,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.EngineOilLevel
   isArray: null
   clickHouseType: ""
@@ -200,7 +200,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.Speed
   isArray: null
   clickHouseType: ""
@@ -211,7 +211,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.TPS
   isArray: null
   clickHouseType: ""
@@ -222,7 +222,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.FuelSystem.AbsoluteLevel
   isArray: null
   clickHouseType: ""
@@ -233,7 +233,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.FuelSystem.SupportedFuelTypes
   isArray: false
   clickHouseType: ""
@@ -244,7 +244,7 @@
       originalType: string
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.Range
   isArray: null
   clickHouseType: ""
@@ -255,7 +255,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit
   isArray: null
   clickHouseType: ""
@@ -266,7 +266,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.Charging.IsCharging
   isArray: null
   clickHouseType: ""
@@ -277,7 +277,7 @@
       originalType: bool
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.GrossCapacity
   isArray: null
   clickHouseType: ""
@@ -288,7 +288,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.StateOfCharge.Current
   isArray: null
   clickHouseType: ""
@@ -299,7 +299,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.Transmission.TravelledDistance
   isArray: null
   clickHouseType: ""
@@ -310,7 +310,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.Type
   isArray: null
   clickHouseType: ""
@@ -321,7 +321,7 @@
       originalType: string
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Speed
   isArray: null
   clickHouseType: ""
@@ -332,7 +332,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.VehicleIdentification.Brand
   isArray: null
   clickHouseType: ""
@@ -343,7 +343,7 @@
       originalType: string
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.VehicleIdentification.Model
   isArray: null
   clickHouseType: ""
@@ -354,7 +354,7 @@
       originalType: string
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.VehicleIdentification.Year
   isArray: null
   clickHouseType: ""
@@ -365,7 +365,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.MAF
   isArray: null
   clickHouseType: ""
@@ -376,7 +376,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.HDOP
   isArray: null
   clickHouseType: ""
@@ -387,7 +387,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.NSAT
   isArray: null
   clickHouseType: ""
@@ -398,7 +398,7 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.WPAState
   isArray: null
   clickHouseType: ""
@@ -409,7 +409,7 @@
       originalType: string
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.SSID
   isArray: null
   clickHouseType: ""
@@ -420,4 +420,4 @@
       originalType: string
       isArray: false
   requiredPrivileges:
-    - VehicleNonLocationData
+    - VEHICLE_NON_LOCATION_DATA
