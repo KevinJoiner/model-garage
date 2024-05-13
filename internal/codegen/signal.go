@@ -36,7 +36,6 @@ type SignalInfo struct {
 	// Derived
 	IsArray     bool
 	GOName      string
-	CHName      string
 	JSONName    string
 	BaseGoType  string
 	BaseCHType  string
@@ -112,7 +111,6 @@ func NewSignalInfo(record []string) *SignalInfo {
 		sig.BaseGQLType = gqlTypeFromVSPEC(baseType)
 	}
 	sig.GOName = goName(sig.Name)
-	sig.CHName = chName(sig.Name)
 	sig.JSONName = JSONName(sig.Name)
 
 	return sig
@@ -169,10 +167,6 @@ func (s *SignalInfo) GQLType() string {
 
 func goName(name string) string {
 	return nonAlphaNum.ReplaceAllString(removePrefix(name), "")
-}
-
-func chName(name string) string {
-	return strings.ReplaceAll(removePrefix(name), ".", "_")
 }
 
 // JSONName returns the json name of the signal.

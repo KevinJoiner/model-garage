@@ -34,7 +34,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "CurrentLocation_Altitude",
+				Name:      "currentLocationAltitude",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -48,7 +48,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Exterior_AirTemperature",
+				Name:      "exteriorAirTemperature",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -62,7 +62,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "OBD_BarometricPressure",
+				Name:      "oBDBarometricPressure",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -76,7 +76,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Powertrain_TractionBattery_GrossCapacity",
+				Name:      "powertrainTractionBatteryGrossCapacity",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -90,7 +90,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "LowVoltageBattery_CurrentVoltage",
+				Name:      "lowVoltageBatteryCurrentVoltage",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -104,7 +104,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Powertrain_TractionBattery_Charging_ChargeLimit",
+				Name:      "powertrainTractionBatteryChargingChargeLimit",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -118,7 +118,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Powertrain_TractionBattery_Charging_IsCharging",
+				Name:      "powertrainTractionBatteryChargingIsCharging",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -132,7 +132,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Powertrain_CombustionEngine_ECT",
+				Name:      "powertrainCombustionEngineECT",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -146,7 +146,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "OBD_EngineLoad",
+				Name:      "oBDEngineLoad",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -160,7 +160,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Powertrain_CombustionEngine_Speed",
+				Name:      "powertrainCombustionEngineSpeed",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -174,7 +174,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Powertrain_FuelSystem_AbsoluteLevel",
+				Name:      "powertrainFuelSystemAbsoluteLevel",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -188,7 +188,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Powertrain_FuelSystem_SupportedFuelTypes",
+				Name:      "powertrainFuelSystemSupportedFuelTypes",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -201,7 +201,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Powertrain_Type",
+				Name:      "powertrainType",
 			}
 			sig.SetValue(val1)
 			ret = append(ret, sig)
@@ -215,7 +215,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "DIMO_Aftermarket_HDOP",
+				Name:      "dIMOAftermarketHDOP",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -229,7 +229,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "OBD_IntakeTemp",
+				Name:      "oBDIntakeTemp",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -243,7 +243,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "CurrentLocation_Latitude",
+				Name:      "currentLocationLatitude",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -257,7 +257,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "CurrentLocation_Longitude",
+				Name:      "currentLocationLongitude",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -271,7 +271,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Powertrain_CombustionEngine_MAF",
+				Name:      "powertrainCombustionEngineMAF",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -285,7 +285,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "VehicleIdentification_Brand",
+				Name:      "vehicleIdentificationBrand",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -299,7 +299,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "VehicleIdentification_Model",
+				Name:      "vehicleIdentificationModel",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -313,7 +313,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "DIMO_Aftermarket_NSAT",
+				Name:      "dIMOAftermarketNSAT",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -327,7 +327,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Powertrain_Transmission_TravelledDistance",
+				Name:      "powertrainTransmissionTravelledDistance",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -341,7 +341,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Powertrain_CombustionEngine_EngineOilLevel",
+				Name:      "powertrainCombustionEngineEngineOilLevel",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -355,7 +355,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Powertrain_Range",
+				Name:      "powertrainRange",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -369,7 +369,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "OBD_RunTime",
+				Name:      "oBDRunTime",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -383,7 +383,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Powertrain_TractionBattery_StateOfCharge_Current",
+				Name:      "powertrainTractionBatteryStateOfChargeCurrent",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -397,7 +397,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Speed",
+				Name:      "speed",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -411,7 +411,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "DIMO_Aftermarket_SSID",
+				Name:      "dIMOAftermarketSSID",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -425,7 +425,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Powertrain_CombustionEngine_TPS",
+				Name:      "powertrainCombustionEngineTPS",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -439,7 +439,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "CurrentLocation_Timestamp",
+				Name:      "currentLocationTimestamp",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -452,7 +452,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "CurrentLocation_Timestamp",
+				Name:      "currentLocationTimestamp",
 			}
 			sig.SetValue(val1)
 			ret = append(ret, sig)
@@ -466,7 +466,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Chassis_Axle_Row2_Wheel_Left_Tire_Pressure",
+				Name:      "chassisAxleRow2WheelLeftTirePressure",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -480,7 +480,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Chassis_Axle_Row2_Wheel_Right_Tire_Pressure",
+				Name:      "chassisAxleRow2WheelRightTirePressure",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -494,7 +494,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Chassis_Axle_Row1_Wheel_Left_Tire_Pressure",
+				Name:      "chassisAxleRow1WheelLeftTirePressure",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -508,7 +508,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "Chassis_Axle_Row1_Wheel_Right_Tire_Pressure",
+				Name:      "chassisAxleRow1WheelRightTirePressure",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -522,7 +522,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "DIMO_Aftermarket_WPAState",
+				Name:      "dIMOAftermarketWPAState",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -536,7 +536,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "VehicleIdentification_Year",
+				Name:      "vehicleIdentificationYear",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)

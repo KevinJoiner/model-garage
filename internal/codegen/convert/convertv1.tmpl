@@ -23,7 +23,7 @@ func SignalsFromV1Data(baseSignal Signal, jsonData []byte) ([]Signal, error) {
 		}
 	}else {
 		sig := Signal{
-			Name: "{{ $sig.CHName }}",
+			Name: "{{ $sig.JSONName }}",
 			TokenID: baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source: baseSignal.Source,

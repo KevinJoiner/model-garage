@@ -4,14 +4,6 @@ package {{ .PackageName }}
 const (
 {{- range .Signals}}
 	// Field{{ .GOName }} {{ .Desc }}
-	Field{{ .GOName }} = "{{ .CHName }}"
+	Field{{ .GOName }} = "{{ .JSONName }}"
 {{- end}}
 )
-
-
-// JSONName2CHName maps the JSON field names to the Clickhouse column names.
-var JSONName2CHName = map[string]string{
-{{- range .Signals }}
-	"{{ .JSONName }}": "{{ .CHName }}",
-{{- end }}
-}

@@ -31,7 +31,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID: baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source: baseSignal.Source,
-				Name: "{{ $conv.Signal.CHName }}",
+				Name: "{{ $conv.Signal.JSONName }}",
 			}
 			sig.SetValue(val{{ $j }})
 			ret = append(ret, sig)
