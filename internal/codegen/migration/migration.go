@@ -5,10 +5,11 @@ import (
 	"bytes"
 	_ "embed"
 	"fmt"
+	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"text/template"
-	"time"
 
 	"github.com/DIMO-Network/model-garage/internal/codegen"
 	"golang.org/x/text/cases"
@@ -37,7 +38,10 @@ type Config struct {
 
 // Generate creates a new ClickHouse table file.
 func Generate(tmplData *codegen.TemplateData, outputDir string, cfg Config) error {
-	version := time.Now().UTC().Format(timestampFormat)
+	version, err := getVersion(outputDir)
+	if err != nil {
+		return fmt.Errorf("error getting version: %w", err)
+	}
 	fileName := cfg.FileName
 	if fileName == "" {
 		fileName = tmplData.ModelName
@@ -78,4 +82,29 @@ func getFilePath(fileName, outputDir string, version string) string {
 	noSpaceName := lowerCaser.String(strings.ReplaceAll(fileName, " ", "_"))
 	migrationFileName := fmt.Sprintf(migrationFileFormat, version, noSpaceName)
 	return filepath.Clean(filepath.Join(outputDir, migrationFileName))
+}
+
+func getVersion(outputDir string) (string, error) {
+	files, err := os.ReadDir(outputDir)
+	if err != nil {
+		return "", fmt.Errorf("error reading directory: %w", err)
+	}
+	var maxVersion int
+	for _, file := range files {
+		if file.IsDir() {
+			continue
+		}
+		name := file.Name()
+		if strings.HasSuffix(name, ".go") {
+			versionStr := strings.Split(name, "_")[0]
+			version, err := strconv.Atoi(versionStr)
+			if err != nil {
+				continue
+			}
+			if version > maxVersion {
+				maxVersion = version
+			}
+		}
+	}
+	return fmt.Sprintf("%05d", maxVersion+1), nil
 }

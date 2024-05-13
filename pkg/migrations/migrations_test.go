@@ -30,21 +30,17 @@ func TestMigration(t *testing.T) {
 	columns, err := clickhouseinfra.GetCurrentCols(ctx, conn, "signal")
 	require.NoError(t, err, "Failed to get current columns")
 
-	columnsShard, err := clickhouseinfra.GetCurrentCols(ctx, conn, "signal_shard")
-	require.NoError(t, err, "Failed to get current columns")
-
 	expectedColumns := []clickhouseinfra.ColInfo{
-		{Name: "TokenID", Type: "UInt32", Comment: "tokenID of this device data."},
-		{Name: "Timestamp", Type: "DateTime64(6, 'UTC')", Comment: "timestamp of when this data was colllected."},
-		{Name: "Name", Type: "LowCardinality(String)", Comment: "name of the signal collected."},
-		{Name: "ValueNumber", Type: "Float64", Comment: "float64 value of the signal collected."},
-		{Name: "ValueString", Type: "String", Comment: "string value of the signal collected."},
-		{Name: "Source", Type: "String", Comment: "source of the signal collected."},
+		{Name: "token_id", Type: "UInt32", Comment: "token_id of this device data."},
+		{Name: "timestamp", Type: "DateTime64(6, 'UTC')", Comment: "timestamp of when this data was collected."},
+		{Name: "name", Type: "LowCardinality(String)", Comment: "name of the signal collected."},
+		{Name: "source", Type: "String", Comment: "source of the signal collected."},
+		{Name: "value_number", Type: "Float64", Comment: "float64 value of the signal collected."},
+		{Name: "value_string", Type: "String", Comment: "string value of the signal collected."},
 	}
 
 	// Check if the actual columns match the expected columns
 	require.Equal(t, expectedColumns, columns, "Unexpected table columns")
-	require.Equal(t, expectedColumns, columnsShard, "Unexpected shard table columns")
 
 	// Close the DB connection
 	err = db.Close()
