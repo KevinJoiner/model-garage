@@ -17,7 +17,7 @@ import (
 
 const (
 	defaultUser = "default"
-	defaultDB   = "default"
+	defaultDB   = "dimo"
 )
 
 // ColInfo is a struct that holds the column meta information.
