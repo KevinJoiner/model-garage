@@ -15,22 +15,22 @@ const (
 // This is the data format that is stored in the database.
 type Signal struct {
 	// TokenID is the unique identifier of the device.
-	TokenID uint32 `ch:"TokenID" json:"tokenID"`
+	TokenID uint32 `ch:"token_id" json:"tokenId"`
 
 	// Timestamp is when this data was collected.
-	Timestamp time.Time `ch:"Timestamp" json:"timestamp"`
+	Timestamp time.Time `ch:"timestamp" json:"timestamp"`
 
 	// Name is the name of the signal collected.
-	Name string `ch:"Name" json:"Name"`
+	Name string `ch:"name" json:"name"`
 
 	// ValueNumber is the value of the signal collected.
-	ValueNumber float64 `ch:"ValueNumber" json:"valueNumber"`
+	ValueNumber float64 `ch:"value_number" json:"valueNumber"`
 
 	// ValueString is the value of the signal collected.
-	ValueString string `ch:"ValueString" json:"valueString"`
+	ValueString string `ch:"value_string" json:"valueString"`
 
 	// Source is the source of the signal collected.
-	Source string `ch:"Source" json:"source"`
+	Source string `ch:"source" json:"source"`
 }
 
 // SetValue dynamically set the appropriate value field based on the type of the value.
