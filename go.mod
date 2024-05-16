@@ -5,6 +5,7 @@ go 1.22.0
 require (
 	github.com/ClickHouse/clickhouse-go/v2 v2.23.1
 	github.com/docker/go-connections v0.5.0
+	github.com/mdelapenya/tlscert v0.1.0
 	github.com/pressly/goose/v3 v3.20.0
 	github.com/stretchr/testify v1.9.0
 	github.com/testcontainers/testcontainers-go v0.30.0
@@ -41,6 +42,7 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/klauspost/compress v1.17.7 // indirect
 	github.com/lufia/plan9stats v0.0.0-20211012122336-39d0f177ccd0 // indirect
+	github.com/madflojo/testcerts v1.1.1 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mfridman/interpolate v0.0.2 // indirect
 	github.com/moby/docker-image-spec v1.3.1 // indirect

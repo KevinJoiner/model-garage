@@ -9,6 +9,19 @@ import (
 const (
 	// TableName is the name of the distributed table in Clickhouse.
 	TableName = "signal"
+
+	// TokenIDCol is the name of the token_id column in Clickhouse.
+	TokenIDCol = "token_id"
+	// TimestampCol is the name of the timestamp column in Clickhouse.
+	TimestampCol = "timestamp"
+	// SourceCol is the name of the source column in Clickhouse.
+	SourceCol = "source"
+	// NameCol is the name of the name column in Clickhouse.
+	NameCol = "name"
+	// ValueNumberCol is the name of the value_number column in Clickhouse.
+	ValueNumberCol = "value_number"
+	// ValueStringCol is the name of the value_string column in Clickhouse.
+	ValueStringCol = "value_string"
 )
 
 // Signal represents a single signal collected from a device.

@@ -2,7 +2,10 @@
 package clickhouseinfra
 
 import (
+	"bytes"
 	"context"
+	"crypto/tls"
+	"crypto/x509"
 	"database/sql"
 	"fmt"
 	"os"
@@ -10,27 +13,35 @@ import (
 
 	"github.com/ClickHouse/clickhouse-go/v2"
 	"github.com/docker/go-connections/nat"
+	"github.com/mdelapenya/tlscert"
 	"github.com/testcontainers/testcontainers-go"
 	chmodule "github.com/testcontainers/testcontainers-go/modules/clickhouse"
-	"github.com/testcontainers/testcontainers-go/wait"
 )
 
 const (
-	defaultUser = "default"
-	defaultDB   = "dimo"
+	defaultUser      = "default"
+	defaultDB        = "dimo"
+	SecureNativePort = nat.Port("9440/tcp")
 )
 
-// ColInfo is a struct that holds the column meta information.
-type ColInfo struct {
-	Name    string
-	Type    string
-	Comment string
-}
+var secureConfigXML = []byte(`
+<clickhouse>
+	<tcp_port_secure>9440</tcp_port_secure>
+	<openSSL>
+		<server>
+			<certificateFile>/etc/clickhouse-server/certs/client.crt</certificateFile>
+			<privateKeyFile>/etc/clickhouse-server/certs/client.key</privateKeyFile>
+			<verificationMode>relaxed</verificationMode>
+			<caConfig>/etc/clickhouse-server/certs/ca.crt</caConfig>
+		</server>
+	</openSSL>
+</clickhouse>
+`)
 
 // Container is a struct that holds the clickhouse and zookeeper containers.
 type Container struct {
 	*chmodule.ClickHouseContainer
-	ZooKeeperContainer testcontainers.Container
+	RootCAs *x509.CertPool
 }
 
 // CreateClickHouseContainer function starts and testcontainer for clickhouse.
@@ -39,41 +50,52 @@ func CreateClickHouseContainer(ctx context.Context, userName, password string) (
 	if userName == "" {
 		userName = defaultUser
 	}
-	zkcontainer, zkPort, err := StartZooKeeperContainer(ctx)
+	caCert, clientCerts, err := createCert()
 	if err != nil {
-		return nil, fmt.Errorf("failed to start zookeeper container: %w", err)
-	}
-	ipaddr, err := zkcontainer.ContainerIP(ctx)
-	if err != nil {
-		_ = zkcontainer.Terminate(ctx)
-		return nil, fmt.Errorf("failed to get zookeeper container IP: %w", err)
+		return nil, fmt.Errorf("failed to create certs: %w", err)
 	}
 	clickHouseContainer, err := chmodule.RunContainer(ctx,
 		testcontainers.WithImage("clickhouse/clickhouse-server:23.3.8.21-alpine"),
 		chmodule.WithDatabase(defaultDB),
 		chmodule.WithUsername(userName),
 		chmodule.WithPassword(password),
-		chmodule.WithZookeeper(ipaddr, zkPort),
+		WithCerts(caCert, clientCerts),
 	)
 	if err != nil {
-		_ = zkcontainer.Terminate(ctx)
 		return nil, fmt.Errorf("failed to start clickhouse container: %w", err)
 	}
-	return &Container{clickHouseContainer, zkcontainer}, nil
+	rootCAs, _ := x509.SystemCertPool()
+	if rootCAs == nil {
+		rootCAs = x509.NewCertPool()
+	}
+
+	// add our cert to the system pool
+	rootCAs.AppendCertsFromPEM(caCert.Bytes)
+	rootCAs.AppendCertsFromPEM(clientCerts.Bytes)
+	rootCAs.AppendCertsFromPEM(clientCerts.KeyBytes)
+	rootCAs.AppendCertsFromPEM(caCert.Cert.AuthorityKeyId)
+	return &Container{
+		ClickHouseContainer: clickHouseContainer,
+		RootCAs:             rootCAs,
+	}, nil
 }
 
 // GetClickHouseAsConn function returns a clickhouse.Conn connection which uses native ClickHouse protocol.
-func GetClickHouseAsConn(container *chmodule.ClickHouseContainer) (clickhouse.Conn, error) {
-	host, err := container.ConnectionHost(context.TODO())
+func (c *Container) GetClickHouseAsConn() (clickhouse.Conn, error) {
+	host, err := c.ConnectionHost(context.TODO())
 	if err != nil {
 		return nil, fmt.Errorf("failed to get clickhouse host: %w", err)
 	}
 	conn, err := clickhouse.Open(&clickhouse.Options{
-		Addr: []string{host},
+		Protocol: clickhouse.Native,
+		Addr:     []string{host},
 		Auth: clickhouse.Auth{
-			Username: container.User,
-			Password: container.Password,
-			Database: container.DbName,
+			Username: c.User,
+			Password: c.Password,
+			Database: c.DbName,
+		},
+		TLS: &tls.Config{
+			RootCAs: c.RootCAs,
 		},
 	})
 	if err != nil {
@@ -83,17 +105,21 @@ func GetClickHouseAsConn(container *chmodule.ClickHouseContainer) (clickhouse.Co
 }
 
 // GetClickhouseAsDB function returns a sql.DB connection which allows interfaceing with the stdlib database/sql package.
-func GetClickhouseAsDB(ctx context.Context, container *chmodule.ClickHouseContainer) (*sql.DB, error) {
-	host, err := container.ConnectionHost(ctx)
+func (c *Container) GetClickhouseAsDB(ctx context.Context) (*sql.DB, error) {
+	host, err := c.ConnectionHost(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get clickhouse host: %w", err)
 	}
 	dbConn := clickhouse.OpenDB(&clickhouse.Options{
-		Addr: []string{host},
+		Protocol: clickhouse.Native,
+		Addr:     []string{host},
 		Auth: clickhouse.Auth{
-			Username: container.User,
-			Password: container.Password,
-			Database: container.DbName,
+			Username: c.User,
+			Password: c.Password,
+			Database: c.DbName,
+		},
+		TLS: &tls.Config{
+			RootCAs: c.RootCAs,
 		},
 	})
 	const retries = 3
@@ -109,53 +135,81 @@ func GetClickhouseAsDB(ctx context.Context, container *chmodule.ClickHouseContai
 	return nil, fmt.Errorf("failed to ping clickhouse after %d retries: %w", retries, err)
 }
 
-// Terminate function terminates the clickhouse and zookeeper containers.
+// ConnectionHost returns the host and port of the clickhouse container, using the default, native 9000 port, and
+// obtaining the host and exposed port from the container
+func (c *Container) ConnectionHost(ctx context.Context) (string, error) {
+	host, err := c.Host(ctx)
+	if err != nil {
+		return "", err
+	}
+
+	port, err := c.MappedPort(ctx, SecureNativePort)
+	if err != nil {
+		return "", err
+	}
+
+	return host + ":" + port.Port(), nil
+}
+
+// Terminate function terminates the clickhouse containers.
 // If an error occurs, it will be printed to stderr.
 func (c *Container) Terminate(ctx context.Context) {
 	if err := c.ClickHouseContainer.Terminate(ctx); err != nil {
 		_, _ = fmt.Fprintf(os.Stderr, "failed to terminate clickhouse container: %v", err)
 	}
-	if err := c.ZooKeeperContainer.Terminate(ctx); err != nil {
-		_, _ = fmt.Fprintf(os.Stderr, "failed to terminate clickhouse container: %v", err)
-	}
 }
 
-// GetCurrentCols returns the current columns of the table.
-func GetCurrentCols(ctx context.Context, chConn clickhouse.Conn, tableName string) ([]ColInfo, error) {
-	selectStm := fmt.Sprintf("SELECT name, type, comment FROM system.columns where table='%s'", tableName)
-	rows, err := chConn.Query(ctx, selectStm)
-	if err != nil {
-		return nil, fmt.Errorf("failed to show table: %w", err)
-	}
-	defer rows.Close() //nolint // we are not interested in the error here
-	colInfos := []ColInfo{}
-	count := 0
-	for rows.Next() {
-		count++
-		var info ColInfo
-		err := rows.Scan(&info.Name, &info.Type, &info.Comment)
-		if err != nil {
-			return nil, fmt.Errorf("failed to scan table: %w", err)
-		}
-		colInfos = append(colInfos, info)
-	}
-	return colInfos, nil
-}
-
-// StartZooKeeperContainer function starts a zookeeper container. The caller is responsible for terminating the container.
-func StartZooKeeperContainer(ctx context.Context) (testcontainers.Container, string, error) {
-	zkPort := nat.Port("2181/tcp")
-
-	zkcontainer, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{
-		ContainerRequest: testcontainers.ContainerRequest{
-			ExposedPorts: []string{zkPort.Port()},
-			Image:        "zookeeper:3.7",
-			WaitingFor:   wait.ForListeningPort(zkPort),
-		},
-		Started: true,
+func createCert() (*tlscert.Certificate, *tlscert.Certificate, error) {
+	// Generate a certificate for localhost and save it to disk.
+	caCert := tlscert.SelfSignedFromRequest(tlscert.Request{
+		Name:              "ca-cert",
+		Host:              "localhost",
+		SubjectCommonName: "localhost",
+		IsCA:              true,
+		ValidFor:          time.Hour * 24 * 365 * 10,
 	})
-	if err != nil {
-		return zkcontainer, "", fmt.Errorf("failed to start zookeeper container: %w", err)
+	if caCert == nil {
+		return nil, nil, fmt.Errorf("failed to generate CA certificate")
 	}
-	return zkcontainer, zkPort.Port(), nil
+
+	cert := tlscert.SelfSignedFromRequest(tlscert.Request{
+		Name:              "test-cert",
+		SubjectCommonName: "test-cert",
+		Host:              "localhost",
+		Parent:            caCert,
+		ValidFor:          time.Hour * 24 * 365,
+	})
+	if cert == nil {
+		return nil, nil, fmt.Errorf("failed to generate client certificate")
+	}
+
+	return caCert, cert, nil
+}
+
+// WithCerts is a customize request option that adds the certificates to the clickhouse container.
+func WithCerts(caCert, clientCerts *tlscert.Certificate) testcontainers.CustomizeRequestOption {
+	return func(req *testcontainers.GenericContainerRequest) {
+		req.ExposedPorts = append(req.ExposedPorts, SecureNativePort.Port())
+		ca := testcontainers.ContainerFile{
+			Reader:            bytes.NewReader(caCert.Bytes),
+			ContainerFilePath: "/etc/clickhouse-server/certs/ca.crt",
+			FileMode:          0o755,
+		}
+		cert := testcontainers.ContainerFile{
+			Reader:            bytes.NewReader(clientCerts.Bytes),
+			ContainerFilePath: "/etc/clickhouse-server/certs/client.crt",
+			FileMode:          0o755,
+		}
+		key := testcontainers.ContainerFile{
+			Reader:            bytes.NewReader(clientCerts.KeyBytes),
+			ContainerFilePath: "/etc/clickhouse-server/certs/client.key",
+			FileMode:          0o755,
+		}
+		config := testcontainers.ContainerFile{
+			Reader:            bytes.NewReader(secureConfigXML),
+			ContainerFilePath: "/etc/clickhouse-server/config.d/aconfig.xml",
+			FileMode:          0o755,
+		}
+		req.Files = append(req.Files, ca, cert, key, config)
+	}
 }

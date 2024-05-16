@@ -17,13 +17,13 @@ func TestMigration(t *testing.T) {
 
 	defer chcontainer.Terminate(ctx)
 
-	db, err := clickhouseinfra.GetClickhouseAsDB(ctx, chcontainer.ClickHouseContainer)
+	db, err := chcontainer.GetClickhouseAsDB(ctx)
 	require.NoError(t, err, "Failed to get clickhouse db")
 
 	err = migrations.RunGoose(ctx, []string{"up", "-v"}, db)
 	require.NoError(t, err, "Failed to run migration")
 
-	conn, err := clickhouseinfra.GetClickHouseAsConn(chcontainer.ClickHouseContainer)
+	conn, err := chcontainer.GetClickHouseAsConn()
 	require.NoError(t, err, "Failed to get clickhouse connection")
 
 	// Iterate over the rows and check the column names
