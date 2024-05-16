@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	"github.com/DIMO-Network/model-garage/internal/generator/convert"
-	"github.com/DIMO-Network/model-garage/internal/generator/graphql"
+	"github.com/DIMO-Network/model-garage/internal/generator/custom"
 	"github.com/DIMO-Network/model-garage/internal/generator/migration"
 	"github.com/DIMO-Network/model-garage/pkg/runner"
 	"github.com/DIMO-Network/model-garage/pkg/schema"
@@ -22,12 +22,12 @@ func main() {
 	vspecPath := flag.String("spec", "", "Path to the vspec CSV file if empty, the embedded vspec will be used")
 	definitionPath := flag.String("definitions", "", "Path to the definitions file if empty, the definitions will be used")
 	packageName := flag.String("package", "vspec", "Name of the package to generate")
-	generators := flag.String("generators", "all", "Comma separated list of generators to run. Options: all, model, convert, graphql.")
+	generators := flag.String("generators", "all", "Comma separated list of generators to run. Options: all, model, convert, custom.")
 	// Convert flags
 	withTest := flag.Bool("convert.with-test", false, "Generate test functions for conversion functions. Default is true.")
 	// GQL flags
-	gqlOutFile := flag.String("graphql.output-file", "", "Path of the generate gql file that is appened to the outputDir.")
-	gqlTemplateFile := flag.String("graphql.template-file", "", "Path to the template file. Which is executed with codegen.TemplateData data.")
+	gqlOutFile := flag.String("custom.output-file", "", "Path of the generate gql file that is appened to the outputDir.")
+	gqlTemplateFile := flag.String("custom.template-file", "", "Path to the template file. Which is executed with codegen.TemplateData data.")
 	// Migration flags
 	migrationFileName := flag.String("migration.file-name", "", "Name of the migration file. Default is the model name.")
 
@@ -63,7 +63,7 @@ func main() {
 	cfg := runner.Config{
 		PackageName: *packageName,
 		OutputDir:   *outputDir,
-		GraphQL: graphql.Config{
+		Custom: custom.Config{
 			OutputFile:   *gqlOutFile,
 			TemplateFile: *gqlTemplateFile,
 		},

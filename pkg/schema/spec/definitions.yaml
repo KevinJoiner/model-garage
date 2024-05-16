@@ -15,10 +15,6 @@
   # if empty then the type is inferred from the vspec definition
   goType: ""
 
-  # gqlType: The type to use for GraphQL schema.
-  # if empty then the type is inferred from the vspec definition
-  gqlType: ""
-
   # conversions: The mapping of the original to the VSpec field
   conversions:
     # - originalName: The name of the field in the original data

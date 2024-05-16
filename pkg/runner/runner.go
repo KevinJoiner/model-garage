@@ -7,7 +7,7 @@ import (
 	"slices"
 
 	"github.com/DIMO-Network/model-garage/internal/generator/convert"
-	"github.com/DIMO-Network/model-garage/internal/generator/graphql"
+	"github.com/DIMO-Network/model-garage/internal/generator/custom"
 	"github.com/DIMO-Network/model-garage/internal/generator/migration"
 	"github.com/DIMO-Network/model-garage/internal/generator/model"
 	"github.com/DIMO-Network/model-garage/pkg/codegen"
@@ -21,8 +21,8 @@ const (
 	ModelGenerator = "model"
 	// ConvertGenerator is a constant to run the convert generator.
 	ConvertGenerator = "convert"
-	// GraphqlGenerator is a constant to run the graphql generator.
-	GraphqlGenerator = "graphql"
+	// CustomGenerator is a constant to run the custom generator.
+	CustomGenerator = "custom"
 	// MigrationGenerator is a constant to run the migration generator.
 	MigrationGenerator = "migration"
 )
@@ -31,7 +31,7 @@ const (
 type Config struct {
 	PackageName string
 	OutputDir   string
-	GraphQL     graphql.Config
+	Custom      custom.Config
 	Convert     convert.Config
 	Migration   migration.Config
 }
@@ -48,7 +48,7 @@ func Execute(vspecReader, definitionsReader io.Reader, generators []string, cfg 
 	case slices.Contains(generators, AllGenerator):
 	case slices.Contains(generators, ModelGenerator):
 	case slices.Contains(generators, ConvertGenerator):
-	case slices.Contains(generators, GraphqlGenerator):
+	case slices.Contains(generators, CustomGenerator):
 	case slices.Contains(generators, MigrationGenerator):
 	default:
 		return fmt.Errorf("no generator selected")
@@ -80,10 +80,10 @@ func Execute(vspecReader, definitionsReader io.Reader, generators []string, cfg 
 		}
 	}
 
-	if slices.Contains(generators, AllGenerator) || slices.Contains(generators, GraphqlGenerator) {
-		err = graphql.Generate(tmplData, cfg.OutputDir, cfg.GraphQL)
+	if slices.Contains(generators, AllGenerator) || slices.Contains(generators, CustomGenerator) {
+		err = custom.Generate(tmplData, cfg.OutputDir, cfg.Custom)
 		if err != nil {
-			return fmt.Errorf("failed to generate graphql file: %w", err)
+			return fmt.Errorf("failed to generate custom file: %w", err)
 		}
 	}
 

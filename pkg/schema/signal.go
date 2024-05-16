@@ -39,7 +39,6 @@ type SignalInfo struct {
 	JSONName    string
 	BaseGoType  string
 	BaseCHType  string
-	BaseGQLType string
 	Conversions []*ConversionInfo
 	Privileges  []string
 }
@@ -57,7 +56,6 @@ type DefinitionInfo struct {
 	IsArray            *bool             `json:"isArray"            yaml:"isArray"`
 	ClickHouseType     string            `json:"clickHouseType"     yaml:"clickHouseType"`
 	GoType             string            `json:"goType"             yaml:"goType"`
-	GQLType            string            `json:"gqlType"            yaml:"gqlType"`
 	Conversions        []*ConversionInfo `json:"conversions"        yaml:"conversions"`
 	RequiredPrivileges []string          `json:"requiredPrivileges" yaml:"requiredPrivileges"`
 }
@@ -108,7 +106,6 @@ func NewSignalInfo(record []string) *SignalInfo {
 		//  if this is not a branch type, we can convert it to default golang and clickhouse types
 		sig.BaseGoType = goTypeFromVSPEC(baseType)
 		sig.BaseCHType = chTypeFromVSPEC(baseType)
-		sig.BaseGQLType = gqlTypeFromVSPEC(baseType)
 	}
 	sig.GOName = goName(sig.Name)
 	sig.JSONName = JSONName(sig.Name)
@@ -123,9 +120,6 @@ func (s *SignalInfo) MergeWithDefinition(definition *DefinitionInfo) {
 	}
 	if definition.GoType != "" {
 		s.BaseGoType = definition.GoType
-	}
-	if definition.GQLType != "" {
-		s.BaseGQLType = definition.GQLType
 	}
 	if definition.IsArray != nil {
 		s.IsArray = *definition.IsArray
@@ -155,14 +149,6 @@ func (s *SignalInfo) CHType() string {
 		return "Array(" + s.BaseCHType + ")"
 	}
 	return s.BaseCHType
-}
-
-// GQLType returns the graphql type of the signal.
-func (s *SignalInfo) GQLType() string {
-	if s.IsArray {
-		return "[" + s.BaseGQLType + "]"
-	}
-	return s.BaseGQLType
 }
 
 func goName(name string) string {
@@ -221,16 +207,6 @@ func chTypeFromVSPEC(baseType string) string {
 		return "Float32"
 	case "double":
 		return "Float64"
-	default:
-		return "String"
-	}
-}
-
-// gqlTypeFromVSPEC converts vspec type to graphql types.
-func gqlTypeFromVSPEC(baseType string) string {
-	switch baseType {
-	case "uint8", "int8", "uint16", "int16", "uint32", "int32", "float", "double", "uint64", "int64", "Boolean":
-		return "Float"
 	default:
 		return "String"
 	}
