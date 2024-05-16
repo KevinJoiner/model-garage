@@ -65,20 +65,20 @@ func SignalToSlice(obj Signal) []any {
 		obj.TokenID,
 		obj.Timestamp,
 		obj.Name,
+		obj.Source,
 		obj.ValueNumber,
 		obj.ValueString,
-		obj.Source,
 	}
 }
 
 // SignalColNames returns the column names of the Signal struct.
 func SignalColNames() []string {
 	return []string{
-		"TokenID",
-		"Timestamp",
-		"Name",
-		"ValueNumber",
-		"ValueString",
-		"Source",
+		TokenIDCol,
+		TimestampCol,
+		NameCol,
+		SourceCol,
+		ValueNumberCol,
+		ValueStringCol,
 	}
 }
