@@ -2,7 +2,6 @@
 package main
 
 import (
-	"bytes"
 	"flag"
 	"io"
 	"log"
@@ -10,11 +9,11 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/DIMO-Network/model-garage/internal/codegen/convert"
-	"github.com/DIMO-Network/model-garage/internal/codegen/graphql"
-	"github.com/DIMO-Network/model-garage/internal/codegen/migration"
+	"github.com/DIMO-Network/model-garage/internal/generator/convert"
+	"github.com/DIMO-Network/model-garage/internal/generator/graphql"
+	"github.com/DIMO-Network/model-garage/internal/generator/migration"
 	"github.com/DIMO-Network/model-garage/pkg/runner"
-	"github.com/DIMO-Network/model-garage/schema"
+	"github.com/DIMO-Network/model-garage/pkg/schema"
 )
 
 func main() {
@@ -44,7 +43,7 @@ func main() {
 		//nolint:errcheck // we don't care about the error since we are not writing to the file
 		defer f.Close()
 	} else {
-		vspecReader = bytes.NewReader(schema.VssRel42DIMO)
+		vspecReader = strings.NewReader(schema.VssRel42DIMO())
 	}
 	var definitionReader io.Reader
 	if *definitionPath != "" {
@@ -57,7 +56,7 @@ func main() {
 		//nolint:errcheck // we don't care about the error since we are not writing to the file
 		defer f.Close()
 	} else {
-		definitionReader = bytes.NewReader(schema.Definitions)
+		definitionReader = strings.NewReader(schema.DefinitionsYAML())
 	}
 	gens := strings.Split(*generators, ",")
 

@@ -3,52 +3,13 @@ package codegen
 
 import (
 	"fmt"
-	"io"
 	"os"
 	"path/filepath"
-	"strings"
 
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
 	"golang.org/x/tools/imports"
 )
 
 const readAll = 0o755
-
-// TemplateData contains the data to be used during template execution.
-type TemplateData struct {
-	PackageName string
-	ModelName   string
-	Signals     []*SignalInfo
-}
-
-// GetDefinedSignals reads the signals and definitions files and merges them.
-func GetDefinedSignals(specReader, definitionReader io.Reader) (*TemplateData, error) {
-	signals, err := loadSignalsCSV(specReader)
-	if err != nil {
-		return nil, fmt.Errorf("error reading signals: %w", err)
-	}
-
-	definitions, err := loadDefinitionFile(definitionReader)
-	if err != nil {
-		return nil, fmt.Errorf("error reading definition file: %w", err)
-	}
-	signals = definitions.DefinedSignal(signals)
-	modelName := "Model"
-	if len(signals) > 0 {
-		idx := strings.IndexByte(signals[0].Name, '.')
-		if idx > 0 {
-			modelName = signals[0].Name[:idx]
-			modelName = cases.Title(language.English).String(modelName)
-		}
-	}
-	tmplData := &TemplateData{
-		Signals:   signals,
-		ModelName: modelName,
-	}
-
-	return tmplData, nil
-}
 
 // EnsureDir ensures the output directory exists.
 func EnsureDir(dir string) error {

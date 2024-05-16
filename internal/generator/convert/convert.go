@@ -11,7 +11,8 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/DIMO-Network/model-garage/internal/codegen"
+	"github.com/DIMO-Network/model-garage/pkg/codegen"
+	"github.com/DIMO-Network/model-garage/pkg/schema"
 )
 
 const (
@@ -28,7 +29,7 @@ const (
 )
 
 type conversionData struct {
-	Signal  *codegen.SignalInfo
+	Signal  *schema.SignalInfo
 	convIdx int
 }
 
@@ -58,26 +59,26 @@ type Config struct {
 }
 
 type funcTmplData struct {
-	Signal      *codegen.SignalInfo
+	Signal      *schema.SignalInfo
 	ConvIdx     int
 	PackageName string
-	Conversion  *codegen.ConversionInfo
+	Conversion  *schema.ConversionInfo
 }
 
 type convertTmplData struct {
-	*codegen.TemplateData
+	*schema.TemplateData
 	// Group of conversions by original field name.
 	Conversions [][]*singleConversions
 }
 
 type singleConversions struct {
-	Signal     *codegen.SignalInfo
-	Conversion *codegen.ConversionInfo
+	Signal     *schema.SignalInfo
+	Conversion *schema.ConversionInfo
 }
 
 // Generate creates a conversion functions for each field of a model struct.
 // as well as the entire model struct.
-func Generate(tmplData *codegen.TemplateData, outputDir string, cfg Config) (err error) {
+func Generate(tmplData *schema.TemplateData, outputDir string, cfg Config) (err error) {
 	err = createStructConversion(tmplData, outputDir)
 	if err != nil {
 		return err
@@ -106,7 +107,7 @@ func Generate(tmplData *codegen.TemplateData, outputDir string, cfg Config) (err
 }
 
 // createStructConversion creates the conversion function for converting JSON data to a model struct.
-func createStructConversion(tmplData *codegen.TemplateData, outputDir string) error {
+func createStructConversion(tmplData *schema.TemplateData, outputDir string) error {
 	convV1Tmpl, err := createConvV1Template()
 	if err != nil {
 		return err
@@ -175,7 +176,7 @@ func createConvV2Template() (*template.Template, error) {
 // and returns them in the format [][]*singleConversions.
 // Where the outer slice is grouped by the original field name.
 // And the inner slice contains a list of conversions for that field and their corresponding signal.
-func gatherAllConversionsFromSignals(tmplData *codegen.TemplateData) [][]*singleConversions {
+func gatherAllConversionsFromSignals(tmplData *schema.TemplateData) [][]*singleConversions {
 	conversions := make(map[string][]*singleConversions, len(tmplData.Signals))
 	for _, signal := range tmplData.Signals {
 		for _, conv := range signal.Conversions {

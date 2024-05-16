@@ -6,11 +6,12 @@ import (
 	"io"
 	"slices"
 
-	"github.com/DIMO-Network/model-garage/internal/codegen"
-	"github.com/DIMO-Network/model-garage/internal/codegen/convert"
-	"github.com/DIMO-Network/model-garage/internal/codegen/graphql"
-	"github.com/DIMO-Network/model-garage/internal/codegen/migration"
-	"github.com/DIMO-Network/model-garage/internal/codegen/model"
+	"github.com/DIMO-Network/model-garage/internal/generator/convert"
+	"github.com/DIMO-Network/model-garage/internal/generator/graphql"
+	"github.com/DIMO-Network/model-garage/internal/generator/migration"
+	"github.com/DIMO-Network/model-garage/internal/generator/model"
+	"github.com/DIMO-Network/model-garage/pkg/codegen"
+	"github.com/DIMO-Network/model-garage/pkg/schema"
 )
 
 const (
@@ -58,7 +59,7 @@ func Execute(vspecReader, definitionsReader io.Reader, generators []string, cfg 
 		return fmt.Errorf("failed to ensure output directory: %w", err)
 	}
 
-	tmplData, err := codegen.GetDefinedSignals(vspecReader, definitionsReader)
+	tmplData, err := schema.GetDefinedSignals(vspecReader, definitionsReader)
 	if err != nil {
 		return fmt.Errorf("failed to get defined signals: %w", err)
 	}

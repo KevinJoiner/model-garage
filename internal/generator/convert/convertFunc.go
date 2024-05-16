@@ -12,10 +12,11 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/DIMO-Network/model-garage/internal/codegen"
+	"github.com/DIMO-Network/model-garage/pkg/codegen"
+	"github.com/DIMO-Network/model-garage/pkg/schema"
 )
 
-func createConvertFuncs(tmplData *codegen.TemplateData, outputDir string, needsConvertFunc []conversionData) error {
+func createConvertFuncs(tmplData *schema.TemplateData, outputDir string, needsConvertFunc []conversionData) error {
 	convertFuncTemplate, err := createConvertFuncTemplate()
 	if err != nil {
 		return err
@@ -34,7 +35,7 @@ func createConvertFuncs(tmplData *codegen.TemplateData, outputDir string, needsC
 }
 
 // getConversionFunctions returns the signals that need conversion functions and test functions.
-func getConversionFunctions(signals []*codegen.SignalInfo, existingFuncs map[string]bool) ([]conversionData, []conversionData) {
+func getConversionFunctions(signals []*schema.SignalInfo, existingFuncs map[string]bool) ([]conversionData, []conversionData) {
 	var needsConvertFunc []conversionData
 	var needsConvertTestFunc []conversionData
 	for _, signal := range signals {
@@ -58,7 +59,7 @@ func getConversionFunctions(signals []*codegen.SignalInfo, existingFuncs map[str
 }
 
 // createConvertTestFunc creates test functions for the conversion functions if they do not exist.
-func createConvertTestFunc(tmplData *codegen.TemplateData, outputDir string, needsConvertTestFunc []conversionData) error {
+func createConvertTestFunc(tmplData *schema.TemplateData, outputDir string, needsConvertTestFunc []conversionData) error {
 	convertTestFuncTemplate, err := createConvertTestFuncTemplate(tmplData.PackageName)
 	if err != nil {
 		return err
@@ -90,7 +91,7 @@ func createConvertFuncTemplate() (*template.Template, error) {
 
 func createConvertTestFuncTemplate(packageNameToTest string) (*template.Template, error) {
 	tmpl, err := template.New("convertTestFuncTemplate").Funcs(template.FuncMap{
-		"convertName":     func(sig *codegen.SignalInfo) string { return fmt.Sprintf("%s.%s", packageNameToTest, convertName(sig)) },
+		"convertName":     func(sig *schema.SignalInfo) string { return fmt.Sprintf("%s.%s", packageNameToTest, convertName(sig)) },
 		"convertTestName": convertTestName,
 	}).Parse(convertTestsFuncTemplateStr)
 	if err != nil {
@@ -137,11 +138,11 @@ func addFileDeclerations(fset *token.FileSet, filePath string, declaredFunctions
 	return nil
 }
 
-func convertName(signal *codegen.SignalInfo) string {
+func convertName(signal *schema.SignalInfo) string {
 	return "To" + signal.GOName
 }
 
-func convertTestName(signal *codegen.SignalInfo) string {
+func convertTestName(signal *schema.SignalInfo) string {
 	return "Test" + convertName(signal)
 }
 

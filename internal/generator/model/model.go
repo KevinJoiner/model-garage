@@ -9,7 +9,8 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/DIMO-Network/model-garage/internal/codegen"
+	"github.com/DIMO-Network/model-garage/pkg/codegen"
+	"github.com/DIMO-Network/model-garage/pkg/schema"
 )
 
 // structFileName is the name of the Go file that will contain the vehicle struct.
@@ -19,7 +20,7 @@ var structFileName = "%s-structs.go"
 var structTemplate string
 
 // Generate creates a new Go struct file to represent the vehicle struct.
-func Generate(tmplData *codegen.TemplateData, outputDir string) error {
+func Generate(tmplData *schema.TemplateData, outputDir string) error {
 	structFileName = fmt.Sprintf(structFileName, strings.ToLower(tmplData.ModelName))
 	modelTemplate, err := createModelTemplate()
 	if err != nil {

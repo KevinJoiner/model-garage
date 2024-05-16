@@ -9,7 +9,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/DIMO-Network/model-garage/internal/codegen"
+	"github.com/DIMO-Network/model-garage/pkg/schema"
 )
 
 var graphqlFileFormat = "%s.graphqls"
@@ -24,7 +24,7 @@ type Config struct {
 }
 
 // Generate creates a new Graphql table file.
-func Generate(tmplData *codegen.TemplateData, outputDir string, cfg Config) error {
+func Generate(tmplData *schema.TemplateData, outputDir string, cfg Config) error {
 	outFile := cfg.OutputFile
 	if outFile == "" {
 		lowerName := strings.ToLower(tmplData.ModelName)

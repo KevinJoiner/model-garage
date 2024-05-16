@@ -11,7 +11,8 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/DIMO-Network/model-garage/internal/codegen"
+	"github.com/DIMO-Network/model-garage/pkg/codegen"
+	"github.com/DIMO-Network/model-garage/pkg/schema"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
@@ -37,7 +38,7 @@ type Config struct {
 }
 
 // Generate creates a new ClickHouse table file.
-func Generate(tmplData *codegen.TemplateData, outputDir string, cfg Config) error {
+func Generate(tmplData *schema.TemplateData, outputDir string, cfg Config) error {
 	version, err := getVersion(outputDir)
 	if err != nil {
 		return fmt.Errorf("error getting version: %w", err)
