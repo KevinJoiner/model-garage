@@ -38,7 +38,7 @@ type SignalInfo struct {
 	GOName      string
 	JSONName    string
 	BaseGoType  string
-	BaseCHType  string
+	BaseGQLType string
 	Conversions []*ConversionInfo
 	Privileges  []string
 }
@@ -105,7 +105,7 @@ func NewSignalInfo(record []string) *SignalInfo {
 	if baseType != "" {
 		//  if this is not a branch type, we can convert it to default golang and clickhouse types
 		sig.BaseGoType = goTypeFromVSPEC(baseType)
-		sig.BaseCHType = chTypeFromVSPEC(baseType)
+		sig.BaseGQLType = gqlTypeFromVSPEC(baseType)
 	}
 	sig.GOName = goName(sig.Name)
 	sig.JSONName = JSONName(sig.Name)
@@ -115,9 +115,6 @@ func NewSignalInfo(record []string) *SignalInfo {
 
 // MergeWithDefinition merges the signal with the definition information.
 func (s *SignalInfo) MergeWithDefinition(definition *DefinitionInfo) {
-	if definition.ClickHouseType != "" {
-		s.BaseCHType = definition.ClickHouseType
-	}
 	if definition.GoType != "" {
 		s.BaseGoType = definition.GoType
 	}
@@ -143,12 +140,9 @@ func (s *SignalInfo) GOType() string {
 	return s.BaseGoType
 }
 
-// CHType returns the clickhouse type of the signal.
-func (s *SignalInfo) CHType() string {
-	if s.IsArray {
-		return "Array(" + s.BaseCHType + ")"
-	}
-	return s.BaseCHType
+// GQLType returns the graphql type of the signal.
+func (s *SignalInfo) GQLType() string {
+	return s.BaseGQLType
 }
 
 func goName(name string) string {
@@ -180,33 +174,11 @@ func goTypeFromVSPEC(dataType string) string {
 	}
 }
 
-// chTypeFromVSPEC converts vspec type to clickhouse types.
-func chTypeFromVSPEC(baseType string) string {
+// gqlTypeFromVSPEC converts vspec type to graphql types.
+func gqlTypeFromVSPEC(baseType string) string {
 	switch baseType {
-	case "uint8":
-		return "UInt8"
-	case "int8":
-		return "Int8"
-	case "uint16":
-		return "UInt16"
-	case "int16":
-		return "Int16"
-	case "uint32":
-		return "UInt32"
-	case "int32":
-		return "Int32"
-	case "uint64":
-		return "UInt64"
-	case "int64":
-		return "Int64"
-	case "string":
-		return "String"
-	case "boolean":
-		return "Bool"
-	case "float":
-		return "Float32"
-	case "double":
-		return "Float64"
+	case "uint8", "int8", "uint16", "int16", "uint32", "int32", "float", "double", "uint64", "int64", "Boolean":
+		return "Float"
 	default:
 		return "String"
 	}

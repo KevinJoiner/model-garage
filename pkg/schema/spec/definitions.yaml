@@ -6,11 +6,7 @@
   # isArray: Whether the field is an array or not 
   # if null then the value is inferred from the vspec definition
   isArray: null
-
-  # clickHouseType: The type to use for ClickHouse ase.
-  #if empty then the type is inferred from the vspec definition
-  clickHouseType: ""
-
+  
   # goType: The type to use for Golang struct.
   # if empty then the type is inferred from the vspec definition
   goType: ""
@@ -31,7 +27,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -42,7 +37,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -53,7 +47,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -64,7 +57,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.CurrentLocation.Altitude
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -75,7 +67,6 @@
     - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.CurrentLocation.Latitude
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -86,7 +77,6 @@
     - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.CurrentLocation.Longitude
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -111,7 +101,6 @@
     - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.Exterior.AirTemperature
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -122,7 +111,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.LowVoltageBattery.CurrentVoltage
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -133,7 +121,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.BarometricPressure
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -144,7 +131,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.EngineLoad
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -155,7 +141,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.IntakeTemp
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -166,7 +151,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.RunTime
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -177,7 +161,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.ECT
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -188,7 +171,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.EngineOilLevel
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -199,7 +181,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.Speed
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -210,7 +191,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.TPS
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -221,7 +201,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.FuelSystem.AbsoluteLevel
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -232,7 +211,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.FuelSystem.SupportedFuelTypes
   isArray: false
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -243,7 +221,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.Range
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -254,7 +231,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -265,7 +241,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.Charging.IsCharging
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -276,7 +251,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.GrossCapacity
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -287,7 +261,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.StateOfCharge.Current
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -298,7 +271,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.Transmission.TravelledDistance
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -309,7 +281,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.Type
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -320,7 +291,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Speed
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -331,7 +301,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.VehicleIdentification.Brand
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -342,7 +311,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.VehicleIdentification.Model
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -353,7 +321,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.VehicleIdentification.Year
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -364,7 +331,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.MAF
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -375,7 +341,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.HDOP
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -386,7 +351,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.NSAT
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -397,7 +361,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.WPAState
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
@@ -408,7 +371,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.SSID
   isArray: null
-  clickHouseType: ""
   goType: ""
   gqlType: ""
   conversions:
