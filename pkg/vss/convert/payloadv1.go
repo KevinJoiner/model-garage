@@ -18,11 +18,11 @@ type TokenIDGetter interface {
 
 // SignalsFromV1Payload gets a slice signals from a v1 payload.
 func SignalsFromV1Payload(ctx context.Context, tokenGetter TokenIDGetter, jsonData []byte) ([]vss.Signal, error) {
-	ts, err := timestampFromV1Data(jsonData)
+	ts, err := TimestampFromV1Data(jsonData)
 	if err != nil {
 		return nil, fmt.Errorf("error getting timestamp: %w", err)
 	}
-	sub, err := subjectFromV1Data(jsonData)
+	sub, err := SubjectFromV1Data(jsonData)
 	if err != nil {
 		return nil, fmt.Errorf("error getting subject: %w", err)
 	}
@@ -31,7 +31,7 @@ func SignalsFromV1Payload(ctx context.Context, tokenGetter TokenIDGetter, jsonDa
 		return nil, fmt.Errorf("error getting tokenID from subject: %w", err)
 	}
 
-	source, err := sourceFromV1Data(jsonData)
+	source, err := SourceFromV1Data(jsonData)
 	baseSignal := vss.Signal{
 		TokenID:   tokenID,
 		Timestamp: ts,
@@ -44,7 +44,8 @@ func SignalsFromV1Payload(ctx context.Context, tokenGetter TokenIDGetter, jsonDa
 	return sigs, nil
 }
 
-func subjectFromV1Data(jsonData []byte) (string, error) {
+// SubjectFromV1Data gets a subject from a v1 payload.
+func SubjectFromV1Data(jsonData []byte) (string, error) {
 	result := gjson.GetBytes(jsonData, "subject")
 	if !result.Exists() {
 		return "", FieldNotFoundError{Field: "subject", Lookup: "subject"}
@@ -56,7 +57,8 @@ func subjectFromV1Data(jsonData []byte) (string, error) {
 	return sub, nil
 }
 
-func timestampFromV1Data(jsonData []byte) (time.Time, error) {
+// TimestampFromV1Data gets a timestamp from a v1 payload.
+func TimestampFromV1Data(jsonData []byte) (time.Time, error) {
 	result := gjson.GetBytes(jsonData, "time")
 	if !result.Exists() {
 		return time.Time{}, FieldNotFoundError{Field: "timestamp", Lookup: "time"}
@@ -77,7 +79,8 @@ func timestampFromV1Data(jsonData []byte) (time.Time, error) {
 	return ts, nil
 }
 
-func sourceFromV1Data(jsonData []byte) (string, error) {
+// SourceFromV1Data gets a source field from a v1 payload.
+func SourceFromV1Data(jsonData []byte) (string, error) {
 	result := gjson.GetBytes(jsonData, "source")
 	if !result.Exists() {
 		return "", FieldNotFoundError{Field: "source", Lookup: "source"}

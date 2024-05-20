@@ -9,7 +9,7 @@ type VersionError struct {
 
 // Error returns the error message.
 func (e VersionError) Error() string {
-	return fmt.Sprintf("unsupported specversion: %s", e.Version)
+	return fmt.Sprintf("unsupported verision: %s", e.Version)
 }
 
 // FieldNotFoundError is an error for missing fields.

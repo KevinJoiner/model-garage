@@ -21,11 +21,11 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 	if !signals.IsArray() {
 		return nil, errors.New("signals field is not an array")
 	}
-	tokenID, err := tokenIDFromV2Data(jsonData)
+	tokenID, err := TokenIDFromV2Data(jsonData)
 	if err != nil {
 		return nil, fmt.Errorf("error getting tokenID: %w", err)
 	}
-	source, err := sourceFromV2Data(jsonData)
+	source, err := SourceFromV2Data(jsonData)
 	if err != nil {
 		return nil, fmt.Errorf("error getting source: %w", err)
 	}
@@ -35,12 +35,12 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 		Source:  source,
 	}
 	for _, sigData := range signals.Array() {
-		originalName, err := signalNameFromV2Data(sigData)
+		originalName, err := NameFromV2Signal(sigData)
 		if err != nil {
 			errs = errors.Join(errs, err)
 			continue
 		}
-		ts, err := timestampFromV2Data(sigData)
+		ts, err := TimestampFromV2Signal(sigData)
 		if err != nil {
 			err = fmt.Errorf("error for '%s': %w", originalName, err)
 			errs = errors.Join(errs, err)
@@ -57,7 +57,8 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 	return retSignals, errs
 }
 
-func tokenIDFromV2Data(jsonData []byte) (uint32, error) {
+// TokenIDFromV2Data gets a tokenID from a V2 payload.
+func TokenIDFromV2Data(jsonData []byte) (uint32, error) {
 	lookupKey := "vehicleTokenId"
 	tokenID := gjson.GetBytes(jsonData, lookupKey)
 	if !tokenID.Exists() {
@@ -70,7 +71,8 @@ func tokenIDFromV2Data(jsonData []byte) (uint32, error) {
 	return float64toUint32(id), nil
 }
 
-func timestampFromV2Data(sigResult gjson.Result) (time.Time, error) {
+// TimestampFromV2Signal gets a timestamp from a V2 signal.
+func TimestampFromV2Signal(sigResult gjson.Result) (time.Time, error) {
 	lookupKey := "timestamp"
 	timestamp := sigResult.Get(lookupKey)
 	if !timestamp.Exists() {
@@ -79,7 +81,8 @@ func timestampFromV2Data(sigResult gjson.Result) (time.Time, error) {
 	return time.UnixMilli(int64(timestamp.Uint())).UTC(), nil
 }
 
-func signalNameFromV2Data(sigResult gjson.Result) (string, error) {
+// NameFromV2Signal gets a name from a V2 signal.
+func NameFromV2Signal(sigResult gjson.Result) (string, error) {
 	lookupKey := "name"
 	signalName := sigResult.Get(lookupKey)
 	if !signalName.Exists() {
@@ -88,7 +91,8 @@ func signalNameFromV2Data(sigResult gjson.Result) (string, error) {
 	return signalName.String(), nil
 }
 
-func sourceFromV2Data(jsonData []byte) (string, error) {
+// SourceFromV2Data gets a source from a V2 payload.
+func SourceFromV2Data(jsonData []byte) (string, error) {
 	lookupKey := "source"
 	source := gjson.GetBytes(jsonData, lookupKey)
 	if !source.Exists() {
