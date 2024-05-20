@@ -1,7 +1,6 @@
 package convert
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"math"
@@ -10,25 +9,6 @@ import (
 	"github.com/DIMO-Network/model-garage/pkg/vss"
 	"github.com/tidwall/gjson"
 )
-
-const (
-	specV1 = "1.0"
-	specV2 = "2.0"
-)
-
-// SignalsFromPayload extracts signals from a payload.
-// It detects the payload version and calls the appropriate function.
-func SignalsFromPayload(ctx context.Context, tokenGetter TokenIDGetter, jsonData []byte) ([]vss.Signal, error) {
-	specVersion := gjson.GetBytes(jsonData, "specversion").String()
-	switch {
-	case specVersion == specV1:
-		return SignalsFromV1Payload(ctx, tokenGetter, jsonData)
-	case specVersion == specV2:
-		return SignalsFromV2Payload(jsonData)
-	default:
-		return nil, VersionError{Version: specVersion}
-	}
-}
 
 // SignalsFromV2Payload extracts signals from a V2 payload.
 func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
