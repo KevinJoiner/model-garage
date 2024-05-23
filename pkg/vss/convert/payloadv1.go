@@ -32,6 +32,9 @@ func SignalsFromV1Payload(ctx context.Context, tokenGetter TokenIDGetter, jsonDa
 	}
 
 	source, err := SourceFromV1Data(jsonData)
+	if err != nil {
+		return nil, fmt.Errorf("error getting source: %w", err)
+	}
 	baseSignal := vss.Signal{
 		TokenID:   tokenID,
 		Timestamp: ts,

@@ -1,3 +1,4 @@
+// Package migrations provides the functionality to run goose migrations on a clickhouse database.
 package migrations
 
 import (

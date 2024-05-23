@@ -25,9 +25,10 @@ func main() {
 	generators := flag.String("generators", "all", "Comma separated list of generators to run. Options: all, model, convert, custom.")
 	// Convert flags
 	withTest := flag.Bool("convert.with-test", false, "Generate test functions for conversion functions. Default is true.")
-	// GQL flags
-	gqlOutFile := flag.String("custom.output-file", "", "Path of the generate gql file that is appened to the outputDir.")
-	gqlTemplateFile := flag.String("custom.template-file", "", "Path to the template file. Which is executed with codegen.TemplateData data.")
+	// Custom flags
+	customOutFile := flag.String("custom.output-file", "", "Path of the generate gql file that is appened to the outputDir.")
+	customTemplateFile := flag.String("custom.template-file", "", "Path to the template file. Which is executed with codegen.TemplateData data.")
+	customFormat := flag.Bool("custom.format", false, "Format the generated file with goimports.")
 	// Migration flags
 	migrationFileName := flag.String("migration.file-name", "", "Name of the migration file. Default is the model name.")
 
@@ -64,8 +65,9 @@ func main() {
 		PackageName: *packageName,
 		OutputDir:   *outputDir,
 		Custom: custom.Config{
-			OutputFile:   *gqlOutFile,
-			TemplateFile: *gqlTemplateFile,
+			OutputFile:   *customOutFile,
+			TemplateFile: *customTemplateFile,
+			Format:       *customFormat,
 		},
 		Convert: convert.Config{
 			WithTest: *withTest,

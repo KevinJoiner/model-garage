@@ -19,8 +19,9 @@ import (
 )
 
 const (
-	defaultUser      = "default"
-	defaultDB        = "dimo"
+	defaultUser = "default"
+	defaultDB   = "dimo"
+	// SecureNativePort is the secure port for the ClickHouse container.
 	SecureNativePort = nat.Port("9440/tcp")
 )
 
@@ -95,7 +96,8 @@ func (c *Container) GetClickHouseAsConn() (clickhouse.Conn, error) {
 			Database: c.DbName,
 		},
 		TLS: &tls.Config{
-			RootCAs: c.RootCAs,
+			MinVersion: tls.VersionTLS12,
+			RootCAs:    c.RootCAs,
 		},
 	})
 	if err != nil {
@@ -119,7 +121,8 @@ func (c *Container) GetClickhouseAsDB(ctx context.Context) (*sql.DB, error) {
 			Database: c.DbName,
 		},
 		TLS: &tls.Config{
-			RootCAs: c.RootCAs,
+			MinVersion: tls.VersionTLS12,
+			RootCAs:    c.RootCAs,
 		},
 	})
 	const retries = 3
