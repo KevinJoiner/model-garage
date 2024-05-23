@@ -2,6 +2,7 @@
 package custom
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"path"
@@ -9,6 +10,7 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/DIMO-Network/model-garage/pkg/codegen"
 	"github.com/DIMO-Network/model-garage/pkg/schema"
 )
 
@@ -18,9 +20,10 @@ var customFileFormat = "%s.txt"
 type Config struct {
 	// OutputFile is the name of the model to generate the custom file.
 	OutputFile string
-
 	// TemplateFile is the path to the template file.
 	TemplateFile string
+	// Format controls whether the generated file is formatted with goimports.
+	Format bool
 }
 
 // Generate creates a new Custom file.
@@ -49,10 +52,19 @@ func Generate(tmplData *schema.TemplateData, outputDir string, cfg Config) error
 		}
 	}()
 
-	err = customFileTmpl.Execute(customFileOutputFile, &tmplData)
+	var outBuf bytes.Buffer
+	err = customFileTmpl.Execute(&outBuf, &tmplData)
 	if err != nil {
 		return fmt.Errorf("error executing Custom template: %w", err)
 	}
+	if cfg.Format {
+		err = codegen.FormatAndWriteToFile(outBuf.Bytes(), filePath)
+		if err != nil {
+			return fmt.Errorf("error writing file: %w", err)
+		}
+		return nil
+	}
+	customFileOutputFile.Write(outBuf.Bytes())
 
 	return nil
 }
