@@ -1,3 +1,4 @@
+// Package schema contains the types and functions for generating the schema from the spec and definition files.
 package schema
 
 import (

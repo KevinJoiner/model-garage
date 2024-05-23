@@ -64,7 +64,7 @@ func Generate(tmplData *schema.TemplateData, outputDir string, cfg Config) error
 		}
 		return nil
 	}
-	customFileOutputFile.Write(outBuf.Bytes())
+	_, _ = customFileOutputFile.Write(outBuf.Bytes())
 
 	return nil
 }
