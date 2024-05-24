@@ -105,9 +105,9 @@ var (
 		{TokenID: 123, Timestamp: ts, Name: "vehicleIdentificationYear", ValueNumber: 2020, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "exteriorAirTemperature", ValueNumber: 25, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "lowVoltageBatteryCurrentVoltage", ValueNumber: 12.5, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "oBDBarometricPressure", ValueNumber: 1013.25, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "oBDEngineLoad", ValueNumber: 75, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "oBDIntakeTemp", ValueNumber: 30, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "oBDRunTime", ValueNumber: 1200, Source: "dimo/integration/123"},
+		{TokenID: 123, Timestamp: ts, Name: "obdBarometricPressure", ValueNumber: 1013.25, Source: "dimo/integration/123"},
+		{TokenID: 123, Timestamp: ts, Name: "obdEngineLoad", ValueNumber: 75, Source: "dimo/integration/123"},
+		{TokenID: 123, Timestamp: ts, Name: "obdIntakeTemp", ValueNumber: 30, Source: "dimo/integration/123"},
+		{TokenID: 123, Timestamp: ts, Name: "obdRunTime", ValueNumber: 1200, Source: "dimo/integration/123"},
 	}
 )

@@ -62,7 +62,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "oBDBarometricPressure",
+				Name:      "obdBarometricPressure",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -146,7 +146,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "oBDEngineLoad",
+				Name:      "obdEngineLoad",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -215,7 +215,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "dIMOAftermarketHDOP",
+				Name:      "dimoAftermarketHDOP",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -229,7 +229,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "oBDIntakeTemp",
+				Name:      "obdIntakeTemp",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -313,7 +313,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "dIMOAftermarketNSAT",
+				Name:      "dimoAftermarketNSAT",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -369,7 +369,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "oBDRunTime",
+				Name:      "obdRunTime",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -411,7 +411,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "dIMOAftermarketSSID",
+				Name:      "dimoAftermarketSSID",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -522,7 +522,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "dIMOAftermarketWPAState",
+				Name:      "dimoAftermarketWPAState",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)

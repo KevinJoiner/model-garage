@@ -1,0 +1,48 @@
+package schema
+
+import "testing"
+
+func TestJSONName(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected string
+	}{
+		{
+			input:    "Vehicle.CurrentLocation.Altitude",
+			expected: "currentLocationAltitude",
+		},
+		{
+			input:    "Vechicle.DIMO.Source",
+			expected: "dimoSource",
+		},
+		{
+			input:    "Vehicle.DIMO.WPAState",
+			expected: "dimoWPAState",
+		},
+		{
+			input:    "Vehicle.DIMO.Aftemarket.HDOP",
+			expected: "dimoAftemarketHDOP",
+		},
+		{
+			input:    "Vehicle.DIMO.Aftemarket.WPAState",
+			expected: "dimoAftemarketWPAState",
+		},
+		{
+			input:    "Vehicle.Powertrain.CombustionEngine.ECT",
+			expected: "powertrainCombustionEngineECT",
+		},
+		{
+			input:    "Vehicle.Powertrain.CombustionEngine.Tps",
+			expected: "powertrainCombustionEngineTps",
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.input, func(t *testing.T) {
+			result := jsonName(test.input)
+			if result != test.expected {
+				t.Errorf("Unexpected result. Expected: %s, Got: %s", test.expected, result)
+			}
+		})
+	}
+}
