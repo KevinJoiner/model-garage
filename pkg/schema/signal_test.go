@@ -35,6 +35,14 @@ func TestJSONName(t *testing.T) {
 			input:    "Vehicle.Powertrain.CombustionEngine.Tps",
 			expected: "powertrainCombustionEngineTps",
 		},
+		{
+			input:    "",
+			expected: "",
+		},
+		{
+			input:    "Vehicle",
+			expected: "vehicle",
+		},
 	}
 
 	for _, test := range tests {

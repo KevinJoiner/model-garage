@@ -117,9 +117,6 @@ func NewSignalInfo(record []string) *SignalInfo {
 
 // MergeWithDefinition merges the signal with the definition information.
 func (s *SignalInfo) MergeWithDefinition(definition *DefinitionInfo) {
-	if definition.GoType != "" {
-		s.BaseGoType = definition.GoType
-	}
 	if definition.IsArray != nil {
 		s.IsArray = *definition.IsArray
 	}
