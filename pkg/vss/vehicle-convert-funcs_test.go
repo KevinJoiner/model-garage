@@ -255,3 +255,50 @@ func TestToCurrentLocationTimestamp1(t *testing.T) {
 		})
 	}
 }
+
+func TestToPowertrainTractionBatteryCurrentPower1(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name          string
+		input         float64
+		expected      float64
+		expectedError bool
+	}{
+		{
+			name:          "Positive (charging) value",
+			input:         113.0,
+			expected:      113000.0,
+			expectedError: false,
+		},
+		{
+			name:          "Zero Value",
+			input:         0.0,
+			expected:      0.0,
+			expectedError: false,
+		},
+		{
+			name:          "Negative (driving) value",
+			input:         -11.0,
+			expected:      -11000.0,
+			expectedError: false,
+		},
+	}
+
+	for i := range tests {
+		test := tests[i]
+		name := test.name
+		if name == "" {
+			name = fmt.Sprintf("Input: %v", test.input)
+		}
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			result, err := vss.ToPowertrainTractionBatteryCurrentPower0(test.input)
+			if test.expectedError {
+				require.Error(t, err, "Expected an error but got none")
+			} else {
+				require.NoError(t, err, "Unexpected error")
+				require.Equal(t, test.expected, result, "Unexpected result")
+			}
+		})
+	}
+}
