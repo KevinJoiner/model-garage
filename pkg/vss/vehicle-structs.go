@@ -58,6 +58,8 @@ const (
 	FieldPowertrainTractionBatteryChargingChargeLimit = "powertrainTractionBatteryChargingChargeLimit"
 	// FieldPowertrainTractionBatteryChargingIsCharging True if charging is ongoing. Charging is considered to be ongoing if energy is flowing from charger to vehicle.
 	FieldPowertrainTractionBatteryChargingIsCharging = "powertrainTractionBatteryChargingIsCharging"
+	// FieldPowertrainTractionBatteryCurrentPower Current electrical energy flowing in/out of battery. Positive = Energy flowing in to battery, e.g. during charging. Negative = Energy flowing out of battery, e.g. during driving.
+	FieldPowertrainTractionBatteryCurrentPower = "powertrainTractionBatteryCurrentPower"
 	// FieldPowertrainTractionBatteryGrossCapacity Gross capacity of the battery.
 	FieldPowertrainTractionBatteryGrossCapacity = "powertrainTractionBatteryGrossCapacity"
 	// FieldPowertrainTractionBatteryStateOfChargeCurrent Physical state of charge of the high voltage battery, relative to net capacity. This is not necessarily the state of charge being displayed to the customer.

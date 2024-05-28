@@ -109,6 +109,20 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
+	case "charger.power":
+		val0, err := PowertrainTractionBatteryCurrentPowerFromV2Data(valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'charger.power': %w", err))
+		} else {
+			sig := Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "powertrainTractionBatteryCurrentPower",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
 	case "charging":
 		val0, err := PowertrainTractionBatteryChargingIsChargingFromV2Data(valResult)
 		if err != nil {
@@ -1028,6 +1042,23 @@ func PowertrainTractionBatteryChargingIsChargingFromV2Data(result gjson.Result) 
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'charging': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'charging' is not of type 'bool' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// PowertrainTractionBatteryCurrentPowerFromData converts the given JSON data to a float64.
+func PowertrainTractionBatteryCurrentPowerFromV2Data(result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToPowertrainTractionBatteryCurrentPower0(val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'charger.power': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'charger.power' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
 
 	return ret, errs
