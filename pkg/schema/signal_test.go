@@ -28,7 +28,7 @@ func TestJSONName(t *testing.T) {
 			expected: "dimoAftemarketWPAState",
 		},
 		{
-			input:    "Vehicle.Powertrain.CombustionEngine.ECT",
+			input:    "Vehicle.Powertrain.CombustionEngine.ECT", //nolint:misspell // ECT is an abbreviation
 			expected: "powertrainCombustionEngineECT",
 		},
 		{
