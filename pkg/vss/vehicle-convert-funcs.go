@@ -227,3 +227,9 @@ func ToDIMOAftermarketSSID0(val string) (string, error) {
 func ToDIMOAftermarketWPAState0(val string) (string, error) {
 	return val, nil
 }
+
+// ToPowertrainTractionBatteryCurrentPower0 converts data as float64 to float64.
+func ToPowertrainTractionBatteryCurrentPower0(val float64) (float64, error) {
+	// V1 field is in kilowatts (kW), VSS field is in watts (W).
+	return 1000 * val, nil
+}

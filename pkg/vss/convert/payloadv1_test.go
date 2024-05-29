@@ -44,6 +44,9 @@ var (
 				"backLeft": 32.2,
 				"backRight": 33.1
 			},
+			"charger": {
+				"power": 34.0
+			},
 			"altitude": 100.0,
 			"latitude": 37.7749,
 			"longitude": -122.4194,
@@ -82,6 +85,7 @@ var (
 		{TokenID: 123, Timestamp: ts, Name: "chassisAxleRow1WheelRightTirePressure", ValueNumber: 31, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "chassisAxleRow2WheelLeftTirePressure", ValueNumber: 32.2, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "chassisAxleRow2WheelRightTirePressure", ValueNumber: 33.1, Source: "dimo/integration/123"},
+		{TokenID: 123, Timestamp: ts, Name: "powertrainTractionBatteryCurrentPower", ValueNumber: 34000.0, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "currentLocationAltitude", ValueNumber: 100, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "currentLocationLatitude", ValueNumber: 37.7749, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "currentLocationLongitude", ValueNumber: -122.4194, Source: "dimo/integration/123"},

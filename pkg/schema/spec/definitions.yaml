@@ -249,6 +249,16 @@
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.TractionBattery.CurrentPower
+  isArray: null
+  goType: ""
+  gqlType: ""
+  conversions:
+    - originalName: charger.power
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.GrossCapacity
   isArray: null
   goType: ""
