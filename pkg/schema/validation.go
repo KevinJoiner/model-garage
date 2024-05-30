@@ -12,6 +12,7 @@ var (
 	privileges = []string{"VEHICLE_NON_LOCATION_DATA", "VEHICLE_COMMANDS", "VEHICLE_CURRENT_LOCATION", "VEHICLE_ALL_TIME_LOCATION", "VEHICLE_VIN_CREDENTIAL"}
 )
 
+// ErrInvalid is an error for invalid definitions.
 type ErrInvalid struct {
 	Property string
 	Name     string
