@@ -40,14 +40,17 @@ The Model generation is handled by packages in `internal/codegen`. They are resp
 
 ```yaml
 # vspecName: The name of the VSpec field in the VSS schema
+# required
 - vspecName: DIMO.DefinitionID
   # goType: The data type to use for Golang struct.
+  # available types: [float64, string]
   # if empty then the type is inferred from the vspec definition
   goType: ""
 
   # conversion: The mapping of the original data to the VSpec field
   conversion:
     # originalName: The name of the field in the original data
+    # required
     originalName: data.definitionID
 
     # originalType: The data type of the field in the original data
@@ -57,6 +60,7 @@ The Model generation is handled by packages in `internal/codegen`. They are resp
     isArray: false
 
   # requiredPrivileges: The list of privileges required to access the field
+  # required
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 ```

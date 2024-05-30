@@ -46,6 +46,9 @@ func LoadDefinitionFile(r io.Reader) (*Definitions, error) {
 		FromName: map[string]*DefinitionInfo{},
 	}
 	for _, info := range defInfos {
+		if err := Validate(info); err != nil {
+			return nil, fmt.Errorf("error validating definitions: %w", err)
+		}
 		definitions.FromName[info.VspecName] = info
 	}
 
