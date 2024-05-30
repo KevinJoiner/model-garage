@@ -37,15 +37,18 @@ func LoadSignalsCSV(r io.Reader) ([]*SignalInfo, error) {
 // LoadDefinitionFile loads the definitions from a definitions.yaml file.
 func LoadDefinitionFile(r io.Reader) (*Definitions, error) {
 	decoder := yaml.NewDecoder(r)
-	var transInfos []*DefinitionInfo
-	err := decoder.Decode(&transInfos)
+	var defInfos []*DefinitionInfo
+	err := decoder.Decode(&defInfos)
 	if err != nil {
 		return nil, fmt.Errorf("failed to decode json: %w", err)
 	}
 	definitions := &Definitions{
 		FromName: map[string]*DefinitionInfo{},
 	}
-	for _, info := range transInfos {
+	for _, info := range defInfos {
+		if err := Validate(info); err != nil {
+			return nil, fmt.Errorf("error validating definitions: %w", err)
+		}
 		definitions.FromName[info.VspecName] = info
 	}
 

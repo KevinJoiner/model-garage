@@ -55,8 +55,6 @@ type ConversionInfo struct {
 // DefinitionInfo contains the definition information for a field.
 type DefinitionInfo struct {
 	VspecName          string            `json:"vspecName"          yaml:"vspecName"`
-	IsArray            *bool             `json:"isArray"            yaml:"isArray"`
-	ClickHouseType     string            `json:"clickHouseType"     yaml:"clickHouseType"`
 	GoType             string            `json:"goType"             yaml:"goType"`
 	Conversions        []*ConversionInfo `json:"conversions"        yaml:"conversions"`
 	RequiredPrivileges []string          `json:"requiredPrivileges" yaml:"requiredPrivileges"`
@@ -117,8 +115,8 @@ func NewSignalInfo(record []string) *SignalInfo {
 
 // MergeWithDefinition merges the signal with the definition information.
 func (s *SignalInfo) MergeWithDefinition(definition *DefinitionInfo) {
-	if definition.IsArray != nil {
-		s.IsArray = *definition.IsArray
+	if definition.GoType != "" {
+		s.BaseGoType = definition.GoType
 	}
 	if len(definition.Conversions) != 0 {
 		s.Conversions = definition.Conversions
@@ -133,9 +131,6 @@ func (s *SignalInfo) MergeWithDefinition(definition *DefinitionInfo) {
 
 // GOType returns the golang type of the signal.
 func (s *SignalInfo) GOType() string {
-	if s.IsArray {
-		return "[]" + s.BaseGoType
-	}
 	return s.BaseGoType
 }
 

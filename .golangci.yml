@@ -56,3 +56,10 @@ issues:
     - path: convert-funcs_test\.go
       linters:
         - dupl
+    # Exclude some linters from running on tests files.
+    - path: _test\.go
+      linters:
+        - funlen
+        - errcheck
+        - dupl
+        - gosec

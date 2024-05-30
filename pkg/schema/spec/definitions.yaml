@@ -2,11 +2,6 @@
 
   # vspecName: The name of the VSpec field in the VSS schema 
 - vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure
-
-  # isArray: Whether the field is an array or not 
-  # if null then the value is inferred from the vspec definition
-  isArray: null
-  
   # goType: The type to use for Golang struct.
   # if empty then the type is inferred from the vspec definition
   goType: ""
@@ -26,9 +21,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: tires.frontRight
       originalType: float64
@@ -36,9 +29,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: tires.backLeft
       originalType: float64
@@ -46,9 +37,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: tires.backRight
       originalType: float64
@@ -56,9 +45,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.CurrentLocation.Altitude
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: altitude
       originalType: float64
@@ -66,9 +53,7 @@
   requiredPrivileges:
     - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.CurrentLocation.Latitude
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: latitude
       originalType: float64
@@ -76,9 +61,7 @@
   requiredPrivileges:
     - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.CurrentLocation.Longitude
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: longitude
       originalType: float64
@@ -89,7 +72,6 @@
   isArray: false
   clickHouseType: DateTime('UTC')
   goType: "float64"
-  gqlType: ""
   conversions: 
     - originalName: timestamp
       originalType: string
@@ -100,9 +82,7 @@
   requiredPrivileges:
     - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.Exterior.AirTemperature
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: ambientTemp
       originalType: float64
@@ -110,9 +90,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.LowVoltageBattery.CurrentVoltage
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: batteryVoltage
       originalType: float64
@@ -120,9 +98,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.BarometricPressure
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: barometricPressure
       originalType: float64
@@ -130,9 +106,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.EngineLoad
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: engineLoad
       originalType: float64
@@ -140,9 +114,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.IntakeTemp
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: intakeTemp
       originalType: float64
@@ -150,9 +122,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.RunTime
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: runTime
       originalType: float64
@@ -160,9 +130,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.ECT
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: coolantTemp
       originalType: float64
@@ -170,9 +138,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.EngineOilLevel
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: oil
       originalType: float64
@@ -180,9 +146,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.Speed
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: engineSpeed
       originalType: float64
@@ -190,9 +154,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.TPS
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: throttlePosition
       originalType: float64
@@ -200,9 +162,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.FuelSystem.AbsoluteLevel
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: fuelPercentRemaining
       originalType: float64
@@ -212,7 +172,6 @@
 - vspecName: Vehicle.Powertrain.FuelSystem.SupportedFuelTypes
   isArray: false
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: fuelType
       originalType: string
@@ -220,9 +179,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.Range
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: range
       originalType: float64
@@ -230,9 +187,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: chargeLimit
       originalType: float64
@@ -240,9 +195,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.Charging.IsCharging
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: charging
       originalType: bool
@@ -250,9 +203,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.CurrentPower
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: charger.power
       originalType: float64
@@ -260,9 +211,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.GrossCapacity
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: batteryCapacity
       originalType: float64
@@ -270,9 +219,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.StateOfCharge.Current
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: soc
       originalType: float64
@@ -280,9 +227,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.Transmission.TravelledDistance
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: odometer
       originalType: float64
@@ -290,9 +235,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.Type
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: fuelType
       originalType: string
@@ -300,9 +243,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Speed
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: speed
       originalType: float64
@@ -310,9 +251,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.VehicleIdentification.Brand
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: make
       originalType: string
@@ -320,9 +259,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.VehicleIdentification.Model
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: model
       originalType: string
@@ -330,9 +267,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.VehicleIdentification.Year
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: year
       originalType: float64
@@ -340,9 +275,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.MAF
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: maf
       originalType: float64
@@ -350,9 +283,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.HDOP
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: hdop
       originalType: float64
@@ -360,9 +291,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.NSAT
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: nsat
       originalType: float64
@@ -370,9 +299,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.WPAState
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: wpa_state
       originalType: string
@@ -380,9 +307,7 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.SSID
-  isArray: null
   goType: ""
-  gqlType: ""
   conversions:
     - originalName: ssid
       originalType: string
