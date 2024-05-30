@@ -19,25 +19,25 @@ const (
 	// FieldCurrentLocationTimestamp Timestamp from GNSS system for current location, formatted according to ISO 8601 with UTC time zone.
 	FieldCurrentLocationTimestamp = "currentLocationTimestamp"
 	// FieldDIMOAftermarketHDOP Horizontal dilution of precision of GPS
-	FieldDIMOAftermarketHDOP = "dIMOAftermarketHDOP"
+	FieldDIMOAftermarketHDOP = "dimoAftermarketHDOP"
 	// FieldDIMOAftermarketNSAT Number of sync satellites for GPS
-	FieldDIMOAftermarketNSAT = "dIMOAftermarketNSAT"
+	FieldDIMOAftermarketNSAT = "dimoAftermarketNSAT"
 	// FieldDIMOAftermarketSSID Service Set Ientifier for the wifi.
-	FieldDIMOAftermarketSSID = "dIMOAftermarketSSID"
+	FieldDIMOAftermarketSSID = "dimoAftermarketSSID"
 	// FieldDIMOAftermarketWPAState Indicate the current wpa state for the devices wifi
-	FieldDIMOAftermarketWPAState = "dIMOAftermarketWPAState"
+	FieldDIMOAftermarketWPAState = "dimoAftermarketWPAState"
 	// FieldExteriorAirTemperature Air temperature outside the vehicle.
 	FieldExteriorAirTemperature = "exteriorAirTemperature"
 	// FieldLowVoltageBatteryCurrentVoltage Current Voltage of the low voltage battery.
 	FieldLowVoltageBatteryCurrentVoltage = "lowVoltageBatteryCurrentVoltage"
 	// FieldOBDBarometricPressure PID 33 - Barometric pressure
-	FieldOBDBarometricPressure = "oBDBarometricPressure"
+	FieldOBDBarometricPressure = "obdBarometricPressure"
 	// FieldOBDEngineLoad PID 04 - Engine load in percent - 0 = no load, 100 = full load
-	FieldOBDEngineLoad = "oBDEngineLoad"
+	FieldOBDEngineLoad = "obdEngineLoad"
 	// FieldOBDIntakeTemp PID 0F - Intake temperature
-	FieldOBDIntakeTemp = "oBDIntakeTemp"
+	FieldOBDIntakeTemp = "obdIntakeTemp"
 	// FieldOBDRunTime PID 1F - Engine run time
-	FieldOBDRunTime = "oBDRunTime"
+	FieldOBDRunTime = "obdRunTime"
 	// FieldPowertrainCombustionEngineECT Engine coolant temperature.
 	FieldPowertrainCombustionEngineECT = "powertrainCombustionEngineECT"
 	// FieldPowertrainCombustionEngineEngineOilLevel Engine oil level.

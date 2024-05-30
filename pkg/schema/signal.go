@@ -4,6 +4,7 @@ package schema
 import (
 	"regexp"
 	"strings"
+	"unicode"
 )
 
 const (
@@ -109,16 +110,13 @@ func NewSignalInfo(record []string) *SignalInfo {
 		sig.BaseGQLType = gqlTypeFromVSPEC(baseType)
 	}
 	sig.GOName = goName(sig.Name)
-	sig.JSONName = JSONName(sig.Name)
+	sig.JSONName = jsonName(sig.Name)
 
 	return sig
 }
 
 // MergeWithDefinition merges the signal with the definition information.
 func (s *SignalInfo) MergeWithDefinition(definition *DefinitionInfo) {
-	if definition.GoType != "" {
-		s.BaseGoType = definition.GoType
-	}
 	if definition.IsArray != nil {
 		s.IsArray = *definition.IsArray
 	}
@@ -146,23 +144,51 @@ func (s *SignalInfo) GQLType() string {
 	return s.BaseGQLType
 }
 
+// goName returns the golang formated name of the signal.
+// Removes the root Prefix and nonAlphaNumeric characters from the name and capitalizes the first letter.
 func goName(name string) string {
-	return nonAlphaNum.ReplaceAllString(removePrefix(name), "")
+	firstComponent, rest := splitAndSantizeName(name)
+	var nameBuilder strings.Builder
+	_, _ = nameBuilder.WriteRune(unicode.ToUpper(rune(firstComponent[0])))
+	_, _ = nameBuilder.WriteString(firstComponent[1:])
+	_, _ = nameBuilder.WriteString(rest)
+	return nameBuilder.String()
 }
 
-// JSONName returns the json name of the signal.
-func JSONName(name string) string {
-	n := goName(name)
-	// lowercase the first letter
-	return strings.ToLower(n[:1]) + n[1:]
-}
-
-func removePrefix(name string) string {
-	idx := strings.IndexByte(name, '.')
-	if idx != -1 {
-		return name[idx+1:]
+// jsonName returns the JSON formated name of the signal.
+// Removes the root Prefix and nonAlphaNumeric characters from the name and lowercases the first word.
+func jsonName(name string) string {
+	firstComponent, rest := splitAndSantizeName(name)
+	if firstComponent == "" {
+		return ""
 	}
-	return name
+
+	var nameBuilder strings.Builder
+	for i, r := range firstComponent {
+		if i == 0 || unicode.IsUpper(r) {
+			// Lowercase first and any initial consecutive uppercase letters
+			_, _ = nameBuilder.WriteRune(unicode.ToLower(r))
+			continue
+		}
+		// write the remainging characters of the first component
+		_, _ = nameBuilder.WriteString(firstComponent[i:])
+		break
+	}
+	_, _ = nameBuilder.WriteString(rest)
+	return nameBuilder.String()
+}
+
+// splitAndSantizeName removes the root branch prefix from the name and returns the first component separate from rest of the name with nonAlphaNumeric characters removed.
+func splitAndSantizeName(name string) (string, string) {
+	splitName := strings.Split(name, ".")
+
+	if len(splitName) == 1 {
+		return nonAlphaNum.ReplaceAllString(splitName[0], ""), ""
+	}
+	// remove branch prefix if it exists i.e. Vehcile.Speed -> Speed
+	splitName = splitName[1:]
+
+	return nonAlphaNum.ReplaceAllString(splitName[0], ""), nonAlphaNum.ReplaceAllString(strings.Join(splitName[1:], ""), "")
 }
 
 // goTypeFromVSPEC converts vspec type to golang types.

@@ -154,7 +154,7 @@ func SignalsFromV1Data(baseSignal Signal, jsonData []byte) ([]Signal, error) {
 		}
 	} else {
 		sig := Signal{
-			Name:      "dIMOAftermarketHDOP",
+			Name:      "dimoAftermarketHDOP",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -170,7 +170,7 @@ func SignalsFromV1Data(baseSignal Signal, jsonData []byte) ([]Signal, error) {
 		}
 	} else {
 		sig := Signal{
-			Name:      "dIMOAftermarketNSAT",
+			Name:      "dimoAftermarketNSAT",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -186,7 +186,7 @@ func SignalsFromV1Data(baseSignal Signal, jsonData []byte) ([]Signal, error) {
 		}
 	} else {
 		sig := Signal{
-			Name:      "dIMOAftermarketSSID",
+			Name:      "dimoAftermarketSSID",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -202,7 +202,7 @@ func SignalsFromV1Data(baseSignal Signal, jsonData []byte) ([]Signal, error) {
 		}
 	} else {
 		sig := Signal{
-			Name:      "dIMOAftermarketWPAState",
+			Name:      "dimoAftermarketWPAState",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -250,7 +250,7 @@ func SignalsFromV1Data(baseSignal Signal, jsonData []byte) ([]Signal, error) {
 		}
 	} else {
 		sig := Signal{
-			Name:      "oBDBarometricPressure",
+			Name:      "obdBarometricPressure",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -266,7 +266,7 @@ func SignalsFromV1Data(baseSignal Signal, jsonData []byte) ([]Signal, error) {
 		}
 	} else {
 		sig := Signal{
-			Name:      "oBDEngineLoad",
+			Name:      "obdEngineLoad",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -282,7 +282,7 @@ func SignalsFromV1Data(baseSignal Signal, jsonData []byte) ([]Signal, error) {
 		}
 	} else {
 		sig := Signal{
-			Name:      "oBDIntakeTemp",
+			Name:      "obdIntakeTemp",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -298,7 +298,7 @@ func SignalsFromV1Data(baseSignal Signal, jsonData []byte) ([]Signal, error) {
 		}
 	} else {
 		sig := Signal{
-			Name:      "oBDRunTime",
+			Name:      "obdRunTime",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
