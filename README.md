@@ -41,22 +41,9 @@ The Model generation is handled by packages in `internal/codegen`. They are resp
 ```yaml
 # vspecName: The name of the VSpec field in the VSS schema
 - vspecName: DIMO.DefinitionID
-
-  # isArray: Whether the field is an array or not
-  # if null then the value is inferred from the vspec definition
-  isArray: null
-
-  # clickHouseType: The data type to use for ClickHouse Database.
-  #if empty then the type is inferred from the vspec definition
-  clickHouseType: ""
-
   # goType: The data type to use for Golang struct.
   # if empty then the type is inferred from the vspec definition
   goType: ""
-
-  # gqlType: The data type to use for GraphQL schema.
-  # if empty then the type is inferred from the vspec definition
-  gqlType: ""
 
   # conversion: The mapping of the original data to the VSpec field
   conversion:
@@ -66,7 +53,7 @@ The Model generation is handled by packages in `internal/codegen`. They are resp
     # originalType: The data type of the field in the original data
     originalType: string
 
-    # isArray: Whether the field is an array or not
+    # isArray: Whether the original field is an array or not
     isArray: false
 
   # requiredPrivileges: The list of privileges required to access the field
