@@ -187,8 +187,8 @@ func splitAndSantizeName(name string) (string, string) {
 }
 
 // goTypeFromVSPEC converts vspec type to golang types.
-func goTypeFromVSPEC(dataType string) string {
-	switch dataType {
+func goTypeFromVSPEC(baseType string) string {
+	switch baseType {
 	case "uint8", "int8", "uint16", "int16", "uint32", "int32", "uint64", "int64", "float", "double", "boolean":
 		return "float64"
 	default:
@@ -199,7 +199,8 @@ func goTypeFromVSPEC(dataType string) string {
 // gqlTypeFromVSPEC converts vspec type to graphql types.
 func gqlTypeFromVSPEC(baseType string) string {
 	switch baseType {
-	case "uint8", "int8", "uint16", "int16", "uint32", "int32", "float", "double", "uint64", "int64", "Boolean":
+	// TODO(elffjs): Unify the lists between here and goTypeFromVSPEC?
+	case "uint8", "int8", "uint16", "int16", "uint32", "int32", "uint64", "int64", "float", "double", "boolean":
 		return "Float"
 	default:
 		return "String"
