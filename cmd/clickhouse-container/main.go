@@ -9,7 +9,8 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/DIMO-Network/model-garage/pkg/clickhouseinfra"
+	"github.com/DIMO-Network/clickhouse-infra/pkg/connect/config"
+	"github.com/DIMO-Network/clickhouse-infra/pkg/container"
 	"github.com/DIMO-Network/model-garage/pkg/migrations"
 )
 
@@ -26,15 +27,19 @@ func run(ctx context.Context) error {
 	password := flag.String("password", "default", "ClickHouse password")
 	migrate := flag.Bool("migrate", true, "Run migrations")
 	flag.Parse()
-
-	chcontainer, err := clickhouseinfra.CreateClickHouseContainer(ctx, *user, *password)
+	settings := config.Settings{
+		User:     *user,
+		Password: *password,
+		Database: "dimo",
+	}
+	chcontainer, err := container.CreateClickHouseContainer(ctx, settings)
 	if err != nil {
 		return fmt.Errorf("failed to create clickhouse container: %w", err)
 	}
 	defer chcontainer.Terminate(ctx)
 
 	if *migrate {
-		db, err := chcontainer.GetClickhouseAsDB(ctx)
+		db, err := chcontainer.GetClickhouseAsDB()
 		if err != nil {
 			return fmt.Errorf("failed to get clickhouse db: %w", err)
 		}

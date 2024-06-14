@@ -11,7 +11,6 @@ import (
 
 	"github.com/DIMO-Network/model-garage/internal/generator/convert"
 	"github.com/DIMO-Network/model-garage/internal/generator/custom"
-	"github.com/DIMO-Network/model-garage/internal/generator/migration"
 	"github.com/DIMO-Network/model-garage/pkg/runner"
 	"github.com/DIMO-Network/model-garage/pkg/schema"
 )
@@ -29,8 +28,6 @@ func main() {
 	customOutFile := flag.String("custom.output-file", "", "Path of the generate gql file that is appened to the outputDir.")
 	customTemplateFile := flag.String("custom.template-file", "", "Path to the template file. Which is executed with codegen.TemplateData data.")
 	customFormat := flag.Bool("custom.format", false, "Format the generated file with goimports.")
-	// Migration flags
-	migrationFileName := flag.String("migration.file-name", "", "Name of the migration file. Default is the model name.")
 
 	flag.Parse()
 
@@ -71,9 +68,6 @@ func main() {
 		},
 		Convert: convert.Config{
 			WithTest: *withTest,
-		},
-		Migration: migration.Config{
-			FileName: *migrationFileName,
 		},
 	}
 

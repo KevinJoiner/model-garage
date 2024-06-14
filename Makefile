@@ -1,5 +1,8 @@
 .PHONY: clean run build install dep test lint format docker gql tools tools-golangci-lint tools-gotestsum
-export PATH := $(abspath bin/):${PATH}
+# Set the bin path
+PATHINSTBIN = $(abspath ./bin)
+export PATH := $(PATHINSTBIN):$(PATH)
+
 BIN_NAME					?= codegen
 DEFAULT_INSTALL_DIR			:= $(go env GOPATH)/bin
 DEFAULT_ARCH				:= $(shell go env GOARCH)
@@ -14,6 +17,7 @@ VER_CUT   := $(shell echo $(VERSION) | cut -c2-)
 
 # Dependency versions
 GOLANGCI_VERSION   = latest
+CLICKHOUSE_INFRA_VERSION = $(shell go list -m -f '{{.Version}}' github.com/DIMO-Network/clickhouse-infra)
 
 build:
 	@CGO_ENABLED=0 GOOS=$(GOOS) GOARCH=$(ARCH) \
@@ -25,12 +29,12 @@ run: build
 all: clean target
 
 clean:
-	@rm -rf bin
+	@rm -rf $(PATHINSTBIN)
 	
 install: build
 	@install -d $(INSTALL_DIR)
 	@rm -f $(INSTALL_DIR)/$(BIN_NAME)
-	@cp bin/* $(INSTALL_DIR)/
+	@cp $(PATHINSTBIN)/* $(INSTALL_DIR)/
 
 dep: 
 	@go mod tidy
@@ -46,11 +50,15 @@ format:
 	@golangci-lint run --fix
 
 migration: build
-	./bin/codegen -output=./pkg/migrations -package=migrations -generators=migration -migration.file-name="${name}"
+	migration -output=./pkg/migrations -package=migrations -filename="${name}"
 
 tools-golangci-lint:
-	@mkdir -p bin
+	@mkdir -p $(PATHINSTBIN)
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | BINARY=golangci-lint bash -s -- ${GOLANGCI_VERSION}
+
+tools-migration: ## Install migration tool
+	@mkdir -p $(PATHINSTBIN)
+	GOBIN=$(PATHINSTBIN) go install github.com/DIMO-Network/clickhouse-infra/cmd/migration@${CLICKHOUSE_INFRA_VERSION}
 
 tools: tools-golangci-lint
 
@@ -59,3 +67,4 @@ clickhouse:
 
 generate:
 	 go run ./cmd/codegen -output=./pkg/vss -package=vss -generators=model,convert
+

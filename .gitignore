@@ -10,12 +10,15 @@
 
 # binary only
 codegen
+migrate
+clickhouse-container
 !codegen/
 !codegen/*
 bin
 
 # Test binary, built with `go test -c`
 *.test
+settings.yaml
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
