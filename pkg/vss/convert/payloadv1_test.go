@@ -1,9 +1,7 @@
 package convert_test
 
 import (
-	"cmp"
 	"context"
-	"slices"
 	"testing"
 	"time"
 
@@ -23,10 +21,7 @@ func TestFullFromDataConversion(t *testing.T) {
 	getter := &tokenGetter{}
 	actualSignals, err := convert.SignalsFromPayload(context.Background(), getter, []byte(fullInputJSON))
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
-	slices.SortFunc(expectedSignals, func(i, j vss.Signal) int {
-		return cmp.Compare(i.Name, j.Name)
-	})
-	require.Equalf(t, expectedSignals, actualSignals, "converted vehicle does not match expected vehicle")
+	require.ElementsMatchf(t, expectedSignals, actualSignals, "converted vehicle does not match expected vehicle")
 }
 
 var (
@@ -137,9 +132,6 @@ func TestSkipNulls(t *testing.T) {
 	t.Parallel()
 	getter := &tokenGetter{}
 	actualSignals, err := convert.SignalsFromPayload(context.Background(), getter, []byte(inputJSONWithNull))
-	require.NoErrorf(t, err, "error converting full input data: %v", err)
-	slices.SortFunc(expectedSignals, func(i, j vss.Signal) int {
-		return cmp.Compare(i.Name, j.Name)
-	})
-	require.Equalf(t, expectedSignalsWithoutNull, actualSignals, "converted vehicle does not match expected vehicle")
+	require.NoErrorf(t, err, "error converting input data: %v", err)
+	require.ElementsMatchf(t, expectedSignalsWithoutNull, actualSignals, "converted vehicle does not match expected vehicle")
 }
