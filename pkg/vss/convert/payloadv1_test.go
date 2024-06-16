@@ -114,4 +114,32 @@ var (
 		{TokenID: 123, Timestamp: ts, Name: "obdIntakeTemp", ValueNumber: 30, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "obdRunTime", ValueNumber: 1200, Source: "dimo/integration/123"},
 	}
+
+	inputJSONWithNull = `{
+		"id": "randomIDnumber",
+		"specversion": "1.0",
+		"source": "dimo/integration/123",
+		"subject": "Vehicle123",
+		"time": "2022-01-01T12:34:56Z",
+		"type": "DIMO",
+		"data": {
+			"range": null,
+			"speed": 25.0
+		}
+	}`
+
+	expectedSignalsWithoutNull = []vss.Signal{
+		{TokenID: 123, Timestamp: ts, Name: "speed", ValueNumber: 25.0, Source: "dimo/integration/123"},
+	}
 )
+
+func TestSkipNulls(t *testing.T) {
+	t.Parallel()
+	getter := &tokenGetter{}
+	actualSignals, err := convert.SignalsFromPayload(context.Background(), getter, []byte(inputJSONWithNull))
+	require.NoErrorf(t, err, "error converting full input data: %v", err)
+	slices.SortFunc(expectedSignals, func(i, j vss.Signal) int {
+		return cmp.Compare(i.Name, j.Name)
+	})
+	require.Equalf(t, expectedSignalsWithoutNull, actualSignals, "converted vehicle does not match expected vehicle")
+}
