@@ -109,23 +109,6 @@ var (
 		{TokenID: 123, Timestamp: ts, Name: "obdIntakeTemp", ValueNumber: 30, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "obdRunTime", ValueNumber: 1200, Source: "dimo/integration/123"},
 	}
-
-	inputJSONWithNull = `{
-		"id": "randomIDnumber",
-		"specversion": "1.0",
-		"source": "dimo/integration/123",
-		"subject": "Vehicle123",
-		"time": "2022-01-01T12:34:56Z",
-		"type": "DIMO",
-		"data": {
-			"range": null,
-			"speed": 25.0
-		}
-	}`
-
-	expectedSignalsWithoutNull = []vss.Signal{
-		{TokenID: 123, Timestamp: ts, Name: "speed", ValueNumber: 25.0, Source: "dimo/integration/123"},
-	}
 )
 
 func TestSkipNulls(t *testing.T) {
@@ -135,3 +118,24 @@ func TestSkipNulls(t *testing.T) {
 	require.NoErrorf(t, err, "error converting input data: %v", err)
 	require.ElementsMatchf(t, expectedSignalsWithoutNull, actualSignals, "converted vehicle does not match expected vehicle")
 }
+
+var (
+	inputJSONWithNull = `{
+		"id": "randomIDnumber",
+		"specversion": "1.0",
+		"source": "dimo/integration/123",
+		"subject": "Vehicle123",
+		"time": "2022-01-01T12:34:56Z",
+		"type": "DIMO",
+		"data": {
+			"odometer": 5024.0,
+			"range": null,
+			"speed": 25.0
+		}
+	}`
+
+	expectedSignalsWithoutNull = []vss.Signal{
+		{TokenID: 123, Timestamp: ts, Name: "speed", ValueNumber: 25.0, Source: "dimo/integration/123"},
+		{TokenID: 123, Timestamp: ts, Name: "powertrainTransmissionTravelledDistance", ValueNumber: 5024, Source: "dimo/integration/123"},
+	}
+)
