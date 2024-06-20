@@ -314,3 +314,11 @@
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.DIMO.IsLocationRedacted
+  goType: ""
+  conversions:
+    - originalName: isRedacted
+      originalType: bool
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_ALL_TIME_LOCATION
