@@ -233,3 +233,11 @@ func ToPowertrainTractionBatteryCurrentPower0(val float64) (float64, error) {
 	// V1 field is in kilowatts (kW), VSS field is in watts (W).
 	return 1000 * val, nil
 }
+
+// ToDIMOIsLocationRedacted0 converts data as bool to float64.
+func ToDIMOIsLocationRedacted0(val bool) (float64, error) {
+	if val {
+		return 1, nil
+	}
+	return 0, nil
+}

@@ -211,6 +211,22 @@ func SignalsFromV1Data(baseSignal Signal, jsonData []byte) ([]Signal, error) {
 		retSignals = append(retSignals, sig)
 	}
 
+	val, err = DIMOIsLocationRedactedFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = errors.Join(errs, fmt.Errorf("failed to get 'DIMOIsLocationRedacted': %w", err))
+		}
+	} else {
+		sig := Signal{
+			Name:      "dimoIsLocationRedacted",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
 	val, err = ExteriorAirTemperatureFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -921,6 +937,31 @@ func DIMOAftermarketWPAStateFromV1Data(jsonData []byte) (ret string, err error) 
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'DIMOAftermarketWPAState'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// DIMOIsLocationRedactedFromData converts the given JSON data to a float64.
+func DIMOIsLocationRedactedFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.isRedacted")
+	if result.Exists() {
+		val, ok := result.Value().(bool)
+		if ok {
+			retVal, err := ToDIMOIsLocationRedacted0(val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.isRedacted': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.isRedacted' is not of type 'bool' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'DIMOIsLocationRedacted'", errNotFound)
 	}
 
 	return ret, errs

@@ -26,6 +26,8 @@ const (
 	FieldDIMOAftermarketSSID = "dimoAftermarketSSID"
 	// FieldDIMOAftermarketWPAState Indicate the current wpa state for the devices wifi
 	FieldDIMOAftermarketWPAState = "dimoAftermarketWPAState"
+	// FieldDIMOIsLocationRedacted Indicates if the latitude and longitude signals at the current timestamp have been redacted using a privacy zone.
+	FieldDIMOIsLocationRedacted = "dimoIsLocationRedacted"
 	// FieldExteriorAirTemperature Air temperature outside the vehicle.
 	FieldExteriorAirTemperature = "exteriorAirTemperature"
 	// FieldLowVoltageBatteryCurrentVoltage Current Voltage of the low voltage battery.
