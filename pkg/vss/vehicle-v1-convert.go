@@ -618,7 +618,7 @@ func ChassisAxleRow1WheelLeftTirePressureFromV1Data(jsonData []byte) (ret float6
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.tires.frontLeft")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToChassisAxleRow1WheelLeftTirePressure0(val)
@@ -643,7 +643,7 @@ func ChassisAxleRow1WheelRightTirePressureFromV1Data(jsonData []byte) (ret float
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.tires.frontRight")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToChassisAxleRow1WheelRightTirePressure0(val)
@@ -668,7 +668,7 @@ func ChassisAxleRow2WheelLeftTirePressureFromV1Data(jsonData []byte) (ret float6
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.tires.backLeft")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToChassisAxleRow2WheelLeftTirePressure0(val)
@@ -693,7 +693,7 @@ func ChassisAxleRow2WheelRightTirePressureFromV1Data(jsonData []byte) (ret float
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.tires.backRight")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToChassisAxleRow2WheelRightTirePressure0(val)
@@ -718,7 +718,7 @@ func CurrentLocationAltitudeFromV1Data(jsonData []byte) (ret float64, err error)
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.altitude")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToCurrentLocationAltitude0(val)
@@ -743,7 +743,7 @@ func CurrentLocationLatitudeFromV1Data(jsonData []byte) (ret float64, err error)
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.latitude")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToCurrentLocationLatitude0(val)
@@ -768,7 +768,7 @@ func CurrentLocationLongitudeFromV1Data(jsonData []byte) (ret float64, err error
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.longitude")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToCurrentLocationLongitude0(val)
@@ -793,7 +793,7 @@ func CurrentLocationTimestampFromV1Data(jsonData []byte) (ret float64, err error
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.timestamp")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(string)
 		if ok {
 			retVal, err := ToCurrentLocationTimestamp0(val)
@@ -806,7 +806,7 @@ func CurrentLocationTimestampFromV1Data(jsonData []byte) (ret float64, err error
 		}
 	}
 	result = gjson.GetBytes(jsonData, "data.timestamp")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToCurrentLocationTimestamp1(val)
@@ -831,7 +831,7 @@ func DIMOAftermarketHDOPFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.hdop")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToDIMOAftermarketHDOP0(val)
@@ -856,7 +856,7 @@ func DIMOAftermarketNSATFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.nsat")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToDIMOAftermarketNSAT0(val)
@@ -881,7 +881,7 @@ func DIMOAftermarketSSIDFromV1Data(jsonData []byte) (ret string, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.ssid")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(string)
 		if ok {
 			retVal, err := ToDIMOAftermarketSSID0(val)
@@ -906,7 +906,7 @@ func DIMOAftermarketWPAStateFromV1Data(jsonData []byte) (ret string, err error) 
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.wpa_state")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(string)
 		if ok {
 			retVal, err := ToDIMOAftermarketWPAState0(val)
@@ -931,7 +931,7 @@ func ExteriorAirTemperatureFromV1Data(jsonData []byte) (ret float64, err error) 
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.ambientTemp")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToExteriorAirTemperature0(val)
@@ -956,7 +956,7 @@ func LowVoltageBatteryCurrentVoltageFromV1Data(jsonData []byte) (ret float64, er
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.batteryVoltage")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToLowVoltageBatteryCurrentVoltage0(val)
@@ -981,7 +981,7 @@ func OBDBarometricPressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.barometricPressure")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToOBDBarometricPressure0(val)
@@ -1006,7 +1006,7 @@ func OBDEngineLoadFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.engineLoad")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToOBDEngineLoad0(val)
@@ -1031,7 +1031,7 @@ func OBDIntakeTempFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.intakeTemp")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToOBDIntakeTemp0(val)
@@ -1056,7 +1056,7 @@ func OBDRunTimeFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.runTime")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToOBDRunTime0(val)
@@ -1081,7 +1081,7 @@ func PowertrainCombustionEngineECTFromV1Data(jsonData []byte) (ret float64, err 
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.coolantTemp")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToPowertrainCombustionEngineECT0(val)
@@ -1106,7 +1106,7 @@ func PowertrainCombustionEngineEngineOilLevelFromV1Data(jsonData []byte) (ret st
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.oil")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToPowertrainCombustionEngineEngineOilLevel0(val)
@@ -1131,7 +1131,7 @@ func PowertrainCombustionEngineMAFFromV1Data(jsonData []byte) (ret float64, err 
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.maf")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToPowertrainCombustionEngineMAF0(val)
@@ -1156,7 +1156,7 @@ func PowertrainCombustionEngineSpeedFromV1Data(jsonData []byte) (ret float64, er
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.engineSpeed")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToPowertrainCombustionEngineSpeed0(val)
@@ -1181,7 +1181,7 @@ func PowertrainCombustionEngineTPSFromV1Data(jsonData []byte) (ret float64, err 
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.throttlePosition")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToPowertrainCombustionEngineTPS0(val)
@@ -1206,7 +1206,7 @@ func PowertrainFuelSystemAbsoluteLevelFromV1Data(jsonData []byte) (ret float64, 
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.fuelPercentRemaining")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToPowertrainFuelSystemAbsoluteLevel0(val)
@@ -1231,7 +1231,7 @@ func PowertrainFuelSystemSupportedFuelTypesFromV1Data(jsonData []byte) (ret stri
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.fuelType")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(string)
 		if ok {
 			retVal, err := ToPowertrainFuelSystemSupportedFuelTypes0(val)
@@ -1256,7 +1256,7 @@ func PowertrainRangeFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.range")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToPowertrainRange0(val)
@@ -1281,7 +1281,7 @@ func PowertrainTractionBatteryChargingChargeLimitFromV1Data(jsonData []byte) (re
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.chargeLimit")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToPowertrainTractionBatteryChargingChargeLimit0(val)
@@ -1306,7 +1306,7 @@ func PowertrainTractionBatteryChargingIsChargingFromV1Data(jsonData []byte) (ret
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.charging")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(bool)
 		if ok {
 			retVal, err := ToPowertrainTractionBatteryChargingIsCharging0(val)
@@ -1331,7 +1331,7 @@ func PowertrainTractionBatteryCurrentPowerFromV1Data(jsonData []byte) (ret float
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.charger.power")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToPowertrainTractionBatteryCurrentPower0(val)
@@ -1356,7 +1356,7 @@ func PowertrainTractionBatteryGrossCapacityFromV1Data(jsonData []byte) (ret floa
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.batteryCapacity")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToPowertrainTractionBatteryGrossCapacity0(val)
@@ -1381,7 +1381,7 @@ func PowertrainTractionBatteryStateOfChargeCurrentFromV1Data(jsonData []byte) (r
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.soc")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToPowertrainTractionBatteryStateOfChargeCurrent0(val)
@@ -1406,7 +1406,7 @@ func PowertrainTransmissionTravelledDistanceFromV1Data(jsonData []byte) (ret flo
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.odometer")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToPowertrainTransmissionTravelledDistance0(val)
@@ -1431,7 +1431,7 @@ func PowertrainTypeFromV1Data(jsonData []byte) (ret string, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.fuelType")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(string)
 		if ok {
 			retVal, err := ToPowertrainType0(val)
@@ -1456,7 +1456,7 @@ func SpeedFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.speed")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToSpeed0(val)
@@ -1481,7 +1481,7 @@ func VehicleIdentificationBrandFromV1Data(jsonData []byte) (ret string, err erro
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.make")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(string)
 		if ok {
 			retVal, err := ToVehicleIdentificationBrand0(val)
@@ -1506,7 +1506,7 @@ func VehicleIdentificationModelFromV1Data(jsonData []byte) (ret string, err erro
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.model")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(string)
 		if ok {
 			retVal, err := ToVehicleIdentificationModel0(val)
@@ -1531,7 +1531,7 @@ func VehicleIdentificationYearFromV1Data(jsonData []byte) (ret float64, err erro
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.year")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToVehicleIdentificationYear0(val)

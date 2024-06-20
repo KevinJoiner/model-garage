@@ -44,7 +44,7 @@ func {{ .GOName }}FromV1Data(jsonData []byte) (ret {{ .GOType }}, err error) {
 
 	{{- range $j, $conv := .Conversions }}
     result = gjson.GetBytes(jsonData, "data.{{ $conv.OriginalName }}")
-    if result.Exists() {
+    if result.Exists() && result.Value() != nil {
 		{{ if $conv.IsArray -}}
 		if result.IsArray() {
 			slice{{ $sig.GOName}} := make([]{{ $conv.OriginalType }}, len(result.Array()))
