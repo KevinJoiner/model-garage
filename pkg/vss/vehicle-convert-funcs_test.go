@@ -302,3 +302,44 @@ func TestToPowertrainTractionBatteryCurrentPower1(t *testing.T) {
 		})
 	}
 }
+
+func TestToDIMOIsLocationRedacted0(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name          string
+		input         bool
+		expected      float64
+		expectedError bool
+	}{
+		{
+			name:          "True to 1",
+			input:         true,
+			expected:      1,
+			expectedError: false,
+		},
+		{
+			name:          "False to 0",
+			input:         false,
+			expected:      0,
+			expectedError: false,
+		},
+	}
+
+	for i := range tests {
+		test := tests[i]
+		name := test.name
+		if name == "" {
+			name = fmt.Sprintf("Input: %v", test.input)
+		}
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			result, err := vss.ToDIMOIsLocationRedacted0(test.input)
+			if test.expectedError {
+				require.Error(t, err, "Expected an error but got none")
+			} else {
+				require.NoError(t, err, "Unexpected error")
+				require.Equal(t, test.expected, result, "Unexpected result")
+			}
+		})
+	}
+}
