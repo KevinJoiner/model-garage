@@ -947,7 +947,7 @@ func DIMOIsLocationRedactedFromV1Data(jsonData []byte) (ret float64, err error) 
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.isRedacted")
-	if result.Exists() {
+	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(bool)
 		if ok {
 			retVal, err := ToDIMOIsLocationRedacted0(val)
