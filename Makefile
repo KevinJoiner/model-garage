@@ -49,7 +49,7 @@ lint:
 format:
 	@golangci-lint run --fix
 
-migration: build
+migration:
 	migration -output=./pkg/migrations -package=migrations -filename="${name}"
 
 tools-golangci-lint:
