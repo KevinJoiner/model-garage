@@ -1,3 +1,4 @@
+// Package migrations provides the functionality for managing database migrations for the vss tables.
 package migrations
 
 import (

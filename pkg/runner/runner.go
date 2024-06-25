@@ -8,7 +8,6 @@ import (
 
 	"github.com/DIMO-Network/model-garage/internal/generator/convert"
 	"github.com/DIMO-Network/model-garage/internal/generator/custom"
-	"github.com/DIMO-Network/model-garage/internal/generator/migration"
 	"github.com/DIMO-Network/model-garage/internal/generator/model"
 	"github.com/DIMO-Network/model-garage/pkg/codegen"
 	"github.com/DIMO-Network/model-garage/pkg/schema"
@@ -23,8 +22,6 @@ const (
 	ConvertGenerator = "convert"
 	// CustomGenerator is a constant to run the custom generator.
 	CustomGenerator = "custom"
-	// MigrationGenerator is a constant to run the migration generator.
-	MigrationGenerator = "migration"
 )
 
 // Config is the configuration for the code generation tool.
@@ -33,7 +30,6 @@ type Config struct {
 	OutputDir   string
 	Custom      custom.Config
 	Convert     convert.Config
-	Migration   migration.Config
 }
 
 // Execute runs the code generation tool.
@@ -49,7 +45,6 @@ func Execute(vspecReader, definitionsReader io.Reader, generators []string, cfg 
 	case slices.Contains(generators, ModelGenerator):
 	case slices.Contains(generators, ConvertGenerator):
 	case slices.Contains(generators, CustomGenerator):
-	case slices.Contains(generators, MigrationGenerator):
 	default:
 		return fmt.Errorf("no generator selected")
 	}
@@ -87,11 +82,5 @@ func Execute(vspecReader, definitionsReader io.Reader, generators []string, cfg 
 		}
 	}
 
-	if slices.Contains(generators, AllGenerator) || slices.Contains(generators, MigrationGenerator) {
-		err = migration.Generate(tmplData, cfg.OutputDir, cfg.Migration)
-		if err != nil {
-			return fmt.Errorf("failed to generate migration file: %w", err)
-		}
-	}
 	return nil
 }
