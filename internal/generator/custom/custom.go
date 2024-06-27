@@ -10,6 +10,7 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/99designs/gqlgen/codegen/templates"
 	"github.com/DIMO-Network/model-garage/pkg/codegen"
 	"github.com/DIMO-Network/model-garage/pkg/schema"
 )
@@ -72,7 +73,8 @@ func Generate(tmplData *schema.TemplateData, outputDir string, cfg Config) error
 func createCustomFileTemplate(gqlmodelName, templateFile string) (*template.Template, error) {
 	tmplName := path.Base(templateFile)
 	tmpl, err := template.New(tmplName).Funcs(template.FuncMap{
-		"GQLModelName": func() string { return gqlmodelName },
+		"GQLModelName":       func() string { return gqlmodelName },
+		"GQLGenResolverName": func(jsonName string) string { return templates.ToGo(jsonName) },
 	}).ParseFiles(templateFile)
 	if err != nil {
 		return nil, fmt.Errorf("error parsing Custom file template: %w", err)
