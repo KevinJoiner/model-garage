@@ -74,7 +74,7 @@ func createCustomFileTemplate(gqlmodelName, templateFile string) (*template.Temp
 	tmplName := path.Base(templateFile)
 	tmpl, err := template.New(tmplName).Funcs(template.FuncMap{
 		"GQLModelName":       func() string { return gqlmodelName },
-		"GQLGenResolverName": func(jsonName string) string { return templates.ToGo(jsonName) },
+		"GQLGenResolverName": templates.ToGo,
 	}).ParseFiles(templateFile)
 	if err != nil {
 		return nil, fmt.Errorf("error parsing Custom file template: %w", err)
