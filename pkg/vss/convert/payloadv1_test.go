@@ -28,6 +28,7 @@ var (
 	fullInputJSON = `{
 		"id": "randomIDnumber",
 		"specversion": "1.0",
+		"dataschema": "test.status/v1",
 		"source": "dimo/integration/123",
 		"subject": "Vehicle123",
 		"time": "2022-01-01T12:34:56Z",
