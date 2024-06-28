@@ -21,7 +21,8 @@ func TestFullFromV2DataConversion(t *testing.T) {
 var fullV2InputJSON = `{
     "id": "2fHbFXPWzrVActDb7WqWCfqeiYe",
     "source": "dimo/integration/123",
-    "specversion": "2.0",
+    "specversion": "1.0",
+    "dataschema": "testschema/v2.0",
     "subject": "0x98D78d711C0ec544F6fb5d54fcf6559CF41546a9",
     "time": "2024-04-18T17:20:46.436008782Z",
     "type": "com.dimo.device.status",
