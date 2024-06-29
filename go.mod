@@ -3,6 +3,7 @@ module github.com/DIMO-Network/model-garage
 go 1.22.0
 
 require (
+	github.com/99designs/gqlgen v0.17.49
 	github.com/DIMO-Network/clickhouse-infra v0.0.0-20240625130842-c9eff0c8aabe
 	github.com/pressly/goose/v3 v3.20.0
 	github.com/stretchr/testify v1.9.0
@@ -81,5 +82,5 @@ require (
 	golang.org/x/sys v0.21.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240213162025-012b6fc9bca9 // indirect
 	google.golang.org/grpc v1.61.1 // indirect
-	google.golang.org/protobuf v1.33.0 // indirect
+	google.golang.org/protobuf v1.34.1 // indirect
 )
