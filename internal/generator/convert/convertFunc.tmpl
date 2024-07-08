@@ -1,9 +1,18 @@
 
-// {{ convertName .Signal }}{{ .ConvIdx }} converts data as {{ .Conversion.OriginalType }} to {{ .Signal.GOType }}.
-func {{ convertName .Signal }}{{ .ConvIdx }}(val {{ .Conversion.OriginalType }}) ({{ .Signal.GOType }}, error) {
-    {{ if eq .Conversion.OriginalType .Signal.GOType -}}
+{{ if .DocComment }}
+{{ .DocComment }}
+{{- else -}}
+// {{ .FuncName }} converts data from field '{{ .Conversion.OriginalName }}' of type {{ .Conversion.OriginalType }} to '{{ .Signal.Name }}' of type {{ .Signal.GOType }}.
+{{- end -}}
+{{ if .Body }}
+{{ .Body }}
+{{ else }}
+func {{ .FuncName }}(val {{ .Conversion.OriginalType }}) ({{ .Signal.GOType }}, error) {
+{{- if eq .Conversion.OriginalType .Signal.GOType -}}
     return val, nil
-    {{- else -}}
+{{- else -}}
     panic("not implemented")
-    {{- end }}
 }
+{{- end -}}
+{{- end -}}
+
