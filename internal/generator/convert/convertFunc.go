@@ -43,10 +43,9 @@ func createConvertFuncs(tmplData *schema.TemplateData, outputDir string, copyCom
 	return nil
 }
 
-// getConversionFunctions returns the signals that need conversion functions and test functions.
-func getConversionFunctions(signals []*schema.SignalInfo) ([]conversionData, []conversionData) {
+// getConversionFunctions returns the signals that need conversion functions.
+func getConversionFunctions(signals []*schema.SignalInfo) []conversionData {
 	var convertFunc []conversionData
-	var convertTestFunc []conversionData
 	for _, signal := range signals {
 		if len(signal.Conversions) == 0 {
 			continue
@@ -55,49 +54,13 @@ func getConversionFunctions(signals []*schema.SignalInfo) ([]conversionData, []c
 			funcName := convertName(signal) + strconv.Itoa(i)
 			convData := conversionData{Signal: signal, convIdx: i, FuncName: funcName}
 			convertFunc = append(convertFunc, convData)
-
-			funcName = convertTestName(signal) + strconv.Itoa(i)
-			convData = conversionData{Signal: signal, convIdx: i, FuncName: funcName}
-			convertTestFunc = append(convertTestFunc, convData)
-
 		}
 	}
-	return convertFunc, convertTestFunc
-}
-
-// createConvertTestFunc creates test functions for the conversion functions if they do not exist.
-func createConvertTestFunc(tmplData *schema.TemplateData, outputDir string, copyComments bool, convertTestFunc []conversionData, existingFuncs map[string]FunctionInfo) error {
-	convertTestFuncTemplate, err := createConvertTestFuncTemplate(tmplData.PackageName)
-	if err != nil {
-		return err
-	}
-
-	if len(convertTestFunc) == 0 {
-		return nil
-	}
-
-	convertTestFuncFileName := fmt.Sprintf(convertTestFuncFileNameFormat, strings.ToLower(tmplData.ModelName))
-	filePath := filepath.Join(outputDir, convertTestFuncFileName)
-	packageName := tmplData.PackageName + "_test"
-	err = writeConvertFuncs(convertTestFunc, existingFuncs, convertTestFuncTemplate, filePath, packageName, copyComments)
-	if err != nil {
-		return err
-	}
-	return nil
+	return convertFunc
 }
 
 func createConvertFuncTemplate() (*template.Template, error) {
 	tmpl, err := template.New("convertFuncTemplate").Parse(convertFuncTemplateStr)
-	if err != nil {
-		return nil, fmt.Errorf("error parsing go struct template: %w", err)
-	}
-	return tmpl, nil
-}
-
-func createConvertTestFuncTemplate(packageNameToTest string) (*template.Template, error) {
-	tmpl, err := template.New("convertTestFuncTemplate").Funcs(template.FuncMap{
-		"trimSuffix": strings.TrimSuffix,
-	}).Parse(convertTestsFuncTemplateStr)
 	if err != nil {
 		return nil, fmt.Errorf("error parsing go struct template: %w", err)
 	}
@@ -167,10 +130,6 @@ func addFileDeclarations(fset *token.FileSet, filePath string, declaredFunctions
 
 func convertName(signal *schema.SignalInfo) string {
 	return "To" + signal.GOName
-}
-
-func convertTestName(signal *schema.SignalInfo) string {
-	return "Test" + convertName(signal)
 }
 
 func writeConvertFuncs(convertFunc []conversionData, existingFuncs map[string]FunctionInfo, tmpl *template.Template, outputPath string, packageName string, copyComments bool) error {

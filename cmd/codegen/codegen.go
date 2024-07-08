@@ -23,7 +23,6 @@ func main() {
 	packageName := flag.String("package", "vspec", "Name of the package to generate")
 	generators := flag.String("generators", "all", "Comma separated list of generators to run. Options: all, model, convert, custom.")
 	// Convert flags
-	withTest := flag.Bool("convert.with-test", false, "Generate test functions for conversion functions. Default is true.")
 	copyComments := flag.Bool("convert.copy-comments", false, "Copy through comments on conversion functions. Default is false.")
 	// Custom flags
 	customOutFile := flag.String("custom.output-file", "", "Path of the generate gql file that is appened to the outputDir.")
@@ -68,7 +67,6 @@ func main() {
 			Format:       *customFormat,
 		},
 		Convert: convert.Config{
-			WithTest:     *withTest,
 			CopyComments: *copyComments,
 		},
 	}

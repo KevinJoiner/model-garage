@@ -24,8 +24,6 @@ const (
 
 	// convertFuncFileNameFormat is the name of the Go file that will contain the conversion functions.
 	convertFuncFileNameFormat = "%s-convert-funcs.go"
-	// convertTestFuncFileNameFormat is the name of the Go file that will contain the conversion test functions.
-	convertTestFuncFileNameFormat = "%s-convert-funcs_test.go"
 )
 
 type conversionData struct {
@@ -43,9 +41,6 @@ var convertV2TemplateStr string
 //go:embed convertFunc.tmpl
 var convertFuncTemplateStr string
 
-//go:embed convertTestFunc.tmpl
-var convertTestsFuncTemplateStr string
-
 const header = `package %s
 
 // This file is automatically populated with conversion functions for each field of the model struct.
@@ -55,8 +50,6 @@ const header = `package %s
 
 // Config is the configuration for the conversion generator.
 type Config struct {
-	// WithTest determines if test functions should be generated.
-	WithTest bool
 	// CopyComments determines if comments for the conversion functions should be copied through.
 	CopyComments bool
 }
@@ -94,18 +87,11 @@ func Generate(tmplData *schema.TemplateData, outputDir string, cfg Config) (err 
 		return fmt.Errorf("error getting declared functions: %w", err)
 	}
 
-	convertFunc, convertTestFunc := getConversionFunctions(tmplData.Signals)
+	convertFunc := getConversionFunctions(tmplData.Signals)
 
 	err = createConvertFuncs(tmplData, outputDir, cfg.CopyComments, convertFunc, existingFuncs)
 	if err != nil {
 		return err
-	}
-
-	if cfg.WithTest {
-		err = createConvertTestFunc(tmplData, outputDir, cfg.CopyComments, convertTestFunc, existingFuncs)
-		if err != nil {
-			return err
-		}
 	}
 
 	return nil
