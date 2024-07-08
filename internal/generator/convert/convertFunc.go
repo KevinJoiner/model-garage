@@ -52,10 +52,12 @@ func getConversionFunctions(signals []*schema.SignalInfo) ([]conversionData, []c
 			continue
 		}
 		for i := range signal.Conversions {
-			convData := conversionData{Signal: signal, convIdx: i}
+			funcName := convertName(signal) + strconv.Itoa(i)
+			convData := conversionData{Signal: signal, convIdx: i, FuncName: funcName}
 			convertFunc = append(convertFunc, convData)
 
-			convData = conversionData{Signal: signal, convIdx: i}
+			funcName = convertTestName(signal) + strconv.Itoa(i)
+			convData = conversionData{Signal: signal, convIdx: i, FuncName: funcName}
 			convertTestFunc = append(convertTestFunc, convData)
 
 		}
@@ -85,9 +87,7 @@ func createConvertTestFunc(tmplData *schema.TemplateData, outputDir string, copy
 }
 
 func createConvertFuncTemplate() (*template.Template, error) {
-	tmpl, err := template.New("convertFuncTemplate").Funcs(template.FuncMap{
-		"convertName": convertName,
-	}).Parse(convertFuncTemplateStr)
+	tmpl, err := template.New("convertFuncTemplate").Parse(convertFuncTemplateStr)
 	if err != nil {
 		return nil, fmt.Errorf("error parsing go struct template: %w", err)
 	}
@@ -96,8 +96,7 @@ func createConvertFuncTemplate() (*template.Template, error) {
 
 func createConvertTestFuncTemplate(packageNameToTest string) (*template.Template, error) {
 	tmpl, err := template.New("convertTestFuncTemplate").Funcs(template.FuncMap{
-		"convertName":     func(sig *schema.SignalInfo) string { return fmt.Sprintf("%s.%s", packageNameToTest, convertName(sig)) },
-		"convertTestName": convertTestName,
+		"trimSuffix": strings.TrimSuffix,
 	}).Parse(convertTestsFuncTemplateStr)
 	if err != nil {
 		return nil, fmt.Errorf("error parsing go struct template: %w", err)
@@ -179,13 +178,11 @@ func writeConvertFuncs(convertFunc []conversionData, existingFuncs map[string]Fu
 	convertBuff.WriteString(fmt.Sprintf(header, packageName))
 	// Add or update existing functions
 	slices.SortFunc(convertFunc, func(a, b conversionData) int {
-		if a.Signal.Name == b.Signal.Name {
-			return cmp.Compare(a.convIdx, b.convIdx)
-		}
-		return cmp.Compare(a.Signal.Name, b.Signal.Name)
+		return cmp.Compare(a.FuncName, b.FuncName)
 	})
+
 	for _, convData := range convertFunc {
-		funcName := convertName(convData.Signal) + strconv.Itoa(convData.convIdx)
+		funcName := convData.FuncName
 		var docComment, body string
 		if fnInfo, exists := existingFuncs[funcName]; exists {
 			body = string(fnInfo.Body)
@@ -196,7 +193,7 @@ func writeConvertFuncs(convertFunc []conversionData, existingFuncs map[string]Fu
 		err := tmpl.Execute(&convertBuff, funcTmplData{
 			PackageName: packageName,
 			Signal:      convData.Signal,
-			ConvIdx:     convData.convIdx,
+			FuncName:    funcName,
 			Conversion:  convData.Signal.Conversions[convData.convIdx],
 			DocComment:  docComment,
 			Body:        body,

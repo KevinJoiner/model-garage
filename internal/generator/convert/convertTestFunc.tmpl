@@ -1,5 +1,10 @@
-
-func {{ convertTestName .Signal }}{{ .ConvIdx }}(t *testing.T) {
+{{ if .Body }}
+{{ .Body }}
+{{ else }}
+{{ if .DocComment }}
+{{ .DocComment }}
+{{- end -}}
+func {{ .FuncName }} (t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -18,7 +23,7 @@ func {{ convertTestName .Signal }}{{ .ConvIdx }}(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := {{ convertName .Signal }}{{ .ConvIdx }}(test.input)
+			result, err := {{ trimSuffix .FuncName "Test" }}(test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -28,3 +33,4 @@ func {{ convertTestName .Signal }}{{ .ConvIdx }}(t *testing.T) {
 		})
 	}
 }
+{{- end -}}

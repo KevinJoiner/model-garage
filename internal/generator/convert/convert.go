@@ -29,8 +29,9 @@ const (
 )
 
 type conversionData struct {
-	Signal  *schema.SignalInfo
-	convIdx int
+	FuncName string
+	Signal   *schema.SignalInfo
+	convIdx  int
 }
 
 //go:embed convertv1.tmpl
@@ -62,7 +63,7 @@ type Config struct {
 
 type funcTmplData struct {
 	Signal      *schema.SignalInfo
-	ConvIdx     int
+	FuncName    string
 	PackageName string
 	Conversion  *schema.ConversionInfo
 	DocComment  string

@@ -2,12 +2,12 @@
 {{ if .DocComment }}
 {{ .DocComment }}
 {{- else -}}
-// {{ convertName .Signal }}{{ .ConvIdx }} converts data from field '{{ .Conversion.OriginalName }}' of type {{ .Conversion.OriginalType }} to '{{ .Signal.Name }}' of type {{ .Signal.GOType }}.
+// {{ .FuncName }} converts data from field '{{ .Conversion.OriginalName }}' of type {{ .Conversion.OriginalType }} to '{{ .Signal.Name }}' of type {{ .Signal.GOType }}.
 {{- end -}}
 {{ if .Body }}
 {{ .Body }}
 {{ else }}
-func {{ convertName .Signal }}{{ .ConvIdx }}(val {{ .Conversion.OriginalType }}) ({{ .Signal.GOType }}, error) {
+func {{ .FuncName }}(val {{ .Conversion.OriginalType }}) ({{ .Signal.GOType }}, error) {
 {{- if eq .Conversion.OriginalType .Signal.GOType -}}
     return val, nil
 {{- else -}}
