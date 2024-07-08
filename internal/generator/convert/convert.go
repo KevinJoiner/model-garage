@@ -56,6 +56,8 @@ const header = `package %s
 type Config struct {
 	// WithTest determines if test functions should be generated.
 	WithTest bool
+	// CopyComments determines if comments for the conversion functions should be copied through.
+	CopyComments bool
 }
 
 type funcTmplData struct {
@@ -63,6 +65,8 @@ type funcTmplData struct {
 	ConvIdx     int
 	PackageName string
 	Conversion  *schema.ConversionInfo
+	DocComment  string
+	Body        string
 }
 
 type convertTmplData struct {
@@ -89,15 +93,15 @@ func Generate(tmplData *schema.TemplateData, outputDir string, cfg Config) (err 
 		return fmt.Errorf("error getting declared functions: %w", err)
 	}
 
-	needsConvertFunc, needsConvertTestFunc := getConversionFunctions(tmplData.Signals, existingFuncs)
+	convertFunc, convertTestFunc := getConversionFunctions(tmplData.Signals)
 
-	err = createConvertFuncs(tmplData, outputDir, needsConvertFunc)
+	err = createConvertFuncs(tmplData, outputDir, cfg.CopyComments, convertFunc, existingFuncs)
 	if err != nil {
 		return err
 	}
 
 	if cfg.WithTest {
-		err = createConvertTestFunc(tmplData, outputDir, needsConvertTestFunc)
+		err = createConvertTestFunc(tmplData, outputDir, cfg.CopyComments, convertTestFunc, existingFuncs)
 		if err != nil {
 			return err
 		}
