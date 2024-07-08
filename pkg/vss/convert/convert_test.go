@@ -162,7 +162,7 @@ func TestVersionComparison(t *testing.T) {
 
 type testGetter struct{}
 
-func (t *testGetter) TokenIDFromSubject(ctx context.Context, subject string) (uint32, error) {
+func (t *testGetter) TokenIDFromSubject(_ context.Context, subject string) (uint32, error) {
 	id, err := strconv.Atoi(subject)
 	return uint32(id), err
 }

@@ -20,12 +20,12 @@ import (
 	"github.com/DIMO-Network/model-garage/pkg/schema"
 )
 
-type FunctionInfo struct {
+type functionInfo struct {
 	Comments string
 	Body     []byte
 }
 
-func createConvertFuncs(tmplData *schema.TemplateData, outputDir string, copyComments bool, convertFunc []conversionData, existingFuncs map[string]FunctionInfo) error {
+func createConvertFuncs(tmplData *schema.TemplateData, outputDir string, copyComments bool, convertFunc []conversionData, existingFuncs map[string]functionInfo) error {
 	convertFuncTemplate, err := createConvertFuncTemplate()
 	if err != nil {
 		return err
@@ -67,9 +67,9 @@ func createConvertFuncTemplate() (*template.Template, error) {
 	return tmpl, nil
 }
 
-func getDeclaredFunctions(outputPath string) (map[string]FunctionInfo, error) {
+func getDeclaredFunctions(outputPath string) (map[string]functionInfo, error) {
 	fset := token.NewFileSet()
-	declaredFunctions := make(map[string]FunctionInfo)
+	declaredFunctions := make(map[string]functionInfo)
 
 	list, err := os.ReadDir(outputPath)
 	if err != nil {
@@ -90,7 +90,7 @@ func getDeclaredFunctions(outputPath string) (map[string]FunctionInfo, error) {
 	return declaredFunctions, nil
 }
 
-func addFileDeclarations(fset *token.FileSet, filePath string, declaredFunctions map[string]FunctionInfo) error {
+func addFileDeclarations(fset *token.FileSet, filePath string, declaredFunctions map[string]functionInfo) error {
 	src, err := parser.ParseFile(fset, filePath, nil, parser.ParseComments)
 	if err != nil {
 		return fmt.Errorf("error parsing file: %w", err)
@@ -120,7 +120,7 @@ func addFileDeclarations(fset *token.FileSet, filePath string, declaredFunctions
 			return fmt.Errorf("error formating function: %w", err)
 		}
 
-		declaredFunctions[fn.Name.Name] = FunctionInfo{
+		declaredFunctions[fn.Name.Name] = functionInfo{
 			Comments: strings.Join(docComments, "\n"),
 			Body:     buf.Bytes(),
 		}
@@ -132,7 +132,7 @@ func convertName(signal *schema.SignalInfo) string {
 	return "To" + signal.GOName
 }
 
-func writeConvertFuncs(convertFunc []conversionData, existingFuncs map[string]FunctionInfo, tmpl *template.Template, outputPath string, packageName string, copyComments bool) error {
+func writeConvertFuncs(convertFunc []conversionData, existingFuncs map[string]functionInfo, tmpl *template.Template, outputPath string, packageName string, copyComments bool) error {
 	var convertBuff bytes.Buffer
 	convertBuff.WriteString(fmt.Sprintf(header, packageName))
 	// Add or update existing functions
