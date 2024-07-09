@@ -167,7 +167,7 @@
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
-- vspecName: Vehicle.Powertrain.FuelSystem.AbsoluteLevel
+- vspecName: Vehicle.Powertrain.FuelSystem.RelativeLevel
   goType: ""
   conversions:
     - originalName: fuelLevel # dataschema v2

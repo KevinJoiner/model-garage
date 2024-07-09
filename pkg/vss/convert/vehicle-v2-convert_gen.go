@@ -196,7 +196,7 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			ret = append(ret, sig)
 		}
 	case "fuelLevel":
-		val0, err := PowertrainFuelSystemAbsoluteLevelFromV2Data(originalDoc, valResult)
+		val0, err := PowertrainFuelSystemRelativeLevelFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'fuelLevel': %w", err))
 		} else {
@@ -204,13 +204,13 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "powertrainFuelSystemAbsoluteLevel",
+				Name:      "powertrainFuelSystemRelativeLevel",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
 	case "fuelPercentRemaining":
-		val0, err := PowertrainFuelSystemAbsoluteLevelFromV2Data(originalDoc, valResult)
+		val0, err := PowertrainFuelSystemRelativeLevelFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'fuelPercentRemaining': %w", err))
 		} else {
@@ -218,7 +218,7 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "powertrainFuelSystemAbsoluteLevel",
+				Name:      "powertrainFuelSystemRelativeLevel",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -1119,12 +1119,12 @@ func PowertrainCombustionEngineTPSFromV2Data(originalDoc []byte, result gjson.Re
 	return ret, errs
 }
 
-// PowertrainFuelSystemAbsoluteLevelFromData converts the given JSON data to a float64.
-func PowertrainFuelSystemAbsoluteLevelFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+// PowertrainFuelSystemRelativeLevelFromData converts the given JSON data to a float64.
+func PowertrainFuelSystemRelativeLevelFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToPowertrainFuelSystemAbsoluteLevel0(originalDoc, val0)
+		ret, err = ToPowertrainFuelSystemRelativeLevel0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -1134,7 +1134,7 @@ func PowertrainFuelSystemAbsoluteLevelFromV2Data(originalDoc []byte, result gjso
 	}
 	val1, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToPowertrainFuelSystemAbsoluteLevel1(originalDoc, val1)
+		ret, err = ToPowertrainFuelSystemRelativeLevel1(originalDoc, val1)
 		if err == nil {
 			return ret, nil
 		}

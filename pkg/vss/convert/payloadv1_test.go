@@ -102,7 +102,7 @@ var (
 		{TokenID: 123, Timestamp: ts, Name: "powertrainCombustionEngineEngineOilLevel", ValueString: "CRITICALLY_LOW", Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "powertrainCombustionEngineSpeed", ValueNumber: 3000, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "powertrainCombustionEngineTPS", ValueNumber: 50, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainFuelSystemAbsoluteLevel", ValueNumber: 60, Source: "dimo/integration/123"},
+		{TokenID: 123, Timestamp: ts, Name: "powertrainFuelSystemRelativeLevel", ValueNumber: 60, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "powertrainFuelSystemSupportedFuelTypes", ValueString: "GASOLINE", Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "powertrainRange", ValueNumber: 300, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "powertrainType", ValueString: "COMBUSTION", Source: "dimo/integration/123"},

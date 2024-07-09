@@ -234,17 +234,18 @@ func ToPowertrainCombustionEngineTPS0(originalDoc []byte, val float64) (float64,
 	return val, nil
 }
 
-// ToPowertrainFuelSystemAbsoluteLevel0 converts data from field 'fuelLevel' of type float64 to 'Vehicle.Powertrain.FuelSystem.AbsoluteLevel' of type float64.
-// Vehicle.Powertrain.FuelSystem.AbsoluteLevel: Current available fuel in the fuel tank expressed in liters.
-// Unit: 'l'
-func ToPowertrainFuelSystemAbsoluteLevel0(originalDoc []byte, val float64) (float64, error) {
+// ToPowertrainFuelSystemRelativeLevel0 converts data from field 'fuelLevel' of type float64 to 'Vehicle.Powertrain.FuelSystem.RelativeLevel' of type float64.
+// Vehicle.Powertrain.FuelSystem.RelativeLevel: Level in fuel tank as percent of capacity. 0 = empty. 100 = full.
+// Unit: 'percent' Min: '0' Max: '100'
+func ToPowertrainFuelSystemRelativeLevel0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
-// ToPowertrainFuelSystemAbsoluteLevel1 converts data from field 'fuelPercentRemaining' of type float64 to 'Vehicle.Powertrain.FuelSystem.AbsoluteLevel' of type float64.
-// Vehicle.Powertrain.FuelSystem.AbsoluteLevel: Current available fuel in the fuel tank expressed in liters.
-// Unit: 'l'
-func ToPowertrainFuelSystemAbsoluteLevel1(originalDoc []byte, val float64) (float64, error) {
+// ToPowertrainFuelSystemRelativeLevel1 converts data from field 'fuelPercentRemaining' of type float64 to 'Vehicle.Powertrain.FuelSystem.RelativeLevel' of type float64.
+// Vehicle.Powertrain.FuelSystem.RelativeLevel: Level in fuel tank as percent of capacity. 0 = empty. 100 = full.
+// Unit: 'percent' Min: '0' Max: '100'
+func ToPowertrainFuelSystemRelativeLevel1(originalDoc []byte, val float64) (float64, error) {
+	// fuelPercentRemaining comes in as a value between 0 and 1, convert to percentage.
 	return val * 100, nil
 }
 

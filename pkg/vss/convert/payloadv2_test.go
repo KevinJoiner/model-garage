@@ -161,5 +161,5 @@ var expectedV2Signals = []vss.Signal{
 	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "dimoAftermarketSSID", ValueNumber: 0, ValueString: "foo", Source: "dimo/integration/123"},
 	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "speed", ValueNumber: 39, ValueString: "", Source: "dimo/integration/123"},
 	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "powertrainCombustionEngineSpeed", ValueNumber: 2000, ValueString: "", Source: "dimo/integration/123"},
-	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "powertrainFuelSystemAbsoluteLevel", ValueNumber: 50, ValueString: "", Source: "dimo/integration/123"},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "powertrainFuelSystemRelativeLevel", ValueNumber: 50, ValueString: "", Source: "dimo/integration/123"},
 }

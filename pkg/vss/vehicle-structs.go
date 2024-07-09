@@ -50,8 +50,8 @@ const (
 	FieldPowertrainCombustionEngineSpeed = "powertrainCombustionEngineSpeed"
 	// FieldPowertrainCombustionEngineTPS Current throttle position.
 	FieldPowertrainCombustionEngineTPS = "powertrainCombustionEngineTPS"
-	// FieldPowertrainFuelSystemAbsoluteLevel Current available fuel in the fuel tank expressed in liters.
-	FieldPowertrainFuelSystemAbsoluteLevel = "powertrainFuelSystemAbsoluteLevel"
+	// FieldPowertrainFuelSystemRelativeLevel Level in fuel tank as percent of capacity. 0 = empty. 100 = full.
+	FieldPowertrainFuelSystemRelativeLevel = "powertrainFuelSystemRelativeLevel"
 	// FieldPowertrainFuelSystemSupportedFuelTypes High level information of fuel types supported
 	FieldPowertrainFuelSystemSupportedFuelTypes = "powertrainFuelSystemSupportedFuelTypes"
 	// FieldPowertrainRange Remaining range in meters using all energy sources available in the vehicle.

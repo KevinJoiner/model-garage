@@ -404,14 +404,14 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 		retSignals = append(retSignals, sig)
 	}
 
-	val, err = PowertrainFuelSystemAbsoluteLevelFromV1Data(jsonData)
+	val, err = PowertrainFuelSystemRelativeLevelFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainFuelSystemAbsoluteLevel': %w", err))
+			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainFuelSystemRelativeLevel': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
-			Name:      "powertrainFuelSystemAbsoluteLevel",
+			Name:      "powertrainFuelSystemRelativeLevel",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -1295,15 +1295,15 @@ func PowertrainCombustionEngineTPSFromV1Data(jsonData []byte) (ret float64, err 
 	return ret, errs
 }
 
-// PowertrainFuelSystemAbsoluteLevelFromV1Data converts the given JSON data to a float64.
-func PowertrainFuelSystemAbsoluteLevelFromV1Data(jsonData []byte) (ret float64, err error) {
+// PowertrainFuelSystemRelativeLevelFromV1Data converts the given JSON data to a float64.
+func PowertrainFuelSystemRelativeLevelFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.fuelLevel")
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToPowertrainFuelSystemAbsoluteLevel0(jsonData, val)
+			retVal, err := ToPowertrainFuelSystemRelativeLevel0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1316,7 +1316,7 @@ func PowertrainFuelSystemAbsoluteLevelFromV1Data(jsonData []byte) (ret float64, 
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToPowertrainFuelSystemAbsoluteLevel1(jsonData, val)
+			retVal, err := ToPowertrainFuelSystemRelativeLevel1(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1327,7 +1327,7 @@ func PowertrainFuelSystemAbsoluteLevelFromV1Data(jsonData []byte) (ret float64, 
 	}
 
 	if errs == nil {
-		return ret, fmt.Errorf("%w 'PowertrainFuelSystemAbsoluteLevel'", errNotFound)
+		return ret, fmt.Errorf("%w 'PowertrainFuelSystemRelativeLevel'", errNotFound)
 	}
 
 	return ret, errs
