@@ -72,7 +72,7 @@ var (
 			"fuelPercentRemaining": 0.6,
 			"fuelType": "Gasoline",
 			"range": 300.0,
-			"chargeLimit": 80.0,
+			"chargeLimit": 0.8,
 			"charging": true,
 			"batteryCapacity": 60.0,
 			"soc": 0.7,

@@ -277,7 +277,8 @@ func ToPowertrainRange0(originalDoc []byte, val float64) (float64, error) {
 // Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit: Target charge limit (state of charge) for battery.
 // Unit: 'percent' Min: '0' Max: '100'
 func ToPowertrainTractionBatteryChargingChargeLimit0(originalDoc []byte, val float64) (float64, error) {
-	return val, nil
+	// chargeLimit comes in as a value between 0 and 1, convert to percentage.
+	return val * 100, nil
 }
 
 // ToPowertrainTractionBatteryChargingIsCharging0 converts data from field 'charging' of type bool to 'Vehicle.Powertrain.TractionBattery.Charging.IsCharging' of type float64.
