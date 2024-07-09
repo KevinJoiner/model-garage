@@ -72,10 +72,4 @@ const (
 	FieldPowertrainType = "powertrainType"
 	// FieldSpeed Vehicle speed.
 	FieldSpeed = "speed"
-	// FieldVehicleIdentificationBrand Vehicle brand or manufacturer.
-	FieldVehicleIdentificationBrand = "vehicleIdentificationBrand"
-	// FieldVehicleIdentificationModel Vehicle model.
-	FieldVehicleIdentificationModel = "vehicleIdentificationModel"
-	// FieldVehicleIdentificationYear Model year of the vehicle.
-	FieldVehicleIdentificationYear = "vehicleIdentificationYear"
 )

@@ -334,34 +334,6 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
-	case "make":
-		val0, err := VehicleIdentificationBrandFromV2Data(originalDoc, valResult)
-		if err != nil {
-			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'make': %w", err))
-		} else {
-			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "vehicleIdentificationBrand",
-			}
-			sig.SetValue(val0)
-			ret = append(ret, sig)
-		}
-	case "model":
-		val0, err := VehicleIdentificationModelFromV2Data(originalDoc, valResult)
-		if err != nil {
-			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'model': %w", err))
-		} else {
-			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "vehicleIdentificationModel",
-			}
-			sig.SetValue(val0)
-			ret = append(ret, sig)
-		}
 	case "nsat":
 		val0, err := DIMOAftermarketNSATFromV2Data(originalDoc, valResult)
 		if err != nil {
@@ -637,20 +609,6 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
 				Name:      "dimoAftermarketWPAState",
-			}
-			sig.SetValue(val0)
-			ret = append(ret, sig)
-		}
-	case "year":
-		val0, err := VehicleIdentificationYearFromV2Data(originalDoc, valResult)
-		if err != nil {
-			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'year': %w", err))
-		} else {
-			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "vehicleIdentificationYear",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -1321,57 +1279,6 @@ func SpeedFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err 
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'speed': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'speed' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-	}
-
-	return ret, errs
-}
-
-// VehicleIdentificationBrandFromData converts the given JSON data to a string.
-func VehicleIdentificationBrandFromV2Data(originalDoc []byte, result gjson.Result) (ret string, err error) {
-	var errs error
-	val0, ok := result.Value().(string)
-	if ok {
-		ret, err = ToVehicleIdentificationBrand0(originalDoc, val0)
-		if err == nil {
-			return ret, nil
-		}
-		errs = errors.Join(errs, fmt.Errorf("failed to convert 'make': %w", err))
-	} else {
-		errs = errors.Join(errs, fmt.Errorf("%w, field 'make' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-	}
-
-	return ret, errs
-}
-
-// VehicleIdentificationModelFromData converts the given JSON data to a string.
-func VehicleIdentificationModelFromV2Data(originalDoc []byte, result gjson.Result) (ret string, err error) {
-	var errs error
-	val0, ok := result.Value().(string)
-	if ok {
-		ret, err = ToVehicleIdentificationModel0(originalDoc, val0)
-		if err == nil {
-			return ret, nil
-		}
-		errs = errors.Join(errs, fmt.Errorf("failed to convert 'model': %w", err))
-	} else {
-		errs = errors.Join(errs, fmt.Errorf("%w, field 'model' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-	}
-
-	return ret, errs
-}
-
-// VehicleIdentificationYearFromData converts the given JSON data to a float64.
-func VehicleIdentificationYearFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
-	var errs error
-	val0, ok := result.Value().(float64)
-	if ok {
-		ret, err = ToVehicleIdentificationYear0(originalDoc, val0)
-		if err == nil {
-			return ret, nil
-		}
-		errs = errors.Join(errs, fmt.Errorf("failed to convert 'year': %w", err))
-	} else {
-		errs = errors.Join(errs, fmt.Errorf("%w, field 'year' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
 
 	return ret, errs
