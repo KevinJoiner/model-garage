@@ -343,3 +343,57 @@ func TestToDIMOIsLocationRedacted0(t *testing.T) {
 		})
 	}
 }
+
+// Powertrain.Transmission.TravelledDistance
+func TestPowertrainTransmissionTravelledDistance(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name          string
+		input         float64
+		expected      float64
+		expectedError bool
+	}{
+		{
+			name:          "Positive Value",
+			input:         100.0,
+			expected:      100.0,
+			expectedError: false,
+		},
+		{
+			name:          "Zero Value",
+			input:         0.0,
+			expected:      0.0,
+			expectedError: false,
+		},
+		{
+			name:          "Negative Value",
+			input:         -100.0,
+			expected:      -100.0,
+			expectedError: false,
+		},
+		{
+			name:          "distance in meters",
+			input:         1000.0 * 1000,
+			expected:      1000.0,
+			expectedError: false,
+		},
+	}
+
+	for i := range tests {
+		test := tests[i]
+		name := test.name
+		if name == "" {
+			name = fmt.Sprintf("Input: %v", test.input)
+		}
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			result, err := convert.ToPowertrainTransmissionTravelledDistance0(nil, test.input)
+			if test.expectedError {
+				require.Error(t, err, "Expected an error but got none")
+			} else {
+				require.NoError(t, err, "Unexpected error")
+				require.Equal(t, test.expected, result, "Unexpected result")
+			}
+		})
+	}
+}

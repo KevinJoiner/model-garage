@@ -1,7 +1,9 @@
 package convert_test
 
 import (
+	"cmp"
 	"context"
+	"slices"
 	"testing"
 	"time"
 
@@ -21,7 +23,15 @@ func TestFullFromDataConversion(t *testing.T) {
 	getter := &tokenGetter{}
 	actualSignals, err := convert.SignalsFromPayload(context.Background(), getter, []byte(fullInputJSON))
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
-	require.ElementsMatchf(t, expectedSignals, actualSignals, "converted vehicle does not match expected vehicle")
+
+	// sort the signals so diffs are easier to read
+	sortFunc := func(a, b vss.Signal) int {
+		return cmp.Compare(a.Name, b.Name)
+	}
+	slices.SortFunc(expectedSignals, sortFunc)
+	slices.SortFunc(actualSignals, sortFunc)
+
+	require.Equal(t, expectedSignals, actualSignals, "converted vehicle does not match expected vehicle")
 }
 
 var (
@@ -52,14 +62,14 @@ var (
 			"ambientTemp": 25.0,
 			"batteryVoltage": 12.5,
 			"barometricPressure": 1013.25,
-			"engineLoad": 75.0,
+			"engineLoad": 0.75,
 			"intakeTemp": 30.0,
 			"runTime": 1200.0,
 			"coolantTemp": 90.0,
 			"oil": 0.10,
 			"engineSpeed": 3000.0,
-			"throttlePosition": 50.0,
-			"fuelPercentRemaining": 60.0,
+			"throttlePosition": 0.50,
+			"fuelPercentRemaining": 0.6,
 			"fuelType": "Gasoline",
 			"range": 300.0,
 			"chargeLimit": 80.0,

@@ -3,9 +3,9 @@ package convert
 
 import (
 	"fmt"
+	"math"
 	"time"
 
-	"github.com/tidwall/gjson"
 	"golang.org/x/mod/semver"
 )
 
@@ -98,9 +98,21 @@ func ToDIMOAftermarketSSID0(originalDoc []byte, val string) (string, error) {
 	return val, nil
 }
 
+// ToDIMOAftermarketSSID1 converts data from field 'wifi.ssid' of type string to 'Vehicle.DIMO.Aftermarket.SSID' of type string.
+// Vehicle.DIMO.Aftermarket.SSID: Service Set Ientifier for the wifi.
+func ToDIMOAftermarketSSID1(originalDoc []byte, val string) (string, error) {
+	return val, nil
+}
+
 // ToDIMOAftermarketWPAState0 converts data from field 'wpa_state' of type string to 'Vehicle.DIMO.Aftermarket.WPAState' of type string.
 // Vehicle.DIMO.Aftermarket.WPAState: Indicate the current wpa state for the devices wifi
 func ToDIMOAftermarketWPAState0(originalDoc []byte, val string) (string, error) {
+	return val, nil
+}
+
+// ToDIMOAftermarketWPAState1 converts data from field 'wifi.wpaState' of type string to 'Vehicle.DIMO.Aftermarket.WPAState' of type string.
+// Vehicle.DIMO.Aftermarket.WPAState: Indicate the current wpa state for the devices wifi
+func ToDIMOAftermarketWPAState1(originalDoc []byte, val string) (string, error) {
 	return val, nil
 }
 
@@ -113,10 +125,17 @@ func ToDIMOIsLocationRedacted0(originalDoc []byte, val bool) (float64, error) {
 	return 0, nil
 }
 
-// ToExteriorAirTemperature0 converts data from field 'ambientTemp' of type float64 to 'Vehicle.Exterior.AirTemperature' of type float64.
+// ToExteriorAirTemperature0 converts data from field 'ambientAirTemp' of type float64 to 'Vehicle.Exterior.AirTemperature' of type float64.
 // Vehicle.Exterior.AirTemperature: Air temperature outside the vehicle.
 // Unit: 'celsius'
 func ToExteriorAirTemperature0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToExteriorAirTemperature1 converts data from field 'ambientTemp' of type float64 to 'Vehicle.Exterior.AirTemperature' of type float64.
+// Vehicle.Exterior.AirTemperature: Air temperature outside the vehicle.
+// Unit: 'celsius'
+func ToExteriorAirTemperature1(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
@@ -138,8 +157,8 @@ func ToOBDBarometricPressure0(originalDoc []byte, val float64) (float64, error) 
 // Vehicle.OBD.EngineLoad: PID 04 - Engine load in percent - 0 = no load, 100 = full load
 // Unit: 'percent'
 func ToOBDEngineLoad0(originalDoc []byte, val float64) (float64, error) {
-	version := gjson.GetBytes(originalDoc, "dataschema").String()
-	if semver.Compare("v1", version) == 0 || semver.Compare(StatusV1Converted, version) == 0 {
+	version := GetSchemaVersion(originalDoc)
+	if semver.Compare(StatusV1, version) == 0 || semver.Compare(StatusV1Converted, version) == 0 {
 		return val * 100, nil
 	}
 	return val, nil
@@ -190,10 +209,17 @@ func ToPowertrainCombustionEngineMAF0(originalDoc []byte, val float64) (float64,
 	return val, nil
 }
 
-// ToPowertrainCombustionEngineSpeed0 converts data from field 'engineSpeed' of type float64 to 'Vehicle.Powertrain.CombustionEngine.Speed' of type float64.
+// ToPowertrainCombustionEngineSpeed0 converts data from field 'rpm' of type float64 to 'Vehicle.Powertrain.CombustionEngine.Speed' of type float64.
 // Vehicle.Powertrain.CombustionEngine.Speed: Engine speed measured as rotations per minute.
 // Unit: 'rpm'
 func ToPowertrainCombustionEngineSpeed0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToPowertrainCombustionEngineSpeed1 converts data from field 'engineSpeed' of type float64 to 'Vehicle.Powertrain.CombustionEngine.Speed' of type float64.
+// Vehicle.Powertrain.CombustionEngine.Speed: Engine speed measured as rotations per minute.
+// Unit: 'rpm'
+func ToPowertrainCombustionEngineSpeed1(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
@@ -201,14 +227,25 @@ func ToPowertrainCombustionEngineSpeed0(originalDoc []byte, val float64) (float6
 // Vehicle.Powertrain.CombustionEngine.TPS: Current throttle position.
 // Unit: 'percent'  Max: '100'
 func ToPowertrainCombustionEngineTPS0(originalDoc []byte, val float64) (float64, error) {
+	schemaVersion := GetSchemaVersion(originalDoc)
+	if semver.Compare(StatusV1, schemaVersion) == 0 || semver.Compare(StatusV1Converted, schemaVersion) == 0 {
+		return val * 100, nil
+	}
 	return val, nil
 }
 
-// ToPowertrainFuelSystemAbsoluteLevel0 converts data from field 'fuelPercentRemaining' of type float64 to 'Vehicle.Powertrain.FuelSystem.AbsoluteLevel' of type float64.
+// ToPowertrainFuelSystemAbsoluteLevel0 converts data from field 'fuelLevel' of type float64 to 'Vehicle.Powertrain.FuelSystem.AbsoluteLevel' of type float64.
 // Vehicle.Powertrain.FuelSystem.AbsoluteLevel: Current available fuel in the fuel tank expressed in liters.
 // Unit: 'l'
 func ToPowertrainFuelSystemAbsoluteLevel0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
+}
+
+// ToPowertrainFuelSystemAbsoluteLevel1 converts data from field 'fuelPercentRemaining' of type float64 to 'Vehicle.Powertrain.FuelSystem.AbsoluteLevel' of type float64.
+// Vehicle.Powertrain.FuelSystem.AbsoluteLevel: Current available fuel in the fuel tank expressed in liters.
+// Unit: 'l'
+func ToPowertrainFuelSystemAbsoluteLevel1(originalDoc []byte, val float64) (float64, error) {
+	return val * 100, nil
 }
 
 // ToPowertrainFuelSystemSupportedFuelTypes0 converts data from field 'fuelType' of type string to 'Vehicle.Powertrain.FuelSystem.SupportedFuelTypes' of type string.
@@ -277,6 +314,12 @@ func ToPowertrainTractionBatteryStateOfChargeCurrent0(originalDoc []byte, val fl
 // Vehicle.Powertrain.Transmission.TravelledDistance: Odometer reading, total distance travelled during the lifetime of the transmission.
 // Unit: 'km'
 func ToPowertrainTransmissionTravelledDistance0(originalDoc []byte, val float64) (float64, error) {
+	if val > 999999 {
+		// if the value is absurdly high, it is likely in meters, convert to kilometers
+		// TODO: find a reliable way to determine if the value is in meters
+		const metersToKilometers = 1000
+		return math.Round(val / metersToKilometers), nil
+	}
 	return val, nil
 }
 
@@ -291,10 +334,17 @@ func ToPowertrainType0(originalDoc []byte, val string) (string, error) {
 	return "COMBUSTION", nil
 }
 
-// ToSpeed0 converts data from field 'speed' of type float64 to 'Vehicle.Speed' of type float64.
+// ToSpeed0 converts data from field 'vehicleSpeed' of type float64 to 'Vehicle.Speed' of type float64.
 // Vehicle.Speed: Vehicle speed.
 // Unit: 'km/h'
 func ToSpeed0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToSpeed1 converts data from field 'speed' of type float64 to 'Vehicle.Speed' of type float64.
+// Vehicle.Speed: Vehicle speed.
+// Unit: 'km/h'
+func ToSpeed1(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 

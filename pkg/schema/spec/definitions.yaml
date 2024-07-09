@@ -84,7 +84,10 @@
 - vspecName: Vehicle.Exterior.AirTemperature
   goType: ""
   conversions:
-    - originalName: ambientTemp
+    - originalName: ambientAirTemp # dataschema v2
+      originalType: float64
+      isArray: false
+    - originalName: ambientTemp # dataschema v1
       originalType: float64
       isArray: false
   requiredPrivileges:
@@ -148,7 +151,10 @@
 - vspecName: Vehicle.Powertrain.CombustionEngine.Speed
   goType: ""
   conversions:
-    - originalName: engineSpeed
+    - originalName: rpm # dataschema v2
+      originalType: float64
+      isArray: false
+    - originalName: engineSpeed # dataschema v1
       originalType: float64
       isArray: false
   requiredPrivileges:
@@ -164,7 +170,10 @@
 - vspecName: Vehicle.Powertrain.FuelSystem.AbsoluteLevel
   goType: ""
   conversions:
-    - originalName: fuelPercentRemaining
+    - originalName: fuelLevel # dataschema v2
+      originalType: float64
+      isArray: false
+    - originalName: fuelPercentRemaining # dataschema v1
       originalType: float64
       isArray: false
   requiredPrivileges:
@@ -245,7 +254,10 @@
 - vspecName: Vehicle.Speed
   goType: ""
   conversions:
-    - originalName: speed
+    - originalName: vehicleSpeed # dataschema v2
+      originalType: float64
+      isArray: false
+    - originalName: speed # dataschema v1
       originalType: float64
       isArray: false
   requiredPrivileges:
@@ -301,7 +313,10 @@
 - vspecName: Vehicle.DIMO.Aftermarket.WPAState
   goType: ""
   conversions:
-    - originalName: wpa_state
+    - originalName: wpa_state # dataschema v2
+      originalType: string
+      isArray: false
+    - originalName: wifi.wpaState # dataschema v1
       originalType: string
       isArray: false
   requiredPrivileges:
@@ -309,7 +324,10 @@
 - vspecName: Vehicle.DIMO.Aftermarket.SSID
   goType: ""
   conversions:
-    - originalName: ssid
+    - originalName: ssid # dataschema v2
+      originalType: string
+      isArray: false
+    - originalName: wifi.ssid # dataschema v1
       originalType: string
       isArray: false
   requiredPrivileges:

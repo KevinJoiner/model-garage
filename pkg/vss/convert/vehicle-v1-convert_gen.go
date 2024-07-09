@@ -910,6 +910,19 @@ func DIMOAftermarketSSIDFromV1Data(jsonData []byte) (ret string, err error) {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.ssid' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.wifi.ssid")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToDIMOAftermarketSSID1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.wifi.ssid': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.wifi.ssid' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'DIMOAftermarketSSID'", errNotFound)
@@ -933,6 +946,19 @@ func DIMOAftermarketWPAStateFromV1Data(jsonData []byte) (ret string, err error) 
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.wpa_state': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.wpa_state' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.wifi.wpaState")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToDIMOAftermarketWPAState1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.wifi.wpaState': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.wifi.wpaState' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
@@ -972,11 +998,24 @@ func DIMOIsLocationRedactedFromV1Data(jsonData []byte) (ret float64, err error) 
 func ExteriorAirTemperatureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.ambientTemp")
+	result = gjson.GetBytes(jsonData, "data.ambientAirTemp")
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToExteriorAirTemperature0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.ambientAirTemp': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.ambientAirTemp' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.ambientTemp")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToExteriorAirTemperature1(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1197,11 +1236,24 @@ func PowertrainCombustionEngineMAFFromV1Data(jsonData []byte) (ret float64, err 
 func PowertrainCombustionEngineSpeedFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.engineSpeed")
+	result = gjson.GetBytes(jsonData, "data.rpm")
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToPowertrainCombustionEngineSpeed0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.rpm': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.rpm' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.engineSpeed")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainCombustionEngineSpeed1(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1247,11 +1299,24 @@ func PowertrainCombustionEngineTPSFromV1Data(jsonData []byte) (ret float64, err 
 func PowertrainFuelSystemAbsoluteLevelFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.fuelPercentRemaining")
+	result = gjson.GetBytes(jsonData, "data.fuelLevel")
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToPowertrainFuelSystemAbsoluteLevel0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.fuelLevel': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.fuelLevel' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.fuelPercentRemaining")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainFuelSystemAbsoluteLevel1(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1497,11 +1562,24 @@ func PowertrainTypeFromV1Data(jsonData []byte) (ret string, err error) {
 func SpeedFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.speed")
+	result = gjson.GetBytes(jsonData, "data.vehicleSpeed")
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
 			retVal, err := ToSpeed0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.vehicleSpeed': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.vehicleSpeed' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.speed")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToSpeed1(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
