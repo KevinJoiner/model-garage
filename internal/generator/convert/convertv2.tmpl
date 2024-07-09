@@ -12,7 +12,7 @@ func IsInvalidType(err error) bool {
 
 
 // SignalsFromData converts the given JSON data to a slice of signals.
-func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Result) ([]Signal, error) {
+func SignalsFromV2Data(originalDoc []byte, baseSignal Signal, signalName string, sigResult gjson.Result) ([]Signal, error) {
 	valResult := sigResult.Get("value")
 	if !valResult.Exists() {
 		return nil, errors.New("value field not found")
@@ -23,7 +23,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 	{{- range $i, $convs := .Conversions }}
 	case "{{ (index $convs 0).Conversion.OriginalName }}":
 		{{- range $j, $conv := $convs }}
-		val{{ $j }}, err := {{ $conv.Signal.GOName }}FromV2Data(valResult)
+		val{{ $j }}, err := {{ $conv.Signal.GOName }}FromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert '{{ $conv.Conversion.OriginalName }}': %w", err))
 		} else {
@@ -47,7 +47,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 
 {{- range $i, $sig := .Signals }}
 // {{ $sig.GOName }}FromData converts the given JSON data to a {{ $sig.GOType }}.
-func {{ .GOName }}FromV2Data(result gjson.Result) (ret {{ .BaseGoType }}, err error) {
+func {{ .GOName }}FromV2Data(originalDoc []byte, result gjson.Result) (ret {{ .BaseGoType }}, err error) {
     var errs error
 	{{- range $j, $conv := .Conversions }}
 	{{ if $conv.IsArray -}}
@@ -61,7 +61,7 @@ func {{ .GOName }}FromV2Data(result gjson.Result) (ret {{ .BaseGoType }}, err er
 				errs = errors.Join(errs, fmt.Errorf("%w, field '{{ $conv.OriginalName }}' array element %d is not of type '{{ $conv.OriginalType }}' got '%v' of type '%T'", errInvalidType, i, res.Value(), res.Value()))
 			}
 		}
-		ret, err = {{ convertName $sig }}{{ $j }}(slice{{ $sig.GOName}})
+		ret, err = {{ convertName $sig }}{{ $j }}(originalDoc, slice{{ $sig.GOName}})
 		if err == nil {
 			return ret, nil
 		}
@@ -72,7 +72,7 @@ func {{ .GOName }}FromV2Data(result gjson.Result) (ret {{ .BaseGoType }}, err er
 	{{ else -}}
 	val{{ $j }}, ok := result.Value().({{ $conv.OriginalType }})
 	if ok {
-		ret, err = {{ convertName $sig }}{{ $j }}(val{{ $j }})
+		ret, err = {{ convertName $sig }}{{ $j }}(originalDoc, val{{ $j }})
 		if err == nil {
 			return ret, nil
 		}

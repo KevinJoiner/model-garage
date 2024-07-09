@@ -113,7 +113,7 @@ func addFileDeclarations(fset *token.FileSet, filePath string, declaredFunctions
 		// Capture function body including comments
 		var buf bytes.Buffer
 		err = format.Node(&buf, fset, &printer.CommentedNode{
-			Node:     fn,
+			Node:     fn.Body,
 			Comments: src.Comments,
 		})
 		if err != nil {

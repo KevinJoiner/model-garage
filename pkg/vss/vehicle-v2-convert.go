@@ -17,7 +17,7 @@ func IsInvalidType(err error) bool {
 }
 
 // SignalsFromData converts the given JSON data to a slice of signals.
-func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Result) ([]Signal, error) {
+func SignalsFromV2Data(originalDoc []byte, baseSignal Signal, signalName string, sigResult gjson.Result) ([]Signal, error) {
 	valResult := sigResult.Get("value")
 	if !valResult.Exists() {
 		return nil, errors.New("value field not found")
@@ -26,7 +26,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 	var retErrs error
 	switch signalName {
 	case "altitude":
-		val0, err := CurrentLocationAltitudeFromV2Data(valResult)
+		val0, err := CurrentLocationAltitudeFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'altitude': %w", err))
 		} else {
@@ -40,7 +40,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "ambientTemp":
-		val0, err := ExteriorAirTemperatureFromV2Data(valResult)
+		val0, err := ExteriorAirTemperatureFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'ambientTemp': %w", err))
 		} else {
@@ -54,7 +54,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "barometricPressure":
-		val0, err := OBDBarometricPressureFromV2Data(valResult)
+		val0, err := OBDBarometricPressureFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'barometricPressure': %w", err))
 		} else {
@@ -68,7 +68,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "batteryCapacity":
-		val0, err := PowertrainTractionBatteryGrossCapacityFromV2Data(valResult)
+		val0, err := PowertrainTractionBatteryGrossCapacityFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'batteryCapacity': %w", err))
 		} else {
@@ -82,7 +82,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "batteryVoltage":
-		val0, err := LowVoltageBatteryCurrentVoltageFromV2Data(valResult)
+		val0, err := LowVoltageBatteryCurrentVoltageFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'batteryVoltage': %w", err))
 		} else {
@@ -96,7 +96,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "chargeLimit":
-		val0, err := PowertrainTractionBatteryChargingChargeLimitFromV2Data(valResult)
+		val0, err := PowertrainTractionBatteryChargingChargeLimitFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'chargeLimit': %w", err))
 		} else {
@@ -110,7 +110,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "charger.power":
-		val0, err := PowertrainTractionBatteryCurrentPowerFromV2Data(valResult)
+		val0, err := PowertrainTractionBatteryCurrentPowerFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'charger.power': %w", err))
 		} else {
@@ -124,7 +124,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "charging":
-		val0, err := PowertrainTractionBatteryChargingIsChargingFromV2Data(valResult)
+		val0, err := PowertrainTractionBatteryChargingIsChargingFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'charging': %w", err))
 		} else {
@@ -138,7 +138,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "coolantTemp":
-		val0, err := PowertrainCombustionEngineECTFromV2Data(valResult)
+		val0, err := PowertrainCombustionEngineECTFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'coolantTemp': %w", err))
 		} else {
@@ -152,7 +152,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "engineLoad":
-		val0, err := OBDEngineLoadFromV2Data(valResult)
+		val0, err := OBDEngineLoadFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'engineLoad': %w", err))
 		} else {
@@ -166,7 +166,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "engineSpeed":
-		val0, err := PowertrainCombustionEngineSpeedFromV2Data(valResult)
+		val0, err := PowertrainCombustionEngineSpeedFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'engineSpeed': %w", err))
 		} else {
@@ -180,7 +180,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "fuelPercentRemaining":
-		val0, err := PowertrainFuelSystemAbsoluteLevelFromV2Data(valResult)
+		val0, err := PowertrainFuelSystemAbsoluteLevelFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'fuelPercentRemaining': %w", err))
 		} else {
@@ -194,7 +194,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "fuelType":
-		val0, err := PowertrainFuelSystemSupportedFuelTypesFromV2Data(valResult)
+		val0, err := PowertrainFuelSystemSupportedFuelTypesFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'fuelType': %w", err))
 		} else {
@@ -207,7 +207,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
-		val1, err := PowertrainTypeFromV2Data(valResult)
+		val1, err := PowertrainTypeFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'fuelType': %w", err))
 		} else {
@@ -221,7 +221,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "hdop":
-		val0, err := DIMOAftermarketHDOPFromV2Data(valResult)
+		val0, err := DIMOAftermarketHDOPFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'hdop': %w", err))
 		} else {
@@ -235,7 +235,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "intakeTemp":
-		val0, err := OBDIntakeTempFromV2Data(valResult)
+		val0, err := OBDIntakeTempFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'intakeTemp': %w", err))
 		} else {
@@ -249,7 +249,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "isRedacted":
-		val0, err := DIMOIsLocationRedactedFromV2Data(valResult)
+		val0, err := DIMOIsLocationRedactedFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'isRedacted': %w", err))
 		} else {
@@ -263,7 +263,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "latitude":
-		val0, err := CurrentLocationLatitudeFromV2Data(valResult)
+		val0, err := CurrentLocationLatitudeFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'latitude': %w", err))
 		} else {
@@ -277,7 +277,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "longitude":
-		val0, err := CurrentLocationLongitudeFromV2Data(valResult)
+		val0, err := CurrentLocationLongitudeFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'longitude': %w", err))
 		} else {
@@ -291,7 +291,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "maf":
-		val0, err := PowertrainCombustionEngineMAFFromV2Data(valResult)
+		val0, err := PowertrainCombustionEngineMAFFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'maf': %w", err))
 		} else {
@@ -305,7 +305,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "make":
-		val0, err := VehicleIdentificationBrandFromV2Data(valResult)
+		val0, err := VehicleIdentificationBrandFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'make': %w", err))
 		} else {
@@ -319,7 +319,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "model":
-		val0, err := VehicleIdentificationModelFromV2Data(valResult)
+		val0, err := VehicleIdentificationModelFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'model': %w", err))
 		} else {
@@ -333,7 +333,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "nsat":
-		val0, err := DIMOAftermarketNSATFromV2Data(valResult)
+		val0, err := DIMOAftermarketNSATFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'nsat': %w", err))
 		} else {
@@ -347,7 +347,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "odometer":
-		val0, err := PowertrainTransmissionTravelledDistanceFromV2Data(valResult)
+		val0, err := PowertrainTransmissionTravelledDistanceFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'odometer': %w", err))
 		} else {
@@ -361,7 +361,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "oil":
-		val0, err := PowertrainCombustionEngineEngineOilLevelFromV2Data(valResult)
+		val0, err := PowertrainCombustionEngineEngineOilLevelFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'oil': %w", err))
 		} else {
@@ -375,7 +375,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "range":
-		val0, err := PowertrainRangeFromV2Data(valResult)
+		val0, err := PowertrainRangeFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'range': %w", err))
 		} else {
@@ -389,7 +389,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "runTime":
-		val0, err := OBDRunTimeFromV2Data(valResult)
+		val0, err := OBDRunTimeFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'runTime': %w", err))
 		} else {
@@ -403,7 +403,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "soc":
-		val0, err := PowertrainTractionBatteryStateOfChargeCurrentFromV2Data(valResult)
+		val0, err := PowertrainTractionBatteryStateOfChargeCurrentFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'soc': %w", err))
 		} else {
@@ -417,7 +417,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "speed":
-		val0, err := SpeedFromV2Data(valResult)
+		val0, err := SpeedFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'speed': %w", err))
 		} else {
@@ -431,7 +431,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "ssid":
-		val0, err := DIMOAftermarketSSIDFromV2Data(valResult)
+		val0, err := DIMOAftermarketSSIDFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'ssid': %w", err))
 		} else {
@@ -445,7 +445,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "throttlePosition":
-		val0, err := PowertrainCombustionEngineTPSFromV2Data(valResult)
+		val0, err := PowertrainCombustionEngineTPSFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'throttlePosition': %w", err))
 		} else {
@@ -459,7 +459,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "timestamp":
-		val0, err := CurrentLocationTimestampFromV2Data(valResult)
+		val0, err := CurrentLocationTimestampFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'timestamp': %w", err))
 		} else {
@@ -472,7 +472,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
-		val1, err := CurrentLocationTimestampFromV2Data(valResult)
+		val1, err := CurrentLocationTimestampFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'timestamp': %w", err))
 		} else {
@@ -486,7 +486,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "tires.backLeft":
-		val0, err := ChassisAxleRow2WheelLeftTirePressureFromV2Data(valResult)
+		val0, err := ChassisAxleRow2WheelLeftTirePressureFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'tires.backLeft': %w", err))
 		} else {
@@ -500,7 +500,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "tires.backRight":
-		val0, err := ChassisAxleRow2WheelRightTirePressureFromV2Data(valResult)
+		val0, err := ChassisAxleRow2WheelRightTirePressureFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'tires.backRight': %w", err))
 		} else {
@@ -514,7 +514,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "tires.frontLeft":
-		val0, err := ChassisAxleRow1WheelLeftTirePressureFromV2Data(valResult)
+		val0, err := ChassisAxleRow1WheelLeftTirePressureFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'tires.frontLeft': %w", err))
 		} else {
@@ -528,7 +528,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "tires.frontRight":
-		val0, err := ChassisAxleRow1WheelRightTirePressureFromV2Data(valResult)
+		val0, err := ChassisAxleRow1WheelRightTirePressureFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'tires.frontRight': %w", err))
 		} else {
@@ -542,7 +542,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "wpa_state":
-		val0, err := DIMOAftermarketWPAStateFromV2Data(valResult)
+		val0, err := DIMOAftermarketWPAStateFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'wpa_state': %w", err))
 		} else {
@@ -556,7 +556,7 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 			ret = append(ret, sig)
 		}
 	case "year":
-		val0, err := VehicleIdentificationYearFromV2Data(valResult)
+		val0, err := VehicleIdentificationYearFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'year': %w", err))
 		} else {
@@ -576,11 +576,11 @@ func SignalsFromV2Data(baseSignal Signal, signalName string, sigResult gjson.Res
 }
 
 // ChassisAxleRow1WheelLeftTirePressureFromData converts the given JSON data to a float64.
-func ChassisAxleRow1WheelLeftTirePressureFromV2Data(result gjson.Result) (ret float64, err error) {
+func ChassisAxleRow1WheelLeftTirePressureFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToChassisAxleRow1WheelLeftTirePressure0(val0)
+		ret, err = ToChassisAxleRow1WheelLeftTirePressure0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -593,11 +593,11 @@ func ChassisAxleRow1WheelLeftTirePressureFromV2Data(result gjson.Result) (ret fl
 }
 
 // ChassisAxleRow1WheelRightTirePressureFromData converts the given JSON data to a float64.
-func ChassisAxleRow1WheelRightTirePressureFromV2Data(result gjson.Result) (ret float64, err error) {
+func ChassisAxleRow1WheelRightTirePressureFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToChassisAxleRow1WheelRightTirePressure0(val0)
+		ret, err = ToChassisAxleRow1WheelRightTirePressure0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -610,11 +610,11 @@ func ChassisAxleRow1WheelRightTirePressureFromV2Data(result gjson.Result) (ret f
 }
 
 // ChassisAxleRow2WheelLeftTirePressureFromData converts the given JSON data to a float64.
-func ChassisAxleRow2WheelLeftTirePressureFromV2Data(result gjson.Result) (ret float64, err error) {
+func ChassisAxleRow2WheelLeftTirePressureFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToChassisAxleRow2WheelLeftTirePressure0(val0)
+		ret, err = ToChassisAxleRow2WheelLeftTirePressure0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -627,11 +627,11 @@ func ChassisAxleRow2WheelLeftTirePressureFromV2Data(result gjson.Result) (ret fl
 }
 
 // ChassisAxleRow2WheelRightTirePressureFromData converts the given JSON data to a float64.
-func ChassisAxleRow2WheelRightTirePressureFromV2Data(result gjson.Result) (ret float64, err error) {
+func ChassisAxleRow2WheelRightTirePressureFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToChassisAxleRow2WheelRightTirePressure0(val0)
+		ret, err = ToChassisAxleRow2WheelRightTirePressure0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -644,11 +644,11 @@ func ChassisAxleRow2WheelRightTirePressureFromV2Data(result gjson.Result) (ret f
 }
 
 // CurrentLocationAltitudeFromData converts the given JSON data to a float64.
-func CurrentLocationAltitudeFromV2Data(result gjson.Result) (ret float64, err error) {
+func CurrentLocationAltitudeFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToCurrentLocationAltitude0(val0)
+		ret, err = ToCurrentLocationAltitude0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -661,11 +661,11 @@ func CurrentLocationAltitudeFromV2Data(result gjson.Result) (ret float64, err er
 }
 
 // CurrentLocationLatitudeFromData converts the given JSON data to a float64.
-func CurrentLocationLatitudeFromV2Data(result gjson.Result) (ret float64, err error) {
+func CurrentLocationLatitudeFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToCurrentLocationLatitude0(val0)
+		ret, err = ToCurrentLocationLatitude0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -678,11 +678,11 @@ func CurrentLocationLatitudeFromV2Data(result gjson.Result) (ret float64, err er
 }
 
 // CurrentLocationLongitudeFromData converts the given JSON data to a float64.
-func CurrentLocationLongitudeFromV2Data(result gjson.Result) (ret float64, err error) {
+func CurrentLocationLongitudeFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToCurrentLocationLongitude0(val0)
+		ret, err = ToCurrentLocationLongitude0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -695,11 +695,11 @@ func CurrentLocationLongitudeFromV2Data(result gjson.Result) (ret float64, err e
 }
 
 // CurrentLocationTimestampFromData converts the given JSON data to a float64.
-func CurrentLocationTimestampFromV2Data(result gjson.Result) (ret float64, err error) {
+func CurrentLocationTimestampFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(string)
 	if ok {
-		ret, err = ToCurrentLocationTimestamp0(val0)
+		ret, err = ToCurrentLocationTimestamp0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -709,7 +709,7 @@ func CurrentLocationTimestampFromV2Data(result gjson.Result) (ret float64, err e
 	}
 	val1, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToCurrentLocationTimestamp1(val1)
+		ret, err = ToCurrentLocationTimestamp1(originalDoc, val1)
 		if err == nil {
 			return ret, nil
 		}
@@ -722,11 +722,11 @@ func CurrentLocationTimestampFromV2Data(result gjson.Result) (ret float64, err e
 }
 
 // DIMOAftermarketHDOPFromData converts the given JSON data to a float64.
-func DIMOAftermarketHDOPFromV2Data(result gjson.Result) (ret float64, err error) {
+func DIMOAftermarketHDOPFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToDIMOAftermarketHDOP0(val0)
+		ret, err = ToDIMOAftermarketHDOP0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -739,11 +739,11 @@ func DIMOAftermarketHDOPFromV2Data(result gjson.Result) (ret float64, err error)
 }
 
 // DIMOAftermarketNSATFromData converts the given JSON data to a float64.
-func DIMOAftermarketNSATFromV2Data(result gjson.Result) (ret float64, err error) {
+func DIMOAftermarketNSATFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToDIMOAftermarketNSAT0(val0)
+		ret, err = ToDIMOAftermarketNSAT0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -756,11 +756,11 @@ func DIMOAftermarketNSATFromV2Data(result gjson.Result) (ret float64, err error)
 }
 
 // DIMOAftermarketSSIDFromData converts the given JSON data to a string.
-func DIMOAftermarketSSIDFromV2Data(result gjson.Result) (ret string, err error) {
+func DIMOAftermarketSSIDFromV2Data(originalDoc []byte, result gjson.Result) (ret string, err error) {
 	var errs error
 	val0, ok := result.Value().(string)
 	if ok {
-		ret, err = ToDIMOAftermarketSSID0(val0)
+		ret, err = ToDIMOAftermarketSSID0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -773,11 +773,11 @@ func DIMOAftermarketSSIDFromV2Data(result gjson.Result) (ret string, err error) 
 }
 
 // DIMOAftermarketWPAStateFromData converts the given JSON data to a string.
-func DIMOAftermarketWPAStateFromV2Data(result gjson.Result) (ret string, err error) {
+func DIMOAftermarketWPAStateFromV2Data(originalDoc []byte, result gjson.Result) (ret string, err error) {
 	var errs error
 	val0, ok := result.Value().(string)
 	if ok {
-		ret, err = ToDIMOAftermarketWPAState0(val0)
+		ret, err = ToDIMOAftermarketWPAState0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -790,11 +790,11 @@ func DIMOAftermarketWPAStateFromV2Data(result gjson.Result) (ret string, err err
 }
 
 // DIMOIsLocationRedactedFromData converts the given JSON data to a float64.
-func DIMOIsLocationRedactedFromV2Data(result gjson.Result) (ret float64, err error) {
+func DIMOIsLocationRedactedFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(bool)
 	if ok {
-		ret, err = ToDIMOIsLocationRedacted0(val0)
+		ret, err = ToDIMOIsLocationRedacted0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -807,11 +807,11 @@ func DIMOIsLocationRedactedFromV2Data(result gjson.Result) (ret float64, err err
 }
 
 // ExteriorAirTemperatureFromData converts the given JSON data to a float64.
-func ExteriorAirTemperatureFromV2Data(result gjson.Result) (ret float64, err error) {
+func ExteriorAirTemperatureFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToExteriorAirTemperature0(val0)
+		ret, err = ToExteriorAirTemperature0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -824,11 +824,11 @@ func ExteriorAirTemperatureFromV2Data(result gjson.Result) (ret float64, err err
 }
 
 // LowVoltageBatteryCurrentVoltageFromData converts the given JSON data to a float64.
-func LowVoltageBatteryCurrentVoltageFromV2Data(result gjson.Result) (ret float64, err error) {
+func LowVoltageBatteryCurrentVoltageFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToLowVoltageBatteryCurrentVoltage0(val0)
+		ret, err = ToLowVoltageBatteryCurrentVoltage0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -841,11 +841,11 @@ func LowVoltageBatteryCurrentVoltageFromV2Data(result gjson.Result) (ret float64
 }
 
 // OBDBarometricPressureFromData converts the given JSON data to a float64.
-func OBDBarometricPressureFromV2Data(result gjson.Result) (ret float64, err error) {
+func OBDBarometricPressureFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToOBDBarometricPressure0(val0)
+		ret, err = ToOBDBarometricPressure0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -858,11 +858,11 @@ func OBDBarometricPressureFromV2Data(result gjson.Result) (ret float64, err erro
 }
 
 // OBDEngineLoadFromData converts the given JSON data to a float64.
-func OBDEngineLoadFromV2Data(result gjson.Result) (ret float64, err error) {
+func OBDEngineLoadFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToOBDEngineLoad0(val0)
+		ret, err = ToOBDEngineLoad0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -875,11 +875,11 @@ func OBDEngineLoadFromV2Data(result gjson.Result) (ret float64, err error) {
 }
 
 // OBDIntakeTempFromData converts the given JSON data to a float64.
-func OBDIntakeTempFromV2Data(result gjson.Result) (ret float64, err error) {
+func OBDIntakeTempFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToOBDIntakeTemp0(val0)
+		ret, err = ToOBDIntakeTemp0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -892,11 +892,11 @@ func OBDIntakeTempFromV2Data(result gjson.Result) (ret float64, err error) {
 }
 
 // OBDRunTimeFromData converts the given JSON data to a float64.
-func OBDRunTimeFromV2Data(result gjson.Result) (ret float64, err error) {
+func OBDRunTimeFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToOBDRunTime0(val0)
+		ret, err = ToOBDRunTime0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -909,11 +909,11 @@ func OBDRunTimeFromV2Data(result gjson.Result) (ret float64, err error) {
 }
 
 // PowertrainCombustionEngineECTFromData converts the given JSON data to a float64.
-func PowertrainCombustionEngineECTFromV2Data(result gjson.Result) (ret float64, err error) {
+func PowertrainCombustionEngineECTFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToPowertrainCombustionEngineECT0(val0)
+		ret, err = ToPowertrainCombustionEngineECT0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -926,11 +926,11 @@ func PowertrainCombustionEngineECTFromV2Data(result gjson.Result) (ret float64, 
 }
 
 // PowertrainCombustionEngineEngineOilLevelFromData converts the given JSON data to a string.
-func PowertrainCombustionEngineEngineOilLevelFromV2Data(result gjson.Result) (ret string, err error) {
+func PowertrainCombustionEngineEngineOilLevelFromV2Data(originalDoc []byte, result gjson.Result) (ret string, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToPowertrainCombustionEngineEngineOilLevel0(val0)
+		ret, err = ToPowertrainCombustionEngineEngineOilLevel0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -943,11 +943,11 @@ func PowertrainCombustionEngineEngineOilLevelFromV2Data(result gjson.Result) (re
 }
 
 // PowertrainCombustionEngineMAFFromData converts the given JSON data to a float64.
-func PowertrainCombustionEngineMAFFromV2Data(result gjson.Result) (ret float64, err error) {
+func PowertrainCombustionEngineMAFFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToPowertrainCombustionEngineMAF0(val0)
+		ret, err = ToPowertrainCombustionEngineMAF0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -960,11 +960,11 @@ func PowertrainCombustionEngineMAFFromV2Data(result gjson.Result) (ret float64, 
 }
 
 // PowertrainCombustionEngineSpeedFromData converts the given JSON data to a float64.
-func PowertrainCombustionEngineSpeedFromV2Data(result gjson.Result) (ret float64, err error) {
+func PowertrainCombustionEngineSpeedFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToPowertrainCombustionEngineSpeed0(val0)
+		ret, err = ToPowertrainCombustionEngineSpeed0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -977,11 +977,11 @@ func PowertrainCombustionEngineSpeedFromV2Data(result gjson.Result) (ret float64
 }
 
 // PowertrainCombustionEngineTPSFromData converts the given JSON data to a float64.
-func PowertrainCombustionEngineTPSFromV2Data(result gjson.Result) (ret float64, err error) {
+func PowertrainCombustionEngineTPSFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToPowertrainCombustionEngineTPS0(val0)
+		ret, err = ToPowertrainCombustionEngineTPS0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -994,11 +994,11 @@ func PowertrainCombustionEngineTPSFromV2Data(result gjson.Result) (ret float64, 
 }
 
 // PowertrainFuelSystemAbsoluteLevelFromData converts the given JSON data to a float64.
-func PowertrainFuelSystemAbsoluteLevelFromV2Data(result gjson.Result) (ret float64, err error) {
+func PowertrainFuelSystemAbsoluteLevelFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToPowertrainFuelSystemAbsoluteLevel0(val0)
+		ret, err = ToPowertrainFuelSystemAbsoluteLevel0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -1011,11 +1011,11 @@ func PowertrainFuelSystemAbsoluteLevelFromV2Data(result gjson.Result) (ret float
 }
 
 // PowertrainFuelSystemSupportedFuelTypesFromData converts the given JSON data to a string.
-func PowertrainFuelSystemSupportedFuelTypesFromV2Data(result gjson.Result) (ret string, err error) {
+func PowertrainFuelSystemSupportedFuelTypesFromV2Data(originalDoc []byte, result gjson.Result) (ret string, err error) {
 	var errs error
 	val0, ok := result.Value().(string)
 	if ok {
-		ret, err = ToPowertrainFuelSystemSupportedFuelTypes0(val0)
+		ret, err = ToPowertrainFuelSystemSupportedFuelTypes0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -1028,11 +1028,11 @@ func PowertrainFuelSystemSupportedFuelTypesFromV2Data(result gjson.Result) (ret 
 }
 
 // PowertrainRangeFromData converts the given JSON data to a float64.
-func PowertrainRangeFromV2Data(result gjson.Result) (ret float64, err error) {
+func PowertrainRangeFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToPowertrainRange0(val0)
+		ret, err = ToPowertrainRange0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -1045,11 +1045,11 @@ func PowertrainRangeFromV2Data(result gjson.Result) (ret float64, err error) {
 }
 
 // PowertrainTractionBatteryChargingChargeLimitFromData converts the given JSON data to a float64.
-func PowertrainTractionBatteryChargingChargeLimitFromV2Data(result gjson.Result) (ret float64, err error) {
+func PowertrainTractionBatteryChargingChargeLimitFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToPowertrainTractionBatteryChargingChargeLimit0(val0)
+		ret, err = ToPowertrainTractionBatteryChargingChargeLimit0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -1062,11 +1062,11 @@ func PowertrainTractionBatteryChargingChargeLimitFromV2Data(result gjson.Result)
 }
 
 // PowertrainTractionBatteryChargingIsChargingFromData converts the given JSON data to a float64.
-func PowertrainTractionBatteryChargingIsChargingFromV2Data(result gjson.Result) (ret float64, err error) {
+func PowertrainTractionBatteryChargingIsChargingFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(bool)
 	if ok {
-		ret, err = ToPowertrainTractionBatteryChargingIsCharging0(val0)
+		ret, err = ToPowertrainTractionBatteryChargingIsCharging0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -1079,11 +1079,11 @@ func PowertrainTractionBatteryChargingIsChargingFromV2Data(result gjson.Result) 
 }
 
 // PowertrainTractionBatteryCurrentPowerFromData converts the given JSON data to a float64.
-func PowertrainTractionBatteryCurrentPowerFromV2Data(result gjson.Result) (ret float64, err error) {
+func PowertrainTractionBatteryCurrentPowerFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToPowertrainTractionBatteryCurrentPower0(val0)
+		ret, err = ToPowertrainTractionBatteryCurrentPower0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -1096,11 +1096,11 @@ func PowertrainTractionBatteryCurrentPowerFromV2Data(result gjson.Result) (ret f
 }
 
 // PowertrainTractionBatteryGrossCapacityFromData converts the given JSON data to a float64.
-func PowertrainTractionBatteryGrossCapacityFromV2Data(result gjson.Result) (ret float64, err error) {
+func PowertrainTractionBatteryGrossCapacityFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToPowertrainTractionBatteryGrossCapacity0(val0)
+		ret, err = ToPowertrainTractionBatteryGrossCapacity0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -1113,11 +1113,11 @@ func PowertrainTractionBatteryGrossCapacityFromV2Data(result gjson.Result) (ret 
 }
 
 // PowertrainTractionBatteryStateOfChargeCurrentFromData converts the given JSON data to a float64.
-func PowertrainTractionBatteryStateOfChargeCurrentFromV2Data(result gjson.Result) (ret float64, err error) {
+func PowertrainTractionBatteryStateOfChargeCurrentFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToPowertrainTractionBatteryStateOfChargeCurrent0(val0)
+		ret, err = ToPowertrainTractionBatteryStateOfChargeCurrent0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -1130,11 +1130,11 @@ func PowertrainTractionBatteryStateOfChargeCurrentFromV2Data(result gjson.Result
 }
 
 // PowertrainTransmissionTravelledDistanceFromData converts the given JSON data to a float64.
-func PowertrainTransmissionTravelledDistanceFromV2Data(result gjson.Result) (ret float64, err error) {
+func PowertrainTransmissionTravelledDistanceFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToPowertrainTransmissionTravelledDistance0(val0)
+		ret, err = ToPowertrainTransmissionTravelledDistance0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -1147,11 +1147,11 @@ func PowertrainTransmissionTravelledDistanceFromV2Data(result gjson.Result) (ret
 }
 
 // PowertrainTypeFromData converts the given JSON data to a string.
-func PowertrainTypeFromV2Data(result gjson.Result) (ret string, err error) {
+func PowertrainTypeFromV2Data(originalDoc []byte, result gjson.Result) (ret string, err error) {
 	var errs error
 	val0, ok := result.Value().(string)
 	if ok {
-		ret, err = ToPowertrainType0(val0)
+		ret, err = ToPowertrainType0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -1164,11 +1164,11 @@ func PowertrainTypeFromV2Data(result gjson.Result) (ret string, err error) {
 }
 
 // SpeedFromData converts the given JSON data to a float64.
-func SpeedFromV2Data(result gjson.Result) (ret float64, err error) {
+func SpeedFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToSpeed0(val0)
+		ret, err = ToSpeed0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -1181,11 +1181,11 @@ func SpeedFromV2Data(result gjson.Result) (ret float64, err error) {
 }
 
 // VehicleIdentificationBrandFromData converts the given JSON data to a string.
-func VehicleIdentificationBrandFromV2Data(result gjson.Result) (ret string, err error) {
+func VehicleIdentificationBrandFromV2Data(originalDoc []byte, result gjson.Result) (ret string, err error) {
 	var errs error
 	val0, ok := result.Value().(string)
 	if ok {
-		ret, err = ToVehicleIdentificationBrand0(val0)
+		ret, err = ToVehicleIdentificationBrand0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -1198,11 +1198,11 @@ func VehicleIdentificationBrandFromV2Data(result gjson.Result) (ret string, err 
 }
 
 // VehicleIdentificationModelFromData converts the given JSON data to a string.
-func VehicleIdentificationModelFromV2Data(result gjson.Result) (ret string, err error) {
+func VehicleIdentificationModelFromV2Data(originalDoc []byte, result gjson.Result) (ret string, err error) {
 	var errs error
 	val0, ok := result.Value().(string)
 	if ok {
-		ret, err = ToVehicleIdentificationModel0(val0)
+		ret, err = ToVehicleIdentificationModel0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}
@@ -1215,11 +1215,11 @@ func VehicleIdentificationModelFromV2Data(result gjson.Result) (ret string, err 
 }
 
 // VehicleIdentificationYearFromData converts the given JSON data to a float64.
-func VehicleIdentificationYearFromV2Data(result gjson.Result) (ret float64, err error) {
+func VehicleIdentificationYearFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToVehicleIdentificationYear0(val0)
+		ret, err = ToVehicleIdentificationYear0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}

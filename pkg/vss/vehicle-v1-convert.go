@@ -629,7 +629,7 @@ func SignalsFromV1Data(baseSignal Signal, jsonData []byte) ([]Signal, error) {
 	return retSignals, errs
 }
 
-// ChassisAxleRow1WheelLeftTirePressureFromData converts the given JSON data to a float64.
+// ChassisAxleRow1WheelLeftTirePressureFromV1Data converts the given JSON data to a float64.
 func ChassisAxleRow1WheelLeftTirePressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -637,7 +637,7 @@ func ChassisAxleRow1WheelLeftTirePressureFromV1Data(jsonData []byte) (ret float6
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToChassisAxleRow1WheelLeftTirePressure0(val)
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -654,7 +654,7 @@ func ChassisAxleRow1WheelLeftTirePressureFromV1Data(jsonData []byte) (ret float6
 	return ret, errs
 }
 
-// ChassisAxleRow1WheelRightTirePressureFromData converts the given JSON data to a float64.
+// ChassisAxleRow1WheelRightTirePressureFromV1Data converts the given JSON data to a float64.
 func ChassisAxleRow1WheelRightTirePressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -662,7 +662,7 @@ func ChassisAxleRow1WheelRightTirePressureFromV1Data(jsonData []byte) (ret float
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToChassisAxleRow1WheelRightTirePressure0(val)
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -679,7 +679,7 @@ func ChassisAxleRow1WheelRightTirePressureFromV1Data(jsonData []byte) (ret float
 	return ret, errs
 }
 
-// ChassisAxleRow2WheelLeftTirePressureFromData converts the given JSON data to a float64.
+// ChassisAxleRow2WheelLeftTirePressureFromV1Data converts the given JSON data to a float64.
 func ChassisAxleRow2WheelLeftTirePressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -687,7 +687,7 @@ func ChassisAxleRow2WheelLeftTirePressureFromV1Data(jsonData []byte) (ret float6
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToChassisAxleRow2WheelLeftTirePressure0(val)
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -704,7 +704,7 @@ func ChassisAxleRow2WheelLeftTirePressureFromV1Data(jsonData []byte) (ret float6
 	return ret, errs
 }
 
-// ChassisAxleRow2WheelRightTirePressureFromData converts the given JSON data to a float64.
+// ChassisAxleRow2WheelRightTirePressureFromV1Data converts the given JSON data to a float64.
 func ChassisAxleRow2WheelRightTirePressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -712,7 +712,7 @@ func ChassisAxleRow2WheelRightTirePressureFromV1Data(jsonData []byte) (ret float
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToChassisAxleRow2WheelRightTirePressure0(val)
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -729,7 +729,7 @@ func ChassisAxleRow2WheelRightTirePressureFromV1Data(jsonData []byte) (ret float
 	return ret, errs
 }
 
-// CurrentLocationAltitudeFromData converts the given JSON data to a float64.
+// CurrentLocationAltitudeFromV1Data converts the given JSON data to a float64.
 func CurrentLocationAltitudeFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -737,7 +737,7 @@ func CurrentLocationAltitudeFromV1Data(jsonData []byte) (ret float64, err error)
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToCurrentLocationAltitude0(val)
+			retVal, err := ToCurrentLocationAltitude0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -754,7 +754,7 @@ func CurrentLocationAltitudeFromV1Data(jsonData []byte) (ret float64, err error)
 	return ret, errs
 }
 
-// CurrentLocationLatitudeFromData converts the given JSON data to a float64.
+// CurrentLocationLatitudeFromV1Data converts the given JSON data to a float64.
 func CurrentLocationLatitudeFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -762,7 +762,7 @@ func CurrentLocationLatitudeFromV1Data(jsonData []byte) (ret float64, err error)
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToCurrentLocationLatitude0(val)
+			retVal, err := ToCurrentLocationLatitude0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -779,7 +779,7 @@ func CurrentLocationLatitudeFromV1Data(jsonData []byte) (ret float64, err error)
 	return ret, errs
 }
 
-// CurrentLocationLongitudeFromData converts the given JSON data to a float64.
+// CurrentLocationLongitudeFromV1Data converts the given JSON data to a float64.
 func CurrentLocationLongitudeFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -787,7 +787,7 @@ func CurrentLocationLongitudeFromV1Data(jsonData []byte) (ret float64, err error
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToCurrentLocationLongitude0(val)
+			retVal, err := ToCurrentLocationLongitude0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -804,7 +804,7 @@ func CurrentLocationLongitudeFromV1Data(jsonData []byte) (ret float64, err error
 	return ret, errs
 }
 
-// CurrentLocationTimestampFromData converts the given JSON data to a float64.
+// CurrentLocationTimestampFromV1Data converts the given JSON data to a float64.
 func CurrentLocationTimestampFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -812,7 +812,7 @@ func CurrentLocationTimestampFromV1Data(jsonData []byte) (ret float64, err error
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(string)
 		if ok {
-			retVal, err := ToCurrentLocationTimestamp0(val)
+			retVal, err := ToCurrentLocationTimestamp0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -825,7 +825,7 @@ func CurrentLocationTimestampFromV1Data(jsonData []byte) (ret float64, err error
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToCurrentLocationTimestamp1(val)
+			retVal, err := ToCurrentLocationTimestamp1(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -842,7 +842,7 @@ func CurrentLocationTimestampFromV1Data(jsonData []byte) (ret float64, err error
 	return ret, errs
 }
 
-// DIMOAftermarketHDOPFromData converts the given JSON data to a float64.
+// DIMOAftermarketHDOPFromV1Data converts the given JSON data to a float64.
 func DIMOAftermarketHDOPFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -850,7 +850,7 @@ func DIMOAftermarketHDOPFromV1Data(jsonData []byte) (ret float64, err error) {
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToDIMOAftermarketHDOP0(val)
+			retVal, err := ToDIMOAftermarketHDOP0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -867,7 +867,7 @@ func DIMOAftermarketHDOPFromV1Data(jsonData []byte) (ret float64, err error) {
 	return ret, errs
 }
 
-// DIMOAftermarketNSATFromData converts the given JSON data to a float64.
+// DIMOAftermarketNSATFromV1Data converts the given JSON data to a float64.
 func DIMOAftermarketNSATFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -875,7 +875,7 @@ func DIMOAftermarketNSATFromV1Data(jsonData []byte) (ret float64, err error) {
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToDIMOAftermarketNSAT0(val)
+			retVal, err := ToDIMOAftermarketNSAT0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -892,7 +892,7 @@ func DIMOAftermarketNSATFromV1Data(jsonData []byte) (ret float64, err error) {
 	return ret, errs
 }
 
-// DIMOAftermarketSSIDFromData converts the given JSON data to a string.
+// DIMOAftermarketSSIDFromV1Data converts the given JSON data to a string.
 func DIMOAftermarketSSIDFromV1Data(jsonData []byte) (ret string, err error) {
 	var errs error
 	var result gjson.Result
@@ -900,7 +900,7 @@ func DIMOAftermarketSSIDFromV1Data(jsonData []byte) (ret string, err error) {
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(string)
 		if ok {
-			retVal, err := ToDIMOAftermarketSSID0(val)
+			retVal, err := ToDIMOAftermarketSSID0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -917,7 +917,7 @@ func DIMOAftermarketSSIDFromV1Data(jsonData []byte) (ret string, err error) {
 	return ret, errs
 }
 
-// DIMOAftermarketWPAStateFromData converts the given JSON data to a string.
+// DIMOAftermarketWPAStateFromV1Data converts the given JSON data to a string.
 func DIMOAftermarketWPAStateFromV1Data(jsonData []byte) (ret string, err error) {
 	var errs error
 	var result gjson.Result
@@ -925,7 +925,7 @@ func DIMOAftermarketWPAStateFromV1Data(jsonData []byte) (ret string, err error) 
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(string)
 		if ok {
-			retVal, err := ToDIMOAftermarketWPAState0(val)
+			retVal, err := ToDIMOAftermarketWPAState0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -942,7 +942,7 @@ func DIMOAftermarketWPAStateFromV1Data(jsonData []byte) (ret string, err error) 
 	return ret, errs
 }
 
-// DIMOIsLocationRedactedFromData converts the given JSON data to a float64.
+// DIMOIsLocationRedactedFromV1Data converts the given JSON data to a float64.
 func DIMOIsLocationRedactedFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -950,7 +950,7 @@ func DIMOIsLocationRedactedFromV1Data(jsonData []byte) (ret float64, err error) 
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(bool)
 		if ok {
-			retVal, err := ToDIMOIsLocationRedacted0(val)
+			retVal, err := ToDIMOIsLocationRedacted0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -967,7 +967,7 @@ func DIMOIsLocationRedactedFromV1Data(jsonData []byte) (ret float64, err error) 
 	return ret, errs
 }
 
-// ExteriorAirTemperatureFromData converts the given JSON data to a float64.
+// ExteriorAirTemperatureFromV1Data converts the given JSON data to a float64.
 func ExteriorAirTemperatureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -975,7 +975,7 @@ func ExteriorAirTemperatureFromV1Data(jsonData []byte) (ret float64, err error) 
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToExteriorAirTemperature0(val)
+			retVal, err := ToExteriorAirTemperature0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -992,7 +992,7 @@ func ExteriorAirTemperatureFromV1Data(jsonData []byte) (ret float64, err error) 
 	return ret, errs
 }
 
-// LowVoltageBatteryCurrentVoltageFromData converts the given JSON data to a float64.
+// LowVoltageBatteryCurrentVoltageFromV1Data converts the given JSON data to a float64.
 func LowVoltageBatteryCurrentVoltageFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1000,7 +1000,7 @@ func LowVoltageBatteryCurrentVoltageFromV1Data(jsonData []byte) (ret float64, er
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToLowVoltageBatteryCurrentVoltage0(val)
+			retVal, err := ToLowVoltageBatteryCurrentVoltage0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1017,7 +1017,7 @@ func LowVoltageBatteryCurrentVoltageFromV1Data(jsonData []byte) (ret float64, er
 	return ret, errs
 }
 
-// OBDBarometricPressureFromData converts the given JSON data to a float64.
+// OBDBarometricPressureFromV1Data converts the given JSON data to a float64.
 func OBDBarometricPressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1025,7 +1025,7 @@ func OBDBarometricPressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToOBDBarometricPressure0(val)
+			retVal, err := ToOBDBarometricPressure0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1042,7 +1042,7 @@ func OBDBarometricPressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	return ret, errs
 }
 
-// OBDEngineLoadFromData converts the given JSON data to a float64.
+// OBDEngineLoadFromV1Data converts the given JSON data to a float64.
 func OBDEngineLoadFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1050,7 +1050,7 @@ func OBDEngineLoadFromV1Data(jsonData []byte) (ret float64, err error) {
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToOBDEngineLoad0(val)
+			retVal, err := ToOBDEngineLoad0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1067,7 +1067,7 @@ func OBDEngineLoadFromV1Data(jsonData []byte) (ret float64, err error) {
 	return ret, errs
 }
 
-// OBDIntakeTempFromData converts the given JSON data to a float64.
+// OBDIntakeTempFromV1Data converts the given JSON data to a float64.
 func OBDIntakeTempFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1075,7 +1075,7 @@ func OBDIntakeTempFromV1Data(jsonData []byte) (ret float64, err error) {
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToOBDIntakeTemp0(val)
+			retVal, err := ToOBDIntakeTemp0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1092,7 +1092,7 @@ func OBDIntakeTempFromV1Data(jsonData []byte) (ret float64, err error) {
 	return ret, errs
 }
 
-// OBDRunTimeFromData converts the given JSON data to a float64.
+// OBDRunTimeFromV1Data converts the given JSON data to a float64.
 func OBDRunTimeFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1100,7 +1100,7 @@ func OBDRunTimeFromV1Data(jsonData []byte) (ret float64, err error) {
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToOBDRunTime0(val)
+			retVal, err := ToOBDRunTime0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1117,7 +1117,7 @@ func OBDRunTimeFromV1Data(jsonData []byte) (ret float64, err error) {
 	return ret, errs
 }
 
-// PowertrainCombustionEngineECTFromData converts the given JSON data to a float64.
+// PowertrainCombustionEngineECTFromV1Data converts the given JSON data to a float64.
 func PowertrainCombustionEngineECTFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1125,7 +1125,7 @@ func PowertrainCombustionEngineECTFromV1Data(jsonData []byte) (ret float64, err 
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToPowertrainCombustionEngineECT0(val)
+			retVal, err := ToPowertrainCombustionEngineECT0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1142,7 +1142,7 @@ func PowertrainCombustionEngineECTFromV1Data(jsonData []byte) (ret float64, err 
 	return ret, errs
 }
 
-// PowertrainCombustionEngineEngineOilLevelFromData converts the given JSON data to a string.
+// PowertrainCombustionEngineEngineOilLevelFromV1Data converts the given JSON data to a string.
 func PowertrainCombustionEngineEngineOilLevelFromV1Data(jsonData []byte) (ret string, err error) {
 	var errs error
 	var result gjson.Result
@@ -1150,7 +1150,7 @@ func PowertrainCombustionEngineEngineOilLevelFromV1Data(jsonData []byte) (ret st
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToPowertrainCombustionEngineEngineOilLevel0(val)
+			retVal, err := ToPowertrainCombustionEngineEngineOilLevel0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1167,7 +1167,7 @@ func PowertrainCombustionEngineEngineOilLevelFromV1Data(jsonData []byte) (ret st
 	return ret, errs
 }
 
-// PowertrainCombustionEngineMAFFromData converts the given JSON data to a float64.
+// PowertrainCombustionEngineMAFFromV1Data converts the given JSON data to a float64.
 func PowertrainCombustionEngineMAFFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1175,7 +1175,7 @@ func PowertrainCombustionEngineMAFFromV1Data(jsonData []byte) (ret float64, err 
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToPowertrainCombustionEngineMAF0(val)
+			retVal, err := ToPowertrainCombustionEngineMAF0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1192,7 +1192,7 @@ func PowertrainCombustionEngineMAFFromV1Data(jsonData []byte) (ret float64, err 
 	return ret, errs
 }
 
-// PowertrainCombustionEngineSpeedFromData converts the given JSON data to a float64.
+// PowertrainCombustionEngineSpeedFromV1Data converts the given JSON data to a float64.
 func PowertrainCombustionEngineSpeedFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1200,7 +1200,7 @@ func PowertrainCombustionEngineSpeedFromV1Data(jsonData []byte) (ret float64, er
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToPowertrainCombustionEngineSpeed0(val)
+			retVal, err := ToPowertrainCombustionEngineSpeed0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1217,7 +1217,7 @@ func PowertrainCombustionEngineSpeedFromV1Data(jsonData []byte) (ret float64, er
 	return ret, errs
 }
 
-// PowertrainCombustionEngineTPSFromData converts the given JSON data to a float64.
+// PowertrainCombustionEngineTPSFromV1Data converts the given JSON data to a float64.
 func PowertrainCombustionEngineTPSFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1225,7 +1225,7 @@ func PowertrainCombustionEngineTPSFromV1Data(jsonData []byte) (ret float64, err 
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToPowertrainCombustionEngineTPS0(val)
+			retVal, err := ToPowertrainCombustionEngineTPS0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1242,7 +1242,7 @@ func PowertrainCombustionEngineTPSFromV1Data(jsonData []byte) (ret float64, err 
 	return ret, errs
 }
 
-// PowertrainFuelSystemAbsoluteLevelFromData converts the given JSON data to a float64.
+// PowertrainFuelSystemAbsoluteLevelFromV1Data converts the given JSON data to a float64.
 func PowertrainFuelSystemAbsoluteLevelFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1250,7 +1250,7 @@ func PowertrainFuelSystemAbsoluteLevelFromV1Data(jsonData []byte) (ret float64, 
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToPowertrainFuelSystemAbsoluteLevel0(val)
+			retVal, err := ToPowertrainFuelSystemAbsoluteLevel0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1267,7 +1267,7 @@ func PowertrainFuelSystemAbsoluteLevelFromV1Data(jsonData []byte) (ret float64, 
 	return ret, errs
 }
 
-// PowertrainFuelSystemSupportedFuelTypesFromData converts the given JSON data to a string.
+// PowertrainFuelSystemSupportedFuelTypesFromV1Data converts the given JSON data to a string.
 func PowertrainFuelSystemSupportedFuelTypesFromV1Data(jsonData []byte) (ret string, err error) {
 	var errs error
 	var result gjson.Result
@@ -1275,7 +1275,7 @@ func PowertrainFuelSystemSupportedFuelTypesFromV1Data(jsonData []byte) (ret stri
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(string)
 		if ok {
-			retVal, err := ToPowertrainFuelSystemSupportedFuelTypes0(val)
+			retVal, err := ToPowertrainFuelSystemSupportedFuelTypes0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1292,7 +1292,7 @@ func PowertrainFuelSystemSupportedFuelTypesFromV1Data(jsonData []byte) (ret stri
 	return ret, errs
 }
 
-// PowertrainRangeFromData converts the given JSON data to a float64.
+// PowertrainRangeFromV1Data converts the given JSON data to a float64.
 func PowertrainRangeFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1300,7 +1300,7 @@ func PowertrainRangeFromV1Data(jsonData []byte) (ret float64, err error) {
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToPowertrainRange0(val)
+			retVal, err := ToPowertrainRange0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1317,7 +1317,7 @@ func PowertrainRangeFromV1Data(jsonData []byte) (ret float64, err error) {
 	return ret, errs
 }
 
-// PowertrainTractionBatteryChargingChargeLimitFromData converts the given JSON data to a float64.
+// PowertrainTractionBatteryChargingChargeLimitFromV1Data converts the given JSON data to a float64.
 func PowertrainTractionBatteryChargingChargeLimitFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1325,7 +1325,7 @@ func PowertrainTractionBatteryChargingChargeLimitFromV1Data(jsonData []byte) (re
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToPowertrainTractionBatteryChargingChargeLimit0(val)
+			retVal, err := ToPowertrainTractionBatteryChargingChargeLimit0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1342,7 +1342,7 @@ func PowertrainTractionBatteryChargingChargeLimitFromV1Data(jsonData []byte) (re
 	return ret, errs
 }
 
-// PowertrainTractionBatteryChargingIsChargingFromData converts the given JSON data to a float64.
+// PowertrainTractionBatteryChargingIsChargingFromV1Data converts the given JSON data to a float64.
 func PowertrainTractionBatteryChargingIsChargingFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1350,7 +1350,7 @@ func PowertrainTractionBatteryChargingIsChargingFromV1Data(jsonData []byte) (ret
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(bool)
 		if ok {
-			retVal, err := ToPowertrainTractionBatteryChargingIsCharging0(val)
+			retVal, err := ToPowertrainTractionBatteryChargingIsCharging0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1367,7 +1367,7 @@ func PowertrainTractionBatteryChargingIsChargingFromV1Data(jsonData []byte) (ret
 	return ret, errs
 }
 
-// PowertrainTractionBatteryCurrentPowerFromData converts the given JSON data to a float64.
+// PowertrainTractionBatteryCurrentPowerFromV1Data converts the given JSON data to a float64.
 func PowertrainTractionBatteryCurrentPowerFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1375,7 +1375,7 @@ func PowertrainTractionBatteryCurrentPowerFromV1Data(jsonData []byte) (ret float
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToPowertrainTractionBatteryCurrentPower0(val)
+			retVal, err := ToPowertrainTractionBatteryCurrentPower0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1392,7 +1392,7 @@ func PowertrainTractionBatteryCurrentPowerFromV1Data(jsonData []byte) (ret float
 	return ret, errs
 }
 
-// PowertrainTractionBatteryGrossCapacityFromData converts the given JSON data to a float64.
+// PowertrainTractionBatteryGrossCapacityFromV1Data converts the given JSON data to a float64.
 func PowertrainTractionBatteryGrossCapacityFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1400,7 +1400,7 @@ func PowertrainTractionBatteryGrossCapacityFromV1Data(jsonData []byte) (ret floa
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToPowertrainTractionBatteryGrossCapacity0(val)
+			retVal, err := ToPowertrainTractionBatteryGrossCapacity0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1417,7 +1417,7 @@ func PowertrainTractionBatteryGrossCapacityFromV1Data(jsonData []byte) (ret floa
 	return ret, errs
 }
 
-// PowertrainTractionBatteryStateOfChargeCurrentFromData converts the given JSON data to a float64.
+// PowertrainTractionBatteryStateOfChargeCurrentFromV1Data converts the given JSON data to a float64.
 func PowertrainTractionBatteryStateOfChargeCurrentFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1425,7 +1425,7 @@ func PowertrainTractionBatteryStateOfChargeCurrentFromV1Data(jsonData []byte) (r
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToPowertrainTractionBatteryStateOfChargeCurrent0(val)
+			retVal, err := ToPowertrainTractionBatteryStateOfChargeCurrent0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1442,7 +1442,7 @@ func PowertrainTractionBatteryStateOfChargeCurrentFromV1Data(jsonData []byte) (r
 	return ret, errs
 }
 
-// PowertrainTransmissionTravelledDistanceFromData converts the given JSON data to a float64.
+// PowertrainTransmissionTravelledDistanceFromV1Data converts the given JSON data to a float64.
 func PowertrainTransmissionTravelledDistanceFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1450,7 +1450,7 @@ func PowertrainTransmissionTravelledDistanceFromV1Data(jsonData []byte) (ret flo
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToPowertrainTransmissionTravelledDistance0(val)
+			retVal, err := ToPowertrainTransmissionTravelledDistance0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1467,7 +1467,7 @@ func PowertrainTransmissionTravelledDistanceFromV1Data(jsonData []byte) (ret flo
 	return ret, errs
 }
 
-// PowertrainTypeFromData converts the given JSON data to a string.
+// PowertrainTypeFromV1Data converts the given JSON data to a string.
 func PowertrainTypeFromV1Data(jsonData []byte) (ret string, err error) {
 	var errs error
 	var result gjson.Result
@@ -1475,7 +1475,7 @@ func PowertrainTypeFromV1Data(jsonData []byte) (ret string, err error) {
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(string)
 		if ok {
-			retVal, err := ToPowertrainType0(val)
+			retVal, err := ToPowertrainType0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1492,7 +1492,7 @@ func PowertrainTypeFromV1Data(jsonData []byte) (ret string, err error) {
 	return ret, errs
 }
 
-// SpeedFromData converts the given JSON data to a float64.
+// SpeedFromV1Data converts the given JSON data to a float64.
 func SpeedFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1500,7 +1500,7 @@ func SpeedFromV1Data(jsonData []byte) (ret float64, err error) {
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToSpeed0(val)
+			retVal, err := ToSpeed0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1517,7 +1517,7 @@ func SpeedFromV1Data(jsonData []byte) (ret float64, err error) {
 	return ret, errs
 }
 
-// VehicleIdentificationBrandFromData converts the given JSON data to a string.
+// VehicleIdentificationBrandFromV1Data converts the given JSON data to a string.
 func VehicleIdentificationBrandFromV1Data(jsonData []byte) (ret string, err error) {
 	var errs error
 	var result gjson.Result
@@ -1525,7 +1525,7 @@ func VehicleIdentificationBrandFromV1Data(jsonData []byte) (ret string, err erro
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(string)
 		if ok {
-			retVal, err := ToVehicleIdentificationBrand0(val)
+			retVal, err := ToVehicleIdentificationBrand0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1542,7 +1542,7 @@ func VehicleIdentificationBrandFromV1Data(jsonData []byte) (ret string, err erro
 	return ret, errs
 }
 
-// VehicleIdentificationModelFromData converts the given JSON data to a string.
+// VehicleIdentificationModelFromV1Data converts the given JSON data to a string.
 func VehicleIdentificationModelFromV1Data(jsonData []byte) (ret string, err error) {
 	var errs error
 	var result gjson.Result
@@ -1550,7 +1550,7 @@ func VehicleIdentificationModelFromV1Data(jsonData []byte) (ret string, err erro
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(string)
 		if ok {
-			retVal, err := ToVehicleIdentificationModel0(val)
+			retVal, err := ToVehicleIdentificationModel0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1567,7 +1567,7 @@ func VehicleIdentificationModelFromV1Data(jsonData []byte) (ret string, err erro
 	return ret, errs
 }
 
-// VehicleIdentificationYearFromData converts the given JSON data to a float64.
+// VehicleIdentificationYearFromV1Data converts the given JSON data to a float64.
 func VehicleIdentificationYearFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
@@ -1575,7 +1575,7 @@ func VehicleIdentificationYearFromV1Data(jsonData []byte) (ret float64, err erro
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
-			retVal, err := ToVehicleIdentificationYear0(val)
+			retVal, err := ToVehicleIdentificationYear0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
