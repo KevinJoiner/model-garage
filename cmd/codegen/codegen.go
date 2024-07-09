@@ -13,10 +13,12 @@ import (
 	"github.com/DIMO-Network/model-garage/internal/generator/custom"
 	"github.com/DIMO-Network/model-garage/pkg/runner"
 	"github.com/DIMO-Network/model-garage/pkg/schema"
+	"github.com/DIMO-Network/model-garage/pkg/version"
 )
 
 func main() {
 	// Command-line flags
+	printVersion := flag.Bool("version", false, "Print the version of the codegen tool")
 	outputDir := flag.String("output", ".", "Output directory for the generated Go file")
 	vspecPath := flag.String("spec", "", "Path to the vspec CSV file if empty, the embedded vspec will be used")
 	definitionPath := flag.String("definitions", "", "Path to the definitions file if empty, the definitions will be used")
@@ -30,6 +32,11 @@ func main() {
 	customFormat := flag.Bool("custom.format", false, "Format the generated file with goimports.")
 
 	flag.Parse()
+
+	if *printVersion {
+		log.Printf("codegen version: %s", version.GetVersion())
+		return
+	}
 
 	var vspecReader io.Reader
 	if *vspecPath != "" {
