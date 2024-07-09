@@ -12,16 +12,24 @@ GOOS						?= $(DEFAULT_GOOS)
 INSTALL_DIR					?= $(DEFAULT_INSTALL_DIR)
 .DEFAULT_GOAL := run
 
-VERSION   := $(shell git describe --tags || echo "v0.0.0")
-VER_CUT   := $(shell echo $(VERSION) | cut -c2-)
+# Get the app version from the git tag and commit
+GIT_COMMIT := $(shell git rev-parse --short HEAD)
+TAG := $(shell git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+TAG_COMMIT := $(shell git rev-list -n 1 $(TAG))
+VERSION := $(TAG)
+ifneq ($(TAG_COMMIT), $(shell git rev-parse HEAD))
+	VERSION := $(TAG)-$(GIT_COMMIT)
+endif
 
 # Dependency versions
-GOLANGCI_VERSION   = latest
-CLICKHOUSE_INFRA_VERSION = $(shell go list -m -f '{{.Version}}' github.com/DIMO-Network/clickhouse-infra)
+GOLANGCI_VERSION := latest
+CLICKHOUSE_INFRA_VERSION := $(shell go list -m -f '{{.Version}}' github.com/DIMO-Network/clickhouse-infra)
 
 build:
 	@CGO_ENABLED=0 GOOS=$(GOOS) GOARCH=$(ARCH) \
-		go build -o bin/$(BIN_NAME) ./cmd/$(BIN_NAME)
+		go build -ldflags "-X 'github.com/DIMO-Network/model-garage/pkg/version.version=$(VERSION)'" \
+		-o bin/$(BIN_NAME) ./cmd/$(BIN_NAME)
+
 
 run: build
 	@./bin/$(BIN_NAME)

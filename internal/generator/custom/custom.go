@@ -13,6 +13,7 @@ import (
 	"github.com/99designs/gqlgen/codegen/templates"
 	"github.com/DIMO-Network/model-garage/pkg/codegen"
 	"github.com/DIMO-Network/model-garage/pkg/schema"
+	"github.com/DIMO-Network/model-garage/pkg/version"
 )
 
 var customFileFormat = "%s.txt"
@@ -75,6 +76,7 @@ func createCustomFileTemplate(gqlmodelName, templateFile string) (*template.Temp
 	tmpl, err := template.New(tmplName).Funcs(template.FuncMap{
 		"GQLModelName":       func() string { return gqlmodelName },
 		"GQLGenResolverName": templates.ToGo,
+		"Version":            version.GetVersion,
 	}).ParseFiles(templateFile)
 	if err != nil {
 		return nil, fmt.Errorf("error parsing Custom file template: %w", err)
