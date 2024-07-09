@@ -3,6 +3,7 @@
 {{ .DocComment }}
 {{- else -}}
 // {{ .FuncName }} converts data from field '{{ .Conversion.OriginalName }}' of type {{ .Conversion.OriginalType }} to '{{ .Signal.Name }}' of type {{ .Signal.GOType }}.
+// {{ .Signal.Name }}: {{ .Signal.Desc }}
 {{- end }}
 func {{ .FuncName }}(originalDoc []byte, val {{ .Conversion.OriginalType }}) ({{ .Signal.GOType }}, error)
 {{- if .Body -}}
