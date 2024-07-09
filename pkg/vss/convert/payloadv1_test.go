@@ -75,7 +75,7 @@ var (
 			"chargeLimit": 80.0,
 			"charging": true,
 			"batteryCapacity": 60.0,
-			"soc": 70.0,
+			"soc": 0.7,
 			"odometer": 50000.0,
 			"speed": 60.0,
 			"make": "Toyota",

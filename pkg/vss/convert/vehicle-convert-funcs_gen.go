@@ -307,7 +307,8 @@ func ToPowertrainTractionBatteryGrossCapacity0(originalDoc []byte, val float64) 
 // Vehicle.Powertrain.TractionBattery.StateOfCharge.Current: Physical state of charge of the high voltage battery, relative to net capacity. This is not necessarily the state of charge being displayed to the customer.
 // Unit: 'percent' Min: '0' Max: '100.0'
 func ToPowertrainTractionBatteryStateOfChargeCurrent0(originalDoc []byte, val float64) (float64, error) {
-	return val, nil
+	// soc comes in as a value between 0 and 1, convert to percentage.
+	return val * 100, nil
 }
 
 // ToPowertrainTransmissionTravelledDistance0 converts data from field 'odometer' of type float64 to 'Vehicle.Powertrain.Transmission.TravelledDistance' of type float64.
