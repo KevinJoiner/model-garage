@@ -12,13 +12,14 @@ func IsInvalidType(err error) bool {
 
 
 // SignalsFromData converts the given JSON data to a slice of signals.
-func SignalsFromV2Data(originalDoc []byte, baseSignal Signal, signalName string, sigResult gjson.Result) ([]Signal, error) {
+func SignalsFromV2Data(originalDoc []byte, baseSignal {{ .ModelPackagePrefix }}Signal, signalName string, sigResult gjson.Result) ([]{{ .ModelPackagePrefix }}Signal, error) {
 	valResult := sigResult.Get("value")
 	if !valResult.Exists() {
 		return nil, errors.New("value field not found")
 	}
-	ret := make([]Signal, 0)
+	ret := make([]{{ .ModelPackagePrefix }}Signal, 0)
 	var retErrs error
+	{{ $root := . }}
 	switch signalName {
 	{{- range $i, $convs := .Conversions }}
 	case "{{ (index $convs 0).Conversion.OriginalName }}":
@@ -27,7 +28,7 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal Signal, signalName string,
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert '{{ $conv.Conversion.OriginalName }}': %w", err))
 		} else {
-			sig := Signal{
+			sig := {{ $root.ModelPackagePrefix }}Signal{
 				TokenID: baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source: baseSignal.Source,

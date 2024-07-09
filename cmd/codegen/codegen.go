@@ -26,6 +26,8 @@ func main() {
 	generators := flag.String("generators", "all", "Comma separated list of generators to run. Options: all, model, convert, custom.")
 	// Convert flags
 	copyComments := flag.Bool("convert.copy-comments", false, "Copy through comments on conversion functions. Default is false.")
+	convertPackageName := flag.String("convert.package", "", "Name of the package to generate the conversion functions. If empty, the base package name is used.")
+	convertOutputDir := flag.String("convert.output", "", "Output directory for the generated conversion files. If empty, the output directory is used.")
 	// Custom flags
 	customOutFile := flag.String("custom.output-file", "", "Path of the generate gql file that is appened to the outputDir.")
 	customTemplateFile := flag.String("custom.template-file", "", "Path to the template file. Which is executed with codegen.TemplateData data.")
@@ -75,6 +77,8 @@ func main() {
 		},
 		Convert: convert.Config{
 			CopyComments: *copyComments,
+			PackageName:  *convertPackageName,
+			OutputDir:    *convertOutputDir,
 		},
 	}
 

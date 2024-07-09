@@ -1,10 +1,10 @@
-package vss_test
+package convert_test
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/DIMO-Network/model-garage/pkg/vss"
+	"github.com/DIMO-Network/model-garage/pkg/vss/convert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -62,7 +62,7 @@ func TestToPowertrainFuelSystemSupportedFuelTypes0(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToPowertrainFuelSystemSupportedFuelTypes0(nil, test.input)
+			result, err := convert.ToPowertrainFuelSystemSupportedFuelTypes0(nil, test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -127,7 +127,7 @@ func TestToPowertrainType0(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToPowertrainType0(nil, test.input)
+			result, err := convert.ToPowertrainType0(nil, test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -198,7 +198,7 @@ func TestToPowertrainCombustionEngineEngineOilLevel0(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToPowertrainCombustionEngineEngineOilLevel0(nil, test.input)
+			result, err := convert.ToPowertrainCombustionEngineEngineOilLevel0(nil, test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -245,7 +245,7 @@ func TestToCurrentLocationTimestamp1(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToCurrentLocationTimestamp0(nil, test.input)
+			result, err := convert.ToCurrentLocationTimestamp0(nil, test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -292,7 +292,7 @@ func TestToPowertrainTractionBatteryCurrentPower1(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToPowertrainTractionBatteryCurrentPower0(nil, test.input)
+			result, err := convert.ToPowertrainTractionBatteryCurrentPower0(nil, test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -333,7 +333,7 @@ func TestToDIMOIsLocationRedacted0(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := vss.ToDIMOIsLocationRedacted0(nil, test.input)
+			result, err := convert.ToDIMOIsLocationRedacted0(nil, test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {

@@ -47,7 +47,7 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 			continue
 		}
 		signalMeta.Timestamp = ts
-		sigs, err := vss.SignalsFromV2Data(jsonData, signalMeta, originalName, sigData)
+		sigs, err := SignalsFromV2Data(jsonData, signalMeta, originalName, sigData)
 		if err != nil {
 			errs = errors.Join(errs, err)
 			continue
