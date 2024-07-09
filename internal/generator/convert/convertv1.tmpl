@@ -3,11 +3,12 @@ package {{ .PackageName }}
 
 var errNotFound = errors.New("field not found")
 
-// SignalsFromV1Data creates a slice of Signal from the given v1 status JSON data.
+// SignalsFromV1Data creates a slice of {{ .ModelPackagePrefix }}Signal from the given v1 status JSON data.
 // On error, partial results may be returned.
-func SignalsFromV1Data(baseSignal Signal, jsonData []byte) ([]Signal, error) {
-	var retSignals []Signal
+func SignalsFromV1Data(baseSignal {{ .ModelPackagePrefix }}Signal, jsonData []byte) ([]{{ .ModelPackagePrefix }}Signal, error) {
+	var retSignals []{{ .ModelPackagePrefix }}Signal
 {{ $first := true -}}
+{{- $root := . }}
 {{- range $idx, $sig := .Signals }}
 	{{ if eq (len $sig.Conversions) 0 }} {{ continue }} {{ end -}}
 	{{ if $first -}}
@@ -22,7 +23,7 @@ func SignalsFromV1Data(baseSignal Signal, jsonData []byte) ([]Signal, error) {
 			errs = errors.Join(errs, fmt.Errorf("failed to get '{{ $sig.GOName }}': %w", err))
 		}
 	}else {
-		sig := Signal{
+		sig := {{ $root.ModelPackagePrefix }}Signal{
 			Name: "{{ $sig.JSONName }}",
 			TokenID: baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,

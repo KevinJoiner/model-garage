@@ -17,13 +17,13 @@ import (
 
 const (
 	// convertV1FileNameFormat is the name of the Go file that will convert v1 JSON data to the signals.
-	convertV1FileNameFormat = "%s-v1-convert.go"
+	convertV1FileNameFormat = "%s-v1-convert_gen.go"
 
 	// convertV2FileNameFormat is the name of the Go file that will convert v2 JSON data to the signals.
-	convertV2FileNameFormat = "%s-v2-convert.go"
+	convertV2FileNameFormat = "%s-v2-convert_gen.go"
 
 	// convertFuncFileNameFormat is the name of the Go file that will contain the conversion functions.
-	convertFuncFileNameFormat = "%s-convert-funcs.go"
+	convertFuncFileNameFormat = "%s-convert-funcs_gen.go"
 )
 
 type conversionData struct {
@@ -53,6 +53,13 @@ package %s
 type Config struct {
 	// CopyComments determines if comments for the conversion functions should be copied through.
 	CopyComments bool
+	// PackageName is the name of the package to generate the conversion functions.
+	// This is separate from the model package name.
+	// if empty, the model package name is used.
+	PackageName string
+	// OutputDir is the output directory for the generated conversion files.
+	// if empty, the base output directory is used.
+	OutputDir string
 }
 
 type funcTmplData struct {
@@ -67,7 +74,8 @@ type funcTmplData struct {
 type convertTmplData struct {
 	*schema.TemplateData
 	// Group of conversions by original field name.
-	Conversions [][]*singleConversions
+	Conversions        [][]*singleConversions
+	ModelPackagePrefix string
 }
 
 type singleConversions struct {
@@ -78,7 +86,15 @@ type singleConversions struct {
 // Generate creates a conversion functions for each field of a model struct.
 // as well as the entire model struct.
 func Generate(tmplData *schema.TemplateData, outputDir string, cfg Config) (err error) {
-	err = createStructConversion(tmplData, outputDir)
+	modelPackagePrefix := ""
+	if cfg.PackageName != "" {
+		modelPackagePrefix = tmplData.PackageName + "."
+		tmplData.PackageName = cfg.PackageName
+	}
+	if cfg.OutputDir != "" {
+		outputDir = cfg.OutputDir
+	}
+	err = createStructConversion(tmplData, outputDir, modelPackagePrefix)
 	if err != nil {
 		return err
 	}
@@ -99,7 +115,7 @@ func Generate(tmplData *schema.TemplateData, outputDir string, cfg Config) (err 
 }
 
 // createStructConversion creates the conversion function for converting JSON data to a model struct.
-func createStructConversion(tmplData *schema.TemplateData, outputDir string) error {
+func createStructConversion(tmplData *schema.TemplateData, outputDir, modelPackagePrefix string) error {
 	convV1Tmpl, err := createConvV1Template()
 	if err != nil {
 		return err
@@ -112,8 +128,9 @@ func createStructConversion(tmplData *schema.TemplateData, outputDir string) err
 
 	convSlice := gatherAllConversionsFromSignals(tmplData)
 	convTmplData := &convertTmplData{
-		TemplateData: tmplData,
-		Conversions:  convSlice,
+		TemplateData:       tmplData,
+		Conversions:        convSlice,
+		ModelPackagePrefix: modelPackagePrefix,
 	}
 
 	var outBuf bytes.Buffer

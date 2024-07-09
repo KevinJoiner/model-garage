@@ -66,5 +66,5 @@ clickhouse:
 	go run ./cmd/clickhouse-container
 
 generate:
-	 go run ./cmd/codegen -output=./pkg/vss -package=vss -generators=model,convert
+	 go run ./cmd/codegen -output=./pkg/vss -package=vss -generators=model,convert -convert.package=convert -convert.output=./pkg/vss/convert
 

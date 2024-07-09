@@ -1,6 +1,6 @@
 # This file contains the mapping of the vehicle to the VSpecs
 
-  # vspecName: The name of the VSpec field in the VSS schema 
+# vspecName: The name of the VSpec field in the VSS schema
 - vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure
   # goType: The type to use for Golang struct.
   # if empty then the type is inferred from the vspec definition
@@ -11,12 +11,12 @@
     # - originalName: The name of the field in the original data
     - originalName: tires.frontLeft
 
-    #   originalType: The type of the field in the original data
+      #   originalType: The type of the field in the original data
       originalType: float64
 
-    # isArray: Whether the field is an array or not
+      # isArray: Whether the field is an array or not
       isArray: false
-  
+
   # requiredPrivileges: The list of privileges required to access the field
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
@@ -72,7 +72,7 @@
   isArray: false
   clickHouseType: DateTime('UTC')
   goType: "float64"
-  conversions: 
+  conversions:
     - originalName: timestamp
       originalType: string
       isArray: false

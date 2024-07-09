@@ -40,7 +40,7 @@ func SignalsFromV1Payload(ctx context.Context, tokenGetter TokenIDGetter, jsonDa
 		Timestamp: ts,
 		Source:    source,
 	}
-	sigs, err := vss.SignalsFromV1Data(baseSignal, jsonData)
+	sigs, err := SignalsFromV1Data(baseSignal, jsonData)
 	if err != nil {
 		return nil, fmt.Errorf("error getting signals from v1 data: %w", err)
 	}
