@@ -15,48 +15,56 @@ import (
 
 // ToChassisAxleRow1WheelLeftTirePressure0 converts data from field 'tires.frontLeft' of type float64 to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
 func ToChassisAxleRow1WheelLeftTirePressure0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
 // ToChassisAxleRow1WheelRightTirePressure0 converts data from field 'tires.frontRight' of type float64 to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
 func ToChassisAxleRow1WheelRightTirePressure0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
 // ToChassisAxleRow2WheelLeftTirePressure0 converts data from field 'tires.backLeft' of type float64 to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
 func ToChassisAxleRow2WheelLeftTirePressure0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
 // ToChassisAxleRow2WheelRightTirePressure0 converts data from field 'tires.backRight' of type float64 to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
 func ToChassisAxleRow2WheelRightTirePressure0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
 // ToCurrentLocationAltitude0 converts data from field 'altitude' of type float64 to 'Vehicle.CurrentLocation.Altitude' of type float64.
 // Vehicle.CurrentLocation.Altitude: Current altitude relative to WGS 84 reference ellipsoid, as measured at the position of GNSS receiver antenna.
+// Unit: 'm'
 func ToCurrentLocationAltitude0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
 // ToCurrentLocationLatitude0 converts data from field 'latitude' of type float64 to 'Vehicle.CurrentLocation.Latitude' of type float64.
 // Vehicle.CurrentLocation.Latitude: Current latitude of vehicle in WGS 84 geodetic coordinates, as measured at the position of GNSS receiver antenna.
+// Unit: 'degrees' Min: '-90' Max: '90'
 func ToCurrentLocationLatitude0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
 // ToCurrentLocationLongitude0 converts data from field 'longitude' of type float64 to 'Vehicle.CurrentLocation.Longitude' of type float64.
 // Vehicle.CurrentLocation.Longitude: Current longitude of vehicle in WGS 84 geodetic coordinates, as measured at the position of GNSS receiver antenna.
+// Unit: 'degrees' Min: '-180' Max: '180'
 func ToCurrentLocationLongitude0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
 // ToCurrentLocationTimestamp0 converts data from field 'timestamp' of type string to 'Vehicle.CurrentLocation.Timestamp' of type float64.
 // Vehicle.CurrentLocation.Timestamp: Timestamp from GNSS system for current location, formatted according to ISO 8601 with UTC time zone.
+// Unit: 'iso8601'
 func ToCurrentLocationTimestamp0(originalDoc []byte, val string) (float64, error) {
 	ts, err := time.Parse(time.RFC3339, val)
 	if err != nil {
@@ -67,6 +75,7 @@ func ToCurrentLocationTimestamp0(originalDoc []byte, val string) (float64, error
 
 // ToCurrentLocationTimestamp1 converts data from field 'timestamp' of type float64 to 'Vehicle.CurrentLocation.Timestamp' of type float64.
 // Vehicle.CurrentLocation.Timestamp: Timestamp from GNSS system for current location, formatted according to ISO 8601 with UTC time zone.
+// Unit: 'iso8601'
 func ToCurrentLocationTimestamp1(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
@@ -106,24 +115,28 @@ func ToDIMOIsLocationRedacted0(originalDoc []byte, val bool) (float64, error) {
 
 // ToExteriorAirTemperature0 converts data from field 'ambientTemp' of type float64 to 'Vehicle.Exterior.AirTemperature' of type float64.
 // Vehicle.Exterior.AirTemperature: Air temperature outside the vehicle.
+// Unit: 'celsius'
 func ToExteriorAirTemperature0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
 // ToLowVoltageBatteryCurrentVoltage0 converts data from field 'batteryVoltage' of type float64 to 'Vehicle.LowVoltageBattery.CurrentVoltage' of type float64.
 // Vehicle.LowVoltageBattery.CurrentVoltage: Current Voltage of the low voltage battery.
+// Unit: 'V'
 func ToLowVoltageBatteryCurrentVoltage0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
 // ToOBDBarometricPressure0 converts data from field 'barometricPressure' of type float64 to 'Vehicle.OBD.BarometricPressure' of type float64.
 // Vehicle.OBD.BarometricPressure: PID 33 - Barometric pressure
+// Unit: 'kPa'
 func ToOBDBarometricPressure0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
 // ToOBDEngineLoad0 converts data from field 'engineLoad' of type float64 to 'Vehicle.OBD.EngineLoad' of type float64.
 // Vehicle.OBD.EngineLoad: PID 04 - Engine load in percent - 0 = no load, 100 = full load
+// Unit: 'percent'
 func ToOBDEngineLoad0(originalDoc []byte, val float64) (float64, error) {
 	version := gjson.GetBytes(originalDoc, "dataschema").String()
 	if semver.Compare("v1", version) == 0 || semver.Compare(StatusV1Converted, version) == 0 {
@@ -134,18 +147,21 @@ func ToOBDEngineLoad0(originalDoc []byte, val float64) (float64, error) {
 
 // ToOBDIntakeTemp0 converts data from field 'intakeTemp' of type float64 to 'Vehicle.OBD.IntakeTemp' of type float64.
 // Vehicle.OBD.IntakeTemp: PID 0F - Intake temperature
+// Unit: 'celsius'
 func ToOBDIntakeTemp0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
 // ToOBDRunTime0 converts data from field 'runTime' of type float64 to 'Vehicle.OBD.RunTime' of type float64.
 // Vehicle.OBD.RunTime: PID 1F - Engine run time
+// Unit: 's'
 func ToOBDRunTime0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
 // ToPowertrainCombustionEngineECT0 converts data from field 'coolantTemp' of type float64 to 'Vehicle.Powertrain.CombustionEngine.ECT' of type float64.
 // Vehicle.Powertrain.CombustionEngine.ECT: Engine coolant temperature.
+// Unit: 'celsius'
 func ToPowertrainCombustionEngineECT0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
@@ -169,24 +185,28 @@ func ToPowertrainCombustionEngineEngineOilLevel0(originalDoc []byte, val float64
 
 // ToPowertrainCombustionEngineMAF0 converts data from field 'maf' of type float64 to 'Vehicle.Powertrain.CombustionEngine.MAF' of type float64.
 // Vehicle.Powertrain.CombustionEngine.MAF: Grams of air drawn into engine per second.
+// Unit: 'g/s'
 func ToPowertrainCombustionEngineMAF0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
 // ToPowertrainCombustionEngineSpeed0 converts data from field 'engineSpeed' of type float64 to 'Vehicle.Powertrain.CombustionEngine.Speed' of type float64.
 // Vehicle.Powertrain.CombustionEngine.Speed: Engine speed measured as rotations per minute.
+// Unit: 'rpm'
 func ToPowertrainCombustionEngineSpeed0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
 // ToPowertrainCombustionEngineTPS0 converts data from field 'throttlePosition' of type float64 to 'Vehicle.Powertrain.CombustionEngine.TPS' of type float64.
 // Vehicle.Powertrain.CombustionEngine.TPS: Current throttle position.
+// Unit: 'percent'  Max: '100'
 func ToPowertrainCombustionEngineTPS0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
 // ToPowertrainFuelSystemAbsoluteLevel0 converts data from field 'fuelPercentRemaining' of type float64 to 'Vehicle.Powertrain.FuelSystem.AbsoluteLevel' of type float64.
 // Vehicle.Powertrain.FuelSystem.AbsoluteLevel: Current available fuel in the fuel tank expressed in liters.
+// Unit: 'l'
 func ToPowertrainFuelSystemAbsoluteLevel0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
@@ -210,12 +230,14 @@ func ToPowertrainFuelSystemSupportedFuelTypes0(originalDoc []byte, val string) (
 
 // ToPowertrainRange0 converts data from field 'range' of type float64 to 'Vehicle.Powertrain.Range' of type float64.
 // Vehicle.Powertrain.Range: Remaining range in meters using all energy sources available in the vehicle.
+// Unit: 'm'
 func ToPowertrainRange0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
 // ToPowertrainTractionBatteryChargingChargeLimit0 converts data from field 'chargeLimit' of type float64 to 'Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit' of type float64.
 // Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit: Target charge limit (state of charge) for battery.
+// Unit: 'percent' Min: '0' Max: '100'
 func ToPowertrainTractionBatteryChargingChargeLimit0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
@@ -231,6 +253,7 @@ func ToPowertrainTractionBatteryChargingIsCharging0(originalDoc []byte, val bool
 
 // ToPowertrainTractionBatteryCurrentPower0 converts data from field 'charger.power' of type float64 to 'Vehicle.Powertrain.TractionBattery.CurrentPower' of type float64.
 // Vehicle.Powertrain.TractionBattery.CurrentPower: Current electrical energy flowing in/out of battery. Positive = Energy flowing in to battery, e.g. during charging. Negative = Energy flowing out of battery, e.g. during driving.
+// Unit: 'W'
 func ToPowertrainTractionBatteryCurrentPower0(originalDoc []byte, val float64) (float64, error) {
 	// V1 field is in kilowatts (kW), VSS field is in watts (W).
 	return 1000 * val, nil
@@ -238,18 +261,21 @@ func ToPowertrainTractionBatteryCurrentPower0(originalDoc []byte, val float64) (
 
 // ToPowertrainTractionBatteryGrossCapacity0 converts data from field 'batteryCapacity' of type float64 to 'Vehicle.Powertrain.TractionBattery.GrossCapacity' of type float64.
 // Vehicle.Powertrain.TractionBattery.GrossCapacity: Gross capacity of the battery.
+// Unit: 'kWh'
 func ToPowertrainTractionBatteryGrossCapacity0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
 // ToPowertrainTractionBatteryStateOfChargeCurrent0 converts data from field 'soc' of type float64 to 'Vehicle.Powertrain.TractionBattery.StateOfCharge.Current' of type float64.
 // Vehicle.Powertrain.TractionBattery.StateOfCharge.Current: Physical state of charge of the high voltage battery, relative to net capacity. This is not necessarily the state of charge being displayed to the customer.
+// Unit: 'percent' Min: '0' Max: '100.0'
 func ToPowertrainTractionBatteryStateOfChargeCurrent0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
 // ToPowertrainTransmissionTravelledDistance0 converts data from field 'odometer' of type float64 to 'Vehicle.Powertrain.Transmission.TravelledDistance' of type float64.
 // Vehicle.Powertrain.Transmission.TravelledDistance: Odometer reading, total distance travelled during the lifetime of the transmission.
+// Unit: 'km'
 func ToPowertrainTransmissionTravelledDistance0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
@@ -267,6 +293,7 @@ func ToPowertrainType0(originalDoc []byte, val string) (string, error) {
 
 // ToSpeed0 converts data from field 'speed' of type float64 to 'Vehicle.Speed' of type float64.
 // Vehicle.Speed: Vehicle speed.
+// Unit: 'km/h'
 func ToSpeed0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
