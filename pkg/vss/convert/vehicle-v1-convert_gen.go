@@ -579,54 +579,6 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
 	}
-
-	val, err = VehicleIdentificationBrandFromV1Data(jsonData)
-	if err != nil {
-		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleIdentificationBrand': %w", err))
-		}
-	} else {
-		sig := vss.Signal{
-			Name:      "vehicleIdentificationBrand",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
-		}
-		sig.SetValue(val)
-		retSignals = append(retSignals, sig)
-	}
-
-	val, err = VehicleIdentificationModelFromV1Data(jsonData)
-	if err != nil {
-		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleIdentificationModel': %w", err))
-		}
-	} else {
-		sig := vss.Signal{
-			Name:      "vehicleIdentificationModel",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
-		}
-		sig.SetValue(val)
-		retSignals = append(retSignals, sig)
-	}
-
-	val, err = VehicleIdentificationYearFromV1Data(jsonData)
-	if err != nil {
-		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'VehicleIdentificationYear': %w", err))
-		}
-	} else {
-		sig := vss.Signal{
-			Name:      "vehicleIdentificationYear",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
-		}
-		sig.SetValue(val)
-		retSignals = append(retSignals, sig)
-	}
 	return retSignals, errs
 }
 
@@ -1591,81 +1543,6 @@ func SpeedFromV1Data(jsonData []byte) (ret float64, err error) {
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'Speed'", errNotFound)
-	}
-
-	return ret, errs
-}
-
-// VehicleIdentificationBrandFromV1Data converts the given JSON data to a string.
-func VehicleIdentificationBrandFromV1Data(jsonData []byte) (ret string, err error) {
-	var errs error
-	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.make")
-	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(string)
-		if ok {
-			retVal, err := ToVehicleIdentificationBrand0(jsonData, val)
-			if err == nil {
-				return retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.make': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.make' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-		}
-	}
-
-	if errs == nil {
-		return ret, fmt.Errorf("%w 'VehicleIdentificationBrand'", errNotFound)
-	}
-
-	return ret, errs
-}
-
-// VehicleIdentificationModelFromV1Data converts the given JSON data to a string.
-func VehicleIdentificationModelFromV1Data(jsonData []byte) (ret string, err error) {
-	var errs error
-	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.model")
-	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(string)
-		if ok {
-			retVal, err := ToVehicleIdentificationModel0(jsonData, val)
-			if err == nil {
-				return retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.model': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.model' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-		}
-	}
-
-	if errs == nil {
-		return ret, fmt.Errorf("%w 'VehicleIdentificationModel'", errNotFound)
-	}
-
-	return ret, errs
-}
-
-// VehicleIdentificationYearFromV1Data converts the given JSON data to a float64.
-func VehicleIdentificationYearFromV1Data(jsonData []byte) (ret float64, err error) {
-	var errs error
-	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.year")
-	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(float64)
-		if ok {
-			retVal, err := ToVehicleIdentificationYear0(jsonData, val)
-			if err == nil {
-				return retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.year': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.year' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-		}
-	}
-
-	if errs == nil {
-		return ret, fmt.Errorf("%w 'VehicleIdentificationYear'", errNotFound)
 	}
 
 	return ret, errs

@@ -262,30 +262,6 @@
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
-- vspecName: Vehicle.VehicleIdentification.Brand
-  goType: ""
-  conversions:
-    - originalName: make
-      originalType: string
-      isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
-- vspecName: Vehicle.VehicleIdentification.Model
-  goType: ""
-  conversions:
-    - originalName: model
-      originalType: string
-      isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
-- vspecName: Vehicle.VehicleIdentification.Year
-  goType: ""
-  conversions:
-    - originalName: year
-      originalType: float64
-      isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.MAF
   goType: ""
   conversions:

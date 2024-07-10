@@ -350,21 +350,3 @@ func ToSpeed0(originalDoc []byte, val float64) (float64, error) {
 func ToSpeed1(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
-
-// ToVehicleIdentificationBrand0 converts data from field 'make' of type string to 'Vehicle.VehicleIdentification.Brand' of type string.
-// Vehicle.VehicleIdentification.Brand: Vehicle brand or manufacturer.
-func ToVehicleIdentificationBrand0(originalDoc []byte, val string) (string, error) {
-	return val, nil
-}
-
-// ToVehicleIdentificationModel0 converts data from field 'model' of type string to 'Vehicle.VehicleIdentification.Model' of type string.
-// Vehicle.VehicleIdentification.Model: Vehicle model.
-func ToVehicleIdentificationModel0(originalDoc []byte, val string) (string, error) {
-	return val, nil
-}
-
-// ToVehicleIdentificationYear0 converts data from field 'year' of type float64 to 'Vehicle.VehicleIdentification.Year' of type float64.
-// Vehicle.VehicleIdentification.Year: Model year of the vehicle.
-func ToVehicleIdentificationYear0(originalDoc []byte, val float64) (float64, error) {
-	return val, nil
-}
