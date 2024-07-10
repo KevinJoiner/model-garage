@@ -96,7 +96,6 @@ var (
 		{TokenID: 123, Timestamp: ts, Name: "currentLocationAltitude", ValueNumber: 100, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "currentLocationLatitude", ValueNumber: 37.7749, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "currentLocationLongitude", ValueNumber: -122.4194, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "currentLocationTimestamp", ValueNumber: float64(ts.UTC().Unix()), Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "currentLocationIsRedacted", ValueNumber: 1, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "powertrainCombustionEngineECT", ValueNumber: 90, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "powertrainCombustionEngineEngineOilLevel", ValueString: "CRITICALLY_LOW", Source: "dimo/integration/123"},

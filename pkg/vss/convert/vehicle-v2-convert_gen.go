@@ -487,33 +487,6 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
-	case "timestamp":
-		val0, err := CurrentLocationTimestampFromV2Data(originalDoc, valResult)
-		if err != nil {
-			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'timestamp': %w", err))
-		} else {
-			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "currentLocationTimestamp",
-			}
-			sig.SetValue(val0)
-			ret = append(ret, sig)
-		}
-		val1, err := CurrentLocationTimestampFromV2Data(originalDoc, valResult)
-		if err != nil {
-			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'timestamp': %w", err))
-		} else {
-			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "currentLocationTimestamp",
-			}
-			sig.SetValue(val1)
-			ret = append(ret, sig)
-		}
 	case "tires.backLeft":
 		val0, err := ChassisAxleRow2WheelLeftTirePressureFromV2Data(originalDoc, valResult)
 		if err != nil {
@@ -763,33 +736,6 @@ func CurrentLocationLongitudeFromV2Data(originalDoc []byte, result gjson.Result)
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'longitude': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'longitude' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-	}
-
-	return ret, errs
-}
-
-// CurrentLocationTimestampFromData converts the given JSON data to a float64.
-func CurrentLocationTimestampFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
-	var errs error
-	val0, ok := result.Value().(string)
-	if ok {
-		ret, err = ToCurrentLocationTimestamp0(originalDoc, val0)
-		if err == nil {
-			return ret, nil
-		}
-		errs = errors.Join(errs, fmt.Errorf("failed to convert 'timestamp': %w", err))
-	} else {
-		errs = errors.Join(errs, fmt.Errorf("%w, field 'timestamp' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-	}
-	val1, ok := result.Value().(float64)
-	if ok {
-		ret, err = ToCurrentLocationTimestamp1(originalDoc, val1)
-		if err == nil {
-			return ret, nil
-		}
-		errs = errors.Join(errs, fmt.Errorf("failed to convert 'timestamp': %w", err))
-	} else {
-		errs = errors.Join(errs, fmt.Errorf("%w, field 'timestamp' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
 
 	return ret, errs

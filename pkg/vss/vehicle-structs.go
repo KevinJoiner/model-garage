@@ -18,8 +18,6 @@ const (
 	FieldCurrentLocationLatitude = "currentLocationLatitude"
 	// FieldCurrentLocationLongitude Current longitude of vehicle in WGS 84 geodetic coordinates, as measured at the position of GNSS receiver antenna.
 	FieldCurrentLocationLongitude = "currentLocationLongitude"
-	// FieldCurrentLocationTimestamp Timestamp from GNSS system for current location, formatted according to ISO 8601 with UTC time zone.
-	FieldCurrentLocationTimestamp = "currentLocationTimestamp"
 	// FieldDIMOAftermarketHDOP Horizontal dilution of precision of GPS
 	FieldDIMOAftermarketHDOP = "dimoAftermarketHDOP"
 	// FieldDIMOAftermarketNSAT Number of sync satellites for GPS
