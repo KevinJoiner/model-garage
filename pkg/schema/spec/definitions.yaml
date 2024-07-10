@@ -68,19 +68,6 @@
       isArray: false
   requiredPrivileges:
     - VEHICLE_ALL_TIME_LOCATION
-- vspecName: Vehicle.CurrentLocation.Timestamp
-  isArray: false
-  clickHouseType: DateTime('UTC')
-  goType: "float64"
-  conversions:
-    - originalName: timestamp
-      originalType: string
-      isArray: false
-    - originalName: timestamp
-      originalType: float64
-      isArray: false
-  requiredPrivileges:
-    - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.Exterior.AirTemperature
   goType: ""
   conversions:

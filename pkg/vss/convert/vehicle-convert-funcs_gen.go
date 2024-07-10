@@ -2,9 +2,7 @@
 package convert
 
 import (
-	"fmt"
 	"math"
-	"time"
 
 	"golang.org/x/mod/semver"
 )
@@ -68,24 +66,6 @@ func ToCurrentLocationLatitude0(originalDoc []byte, val float64) (float64, error
 // Vehicle.CurrentLocation.Longitude: Current longitude of vehicle in WGS 84 geodetic coordinates, as measured at the position of GNSS receiver antenna.
 // Unit: 'degrees' Min: '-180' Max: '180'
 func ToCurrentLocationLongitude0(originalDoc []byte, val float64) (float64, error) {
-	return val, nil
-}
-
-// ToCurrentLocationTimestamp0 converts data from field 'timestamp' of type string to 'Vehicle.CurrentLocation.Timestamp' of type float64.
-// Vehicle.CurrentLocation.Timestamp: Timestamp from GNSS system for current location, formatted according to ISO 8601 with UTC time zone.
-// Unit: 'iso8601'
-func ToCurrentLocationTimestamp0(originalDoc []byte, val string) (float64, error) {
-	ts, err := time.Parse(time.RFC3339, val)
-	if err != nil {
-		return 0, fmt.Errorf("error parsing time: %w", err)
-	}
-	return float64(ts.UTC().Unix()), nil
-}
-
-// ToCurrentLocationTimestamp1 converts data from field 'timestamp' of type float64 to 'Vehicle.CurrentLocation.Timestamp' of type float64.
-// Vehicle.CurrentLocation.Timestamp: Timestamp from GNSS system for current location, formatted according to ISO 8601 with UTC time zone.
-// Unit: 'iso8601'
-func ToCurrentLocationTimestamp1(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 

@@ -148,22 +148,6 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 		retSignals = append(retSignals, sig)
 	}
 
-	val, err = CurrentLocationTimestampFromV1Data(jsonData)
-	if err != nil {
-		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'CurrentLocationTimestamp': %w", err))
-		}
-	} else {
-		sig := vss.Signal{
-			Name:      "currentLocationTimestamp",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
-		}
-		sig.SetValue(val)
-		retSignals = append(retSignals, sig)
-	}
-
 	val, err = DIMOAftermarketHDOPFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -793,44 +777,6 @@ func CurrentLocationLongitudeFromV1Data(jsonData []byte) (ret float64, err error
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'CurrentLocationLongitude'", errNotFound)
-	}
-
-	return ret, errs
-}
-
-// CurrentLocationTimestampFromV1Data converts the given JSON data to a float64.
-func CurrentLocationTimestampFromV1Data(jsonData []byte) (ret float64, err error) {
-	var errs error
-	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.timestamp")
-	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(string)
-		if ok {
-			retVal, err := ToCurrentLocationTimestamp0(jsonData, val)
-			if err == nil {
-				return retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.timestamp': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.timestamp' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-		}
-	}
-	result = gjson.GetBytes(jsonData, "data.timestamp")
-	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(float64)
-		if ok {
-			retVal, err := ToCurrentLocationTimestamp1(jsonData, val)
-			if err == nil {
-				return retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.timestamp': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.timestamp' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-		}
-	}
-
-	if errs == nil {
-		return ret, fmt.Errorf("%w 'CurrentLocationTimestamp'", errNotFound)
 	}
 
 	return ret, errs
