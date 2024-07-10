@@ -4,7 +4,7 @@ import (
 	_ "embed"
 )
 
-//go:embed spec/vss_rel_4.2-DIMO.csv
+//go:embed spec/vss_rel_4.2-DIMO-*.csv
 var vssRel42DIMO string
 
 //go:embed spec/definitions.yaml
