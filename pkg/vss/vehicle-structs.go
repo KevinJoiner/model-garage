@@ -12,6 +12,8 @@ const (
 	FieldChassisAxleRow2WheelRightTirePressure = "chassisAxleRow2WheelRightTirePressure"
 	// FieldCurrentLocationAltitude Current altitude relative to WGS 84 reference ellipsoid, as measured at the position of GNSS receiver antenna.
 	FieldCurrentLocationAltitude = "currentLocationAltitude"
+	// FieldCurrentLocationIsRedacted Indicates if the latitude and longitude signals at the current timestamp have been redacted using a privacy zone.
+	FieldCurrentLocationIsRedacted = "currentLocationIsRedacted"
 	// FieldCurrentLocationLatitude Current latitude of vehicle in WGS 84 geodetic coordinates, as measured at the position of GNSS receiver antenna.
 	FieldCurrentLocationLatitude = "currentLocationLatitude"
 	// FieldCurrentLocationLongitude Current longitude of vehicle in WGS 84 geodetic coordinates, as measured at the position of GNSS receiver antenna.
@@ -22,12 +24,10 @@ const (
 	FieldDIMOAftermarketHDOP = "dimoAftermarketHDOP"
 	// FieldDIMOAftermarketNSAT Number of sync satellites for GPS
 	FieldDIMOAftermarketNSAT = "dimoAftermarketNSAT"
-	// FieldDIMOAftermarketSSID Service Set Ientifier for the wifi.
+	// FieldDIMOAftermarketSSID Service Set Identifier for the wifi.
 	FieldDIMOAftermarketSSID = "dimoAftermarketSSID"
-	// FieldDIMOAftermarketWPAState Indicate the current wpa state for the devices wifi
+	// FieldDIMOAftermarketWPAState Indicate the current WPA state for the device's wifi
 	FieldDIMOAftermarketWPAState = "dimoAftermarketWPAState"
-	// FieldDIMOIsLocationRedacted Indicates if the latitude and longitude signals at the current timestamp have been redacted using a privacy zone.
-	FieldDIMOIsLocationRedacted = "dimoIsLocationRedacted"
 	// FieldExteriorAirTemperature Air temperature outside the vehicle.
 	FieldExteriorAirTemperature = "exteriorAirTemperature"
 	// FieldLowVoltageBatteryCurrentVoltage Current Voltage of the low voltage battery.
@@ -44,6 +44,8 @@ const (
 	FieldPowertrainCombustionEngineECT = "powertrainCombustionEngineECT"
 	// FieldPowertrainCombustionEngineEngineOilLevel Engine oil level.
 	FieldPowertrainCombustionEngineEngineOilLevel = "powertrainCombustionEngineEngineOilLevel"
+	// FieldPowertrainCombustionEngineEngineOilRelativeLevel Engine oil level as a percentage.
+	FieldPowertrainCombustionEngineEngineOilRelativeLevel = "powertrainCombustionEngineEngineOilRelativeLevel"
 	// FieldPowertrainCombustionEngineMAF Grams of air drawn into engine per second.
 	FieldPowertrainCombustionEngineMAF = "powertrainCombustionEngineMAF"
 	// FieldPowertrainCombustionEngineSpeed Engine speed measured as rotations per minute.

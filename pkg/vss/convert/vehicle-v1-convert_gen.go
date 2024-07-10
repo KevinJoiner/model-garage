@@ -100,6 +100,22 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 		retSignals = append(retSignals, sig)
 	}
 
+	val, err = CurrentLocationIsRedactedFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = errors.Join(errs, fmt.Errorf("failed to get 'CurrentLocationIsRedacted': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "currentLocationIsRedacted",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
 	val, err = CurrentLocationLatitudeFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -204,22 +220,6 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	} else {
 		sig := vss.Signal{
 			Name:      "dimoAftermarketWPAState",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
-		}
-		sig.SetValue(val)
-		retSignals = append(retSignals, sig)
-	}
-
-	val, err = DIMOIsLocationRedactedFromV1Data(jsonData)
-	if err != nil {
-		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'DIMOIsLocationRedacted': %w", err))
-		}
-	} else {
-		sig := vss.Signal{
-			Name:      "dimoIsLocationRedacted",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -348,6 +348,22 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	} else {
 		sig := vss.Signal{
 			Name:      "powertrainCombustionEngineEngineOilLevel",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = PowertrainCombustionEngineEngineOilRelativeLevelFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineEngineOilRelativeLevel': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "powertrainCombustionEngineEngineOilRelativeLevel",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -755,6 +771,31 @@ func CurrentLocationAltitudeFromV1Data(jsonData []byte) (ret float64, err error)
 	return ret, errs
 }
 
+// CurrentLocationIsRedactedFromV1Data converts the given JSON data to a float64.
+func CurrentLocationIsRedactedFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.isRedacted")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(bool)
+		if ok {
+			retVal, err := ToCurrentLocationIsRedacted0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.isRedacted': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.isRedacted' is not of type 'bool' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'CurrentLocationIsRedacted'", errNotFound)
+	}
+
+	return ret, errs
+}
+
 // CurrentLocationLatitudeFromV1Data converts the given JSON data to a float64.
 func CurrentLocationLatitudeFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
@@ -969,31 +1010,6 @@ func DIMOAftermarketWPAStateFromV1Data(jsonData []byte) (ret string, err error) 
 	return ret, errs
 }
 
-// DIMOIsLocationRedactedFromV1Data converts the given JSON data to a float64.
-func DIMOIsLocationRedactedFromV1Data(jsonData []byte) (ret float64, err error) {
-	var errs error
-	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.isRedacted")
-	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(bool)
-		if ok {
-			retVal, err := ToDIMOIsLocationRedacted0(jsonData, val)
-			if err == nil {
-				return retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.isRedacted': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.isRedacted' is not of type 'bool' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-		}
-	}
-
-	if errs == nil {
-		return ret, fmt.Errorf("%w 'DIMOIsLocationRedacted'", errNotFound)
-	}
-
-	return ret, errs
-}
-
 // ExteriorAirTemperatureFromV1Data converts the given JSON data to a float64.
 func ExteriorAirTemperatureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
@@ -1202,6 +1218,31 @@ func PowertrainCombustionEngineEngineOilLevelFromV1Data(jsonData []byte) (ret st
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'PowertrainCombustionEngineEngineOilLevel'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// PowertrainCombustionEngineEngineOilRelativeLevelFromV1Data converts the given JSON data to a float64.
+func PowertrainCombustionEngineEngineOilRelativeLevelFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.oil")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainCombustionEngineEngineOilRelativeLevel0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.oil': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.oil' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'PowertrainCombustionEngineEngineOilRelativeLevel'", errNotFound)
 	}
 
 	return ret, errs

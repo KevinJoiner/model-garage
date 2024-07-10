@@ -48,6 +48,15 @@ func ToCurrentLocationAltitude0(originalDoc []byte, val float64) (float64, error
 	return val, nil
 }
 
+// ToCurrentLocationIsRedacted0 converts data from field 'isRedacted' of type bool to 'Vehicle.CurrentLocation.IsRedacted' of type float64.
+// Vehicle.CurrentLocation.IsRedacted: Indicates if the latitude and longitude signals at the current timestamp have been redacted using a privacy zone.
+func ToCurrentLocationIsRedacted0(originalDoc []byte, val bool) (float64, error) {
+	if val {
+		return 1, nil
+	}
+	return 0, nil
+}
+
 // ToCurrentLocationLatitude0 converts data from field 'latitude' of type float64 to 'Vehicle.CurrentLocation.Latitude' of type float64.
 // Vehicle.CurrentLocation.Latitude: Current latitude of vehicle in WGS 84 geodetic coordinates, as measured at the position of GNSS receiver antenna.
 // Unit: 'degrees' Min: '-90' Max: '90'
@@ -93,36 +102,27 @@ func ToDIMOAftermarketNSAT0(originalDoc []byte, val float64) (float64, error) {
 }
 
 // ToDIMOAftermarketSSID0 converts data from field 'ssid' of type string to 'Vehicle.DIMO.Aftermarket.SSID' of type string.
-// Vehicle.DIMO.Aftermarket.SSID: Service Set Ientifier for the wifi.
+// Vehicle.DIMO.Aftermarket.SSID: Service Set Identifier for the wifi.
 func ToDIMOAftermarketSSID0(originalDoc []byte, val string) (string, error) {
 	return val, nil
 }
 
 // ToDIMOAftermarketSSID1 converts data from field 'wifi.ssid' of type string to 'Vehicle.DIMO.Aftermarket.SSID' of type string.
-// Vehicle.DIMO.Aftermarket.SSID: Service Set Ientifier for the wifi.
+// Vehicle.DIMO.Aftermarket.SSID: Service Set Identifier for the wifi.
 func ToDIMOAftermarketSSID1(originalDoc []byte, val string) (string, error) {
 	return val, nil
 }
 
 // ToDIMOAftermarketWPAState0 converts data from field 'wpa_state' of type string to 'Vehicle.DIMO.Aftermarket.WPAState' of type string.
-// Vehicle.DIMO.Aftermarket.WPAState: Indicate the current wpa state for the devices wifi
+// Vehicle.DIMO.Aftermarket.WPAState: Indicate the current WPA state for the device's wifi
 func ToDIMOAftermarketWPAState0(originalDoc []byte, val string) (string, error) {
 	return val, nil
 }
 
 // ToDIMOAftermarketWPAState1 converts data from field 'wifi.wpaState' of type string to 'Vehicle.DIMO.Aftermarket.WPAState' of type string.
-// Vehicle.DIMO.Aftermarket.WPAState: Indicate the current wpa state for the devices wifi
+// Vehicle.DIMO.Aftermarket.WPAState: Indicate the current WPA state for the device's wifi
 func ToDIMOAftermarketWPAState1(originalDoc []byte, val string) (string, error) {
 	return val, nil
-}
-
-// ToDIMOIsLocationRedacted0 converts data from field 'isRedacted' of type bool to 'Vehicle.DIMO.IsLocationRedacted' of type float64.
-// Vehicle.DIMO.IsLocationRedacted: Indicates if the latitude and longitude signals at the current timestamp have been redacted using a privacy zone.
-func ToDIMOIsLocationRedacted0(originalDoc []byte, val bool) (float64, error) {
-	if val {
-		return 1, nil
-	}
-	return 0, nil
 }
 
 // ToExteriorAirTemperature0 converts data from field 'ambientAirTemp' of type float64 to 'Vehicle.Exterior.AirTemperature' of type float64.
@@ -200,6 +200,14 @@ func ToPowertrainCombustionEngineEngineOilLevel0(originalDoc []byte, val float64
 	default:
 		return "CRITICALLY_HIGH", nil
 	}
+}
+
+// ToPowertrainCombustionEngineEngineOilRelativeLevel0 converts data from field 'oil' of type float64 to 'Vehicle.Powertrain.CombustionEngine.EngineOilRelativeLevel' of type float64.
+// Vehicle.Powertrain.CombustionEngine.EngineOilRelativeLevel: Engine oil level as a percentage.
+// Unit: 'percent' Min: '0' Max: '100'
+func ToPowertrainCombustionEngineEngineOilRelativeLevel0(originalDoc []byte, val float64) (float64, error) {
+	// oil comes in as a value between 0 and 1, convert to percentage.
+	return val * 100, nil
 }
 
 // ToPowertrainCombustionEngineMAF0 converts data from field 'maf' of type float64 to 'Vehicle.Powertrain.CombustionEngine.MAF' of type float64.

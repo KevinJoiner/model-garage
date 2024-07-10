@@ -92,6 +92,11 @@ var fullV2InputJSON = `{
                 },
                 {
                     "timestamp": 1713460846435,
+                    "name": "isRedacted",
+                    "value": false
+                },
+                {
+                    "timestamp": 1713460846435,
                     "name": "longitude",
                     "value": -56.50151833333334
                 },
@@ -153,6 +158,7 @@ var expectedV2Signals = []vss.Signal{
 	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 42, 256000000, time.UTC), Name: "powertrainCombustionEngineMAF", ValueNumber: 475.79, ValueString: "", Source: "dimo/integration/123"},
 	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 44, 422000000, time.UTC), Name: "obdEngineLoad", ValueNumber: 12.54912, ValueString: "", Source: "dimo/integration/123"},
 	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 44, 962000000, time.UTC), Name: "powertrainCombustionEngineTPS", ValueNumber: 23.529600000000002, ValueString: "", Source: "dimo/integration/123"},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "currentLocationIsRedacted", ValueNumber: 0, ValueString: "", Source: "dimo/integration/123"},
 	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "currentLocationLongitude", ValueNumber: -56.50151833333334, ValueString: "", Source: "dimo/integration/123"},
 	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "currentLocationLatitude", ValueNumber: 56.27014, ValueString: "", Source: "dimo/integration/123"},
 	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "dimoAftermarketHDOP", ValueNumber: 1.4, ValueString: "", Source: "dimo/integration/123"},

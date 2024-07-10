@@ -303,7 +303,7 @@ func TestToPowertrainTractionBatteryCurrentPower1(t *testing.T) {
 	}
 }
 
-func TestToDIMOIsLocationRedacted0(t *testing.T) {
+func TestToCurrentLocationIsRedacted0(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name          string
@@ -333,7 +333,7 @@ func TestToDIMOIsLocationRedacted0(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := convert.ToDIMOIsLocationRedacted0(nil, test.input)
+			result, err := convert.ToCurrentLocationIsRedacted0(nil, test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {

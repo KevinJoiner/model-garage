@@ -279,7 +279,7 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			ret = append(ret, sig)
 		}
 	case "isRedacted":
-		val0, err := DIMOIsLocationRedactedFromV2Data(originalDoc, valResult)
+		val0, err := CurrentLocationIsRedactedFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'isRedacted': %w", err))
 		} else {
@@ -287,7 +287,7 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "dimoIsLocationRedacted",
+				Name:      "currentLocationIsRedacted",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -402,6 +402,19 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 				Name:      "powertrainCombustionEngineEngineOilLevel",
 			}
 			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
+		val1, err := PowertrainCombustionEngineEngineOilRelativeLevelFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'oil': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "powertrainCombustionEngineEngineOilRelativeLevel",
+			}
+			sig.SetValue(val1)
 			ret = append(ret, sig)
 		}
 	case "range":
@@ -746,6 +759,23 @@ func CurrentLocationAltitudeFromV2Data(originalDoc []byte, result gjson.Result) 
 	return ret, errs
 }
 
+// CurrentLocationIsRedactedFromData converts the given JSON data to a float64.
+func CurrentLocationIsRedactedFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(bool)
+	if ok {
+		ret, err = ToCurrentLocationIsRedacted0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'isRedacted': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'isRedacted' is not of type 'bool' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
 // CurrentLocationLatitudeFromData converts the given JSON data to a float64.
 func CurrentLocationLatitudeFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
@@ -895,23 +925,6 @@ func DIMOAftermarketWPAStateFromV2Data(originalDoc []byte, result gjson.Result) 
 	return ret, errs
 }
 
-// DIMOIsLocationRedactedFromData converts the given JSON data to a float64.
-func DIMOIsLocationRedactedFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
-	var errs error
-	val0, ok := result.Value().(bool)
-	if ok {
-		ret, err = ToDIMOIsLocationRedacted0(originalDoc, val0)
-		if err == nil {
-			return ret, nil
-		}
-		errs = errors.Join(errs, fmt.Errorf("failed to convert 'isRedacted': %w", err))
-	} else {
-		errs = errors.Join(errs, fmt.Errorf("%w, field 'isRedacted' is not of type 'bool' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-	}
-
-	return ret, errs
-}
-
 // ExteriorAirTemperatureFromData converts the given JSON data to a float64.
 func ExteriorAirTemperatureFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
@@ -1047,6 +1060,23 @@ func PowertrainCombustionEngineEngineOilLevelFromV2Data(originalDoc []byte, resu
 	val0, ok := result.Value().(float64)
 	if ok {
 		ret, err = ToPowertrainCombustionEngineEngineOilLevel0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'oil': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'oil' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// PowertrainCombustionEngineEngineOilRelativeLevelFromData converts the given JSON data to a float64.
+func PowertrainCombustionEngineEngineOilRelativeLevelFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToPowertrainCombustionEngineEngineOilRelativeLevel0(originalDoc, val0)
 		if err == nil {
 			return ret, nil
 		}

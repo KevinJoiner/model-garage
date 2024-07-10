@@ -332,11 +332,19 @@
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
-- vspecName: Vehicle.DIMO.IsLocationRedacted
+- vspecName: Vehicle.CurrentLocation.IsRedacted
   goType: ""
   conversions:
     - originalName: isRedacted
       originalType: bool
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_ALL_TIME_LOCATION
+- vspecName: Vehicle.Powertrain.CombustionEngine.EngineOilRelativeLevel
+  goType: ""
+  conversions:
+    - originalName: oil
+      originalType: float64
       isArray: false
   requiredPrivileges:
     - VEHICLE_ALL_TIME_LOCATION
