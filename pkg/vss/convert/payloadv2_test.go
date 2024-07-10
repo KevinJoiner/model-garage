@@ -119,7 +119,22 @@ var fullV2InputJSON = `{
                     "timestamp": 1713460846435,
                     "name": "ssid",
                     "value": "foo"
-                }
+                },
+                {
+                    "timestamp": 1713460846435,
+                    "name": "vehicleSpeed",
+                    "value": 39
+                },
+                {
+                    "timestamp": 1713460846435,
+                    "name": "rpm",
+                    "value": 2000
+                },
+                {
+                    "timestamp": 1713460846435,
+                    "name": "fuelLevel",
+                    "value": 50
+                },
             ]
         }
     },
@@ -144,4 +159,7 @@ var expectedV2Signals = []vss.Signal{
 	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "dimoAftermarketNSAT", ValueNumber: 6, ValueString: "", Source: "dimo/integration/123"},
 	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "dimoAftermarketWPAState", ValueNumber: 0, ValueString: "COMPLETED", Source: "dimo/integration/123"},
 	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "dimoAftermarketSSID", ValueNumber: 0, ValueString: "foo", Source: "dimo/integration/123"},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "speed", ValueNumber: 39, ValueString: "", Source: "dimo/integration/123"},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "powertrainCombustionEngineSpeed", ValueNumber: 2000, ValueString: "", Source: "dimo/integration/123"},
+	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "powertrainFuelSystemRelativeLevel", ValueNumber: 50, ValueString: "", Source: "dimo/integration/123"},
 }

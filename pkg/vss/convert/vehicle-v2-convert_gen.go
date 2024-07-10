@@ -41,6 +41,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
+	case "ambientAirTemp":
+		val0, err := ExteriorAirTemperatureFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'ambientAirTemp': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "exteriorAirTemperature",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
 	case "ambientTemp":
 		val0, err := ExteriorAirTemperatureFromV2Data(originalDoc, valResult)
 		if err != nil {
@@ -181,8 +195,22 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
+	case "fuelLevel":
+		val0, err := PowertrainFuelSystemRelativeLevelFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'fuelLevel': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "powertrainFuelSystemRelativeLevel",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
 	case "fuelPercentRemaining":
-		val0, err := PowertrainFuelSystemAbsoluteLevelFromV2Data(originalDoc, valResult)
+		val0, err := PowertrainFuelSystemRelativeLevelFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'fuelPercentRemaining': %w", err))
 		} else {
@@ -190,7 +218,7 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "powertrainFuelSystemAbsoluteLevel",
+				Name:      "powertrainFuelSystemRelativeLevel",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -390,6 +418,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
+	case "rpm":
+		val0, err := PowertrainCombustionEngineSpeedFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'rpm': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "powertrainCombustionEngineSpeed",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
 	case "runTime":
 		val0, err := OBDRunTimeFromV2Data(originalDoc, valResult)
 		if err != nil {
@@ -539,6 +581,48 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
 				Name:      "chassisAxleRow1WheelRightTirePressure",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
+	case "vehicleSpeed":
+		val0, err := SpeedFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'vehicleSpeed': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "speed",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
+	case "wifi.ssid":
+		val0, err := DIMOAftermarketSSIDFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'wifi.ssid': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "dimoAftermarketSSID",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
+	case "wifi.wpaState":
+		val0, err := DIMOAftermarketWPAStateFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'wifi.wpaState': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "dimoAftermarketWPAState",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -770,6 +854,16 @@ func DIMOAftermarketSSIDFromV2Data(originalDoc []byte, result gjson.Result) (ret
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'ssid' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
+	val1, ok := result.Value().(string)
+	if ok {
+		ret, err = ToDIMOAftermarketSSID1(originalDoc, val1)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'wifi.ssid': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'wifi.ssid' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
 
 	return ret, errs
 }
@@ -786,6 +880,16 @@ func DIMOAftermarketWPAStateFromV2Data(originalDoc []byte, result gjson.Result) 
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'wpa_state': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'wpa_state' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+	val1, ok := result.Value().(string)
+	if ok {
+		ret, err = ToDIMOAftermarketWPAState1(originalDoc, val1)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'wifi.wpaState': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'wifi.wpaState' is not of type 'string' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
 
 	return ret, errs
@@ -814,6 +918,16 @@ func ExteriorAirTemperatureFromV2Data(originalDoc []byte, result gjson.Result) (
 	val0, ok := result.Value().(float64)
 	if ok {
 		ret, err = ToExteriorAirTemperature0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'ambientAirTemp': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'ambientAirTemp' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+	val1, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToExteriorAirTemperature1(originalDoc, val1)
 		if err == nil {
 			return ret, nil
 		}
@@ -970,6 +1084,16 @@ func PowertrainCombustionEngineSpeedFromV2Data(originalDoc []byte, result gjson.
 		if err == nil {
 			return ret, nil
 		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'rpm': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'rpm' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+	val1, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToPowertrainCombustionEngineSpeed1(originalDoc, val1)
+		if err == nil {
+			return ret, nil
+		}
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'engineSpeed': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'engineSpeed' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
@@ -995,12 +1119,22 @@ func PowertrainCombustionEngineTPSFromV2Data(originalDoc []byte, result gjson.Re
 	return ret, errs
 }
 
-// PowertrainFuelSystemAbsoluteLevelFromData converts the given JSON data to a float64.
-func PowertrainFuelSystemAbsoluteLevelFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+// PowertrainFuelSystemRelativeLevelFromData converts the given JSON data to a float64.
+func PowertrainFuelSystemRelativeLevelFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
 	val0, ok := result.Value().(float64)
 	if ok {
-		ret, err = ToPowertrainFuelSystemAbsoluteLevel0(originalDoc, val0)
+		ret, err = ToPowertrainFuelSystemRelativeLevel0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'fuelLevel': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'fuelLevel' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+	val1, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToPowertrainFuelSystemRelativeLevel1(originalDoc, val1)
 		if err == nil {
 			return ret, nil
 		}
@@ -1171,6 +1305,16 @@ func SpeedFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err 
 	val0, ok := result.Value().(float64)
 	if ok {
 		ret, err = ToSpeed0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'vehicleSpeed': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'vehicleSpeed' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+	val1, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToSpeed1(originalDoc, val1)
 		if err == nil {
 			return ret, nil
 		}

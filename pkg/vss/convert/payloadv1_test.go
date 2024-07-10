@@ -1,7 +1,9 @@
 package convert_test
 
 import (
+	"cmp"
 	"context"
+	"slices"
 	"testing"
 	"time"
 
@@ -21,7 +23,15 @@ func TestFullFromDataConversion(t *testing.T) {
 	getter := &tokenGetter{}
 	actualSignals, err := convert.SignalsFromPayload(context.Background(), getter, []byte(fullInputJSON))
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
-	require.ElementsMatchf(t, expectedSignals, actualSignals, "converted vehicle does not match expected vehicle")
+
+	// sort the signals so diffs are easier to read
+	sortFunc := func(a, b vss.Signal) int {
+		return cmp.Compare(a.Name, b.Name)
+	}
+	slices.SortFunc(expectedSignals, sortFunc)
+	slices.SortFunc(actualSignals, sortFunc)
+
+	require.Equal(t, expectedSignals, actualSignals, "converted vehicle does not match expected vehicle")
 }
 
 var (
@@ -52,20 +62,20 @@ var (
 			"ambientTemp": 25.0,
 			"batteryVoltage": 12.5,
 			"barometricPressure": 1013.25,
-			"engineLoad": 75.0,
+			"engineLoad": 0.75,
 			"intakeTemp": 30.0,
 			"runTime": 1200.0,
 			"coolantTemp": 90.0,
 			"oil": 0.10,
 			"engineSpeed": 3000.0,
-			"throttlePosition": 50.0,
-			"fuelPercentRemaining": 60.0,
+			"throttlePosition": 0.50,
+			"fuelPercentRemaining": 0.6,
 			"fuelType": "Gasoline",
 			"range": 300.0,
-			"chargeLimit": 80.0,
+			"chargeLimit": 0.8,
 			"charging": true,
 			"batteryCapacity": 60.0,
-			"soc": 70.0,
+			"soc": 0.7,
 			"odometer": 50000.0,
 			"speed": 60.0,
 			"make": "Toyota",
@@ -92,7 +102,7 @@ var (
 		{TokenID: 123, Timestamp: ts, Name: "powertrainCombustionEngineEngineOilLevel", ValueString: "CRITICALLY_LOW", Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "powertrainCombustionEngineSpeed", ValueNumber: 3000, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "powertrainCombustionEngineTPS", ValueNumber: 50, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainFuelSystemAbsoluteLevel", ValueNumber: 60, Source: "dimo/integration/123"},
+		{TokenID: 123, Timestamp: ts, Name: "powertrainFuelSystemRelativeLevel", ValueNumber: 60, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "powertrainFuelSystemSupportedFuelTypes", ValueString: "GASOLINE", Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "powertrainRange", ValueNumber: 300, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "powertrainType", ValueString: "COMBUSTION", Source: "dimo/integration/123"},
