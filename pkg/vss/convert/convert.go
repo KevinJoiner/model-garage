@@ -23,9 +23,7 @@ const (
 func SignalsFromPayload(ctx context.Context, tokenGetter TokenIDGetter, jsonData []byte) ([]vss.Signal, error) {
 	version := GetSchemaVersion(jsonData)
 	switch {
-	case version == "": // empty string to support legacy status payloads without dataschema
-		fallthrough
-	case semver.Compare(StatusV1, version) == 0 || semver.Compare(StatusV1Converted, version) == 0:
+	case hasV1Schema(version):
 		return SignalsFromV1Payload(ctx, tokenGetter, jsonData)
 	case semver.Compare(StatusV2, version) == 0:
 		return SignalsFromV2Payload(jsonData)
@@ -43,4 +41,9 @@ func GetSchemaVersion(jsonData []byte) string {
 	schemaString := dataSchema.String()
 	version := schemaString[strings.LastIndex(schemaString, "/")+1:]
 	return version
+}
+
+// hasV1Schema checks if the payload has the same sceham as a v1.0.0.
+func hasV1Schema(version string) bool {
+	return version == "" || semver.Compare(StatusV1, version) == 0 || semver.Compare(StatusV1Converted, version) == 0
 }
