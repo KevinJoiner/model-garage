@@ -149,3 +149,31 @@ var (
 		{TokenID: 123, Timestamp: ts, Name: "powertrainTransmissionTravelledDistance", ValueNumber: 5024, Source: "dimo/integration/123"},
 	}
 )
+
+func TestWithTokenId(t *testing.T) {
+	t.Parallel()
+	actualSignals, err := convert.SignalsFromPayload(context.Background(), nil, []byte(inputJSONWithTokenID))
+	require.NoErrorf(t, err, "error converting input data: %v", err)
+	require.ElementsMatchf(t, expectedSignalsWithFromTokenID, actualSignals, "converted vehicle does not match expected vehicle")
+}
+
+var (
+	inputJSONWithTokenID = `{
+		"id": "randomIDnumber",
+		"specversion": "1.0",
+		"source": "dimo/integration/123",
+		"subject": "Vehicle123",
+		"time": "2022-01-01T12:34:56Z",
+		"type": "DIMO",
+		"vehicleTokenId": 123,
+		"data": {
+			"odometer": 5024.0,
+			"speed": 25.0
+		}
+	}`
+
+	expectedSignalsWithFromTokenID = []vss.Signal{
+		{TokenID: 123, Timestamp: ts, Name: "speed", ValueNumber: 25.0, Source: "dimo/integration/123"},
+		{TokenID: 123, Timestamp: ts, Name: "powertrainTransmissionTravelledDistance", ValueNumber: 5024, Source: "dimo/integration/123"},
+	}
+)

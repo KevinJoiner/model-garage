@@ -21,7 +21,7 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 	if !signals.IsArray() {
 		return nil, errors.New("signals field is not an array")
 	}
-	tokenID, err := TokenIDFromV2Data(jsonData)
+	tokenID, err := TokenIDFromData(jsonData)
 	if err != nil {
 		return nil, fmt.Errorf("error getting tokenID: %w", err)
 	}
@@ -57,8 +57,8 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 	return retSignals, errs
 }
 
-// TokenIDFromV2Data gets a tokenID from a V2 payload.
-func TokenIDFromV2Data(jsonData []byte) (uint32, error) {
+// TokenIDFromData gets a tokenID from a V2 payload.
+func TokenIDFromData(jsonData []byte) (uint32, error) {
 	lookupKey := "vehicleTokenId"
 	tokenID := gjson.GetBytes(jsonData, lookupKey)
 	if !tokenID.Exists() {
