@@ -22,7 +22,7 @@ func SignalsFromV1Payload(ctx context.Context, tokenGetter TokenIDGetter, jsonDa
 	if err != nil {
 		return nil, fmt.Errorf("error getting timestamp: %w", err)
 	}
-	tokenID, err := TokenIDFromV1Data(jsonData, tokenGetter)
+	tokenID, err := TokenIDFromV1Data(ctx, jsonData, tokenGetter)
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +81,7 @@ func TimestampFromV1Data(jsonData []byte) (time.Time, error) {
 // TokenIDFromV1Data gets a tokenID from a v1 payload.
 // attempts to get the tokenID from the vehicleTokenId field.
 // If the field is not found, it will attempt to get the tokenId using the subject field and the tokenGetter.
-func TokenIDFromV1Data(jsonData []byte, tokenGetter TokenIDGetter) (uint32, error) {
+func TokenIDFromV1Data(ctx context.Context, jsonData []byte, tokenGetter TokenIDGetter) (uint32, error) {
 	tokenID, err := TokenIDFromData(jsonData)
 	if err == nil {
 		return tokenID, nil
@@ -94,7 +94,7 @@ func TokenIDFromV1Data(jsonData []byte, tokenGetter TokenIDGetter) (uint32, erro
 	if err != nil {
 		return 0, err
 	}
-	tokenID, err = tokenGetter.TokenIDFromSubject(context.Background(), sub)
+	tokenID, err = tokenGetter.TokenIDFromSubject(ctx, sub)
 	if err != nil {
 		return 0, fmt.Errorf("error getting tokenID: %w", err)
 	}

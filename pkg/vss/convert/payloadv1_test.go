@@ -152,13 +152,13 @@ var (
 
 func TestWithTokenId(t *testing.T) {
 	t.Parallel()
-	actualSignals, err := convert.SignalsFromPayload(context.Background(), nil, []byte(inputJSONWithTokenId))
+	actualSignals, err := convert.SignalsFromPayload(context.Background(), nil, []byte(inputJSONWithTokenID))
 	require.NoErrorf(t, err, "error converting input data: %v", err)
-	require.ElementsMatchf(t, expectedSignalsWithFromTokenId, actualSignals, "converted vehicle does not match expected vehicle")
+	require.ElementsMatchf(t, expectedSignalsWithFromTokenID, actualSignals, "converted vehicle does not match expected vehicle")
 }
 
 var (
-	inputJSONWithTokenId = `{
+	inputJSONWithTokenID = `{
 		"id": "randomIDnumber",
 		"specversion": "1.0",
 		"source": "dimo/integration/123",
@@ -172,7 +172,7 @@ var (
 		}
 	}`
 
-	expectedSignalsWithFromTokenId = []vss.Signal{
+	expectedSignalsWithFromTokenID = []vss.Signal{
 		{TokenID: 123, Timestamp: ts, Name: "speed", ValueNumber: 25.0, Source: "dimo/integration/123"},
 		{TokenID: 123, Timestamp: ts, Name: "powertrainTransmissionTravelledDistance", ValueNumber: 5024, Source: "dimo/integration/123"},
 	}
