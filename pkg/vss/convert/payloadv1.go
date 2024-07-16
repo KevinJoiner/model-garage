@@ -22,13 +22,9 @@ func SignalsFromV1Payload(ctx context.Context, tokenGetter TokenIDGetter, jsonDa
 	if err != nil {
 		return nil, fmt.Errorf("error getting timestamp: %w", err)
 	}
-	sub, err := SubjectFromV1Data(jsonData)
+	tokenID, err := TokenIDFromV1Data(jsonData, tokenGetter)
 	if err != nil {
-		return nil, fmt.Errorf("error getting subject: %w", err)
-	}
-	tokenID, err := tokenGetter.TokenIDFromSubject(ctx, sub)
-	if err != nil {
-		return nil, fmt.Errorf("error getting tokenID from subject: %w", err)
+		return nil, err
 	}
 
 	source, err := SourceFromV1Data(jsonData)
@@ -80,6 +76,29 @@ func TimestampFromV1Data(jsonData []byte) (time.Time, error) {
 		return time.Time{}, fmt.Errorf("error parsing time: %w", err)
 	}
 	return ts, nil
+}
+
+// TokenIDFromV1Data gets a tokenID from a v1 payload.
+// attempts to get the tokenID from the vehicleTokenId field.
+// If the field is not found, it will attempt to get the tokenId using the subject field and the tokenGetter.
+func TokenIDFromV1Data(jsonData []byte, tokenGetter TokenIDGetter) (uint32, error) {
+	tokenID, err := TokenIDFromData(jsonData)
+	if err == nil {
+		return tokenID, nil
+	}
+	if !errors.As(err, &FieldNotFoundError{}) {
+		return 0, err
+	}
+
+	sub, err := SubjectFromV1Data(jsonData)
+	if err != nil {
+		return 0, err
+	}
+	tokenID, err = tokenGetter.TokenIDFromSubject(context.Background(), sub)
+	if err != nil {
+		return 0, fmt.Errorf("error getting tokenID: %w", err)
+	}
+	return tokenID, nil
 }
 
 // SourceFromV1Data gets a source field from a v1 payload.
