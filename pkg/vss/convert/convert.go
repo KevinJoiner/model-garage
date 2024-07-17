@@ -2,6 +2,9 @@ package convert
 
 import (
 	"context"
+	"errors"
+	"fmt"
+	"math"
 	"strings"
 
 	"github.com/DIMO-Network/model-garage/pkg/vss"
@@ -43,7 +46,46 @@ func GetSchemaVersion(jsonData []byte) string {
 	return version
 }
 
+// TokenIDFromData gets a tokenID from a V2 payload.
+func TokenIDFromData(jsonData []byte) (uint32, error) {
+	lookupKey := "vehicleTokenId"
+	tokenID := gjson.GetBytes(jsonData, lookupKey)
+	if !tokenID.Exists() {
+		return 0, FieldNotFoundError{Field: "tokenID", Lookup: lookupKey}
+	}
+	id, ok := tokenID.Value().(float64)
+	if !ok {
+		return 0, fmt.Errorf("%s field is not a number", lookupKey)
+	}
+	return float64toUint32(id), nil
+}
+
+// SourceFromData gets a source from a V2 payload.
+func SourceFromData(jsonData []byte) (string, error) {
+	lookupKey := "source"
+	source := gjson.GetBytes(jsonData, lookupKey)
+	if !source.Exists() {
+		return "", FieldNotFoundError{Field: "source", Lookup: lookupKey}
+	}
+	src, ok := source.Value().(string)
+	if !ok {
+		return "", errors.New("source field is not a string")
+	}
+	return src, nil
+}
+
 // hasV1Schema checks if the payload has the same sceham as a v1.0.0.
 func hasV1Schema(version string) bool {
 	return version == "" || semver.Compare(StatusV1, version) == 0 || semver.Compare(StatusV1Converted, version) == 0
+}
+
+// float64toUint32 converts float64 to uint32.
+func float64toUint32(val float64) uint32 {
+	if val > math.MaxUint32 {
+		return math.MaxUint32
+	}
+	if val < 0 {
+		return 0
+	}
+	return uint32(val)
 }

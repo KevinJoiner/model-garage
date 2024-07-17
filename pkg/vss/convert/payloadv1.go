@@ -27,7 +27,7 @@ func SignalsFromV1Payload(ctx context.Context, tokenGetter TokenIDGetter, jsonDa
 		return nil, err
 	}
 
-	source, err := SourceFromV1Data(jsonData)
+	source, err := SourceFromData(jsonData)
 	if err != nil {
 		return nil, fmt.Errorf("error getting source: %w", err)
 	}
@@ -80,13 +80,18 @@ func TimestampFromV1Data(jsonData []byte) (time.Time, error) {
 
 // TokenIDFromV1Data gets a tokenID from a v1 payload.
 // attempts to get the tokenID from the vehicleTokenId field.
-// If the field is not found, it will attempt to get the tokenId using the subject field and the tokenGetter.
+// If the field is not found and tokenGetter is not nil it will attempt to get the tokenId using the subject field and the tokenGetter.
 func TokenIDFromV1Data(ctx context.Context, jsonData []byte, tokenGetter TokenIDGetter) (uint32, error) {
 	tokenID, err := TokenIDFromData(jsonData)
 	if err == nil {
 		return tokenID, nil
 	}
 	if !errors.As(err, &FieldNotFoundError{}) {
+		return 0, err
+	}
+
+	// if the tokenGetter is nil then we cannot get the tokenID from the subject
+	if tokenGetter == nil {
 		return 0, err
 	}
 
@@ -99,17 +104,4 @@ func TokenIDFromV1Data(ctx context.Context, jsonData []byte, tokenGetter TokenID
 		return 0, fmt.Errorf("error getting tokenID: %w", err)
 	}
 	return tokenID, nil
-}
-
-// SourceFromV1Data gets a source field from a v1 payload.
-func SourceFromV1Data(jsonData []byte) (string, error) {
-	result := gjson.GetBytes(jsonData, "source")
-	if !result.Exists() {
-		return "", FieldNotFoundError{Field: "source", Lookup: "source"}
-	}
-	source, ok := result.Value().(string)
-	if !ok {
-		return "", errors.New("source field is not a string")
-	}
-	return source, nil
 }

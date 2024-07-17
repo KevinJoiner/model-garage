@@ -3,7 +3,6 @@ package convert
 import (
 	"errors"
 	"fmt"
-	"math"
 	"time"
 
 	"github.com/DIMO-Network/model-garage/pkg/vss"
@@ -25,7 +24,7 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error getting tokenID: %w", err)
 	}
-	source, err := SourceFromV2Data(jsonData)
+	source, err := SourceFromData(jsonData)
 	if err != nil {
 		return nil, fmt.Errorf("error getting source: %w", err)
 	}
@@ -57,20 +56,6 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 	return retSignals, errs
 }
 
-// TokenIDFromData gets a tokenID from a V2 payload.
-func TokenIDFromData(jsonData []byte) (uint32, error) {
-	lookupKey := "vehicleTokenId"
-	tokenID := gjson.GetBytes(jsonData, lookupKey)
-	if !tokenID.Exists() {
-		return 0, FieldNotFoundError{Field: "tokenID", Lookup: lookupKey}
-	}
-	id, ok := tokenID.Value().(float64)
-	if !ok {
-		return 0, fmt.Errorf("%s field is not a number", lookupKey)
-	}
-	return float64toUint32(id), nil
-}
-
 // TimestampFromV2Signal gets a timestamp from a V2 signal.
 func TimestampFromV2Signal(sigResult gjson.Result) (time.Time, error) {
 	lookupKey := "timestamp"
@@ -89,29 +74,4 @@ func NameFromV2Signal(sigResult gjson.Result) (string, error) {
 		return "", FieldNotFoundError{Field: "name", Lookup: lookupKey}
 	}
 	return signalName.String(), nil
-}
-
-// SourceFromV2Data gets a source from a V2 payload.
-func SourceFromV2Data(jsonData []byte) (string, error) {
-	lookupKey := "source"
-	source := gjson.GetBytes(jsonData, lookupKey)
-	if !source.Exists() {
-		return "", FieldNotFoundError{Field: "source", Lookup: lookupKey}
-	}
-	src, ok := source.Value().(string)
-	if !ok {
-		return "", errors.New("source field is not a string")
-	}
-	return src, nil
-}
-
-// float64toUint32 converts float64 to uint32.
-func float64toUint32(val float64) uint32 {
-	if val > math.MaxUint32 {
-		return math.MaxUint32
-	}
-	if val < 0 {
-		return 0
-	}
-	return uint32(val)
 }
