@@ -1,12 +1,10 @@
 name: generate files
 on:
-  pull_request:
-    branches: [ '**' ]
   push:
     branches: [main]
-env:
-  GOPRIVATE: github.com/DIMO-Network
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  pull_request:
+    branches: ['**']
+
 jobs:
   golangci:
     runs-on: ubuntu-latest
