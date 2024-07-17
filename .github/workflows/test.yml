@@ -1,5 +1,4 @@
 name: Test
-
 on:
   push:
     branches: [main]
@@ -20,7 +19,6 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go-version }}
-      # You can test your matrix by printing the current Go version
 
       - name: Get dependencies
         run: |
@@ -30,11 +28,5 @@ jobs:
       - name: modVerify
         run: go mod verify
 
-      - name: Run Tests with go testsum
-        run: gotestsum --format pkgname --jsonfile test.json
-
-      - name: Annotate tests
-        if: always()
-        uses: guyarb/golang-test-annotations@v0.8.0
-        with:
-          test-results: test.json
+      - name: Run Tests 
+        run: make test

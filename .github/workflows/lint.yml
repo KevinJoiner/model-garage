@@ -1,7 +1,10 @@
 name: golangci-lint
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: ["**"]
+
 env:
   GOPRIVATE: github.com/DIMO-Network
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -19,9 +22,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v6
-        with:
-          version: latest
-          only-new-issues: false
-          args: --modules-download-mode=readonly --timeout=5m
+      - name: install golangci-lint
+        uses: make tools-golangci-lint
+      
+      - name: Run golangci-lint
+        run: make lint
