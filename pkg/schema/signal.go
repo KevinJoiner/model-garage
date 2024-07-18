@@ -62,8 +62,8 @@ type DefinitionInfo struct {
 
 // Definitions is a map of definitions from clickhouse Name to definition info.
 type Definitions struct {
+	// FromName contains a mapping from VSS name to definition info.
 	FromName map[string]*DefinitionInfo
-	Signals  []*SignalInfo
 }
 
 // DefinedSignal returns a new slice of signals with the definition information applied.
@@ -107,8 +107,8 @@ func NewSignalInfo(record []string) *SignalInfo {
 		sig.BaseGoType = goTypeFromVSPEC(baseType)
 		sig.BaseGQLType = gqlTypeFromVSPEC(baseType)
 	}
-	sig.GOName = goName(sig.Name)
-	sig.JSONName = jsonName(sig.Name)
+	sig.GOName = VSSToGoName(sig.Name)
+	sig.JSONName = VSSToJSONName(sig.Name)
 
 	return sig
 }
@@ -139,9 +139,9 @@ func (s *SignalInfo) GQLType() string {
 	return s.BaseGQLType
 }
 
-// goName returns the golang formated name of the signal.
-// Removes the root Prefix and nonAlphaNumeric characters from the name and capitalizes the first letter.
-func goName(name string) string {
+// VSSToGoName returns the golang formated name of a VSS signal.
+// This is done by removing the root Prefix and nonAlphaNumeric characters from the name and capitalizes the first letter.
+func VSSToGoName(name string) string {
 	firstComponent, rest := splitAndSantizeName(name)
 	var nameBuilder strings.Builder
 	_, _ = nameBuilder.WriteRune(unicode.ToUpper(rune(firstComponent[0])))
@@ -150,9 +150,9 @@ func goName(name string) string {
 	return nameBuilder.String()
 }
 
-// jsonName returns the JSON formated name of the signal.
-// Removes the root Prefix and nonAlphaNumeric characters from the name and lowercases the first word.
-func jsonName(name string) string {
+// VSSToJSONName returns the JSON formated name of a VSS signal.
+// This is done by removing the root Prefix and nonAlphaNumeric characters from the name and lowercases the first word.
+func VSSToJSONName(name string) string {
 	firstComponent, rest := splitAndSantizeName(name)
 	if firstComponent == "" {
 		return ""

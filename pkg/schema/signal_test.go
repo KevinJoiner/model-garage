@@ -47,7 +47,7 @@ func TestJSONName(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.input, func(t *testing.T) {
-			result := jsonName(test.input)
+			result := VSSToJSONName(test.input)
 			if result != test.expected {
 				t.Errorf("Unexpected result. Expected: %s, Got: %s", test.expected, result)
 			}
