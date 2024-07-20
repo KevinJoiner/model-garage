@@ -310,4 +310,4 @@
       originalType: float64
       isArray: false
   requiredPrivileges:
-    - VEHICLE_ALL_TIME_LOCATION
+    - VEHICLE_NON_LOCATION_DATA
