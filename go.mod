@@ -4,13 +4,13 @@ go 1.22.0
 
 require (
 	github.com/99designs/gqlgen v0.17.49
-	github.com/DIMO-Network/clickhouse-infra v0.0.0-20240625130842-c9eff0c8aabe
-	github.com/pressly/goose/v3 v3.20.0
+	github.com/DIMO-Network/clickhouse-infra v0.0.1
+	github.com/pressly/goose/v3 v3.21.1
 	github.com/stretchr/testify v1.9.0
 	github.com/tidwall/gjson v1.17.1
-	golang.org/x/mod v0.18.0
+	golang.org/x/mod v0.19.0
 	golang.org/x/text v0.16.0
-	golang.org/x/tools v0.22.0
+	golang.org/x/tools v0.23.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -79,7 +79,7 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.22.0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
-	golang.org/x/sys v0.21.0 // indirect
+	golang.org/x/sys v0.22.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240213162025-012b6fc9bca9 // indirect
 	google.golang.org/grpc v1.61.1 // indirect
 	google.golang.org/protobuf v1.34.1 // indirect
