@@ -319,3 +319,45 @@
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.ElectricMotor.EngineCoolant.Temperature
+  goType: ""
+  conversions:
+    - originalName: hvBatteryCoolantTemperature
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Cabin.Infotainment.HMI.TemperatureUnit
+  goType: ""
+  conversions:
+    - originalName: interiorTemp
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA    
+- vspecName: Vehicle.Powertrain.TractionBattery.Charging.ChargeVoltage.DC
+  goType: ""
+  conversions:
+    - originalName: hvBatteryVoltage
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA  
+- vspecName: 
+  goType: ""
+  conversions:Vehicle.Powertrain.TractionBattery.Charging.ChargeCurrent.DC
+    - originalName: hvBatteryEnergy
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA 
+- vspecName: 
+  goType: ""
+  conversions:Vehicle.Powertrain.TractionBattery.Charging.Mode
+    - originalName: hvBatteryChargingState
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA 
+    
+      
