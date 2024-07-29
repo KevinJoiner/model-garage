@@ -206,6 +206,14 @@
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.Transmission.CurrentGear
+  goType: ""
+  conversions:
+    - originalName: gearSelection
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.GrossCapacity
   goType: ""
   conversions:
