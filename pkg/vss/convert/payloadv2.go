@@ -9,51 +9,78 @@ import (
 	"github.com/tidwall/gjson"
 )
 
+// ConversionError is an error that occurs during conversion.
+type ConversionError struct {
+	// DecodedSignals is the list of signals that were successfully decoded.
+	DecodedSignals []vss.Signal
+	Errors         []error
+	TokenID        uint32
+	Source         string
+}
+
+func (e ConversionError) Error() string {
+	return fmt.Sprintf("conversion error for tokenID %d, source %s: %v", e.TokenID, e.Source, e.Errors)
+}
+
 // SignalsFromV2Payload extracts signals from a V2 payload.
 func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
-	var errs error
-
 	signals := gjson.GetBytes(jsonData, "data.vehicle.signals")
 	if !signals.Exists() {
-		return nil, FieldNotFoundError{Field: "signals", Lookup: "data.vehicle.signals"}
+		return nil, ConversionError{
+			Errors: []error{FieldNotFoundError{Field: "signals", Lookup: "data.vehicle.signals"}},
+		}
 	}
 	if !signals.IsArray() {
-		return nil, errors.New("signals field is not an array")
+		return nil, ConversionError{
+			Errors: []error{errors.New("signals field is not an array")},
+		}
 	}
 	tokenID, err := TokenIDFromData(jsonData)
 	if err != nil {
-		return nil, fmt.Errorf("error getting tokenID: %w", err)
+		return nil, ConversionError{
+			Errors: []error{fmt.Errorf("error getting tokenId: %w", err)},
+		}
 	}
 	source, err := SourceFromData(jsonData)
 	if err != nil {
-		return nil, fmt.Errorf("error getting source: %w", err)
+		return nil, ConversionError{
+			TokenID: tokenID,
+			Errors:  []error{fmt.Errorf("error getting source: %w", err)},
+		}
 	}
 	retSignals := []vss.Signal{}
 	signalMeta := vss.Signal{
 		TokenID: tokenID,
 		Source:  source,
 	}
+
+	var conversionErrors ConversionError
 	for _, sigData := range signals.Array() {
 		originalName, err := NameFromV2Signal(sigData)
 		if err != nil {
-			errs = errors.Join(errs, err)
+			conversionErrors.Errors = append(conversionErrors.Errors, err)
 			continue
 		}
 		ts, err := TimestampFromV2Signal(sigData)
 		if err != nil {
 			err = fmt.Errorf("error for '%s': %w", originalName, err)
-			errs = errors.Join(errs, err)
+			conversionErrors.Errors = append(conversionErrors.Errors, err)
 			continue
 		}
 		signalMeta.Timestamp = ts
 		sigs, err := SignalsFromV2Data(jsonData, signalMeta, originalName, sigData)
 		if err != nil {
-			errs = errors.Join(errs, err)
+			conversionErrors.Errors = append(conversionErrors.Errors, err)
 			continue
 		}
 		retSignals = append(retSignals, sigs...)
 	}
-	return retSignals, errs
+
+	if len(conversionErrors.Errors) > 0 {
+		conversionErrors.DecodedSignals = retSignals
+		return nil, conversionErrors
+	}
+	return retSignals, nil
 }
 
 // TimestampFromV2Signal gets a timestamp from a V2 signal.
