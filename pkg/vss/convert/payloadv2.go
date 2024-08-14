@@ -3,6 +3,7 @@ package convert
 import (
 	"errors"
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/DIMO-Network/model-garage/pkg/vss"
@@ -19,7 +20,16 @@ type ConversionError struct {
 }
 
 func (e ConversionError) Error() string {
-	return fmt.Sprintf("conversion error for tokenID %d, source %s: %v", e.TokenID, e.Source, e.Errors)
+	tokenIDValue := "unknown"
+	if e.TokenID != 0 {
+		tokenIDValue = strconv.FormatUint(uint64(e.TokenID), 10)
+	}
+	sourceValue := "unknown"
+	if e.Source != "" {
+		sourceValue = e.Source
+	}
+
+	return fmt.Sprintf("conversion error for tokenId '%s', source '%s': %v", tokenIDValue, sourceValue, e.Errors)
 }
 
 // SignalsFromV2Payload extracts signals from a V2 payload.
