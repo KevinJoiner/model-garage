@@ -52,7 +52,7 @@ test:
 
 lint:
 	@golangci-lint version
-	@golangci-lint run
+	@golangci-lint run --timeout=5m
 
 format:
 	@golangci-lint run --fix
