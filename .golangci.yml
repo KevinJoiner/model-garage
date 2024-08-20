@@ -15,6 +15,7 @@ linters-settings:
   revive:
     confidence: 0
     rules:
+    # Default rules with a expoted omitted
       - name: "var-declaration"
       - name: "package-comments"
       - name: "dot-imports"
