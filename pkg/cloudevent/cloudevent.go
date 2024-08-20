@@ -1,3 +1,4 @@
+// Package cloudevent provides types for working with CloudEvents.
 package cloudevent
 
 import "time"

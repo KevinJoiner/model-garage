@@ -1,3 +1,4 @@
+// Package lorawan provides types for working with LoRaWAN payloads.
 package lorawan
 
 import (
