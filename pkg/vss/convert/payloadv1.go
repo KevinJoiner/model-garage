@@ -20,25 +20,37 @@ type TokenIDGetter interface {
 func SignalsFromV1Payload(ctx context.Context, tokenGetter TokenIDGetter, jsonData []byte) ([]vss.Signal, error) {
 	ts, err := TimestampFromV1Data(jsonData)
 	if err != nil {
-		return nil, fmt.Errorf("error getting timestamp: %w", err)
+		return nil, ConversionError{
+			Errors: []error{fmt.Errorf("error getting timestamp: %w", err)},
+		}
 	}
 	tokenID, err := TokenIDFromV1Data(ctx, jsonData, tokenGetter)
 	if err != nil {
-		return nil, err
+		return nil, ConversionError{
+			Errors: []error{fmt.Errorf("error getting tokenId: %w", err)},
+		}
 	}
 
 	source, err := SourceFromData(jsonData)
 	if err != nil {
-		return nil, fmt.Errorf("error getting source: %w", err)
+		return nil, ConversionError{
+			TokenID: tokenID,
+			Errors:  []error{fmt.Errorf("error getting source: %w", err)},
+		}
 	}
 	baseSignal := vss.Signal{
 		TokenID:   tokenID,
 		Timestamp: ts,
 		Source:    source,
 	}
-	sigs, err := SignalsFromV1Data(baseSignal, jsonData)
-	if err != nil {
-		return nil, fmt.Errorf("error getting signals from v1 data: %w", err)
+	sigs, errs := SignalsFromV1Data(baseSignal, jsonData)
+	if errs != nil {
+		return nil, ConversionError{
+			TokenID:        tokenID,
+			Source:         source,
+			DecodedSignals: sigs,
+			Errors:         errs,
+		}
 	}
 	return sigs, nil
 }

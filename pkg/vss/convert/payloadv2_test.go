@@ -1,6 +1,7 @@
 package convert_test
 
 import (
+	"context"
 	"testing"
 	"time"
 
@@ -13,7 +14,8 @@ const tokenID = uint32(123)
 
 func TestFullFromV2DataConversion(t *testing.T) {
 	t.Parallel()
-	actualSignals, err := convert.SignalsFromPayload(nil, nil, []byte(fullV2InputJSON)) //nolint:staticcheck // we want this to fail not v2
+	actualSignals, err := convert.SignalsFromPayload(context.Background(), nil, []byte(fullV2InputJSON))
+
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
 	require.Equalf(t, expectedV2Signals, actualSignals, "converted vehicle does not match expected vehicle")
 }
@@ -169,3 +171,31 @@ var expectedV2Signals = []vss.Signal{
 	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "powertrainCombustionEngineSpeed", ValueNumber: 2000, ValueString: "", Source: "dimo/integration/123"},
 	{TokenID: tokenID, Timestamp: time.Date(2024, time.April, 18, 17, 20, 46, 435000000, time.UTC), Name: "powertrainFuelSystemRelativeLevel", ValueNumber: 50, ValueString: "", Source: "dimo/integration/123"},
 }
+
+func TestNullSignals(t *testing.T) {
+	t.Parallel()
+	actualSignals, err := convert.SignalsFromPayload(context.Background(), nil, []byte(nilSignalsJSON))
+	require.NoErrorf(t, err, "error converting full input data: %v", err)
+	require.Equalf(t, []vss.Signal{}, actualSignals, "converted vehicle does not match expected vehicle")
+}
+
+var nilSignalsJSON = `{
+    "id": "2fHbFXPWzrVActDb7WqWCfqeiYe",
+    "source": "dimo/integration/123",
+    "specversion": "1.0",
+    "dataschema": "testschema/v2.0",
+    "subject": "0x98D78d711C0ec544F6fb5d54fcf6559CF41546a9",
+    "time": "2024-04-18T17:20:46.436008782Z",
+    "type": "com.dimo.device.status",
+    "vehicleTokenId": 123,
+    "data": {
+        "timestamp": 1713460846435,
+        "device": {
+            "rpiUptimeSecs": 218,
+            "batteryVoltage": 12.28
+        },
+        "vehicle": {
+            "signals": null
+        }
+    },
+}`

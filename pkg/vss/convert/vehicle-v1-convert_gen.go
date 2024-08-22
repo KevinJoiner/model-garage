@@ -13,17 +13,17 @@ var errNotFound = errors.New("field not found")
 
 // SignalsFromV1Data creates a slice of vss.Signal from the given v1 status JSON data.
 // On error, partial results may be returned.
-func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, error) {
+func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []error) {
 	var retSignals []vss.Signal
 
 	var val any
 	var err error
-	var errs error
+	var errs []error
 
 	val, err = ChassisAxleRow1WheelLeftTirePressureFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'ChassisAxleRow1WheelLeftTirePressure': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'ChassisAxleRow1WheelLeftTirePressure': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -39,7 +39,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = ChassisAxleRow1WheelRightTirePressureFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'ChassisAxleRow1WheelRightTirePressure': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'ChassisAxleRow1WheelRightTirePressure': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -55,7 +55,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = ChassisAxleRow2WheelLeftTirePressureFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'ChassisAxleRow2WheelLeftTirePressure': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'ChassisAxleRow2WheelLeftTirePressure': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -71,7 +71,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = ChassisAxleRow2WheelRightTirePressureFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'ChassisAxleRow2WheelRightTirePressure': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'ChassisAxleRow2WheelRightTirePressure': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -87,7 +87,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = CurrentLocationAltitudeFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'CurrentLocationAltitude': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'CurrentLocationAltitude': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -103,7 +103,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = CurrentLocationIsRedactedFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'CurrentLocationIsRedacted': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'CurrentLocationIsRedacted': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -119,7 +119,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = CurrentLocationLatitudeFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'CurrentLocationLatitude': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'CurrentLocationLatitude': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -135,7 +135,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = CurrentLocationLongitudeFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'CurrentLocationLongitude': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'CurrentLocationLongitude': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -151,7 +151,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = DIMOAftermarketHDOPFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'DIMOAftermarketHDOP': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'DIMOAftermarketHDOP': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -167,7 +167,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = DIMOAftermarketNSATFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'DIMOAftermarketNSAT': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'DIMOAftermarketNSAT': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -183,7 +183,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = DIMOAftermarketSSIDFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'DIMOAftermarketSSID': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'DIMOAftermarketSSID': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -199,7 +199,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = DIMOAftermarketWPAStateFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'DIMOAftermarketWPAState': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'DIMOAftermarketWPAState': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -215,7 +215,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = ExteriorAirTemperatureFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'ExteriorAirTemperature': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'ExteriorAirTemperature': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -231,7 +231,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = LowVoltageBatteryCurrentVoltageFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'LowVoltageBatteryCurrentVoltage': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'LowVoltageBatteryCurrentVoltage': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -247,7 +247,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = OBDBarometricPressureFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'OBDBarometricPressure': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'OBDBarometricPressure': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -263,7 +263,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = OBDEngineLoadFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'OBDEngineLoad': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'OBDEngineLoad': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -279,7 +279,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = OBDIntakeTempFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'OBDIntakeTemp': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'OBDIntakeTemp': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -295,7 +295,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = OBDRunTimeFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'OBDRunTime': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'OBDRunTime': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -311,7 +311,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = PowertrainCombustionEngineECTFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineECT': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineECT': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -327,7 +327,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = PowertrainCombustionEngineEngineOilLevelFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineEngineOilLevel': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineEngineOilLevel': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -343,7 +343,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = PowertrainCombustionEngineEngineOilRelativeLevelFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineEngineOilRelativeLevel': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineEngineOilRelativeLevel': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -359,7 +359,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = PowertrainCombustionEngineMAFFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineMAF': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineMAF': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -375,7 +375,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = PowertrainCombustionEngineSpeedFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineSpeed': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineSpeed': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -391,7 +391,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = PowertrainCombustionEngineTPSFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineTPS': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineTPS': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -407,7 +407,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = PowertrainFuelSystemRelativeLevelFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainFuelSystemRelativeLevel': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainFuelSystemRelativeLevel': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -423,7 +423,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = PowertrainFuelSystemSupportedFuelTypesFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainFuelSystemSupportedFuelTypes': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainFuelSystemSupportedFuelTypes': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -439,7 +439,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = PowertrainRangeFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainRange': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainRange': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -455,7 +455,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = PowertrainTractionBatteryChargingChargeLimitFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryChargingChargeLimit': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryChargingChargeLimit': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -471,7 +471,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = PowertrainTractionBatteryChargingIsChargingFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryChargingIsCharging': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryChargingIsCharging': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -487,7 +487,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = PowertrainTractionBatteryCurrentPowerFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryCurrentPower': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryCurrentPower': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -503,7 +503,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = PowertrainTractionBatteryGrossCapacityFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryGrossCapacity': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryGrossCapacity': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -519,7 +519,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = PowertrainTractionBatteryStateOfChargeCurrentFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryStateOfChargeCurrent': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryStateOfChargeCurrent': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -535,7 +535,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = PowertrainTransmissionTravelledDistanceFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainTransmissionTravelledDistance': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainTransmissionTravelledDistance': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -551,7 +551,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = PowertrainTypeFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'PowertrainType': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainType': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
@@ -567,7 +567,7 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, er
 	val, err = SpeedFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = errors.Join(errs, fmt.Errorf("failed to get 'Speed': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'Speed': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
