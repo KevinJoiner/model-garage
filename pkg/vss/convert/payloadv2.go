@@ -85,7 +85,7 @@ func TimestampFromV2Signal(sigResult gjson.Result) (time.Time, error) {
 	if !timestamp.Exists() {
 		return time.Time{}, FieldNotFoundError{Field: "timestamp", Lookup: lookupKey}
 	}
-	return time.UnixMilli(int64(timestamp.Uint())).UTC(), nil
+	return time.UnixMilli(timestamp.Int()).UTC(), nil
 }
 
 // NameFromV2Signal gets a name from a V2 signal.

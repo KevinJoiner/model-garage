@@ -23,7 +23,7 @@ linters:
     - bodyclose
     - dupl
     - errcheck
-    - exportloopref
+    - copyloopvar
     - funlen
     - gocritic
     - gofumpt
