@@ -49,7 +49,10 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 		Source:  source,
 	}
 
-	var conversionErrors ConversionError
+	conversionErrors := ConversionError{
+		TokenID: tokenID,
+		Source:  source,
+	}
 	for _, sigData := range signals.Array() {
 		originalName, err := NameFromV2Signal(sigData)
 		if err != nil {
