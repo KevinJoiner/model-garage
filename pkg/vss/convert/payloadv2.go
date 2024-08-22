@@ -3,48 +3,14 @@ package convert
 import (
 	"errors"
 	"fmt"
-	"strconv"
 	"time"
 
 	"github.com/DIMO-Network/model-garage/pkg/vss"
 	"github.com/tidwall/gjson"
 )
 
-// ConversionError is an error that occurs during conversion.
-type ConversionError struct {
-	// DecodedSignals is the list of signals that were successfully decoded.
-	DecodedSignals []vss.Signal
-	Errors         []error
-	TokenID        uint32
-	Source         string
-}
-
-func (e ConversionError) Error() string {
-	tokenIDValue := "unknown"
-	if e.TokenID != 0 {
-		tokenIDValue = strconv.FormatUint(uint64(e.TokenID), 10)
-	}
-	sourceValue := "unknown"
-	if e.Source != "" {
-		sourceValue = e.Source
-	}
-
-	return fmt.Sprintf("conversion error for tokenId '%s', source '%s': %v", tokenIDValue, sourceValue, e.Errors)
-}
-
 // SignalsFromV2Payload extracts signals from a V2 payload.
 func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
-	signals := gjson.GetBytes(jsonData, "data.vehicle.signals")
-	if !signals.Exists() {
-		return nil, ConversionError{
-			Errors: []error{FieldNotFoundError{Field: "signals", Lookup: "data.vehicle.signals"}},
-		}
-	}
-	if !signals.IsArray() {
-		return nil, ConversionError{
-			Errors: []error{errors.New("signals field is not an array")},
-		}
-	}
 	tokenID, err := TokenIDFromData(jsonData)
 	if err != nil {
 		return nil, ConversionError{
@@ -56,6 +22,25 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 		return nil, ConversionError{
 			TokenID: tokenID,
 			Errors:  []error{fmt.Errorf("error getting source: %w", err)},
+		}
+	}
+	signals := gjson.GetBytes(jsonData, "data.vehicle.signals")
+	if !signals.Exists() {
+		return nil, ConversionError{
+			TokenID: tokenID,
+			Source:  source,
+			Errors:  []error{FieldNotFoundError{Field: "signals", Lookup: "data.vehicle.signals"}},
+		}
+	}
+	if !signals.IsArray() {
+		if signals.Value() == nil {
+			// If the signals array is NULL treat it like an empty array.
+			return []vss.Signal{}, nil
+		}
+		return nil, ConversionError{
+			TokenID: tokenID,
+			Source:  source,
+			Errors:  []error{errors.New("signals field is not an array")},
 		}
 	}
 	retSignals := []vss.Signal{}
