@@ -174,7 +174,7 @@ var expectedV2Signals = []vss.Signal{
 
 func TestNullSignals(t *testing.T) {
 	t.Parallel()
-	actualSignals, err := convert.SignalsFromPayload(nil, nil, []byte(nilSignalsJSON))
+	actualSignals, err := convert.SignalsFromPayload(context.Background(), nil, []byte(nilSignalsJSON))
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
 	require.Equalf(t, []vss.Signal{}, actualSignals, "converted vehicle does not match expected vehicle")
 }
@@ -195,7 +195,7 @@ var nilSignalsJSON = `{
             "batteryVoltage": 12.28
         },
         "vehicle": {
-            signals: NULL
+            "signals": null
         }
     },
 }`
