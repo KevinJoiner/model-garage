@@ -3,6 +3,7 @@ package schema
 
 import (
 	"regexp"
+	"slices"
 	"strings"
 	"unicode"
 )
@@ -19,7 +20,11 @@ const (
 	colLen        = 8
 )
 
-var nonAlphaNum = regexp.MustCompile(`[^a-zA-Z0-9]+`)
+var (
+	nonAlphaNum = regexp.MustCompile(`[^a-zA-Z0-9]+`)
+
+	numberTypes = []string{"uint8", "int8", "uint16", "int16", "uint32", "int32", "uint64", "int64", "float", "double", "boolean"}
+)
 
 // SignalInfo holds information about a signal that is accessed during template execution.
 // This information comes from the combinations of the spec and definition files.
@@ -184,21 +189,16 @@ func splitAndSantizeName(name string) (string, string) {
 
 // goTypeFromVSPEC converts vspec type to golang types.
 func goTypeFromVSPEC(baseType string) string {
-	switch baseType {
-	case "uint8", "int8", "uint16", "int16", "uint32", "int32", "uint64", "int64", "float", "double", "boolean":
+	if slices.Contains(numberTypes, baseType) {
 		return "float64"
-	default:
-		return "string"
 	}
+	return "string"
 }
 
 // gqlTypeFromVSPEC converts vspec type to graphql types.
 func gqlTypeFromVSPEC(baseType string) string {
-	switch baseType {
-	// TODO(elffjs): Unify the lists between here and goTypeFromVSPEC?
-	case "uint8", "int8", "uint16", "int16", "uint32", "int32", "uint64", "int64", "float", "double", "boolean":
+	if slices.Contains(numberTypes, baseType) {
 		return "Float"
-	default:
-		return "String"
 	}
+	return "String"
 }
