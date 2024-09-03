@@ -55,7 +55,6 @@ type ConversionInfo struct {
 // DefinitionInfo contains the definition information for a field.
 type DefinitionInfo struct {
 	VspecName          string            `json:"vspecName"          yaml:"vspecName"`
-	GoType             string            `json:"goType"             yaml:"goType"`
 	Conversions        []*ConversionInfo `json:"conversions"        yaml:"conversions"`
 	RequiredPrivileges []string          `json:"requiredPrivileges" yaml:"requiredPrivileges"`
 }
@@ -115,9 +114,6 @@ func NewSignalInfo(record []string) *SignalInfo {
 
 // MergeWithDefinition merges the signal with the definition information.
 func (s *SignalInfo) MergeWithDefinition(definition *DefinitionInfo) {
-	if definition.GoType != "" {
-		s.BaseGoType = definition.GoType
-	}
 	if len(definition.Conversions) != 0 {
 		s.Conversions = definition.Conversions
 		for _, conv := range s.Conversions {

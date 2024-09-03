@@ -5,12 +5,8 @@ import (
 	"slices"
 )
 
-var (
-	goTypes = []string{"float64", "string"}
-
-	// privileges are defined on chain and copied here for validation.
-	privileges = []string{"VEHICLE_NON_LOCATION_DATA", "VEHICLE_COMMANDS", "VEHICLE_CURRENT_LOCATION", "VEHICLE_ALL_TIME_LOCATION", "VEHICLE_VIN_CREDENTIAL"}
-)
+// privileges are defined on chain and copied here for validation.
+var privileges = []string{"VEHICLE_NON_LOCATION_DATA", "VEHICLE_COMMANDS", "VEHICLE_CURRENT_LOCATION", "VEHICLE_ALL_TIME_LOCATION", "VEHICLE_VIN_CREDENTIAL"}
 
 // ErrInvalid is an error for invalid definitions.
 type ErrInvalid struct {
@@ -30,9 +26,6 @@ func Validate(d *DefinitionInfo) error {
 	}
 	if d.VspecName == "" {
 		return ErrInvalid{Property: "vspecName", Name: d.VspecName, Reason: "is empty"}
-	}
-	if d.GoType != "" && !slices.Contains(goTypes, d.GoType) {
-		return ErrInvalid{Property: "goType", Name: d.GoType, Reason: fmt.Sprintf("must be one of %v", goTypes)}
 	}
 	if len(d.Conversions) == 0 {
 		return ErrInvalid{Property: "conversions", Name: d.VspecName, Reason: "at least one conversion is required"}
