@@ -2,9 +2,6 @@
 
 # vspecName: The name of the VSpec field in the VSS schema
 - vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure
-  # goType: The type to use for Golang struct.
-  # if empty then the type is inferred from the vspec definition
-  goType: ""
 
   # conversions: The mapping of the original to the VSpec field
   conversions:
@@ -21,7 +18,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure
-  goType: ""
   conversions:
     - originalName: tires.frontRight
       originalType: float64
@@ -29,7 +25,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure
-  goType: ""
   conversions:
     - originalName: tires.backLeft
       originalType: float64
@@ -37,7 +32,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure
-  goType: ""
   conversions:
     - originalName: tires.backRight
       originalType: float64
@@ -45,7 +39,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.CurrentLocation.Altitude
-  goType: ""
   conversions:
     - originalName: altitude
       originalType: float64
@@ -53,7 +46,6 @@
   requiredPrivileges:
     - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.CurrentLocation.Latitude
-  goType: ""
   conversions:
     - originalName: latitude
       originalType: float64
@@ -61,7 +53,6 @@
   requiredPrivileges:
     - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.CurrentLocation.Longitude
-  goType: ""
   conversions:
     - originalName: longitude
       originalType: float64
@@ -69,7 +60,6 @@
   requiredPrivileges:
     - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.Exterior.AirTemperature
-  goType: ""
   conversions:
     - originalName: ambientAirTemp # dataschema v2
       originalType: float64
@@ -80,7 +70,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.LowVoltageBattery.CurrentVoltage
-  goType: ""
   conversions:
     - originalName: batteryVoltage
       originalType: float64
@@ -88,7 +77,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.BarometricPressure
-  goType: ""
   conversions:
     - originalName: barometricPressure
       originalType: float64
@@ -96,7 +84,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.EngineLoad
-  goType: ""
   conversions:
     - originalName: engineLoad
       originalType: float64
@@ -104,7 +91,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.IntakeTemp
-  goType: ""
   conversions:
     - originalName: intakeTemp
       originalType: float64
@@ -112,7 +98,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.RunTime
-  goType: ""
   conversions:
     - originalName: runTime
       originalType: float64
@@ -120,7 +105,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.ECT
-  goType: ""
   conversions:
     - originalName: coolantTemp
       originalType: float64
@@ -128,7 +112,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.EngineOilLevel
-  goType: ""
   conversions:
     - originalName: oil
       originalType: float64
@@ -136,7 +119,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.Speed
-  goType: ""
   conversions:
     - originalName: rpm # dataschema v2
       originalType: float64
@@ -147,7 +129,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.TPS
-  goType: ""
   conversions:
     - originalName: throttlePosition
       originalType: float64
@@ -155,7 +136,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.FuelSystem.RelativeLevel
-  goType: ""
   conversions:
     - originalName: fuelLevel # dataschema v2
       originalType: float64
@@ -167,7 +147,6 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.FuelSystem.SupportedFuelTypes
   isArray: false
-  goType: ""
   conversions:
     - originalName: fuelType
       originalType: string
@@ -175,7 +154,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.Range
-  goType: ""
   conversions:
     - originalName: range
       originalType: float64
@@ -183,7 +161,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit
-  goType: ""
   conversions:
     - originalName: chargeLimit
       originalType: float64
@@ -191,7 +168,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.Charging.IsCharging
-  goType: ""
   conversions:
     - originalName: charging
       originalType: bool
@@ -199,7 +175,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.CurrentPower
-  goType: ""
   conversions:
     - originalName: charger.power
       originalType: float64
@@ -207,7 +182,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.GrossCapacity
-  goType: ""
   conversions:
     - originalName: batteryCapacity
       originalType: float64
@@ -215,7 +189,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.StateOfCharge.Current
-  goType: ""
   conversions:
     - originalName: soc
       originalType: float64
@@ -223,7 +196,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.Transmission.TravelledDistance
-  goType: ""
   conversions:
     - originalName: odometer
       originalType: float64
@@ -231,7 +203,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.Type
-  goType: ""
   conversions:
     - originalName: fuelType
       originalType: string
@@ -239,7 +210,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Speed
-  goType: ""
   conversions:
     - originalName: vehicleSpeed # dataschema v2
       originalType: float64
@@ -250,7 +220,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.MAF
-  goType: ""
   conversions:
     - originalName: maf
       originalType: float64
@@ -258,7 +227,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.HDOP
-  goType: ""
   conversions:
     - originalName: hdop
       originalType: float64
@@ -266,7 +234,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.NSAT
-  goType: ""
   conversions:
     - originalName: nsat
       originalType: float64
@@ -274,7 +241,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.WPAState
-  goType: ""
   conversions:
     - originalName: wpa_state # dataschema v2
       originalType: string
@@ -285,7 +251,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.SSID
-  goType: ""
   conversions:
     - originalName: ssid # dataschema v2
       originalType: string
@@ -296,7 +261,6 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.CurrentLocation.IsRedacted
-  goType: ""
   conversions:
     - originalName: isRedacted
       originalType: bool
@@ -304,7 +268,6 @@
   requiredPrivileges:
     - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.Powertrain.CombustionEngine.EngineOilRelativeLevel
-  goType: ""
   conversions:
     - originalName: oil
       originalType: float64

@@ -12,7 +12,6 @@ func TestValidate(t *testing.T) {
 			name: "Valid Definition",
 			d: &DefinitionInfo{
 				VspecName:          "Vehicle",
-				GoType:             "float64",
 				Conversions:        []*ConversionInfo{{OriginalName: "OriginalName"}},
 				RequiredPrivileges: []string{"VEHICLE_NON_LOCATION_DATA"},
 			},
@@ -39,22 +38,9 @@ func TestValidate(t *testing.T) {
 			},
 		},
 		{
-			name: "Invalid GoType",
-			d: &DefinitionInfo{
-				VspecName: "Vehicle",
-				GoType:    "int",
-			},
-			expected: ErrInvalid{
-				Property: "goType",
-				Name:     "int",
-				Reason:   "must be one of [float64 string]",
-			},
-		},
-		{
 			name: "No Conversions",
 			d: &DefinitionInfo{
 				VspecName: "Vehicle",
-				GoType:    "float64",
 			},
 			expected: ErrInvalid{
 				Property: "conversions",
@@ -66,7 +52,6 @@ func TestValidate(t *testing.T) {
 			name: "Nil Conversion",
 			d: &DefinitionInfo{
 				VspecName: "Vehicle",
-				GoType:    "float64",
 				Conversions: []*ConversionInfo{
 					nil,
 				},
@@ -81,7 +66,6 @@ func TestValidate(t *testing.T) {
 			name: "Empty OriginalName",
 			d: &DefinitionInfo{
 				VspecName: "Vehicle",
-				GoType:    "float64",
 				Conversions: []*ConversionInfo{
 					{OriginalName: ""},
 				},
@@ -96,7 +80,6 @@ func TestValidate(t *testing.T) {
 			name: "No RequiredPrivileges",
 			d: &DefinitionInfo{
 				VspecName:   "Vehicle",
-				GoType:      "float64",
 				Conversions: []*ConversionInfo{{OriginalName: "OriginalName"}},
 			},
 			expected: ErrInvalid{
@@ -109,7 +92,6 @@ func TestValidate(t *testing.T) {
 			name: "Invalid RequiredPrivilege",
 			d: &DefinitionInfo{
 				VspecName:          "Vehicle",
-				GoType:             "float64",
 				Conversions:        []*ConversionInfo{{OriginalName: "OriginalName"}},
 				RequiredPrivileges: []string{"INVALID_PRIVILEGE"},
 			},
