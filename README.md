@@ -11,6 +11,11 @@ Welcome to the **Model Garage**, a Golang toolkit for managing and working with 
 1. **Model Creation**: Create models from vspec CSV schemas, represented as Go structs.
 2. **JSON Conversion**: Easily convert JSON data for your models with automatically generated and customizable conversion functions.
 
+## Signal Definitions
+
+Signal definitions can be found in the [spec package](./pkg/schema/spec/spec.md).
+This package is the source of truth for signals used for DIMO Data.
+
 ## Migrations
 
 To create a new migration, run the following command:
@@ -36,29 +41,7 @@ go run github.com/DIMO-Network/model-garage/cmd/codegen -output=pkg/vss  -genera
 
 #### Generation Info
 
-The Model generation is handled by packages in `internal/codegen`. They are responsible for creating Go structs, Clickhouse tables, and conversion functions from the vspec CSV schema and definitions file. definitions file is a YAML file that specifies the conversions for each field in the vspec schema. The conversion functions are meant to be overridden with custom logic as needed. When generation is re-run, the conversion functions are not overwritten. Below is an example of a definitions file:
-
-```yaml
-# vspecName: The name of the VSpec field in the VSS schema
-# required
-- vspecName: DIMO.DefinitionID
-  # conversion: The mapping of the original data to the VSpec field
-  conversion:
-    # originalName: The name of the field in the original data
-    # required
-    originalName: data.definitionID
-
-    # originalType: The data type of the field in the original data
-    originalType: string
-
-    # isArray: Whether the original field is an array or not
-    isArray: false
-
-  # requiredPrivileges: The list of privileges required to access the field
-  # required
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
-```
+The Model generation is handled by packages in `internal/codegen`. They are responsible for creating Go structs, Clickhouse tables, and conversion functions from the vspec CSV schema and definitions file. definitions file is a YAML file that specifies the conversions for each field in the vspec schema. The conversion functions are meant to be overridden with custom logic as needed. When generation is re-run, the conversion functions are not overwritten.
 
 ##### Generation Process
 
