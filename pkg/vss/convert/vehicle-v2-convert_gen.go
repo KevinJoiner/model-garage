@@ -543,6 +543,48 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
+	case "tiresBackLeft":
+		val0, err := ChassisAxleRow2WheelLeftTirePressureFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'tiresBackLeft': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "chassisAxleRow2WheelLeftTirePressure",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
+	case "tiresBackRight":
+		val0, err := ChassisAxleRow2WheelRightTirePressureFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'tiresBackRight': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "chassisAxleRow2WheelRightTirePressure",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
+	case "tiresFrontRight":
+		val0, err := ChassisAxleRow1WheelRightTirePressureFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'tiresFrontRight': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "chassisAxleRow1WheelRightTirePressure",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
 	case "vehicleSpeed":
 		val0, err := SpeedFromV2Data(originalDoc, valResult)
 		if err != nil {
@@ -635,6 +677,16 @@ func ChassisAxleRow1WheelRightTirePressureFromV2Data(originalDoc []byte, result 
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'tires.frontRight' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
+	val1, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToChassisAxleRow1WheelRightTirePressure1(originalDoc, val1)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'tiresFrontRight': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'tiresFrontRight' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
 
 	return ret, errs
 }
@@ -652,6 +704,16 @@ func ChassisAxleRow2WheelLeftTirePressureFromV2Data(originalDoc []byte, result g
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'tires.backLeft' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
+	val1, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToChassisAxleRow2WheelLeftTirePressure1(originalDoc, val1)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'tiresBackLeft': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'tiresBackLeft' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
 
 	return ret, errs
 }
@@ -668,6 +730,16 @@ func ChassisAxleRow2WheelRightTirePressureFromV2Data(originalDoc []byte, result 
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'tires.backRight': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'tires.backRight' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+	val1, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToChassisAxleRow2WheelRightTirePressure1(originalDoc, val1)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'tiresBackRight': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'tiresBackRight' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
 
 	return ret, errs
