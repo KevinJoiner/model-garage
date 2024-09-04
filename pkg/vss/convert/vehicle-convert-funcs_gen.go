@@ -21,6 +21,13 @@ func ToChassisAxleRow1WheelRightTirePressure0(originalDoc []byte, val float64) (
 	return val, nil
 }
 
+// ToChassisAxleRow1WheelRightTirePressure1 converts data from field 'tiresFrontRight' of type float64 to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure1(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToChassisAxleRow2WheelLeftTirePressure0 converts data from field 'tires.backLeft' of type float64 to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
@@ -28,10 +35,24 @@ func ToChassisAxleRow2WheelLeftTirePressure0(originalDoc []byte, val float64) (f
 	return val, nil
 }
 
+// ToChassisAxleRow2WheelLeftTirePressure1 converts data from field 'tiresBackLeft' of type float64 to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure1(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToChassisAxleRow2WheelRightTirePressure0 converts data from field 'tires.backRight' of type float64 to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
 func ToChassisAxleRow2WheelRightTirePressure0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToChassisAxleRow2WheelRightTirePressure1 converts data from field 'tiresBackRight' of type float64 to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure1(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 

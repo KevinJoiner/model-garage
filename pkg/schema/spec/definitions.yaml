@@ -13,13 +13,15 @@
 
       # isArray: Whether the field is an array or not
       isArray: false
-
   # requiredPrivileges: The list of privileges required to access the field
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure
   conversions:
     - originalName: tires.frontRight
+      originalType: float64
+      isArray: false
+    - originalName: tiresFrontRight #  name used for aftermarket devices since they do not allow '.'
       originalType: float64
       isArray: false
   requiredPrivileges:
@@ -29,11 +31,17 @@
     - originalName: tires.backLeft
       originalType: float64
       isArray: false
+    - originalName: tiresBackLeft #  name used for aftermarket devices since they do not allow '.'
+      originalType: float64
+      isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure
   conversions:
     - originalName: tires.backRight
+      originalType: float64
+      isArray: false
+    - originalName: tiresBackRight #  name used for aftermarket devices since they do not allow '.'
       originalType: float64
       isArray: false
   requiredPrivileges:
