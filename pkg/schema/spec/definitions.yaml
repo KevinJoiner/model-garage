@@ -143,6 +143,13 @@
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.FuelSystem.AbsoluteLevel
+  conversions:
+    - originalName: fuelLevelLiters #added for pids we have that are meassured in liters for fuelLevel
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.FuelSystem.RelativeLevel
   conversions:
     - originalName: fuelLevel # dataschema v2

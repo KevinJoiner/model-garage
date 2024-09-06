@@ -209,6 +209,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
+	case "fuelLevelLiters":
+		val0, err := PowertrainFuelSystemAbsoluteLevelFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'fuelLevelLiters': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "powertrainFuelSystemAbsoluteLevel",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
 	case "fuelPercentRemaining":
 		val0, err := PowertrainFuelSystemRelativeLevelFromV2Data(originalDoc, valResult)
 		if err != nil {
@@ -1120,6 +1134,23 @@ func PowertrainCombustionEngineTPSFromV2Data(originalDoc []byte, result gjson.Re
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'throttlePosition': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'throttlePosition' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// PowertrainFuelSystemAbsoluteLevelFromData converts the given JSON data to a float64.
+func PowertrainFuelSystemAbsoluteLevelFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToPowertrainFuelSystemAbsoluteLevel0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'fuelLevelLiters': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'fuelLevelLiters' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
 
 	return ret, errs
