@@ -5,10 +5,10 @@
 
   # conversions: The mapping of the original to the VSpec field
   conversions:
-    # - originalName: The name of the field in the original data
+      # originalName: The name of the field in the original data
     - originalName: tires.frontLeft
 
-      #   originalType: The type of the field in the original data
+      # originalType: The type of the field in the original data
       originalType: float64
 
       # isArray: Whether the field is an array or not
