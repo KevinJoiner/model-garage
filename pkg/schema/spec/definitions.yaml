@@ -13,6 +13,9 @@
 
       # isArray: Whether the field is an array or not
       isArray: false
+    - originalName: tiresFrontLeft
+      originalType: float64
+      isArray: false
   # requiredPrivileges: The list of privileges required to access the field
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
@@ -122,6 +125,9 @@
 - vspecName: Vehicle.Powertrain.CombustionEngine.EngineOilLevel
   conversions:
     - originalName: oil
+      originalType: float64
+      isArray: false
+    - originalName: oilLife
       originalType: float64
       isArray: false
   requiredPrivileges:
