@@ -14,6 +14,13 @@ func ToChassisAxleRow1WheelLeftTirePressure0(originalDoc []byte, val float64) (f
 	return val, nil
 }
 
+// ToChassisAxleRow1WheelLeftTirePressure1 converts data from field 'tiresFrontLeft' of type float64 to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure1(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToChassisAxleRow1WheelRightTirePressure0 converts data from field 'tires.frontRight' of type float64 to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
@@ -197,6 +204,12 @@ func ToPowertrainCombustionEngineEngineOilLevel0(originalDoc []byte, val float64
 	default:
 		return "CRITICALLY_HIGH", nil
 	}
+}
+
+// ToPowertrainCombustionEngineEngineOilLevel1 converts data from field 'oilLife' of type float64 to 'Vehicle.Powertrain.CombustionEngine.EngineOilLevel' of type string.
+// Vehicle.Powertrain.CombustionEngine.EngineOilLevel: Engine oil level.
+func ToPowertrainCombustionEngineEngineOilLevel1(originalDoc []byte, val float64) (string, error) {
+	panic("not implemented")
 }
 
 // ToPowertrainCombustionEngineEngineOilRelativeLevel0 converts data from field 'oil' of type float64 to 'Vehicle.Powertrain.CombustionEngine.EngineOilRelativeLevel' of type float64.

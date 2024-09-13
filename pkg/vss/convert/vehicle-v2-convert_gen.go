@@ -403,6 +403,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val1)
 			ret = append(ret, sig)
 		}
+	case "oilLife":
+		val0, err := PowertrainCombustionEngineEngineOilLevelFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'oilLife': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "powertrainCombustionEngineEngineOilLevel",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
 	case "range":
 		val0, err := PowertrainRangeFromV2Data(originalDoc, valResult)
 		if err != nil {
@@ -585,6 +599,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
+	case "tiresFrontLeft":
+		val0, err := ChassisAxleRow1WheelLeftTirePressureFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'tiresFrontLeft': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "chassisAxleRow1WheelLeftTirePressure",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
 	case "tiresFrontRight":
 		val0, err := ChassisAxleRow1WheelRightTirePressureFromV2Data(originalDoc, valResult)
 		if err != nil {
@@ -673,6 +701,16 @@ func ChassisAxleRow1WheelLeftTirePressureFromV2Data(originalDoc []byte, result g
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'tires.frontLeft': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'tires.frontLeft' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+	val1, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToChassisAxleRow1WheelLeftTirePressure1(originalDoc, val1)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'tiresFrontLeft': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'tiresFrontLeft' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
 
 	return ret, errs
@@ -1056,6 +1094,16 @@ func PowertrainCombustionEngineEngineOilLevelFromV2Data(originalDoc []byte, resu
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'oil': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'oil' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+	val1, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToPowertrainCombustionEngineEngineOilLevel1(originalDoc, val1)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'oilLife': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'oilLife' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
 
 	return ret, errs
