@@ -615,6 +615,19 @@ func ChassisAxleRow1WheelLeftTirePressureFromV1Data(jsonData []byte) (ret float6
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.tires.frontLeft' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.tiresFrontLeft")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tiresFrontLeft': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.tiresFrontLeft' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'ChassisAxleRow1WheelLeftTirePressure'", errNotFound)
@@ -1166,6 +1179,19 @@ func PowertrainCombustionEngineEngineOilLevelFromV1Data(jsonData []byte) (ret st
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.oil': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.oil' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.oilLife")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainCombustionEngineEngineOilLevel1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.oilLife': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.oilLife' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
