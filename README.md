@@ -64,5 +64,10 @@ For each field, a conversion function is created. If a conversion is specified i
 Make the mappings take across our pipeline
 1. In the https://github.com/DIMO-Network/benthos-plugin/ repo, update the `go.mod` version for the model-garage dependency.
 2. PR and github release
-3. In the https://github.com/DIMO-Network/stream-es repo, update the container to point to the latest benthos-plugin release.
-4. Push to main, then go to argo to release it to prod
+3. In the https://github.com/DIMO-Network/stream-es repo, in `values.yaml` update the container `image.tag` to point to the latest benthos-plugin release commit hash (copy it from release view).
+4. Push to main, then go to argo to sync it to prod
+
+### Add signals to DIMO VSS spec
+
+This is when the COVESA standard does not have a signal for something we get from an external integration.
+1. Look at this repo: https://github.com/DIMO-Network/VSS/blob/main/overlays/DIMO/dimo.vspec and follow readme there.
