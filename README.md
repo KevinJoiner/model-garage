@@ -52,3 +52,22 @@ The Model generation is handled by packages in `internal/codegen`. They are resp
 
 **Conversion Functions**
 For each field, a conversion function is created. If a conversion is specified in the definitions file, the conversion function will use the specified conversion. If no conversion is specified, the conversion info function will assume a direct copy. The conversion functions are meant to be overridden with custom logic as needed. When generation is re-run, the conversion functions are not overwritten.
+
+## Typical use cases
+
+### Updating mappings
+
+1. Update the signal name to VSS name mappings in [definitions.yaml](./pkg/schema/spec/definitions.yaml).
+2. run `make generate`
+3. PR and github release
+
+Make the mappings take across our pipeline
+1. In the https://github.com/DIMO-Network/benthos-plugin/ repo, update the `go.mod` version for the model-garage dependency.
+2. PR and github release
+3. In the https://github.com/DIMO-Network/stream-es repo, in `values.yaml` update the container `image.tag` to point to the latest benthos-plugin release commit hash (copy it from release view).
+4. Push to main, then go to argo to sync it to prod
+
+### Add signals to DIMO VSS spec
+
+This is when the COVESA standard does not have a signal for something we get from an external integration.
+1. Look at this repo: https://github.com/DIMO-Network/VSS/blob/main/overlays/DIMO/dimo.vspec and follow readme there.
