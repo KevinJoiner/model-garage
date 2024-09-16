@@ -260,6 +260,54 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 		retSignals = append(retSignals, sig)
 	}
 
+	val, err = OBDCommandedEGRFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'OBDCommandedEGR': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "obdCommandedEGR",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = OBDDistanceSinceDTCClearFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'OBDDistanceSinceDTCClear': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "obdDistanceSinceDTCClear",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = OBDDistanceWithMILFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'OBDDistanceWithMIL': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "obdDistanceWithMIL",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
 	val, err = OBDEngineLoadFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -292,6 +340,38 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 		retSignals = append(retSignals, sig)
 	}
 
+	val, err = OBDLongTermFuelTrim1FromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'OBDLongTermFuelTrim1': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "obdLongTermFuelTrim1",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = OBDMAPFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'OBDMAP': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "obdMAP",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
 	val, err = OBDRunTimeFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -300,6 +380,38 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 	} else {
 		sig := vss.Signal{
 			Name:      "obdRunTime",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = OBDShortTermFuelTrim1FromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'OBDShortTermFuelTrim1': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "obdShortTermFuelTrim1",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = OBDWarmupsSinceDTCClearFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'OBDWarmupsSinceDTCClear': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "obdWarmupsSinceDTCClear",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -1064,6 +1176,81 @@ func OBDBarometricPressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	return ret, errs
 }
 
+// OBDCommandedEGRFromV1Data converts the given JSON data to a float64.
+func OBDCommandedEGRFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.commandedEgr")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToOBDCommandedEGR0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.commandedEgr': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.commandedEgr' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'OBDCommandedEGR'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// OBDDistanceSinceDTCClearFromV1Data converts the given JSON data to a float64.
+func OBDDistanceSinceDTCClearFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.distanceSinceDtcClear")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToOBDDistanceSinceDTCClear0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.distanceSinceDtcClear': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.distanceSinceDtcClear' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'OBDDistanceSinceDTCClear'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// OBDDistanceWithMILFromV1Data converts the given JSON data to a float64.
+func OBDDistanceWithMILFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.distanceWMil")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToOBDDistanceWithMIL0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.distanceWMil': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.distanceWMil' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'OBDDistanceWithMIL'", errNotFound)
+	}
+
+	return ret, errs
+}
+
 // OBDEngineLoadFromV1Data converts the given JSON data to a float64.
 func OBDEngineLoadFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
@@ -1114,6 +1301,56 @@ func OBDIntakeTempFromV1Data(jsonData []byte) (ret float64, err error) {
 	return ret, errs
 }
 
+// OBDLongTermFuelTrim1FromV1Data converts the given JSON data to a float64.
+func OBDLongTermFuelTrim1FromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.longFuelTrim")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToOBDLongTermFuelTrim10(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.longFuelTrim': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.longFuelTrim' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'OBDLongTermFuelTrim1'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// OBDMAPFromV1Data converts the given JSON data to a float64.
+func OBDMAPFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.intakePressure")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToOBDMAP0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.intakePressure': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.intakePressure' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'OBDMAP'", errNotFound)
+	}
+
+	return ret, errs
+}
+
 // OBDRunTimeFromV1Data converts the given JSON data to a float64.
 func OBDRunTimeFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
@@ -1134,6 +1371,56 @@ func OBDRunTimeFromV1Data(jsonData []byte) (ret float64, err error) {
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'OBDRunTime'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// OBDShortTermFuelTrim1FromV1Data converts the given JSON data to a float64.
+func OBDShortTermFuelTrim1FromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.shortFuelTrim")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToOBDShortTermFuelTrim10(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.shortFuelTrim': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.shortFuelTrim' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'OBDShortTermFuelTrim1'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// OBDWarmupsSinceDTCClearFromV1Data converts the given JSON data to a float64.
+func OBDWarmupsSinceDTCClearFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.warmupsSinceDtcClear")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToOBDWarmupsSinceDTCClear0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.warmupsSinceDtcClear': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.warmupsSinceDtcClear' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'OBDWarmupsSinceDTCClear'", errNotFound)
 	}
 
 	return ret, errs

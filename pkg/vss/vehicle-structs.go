@@ -32,12 +32,26 @@ const (
 	FieldLowVoltageBatteryCurrentVoltage = "lowVoltageBatteryCurrentVoltage"
 	// FieldOBDBarometricPressure PID 33 - Barometric pressure
 	FieldOBDBarometricPressure = "obdBarometricPressure"
+	// FieldOBDCommandedEGR PID 2C - Commanded exhaust gas recirculation (EGR)
+	FieldOBDCommandedEGR = "obdCommandedEGR"
+	// FieldOBDDistanceSinceDTCClear PID 31 - Distance traveled since codes cleared
+	FieldOBDDistanceSinceDTCClear = "obdDistanceSinceDTCClear"
+	// FieldOBDDistanceWithMIL PID 21 - Distance traveled with MIL on
+	FieldOBDDistanceWithMIL = "obdDistanceWithMIL"
 	// FieldOBDEngineLoad PID 04 - Engine load in percent - 0 = no load, 100 = full load
 	FieldOBDEngineLoad = "obdEngineLoad"
 	// FieldOBDIntakeTemp PID 0F - Intake temperature
 	FieldOBDIntakeTemp = "obdIntakeTemp"
+	// FieldOBDLongTermFuelTrim1 PID 07 - Long Term (learned) Fuel Trim - Bank 1 - negative percent leaner, positive percent richer
+	FieldOBDLongTermFuelTrim1 = "obdLongTermFuelTrim1"
+	// FieldOBDMAP PID 0B - Intake manifold pressure
+	FieldOBDMAP = "obdMAP"
 	// FieldOBDRunTime PID 1F - Engine run time
 	FieldOBDRunTime = "obdRunTime"
+	// FieldOBDShortTermFuelTrim1 PID 06 - Short Term (immediate) Fuel Trim - Bank 1 - negative percent leaner, positive percent richer
+	FieldOBDShortTermFuelTrim1 = "obdShortTermFuelTrim1"
+	// FieldOBDWarmupsSinceDTCClear PID 30 - Number of warm-ups since codes cleared
+	FieldOBDWarmupsSinceDTCClear = "obdWarmupsSinceDTCClear"
 	// FieldPowertrainCombustionEngineECT Engine coolant temperature.
 	FieldPowertrainCombustionEngineECT = "powertrainCombustionEngineECT"
 	// FieldPowertrainCombustionEngineEngineOilLevel Engine oil level.

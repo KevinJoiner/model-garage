@@ -302,43 +302,43 @@
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
-- vspecName: 
-  conversions: Vehicle.OBD.LongTermFuelTrim1
+- vspecName: Vehicle.OBD.LongTermFuelTrim1
+  conversions: 
     - originalName: longFuelTrim
       originalType: float64
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
-- vspecName: 
-  conversions: Vehicle.OBD.ShortTermFuelTrim1
+- vspecName: Vehicle.OBD.ShortTermFuelTrim1
+  conversions: 
     - originalName: shortFuelTrim
       originalType: float64
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
-- vspecName: 
-  conversions: Vehicle.OBD.DistanceWithMIL
+- vspecName: Vehicle.OBD.DistanceWithMIL
+  conversions: 
     - originalName: distanceWMil
       originalType: float64
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
-- vspecName: 
-  conversions: Vehicle.OBD.DistanceSinceDTCClear
+- vspecName: Vehicle.OBD.DistanceSinceDTCClear
+  conversions: 
     - originalName: distanceSinceDtcClear
       originalType: float64
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
-- vspecName: 
-  conversions: Vehicle.OBD.CommandedEGR
+- vspecName: Vehicle.OBD.CommandedEGR
+  conversions: 
     - originalName: commandedEgr
       originalType: float64
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
-- vspecName: 
-  conversions: Vehicle.OBD.WarmupsSinceDTCClear
+- vspecName: Vehicle.OBD.WarmupsSinceDTCClear
+  conversions: 
     - originalName: warmupsSinceDtcClear
       originalType: float64
       isArray: false
