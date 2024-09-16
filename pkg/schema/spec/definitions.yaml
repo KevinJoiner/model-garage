@@ -295,3 +295,52 @@
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.OBD.MAP
+  conversions:
+    - originalName: intakePressure
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: 
+  conversions: Vehicle.OBD.LongTermFuelTrim1
+    - originalName: longFuelTrim
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: 
+  conversions: Vehicle.OBD.ShortTermFuelTrim1
+    - originalName: shortFuelTrim
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: 
+  conversions: Vehicle.OBD.DistanceWithMIL
+    - originalName: distanceWMil
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: 
+  conversions: Vehicle.OBD.DistanceSinceDTCClear
+    - originalName: distanceSinceDtcClear
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: 
+  conversions: Vehicle.OBD.CommandedEGR
+    - originalName: commandedEgr
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: 
+  conversions: Vehicle.OBD.WarmupsSinceDTCClear
+    - originalName: warmupsSinceDtcClear
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
