@@ -65,7 +65,7 @@ var fullV2InputJSON = `{
                 },
                 {
                     "timestamp": 1713460830382,
-                    "name": "shortFuelTrim",
+                    "name": "shortTermFuelTrim1",
                     "value": 12.5
                 },
                 {
@@ -90,7 +90,7 @@ var fullV2InputJSON = `{
                 },
                 {
                     "timestamp": 1713460845497,
-                    "name": "shortFuelTrim",
+                    "name": "shortTermFuelTrim1",
                     "value": 12.5
                 },
                 {
