@@ -376,10 +376,10 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
-	case "longFuelTrim":
+	case "longTermFuelTrim1":
 		val0, err := OBDLongTermFuelTrim1FromV2Data(originalDoc, valResult)
 		if err != nil {
-			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'longFuelTrim': %w", err))
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'longTermFuelTrim1': %w", err))
 		} else {
 			sig := vss.Signal{
 				TokenID:   baseSignal.TokenID,
@@ -529,10 +529,10 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
-	case "shortFuelTrim":
+	case "shortTermFuelTrim1":
 		val0, err := OBDShortTermFuelTrim1FromV2Data(originalDoc, valResult)
 		if err != nil {
-			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'shortFuelTrim': %w", err))
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'shortTermFuelTrim1': %w", err))
 		} else {
 			sig := vss.Signal{
 				TokenID:   baseSignal.TokenID,
@@ -1206,9 +1206,9 @@ func OBDLongTermFuelTrim1FromV2Data(originalDoc []byte, result gjson.Result) (re
 		if err == nil {
 			return ret, nil
 		}
-		errs = errors.Join(errs, fmt.Errorf("failed to convert 'longFuelTrim': %w", err))
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'longTermFuelTrim1': %w", err))
 	} else {
-		errs = errors.Join(errs, fmt.Errorf("%w, field 'longFuelTrim' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'longTermFuelTrim1' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
 
 	return ret, errs
@@ -1257,9 +1257,9 @@ func OBDShortTermFuelTrim1FromV2Data(originalDoc []byte, result gjson.Result) (r
 		if err == nil {
 			return ret, nil
 		}
-		errs = errors.Join(errs, fmt.Errorf("failed to convert 'shortFuelTrim': %w", err))
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'shortTermFuelTrim1': %w", err))
 	} else {
-		errs = errors.Join(errs, fmt.Errorf("%w, field 'shortFuelTrim' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'shortTermFuelTrim1' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
 
 	return ret, errs

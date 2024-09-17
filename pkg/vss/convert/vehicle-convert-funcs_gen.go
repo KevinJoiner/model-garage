@@ -196,7 +196,7 @@ func ToOBDIntakeTemp0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
-// ToOBDLongTermFuelTrim10 converts data from field 'longFuelTrim' of type float64 to 'Vehicle.OBD.LongTermFuelTrim1' of type float64.
+// ToOBDLongTermFuelTrim10 converts data from field 'longTermFuelTrim1' of type float64 to 'Vehicle.OBD.LongTermFuelTrim1' of type float64.
 // Vehicle.OBD.LongTermFuelTrim1: PID 07 - Long Term (learned) Fuel Trim - Bank 1 - negative percent leaner, positive percent richer
 // Unit: 'percent'
 func ToOBDLongTermFuelTrim10(originalDoc []byte, val float64) (float64, error) {
@@ -217,7 +217,7 @@ func ToOBDRunTime0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
-// ToOBDShortTermFuelTrim10 converts data from field 'shortFuelTrim' of type float64 to 'Vehicle.OBD.ShortTermFuelTrim1' of type float64.
+// ToOBDShortTermFuelTrim10 converts data from field 'shortTermFuelTrim1' of type float64 to 'Vehicle.OBD.ShortTermFuelTrim1' of type float64.
 // Vehicle.OBD.ShortTermFuelTrim1: PID 06 - Short Term (immediate) Fuel Trim - Bank 1 - negative percent leaner, positive percent richer
 // Unit: 'percent'
 func ToOBDShortTermFuelTrim10(originalDoc []byte, val float64) (float64, error) {

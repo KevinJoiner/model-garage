@@ -1305,7 +1305,7 @@ func OBDIntakeTempFromV1Data(jsonData []byte) (ret float64, err error) {
 func OBDLongTermFuelTrim1FromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.longFuelTrim")
+	result = gjson.GetBytes(jsonData, "data.longTermFuelTrim1")
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
@@ -1313,9 +1313,9 @@ func OBDLongTermFuelTrim1FromV1Data(jsonData []byte) (ret float64, err error) {
 			if err == nil {
 				return retVal, nil
 			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.longFuelTrim': %w", err))
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.longTermFuelTrim1': %w", err))
 		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.longFuelTrim' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.longTermFuelTrim1' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
@@ -1380,7 +1380,7 @@ func OBDRunTimeFromV1Data(jsonData []byte) (ret float64, err error) {
 func OBDShortTermFuelTrim1FromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.shortFuelTrim")
+	result = gjson.GetBytes(jsonData, "data.shortTermFuelTrim1")
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
@@ -1388,9 +1388,9 @@ func OBDShortTermFuelTrim1FromV1Data(jsonData []byte) (ret float64, err error) {
 			if err == nil {
 				return retVal, nil
 			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.shortFuelTrim': %w", err))
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.shortTermFuelTrim1': %w", err))
 		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.shortFuelTrim' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.shortTermFuelTrim1' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 		}
 	}
 
