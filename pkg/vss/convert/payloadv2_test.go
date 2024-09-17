@@ -40,7 +40,7 @@ var fullV2InputJSON = `{
             "signals": [
                 {
                     "timestamp": 1713460823243,
-                    "name": "longFuelTrim",
+                    "name": "longTermFuelTrim1",
                     "value": 25
                 },
                 {
