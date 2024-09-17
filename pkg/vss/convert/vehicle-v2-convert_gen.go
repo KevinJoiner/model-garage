@@ -153,6 +153,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
+	case "commandedEgr":
+		val0, err := OBDCommandedEGRFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'commandedEgr': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "obdCommandedEGR",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
 	case "coolantTemp":
 		val0, err := PowertrainCombustionEngineECTFromV2Data(originalDoc, valResult)
 		if err != nil {
@@ -163,6 +177,34 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
 				Name:      "powertrainCombustionEngineECT",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
+	case "distanceSinceDtcClear":
+		val0, err := OBDDistanceSinceDTCClearFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'distanceSinceDtcClear': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "obdDistanceSinceDTCClear",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
+	case "distanceWMil":
+		val0, err := OBDDistanceWithMILFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'distanceWMil': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "obdDistanceWithMIL",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -278,6 +320,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
+	case "intakePressure":
+		val0, err := OBDMAPFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'intakePressure': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "obdMAP",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
 	case "intakeTemp":
 		val0, err := OBDIntakeTempFromV2Data(originalDoc, valResult)
 		if err != nil {
@@ -316,6 +372,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
 				Name:      "currentLocationLatitude",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
+	case "longTermFuelTrim1":
+		val0, err := OBDLongTermFuelTrim1FromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'longTermFuelTrim1': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "obdLongTermFuelTrim1",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -455,6 +525,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
 				Name:      "obdRunTime",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
+	case "shortTermFuelTrim1":
+		val0, err := OBDShortTermFuelTrim1FromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'shortTermFuelTrim1': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "obdShortTermFuelTrim1",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -637,6 +721,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
 				Name:      "speed",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
+	case "warmupsSinceDtcClear":
+		val0, err := OBDWarmupsSinceDTCClearFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'warmupsSinceDtcClear': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "obdWarmupsSinceDTCClear",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -1014,6 +1112,57 @@ func OBDBarometricPressureFromV2Data(originalDoc []byte, result gjson.Result) (r
 	return ret, errs
 }
 
+// OBDCommandedEGRFromData converts the given JSON data to a float64.
+func OBDCommandedEGRFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToOBDCommandedEGR0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'commandedEgr': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'commandedEgr' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// OBDDistanceSinceDTCClearFromData converts the given JSON data to a float64.
+func OBDDistanceSinceDTCClearFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToOBDDistanceSinceDTCClear0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'distanceSinceDtcClear': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'distanceSinceDtcClear' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// OBDDistanceWithMILFromData converts the given JSON data to a float64.
+func OBDDistanceWithMILFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToOBDDistanceWithMIL0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'distanceWMil': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'distanceWMil' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
 // OBDEngineLoadFromData converts the given JSON data to a float64.
 func OBDEngineLoadFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
@@ -1048,6 +1197,40 @@ func OBDIntakeTempFromV2Data(originalDoc []byte, result gjson.Result) (ret float
 	return ret, errs
 }
 
+// OBDLongTermFuelTrim1FromData converts the given JSON data to a float64.
+func OBDLongTermFuelTrim1FromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToOBDLongTermFuelTrim10(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'longTermFuelTrim1': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'longTermFuelTrim1' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// OBDMAPFromData converts the given JSON data to a float64.
+func OBDMAPFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToOBDMAP0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'intakePressure': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'intakePressure' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
 // OBDRunTimeFromData converts the given JSON data to a float64.
 func OBDRunTimeFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
@@ -1060,6 +1243,40 @@ func OBDRunTimeFromV2Data(originalDoc []byte, result gjson.Result) (ret float64,
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'runTime': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'runTime' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// OBDShortTermFuelTrim1FromData converts the given JSON data to a float64.
+func OBDShortTermFuelTrim1FromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToOBDShortTermFuelTrim10(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'shortTermFuelTrim1': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'shortTermFuelTrim1' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// OBDWarmupsSinceDTCClearFromData converts the given JSON data to a float64.
+func OBDWarmupsSinceDTCClearFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToOBDWarmupsSinceDTCClear0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'warmupsSinceDtcClear': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'warmupsSinceDtcClear' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
 
 	return ret, errs

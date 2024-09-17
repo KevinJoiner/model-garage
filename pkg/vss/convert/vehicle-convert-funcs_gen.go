@@ -157,6 +157,27 @@ func ToOBDBarometricPressure0(originalDoc []byte, val float64) (float64, error) 
 	return val, nil
 }
 
+// ToOBDCommandedEGR0 converts data from field 'commandedEgr' of type float64 to 'Vehicle.OBD.CommandedEGR' of type float64.
+// Vehicle.OBD.CommandedEGR: PID 2C - Commanded exhaust gas recirculation (EGR)
+// Unit: 'percent'
+func ToOBDCommandedEGR0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToOBDDistanceSinceDTCClear0 converts data from field 'distanceSinceDtcClear' of type float64 to 'Vehicle.OBD.DistanceSinceDTCClear' of type float64.
+// Vehicle.OBD.DistanceSinceDTCClear: PID 31 - Distance traveled since codes cleared
+// Unit: 'km'
+func ToOBDDistanceSinceDTCClear0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToOBDDistanceWithMIL0 converts data from field 'distanceWMil' of type float64 to 'Vehicle.OBD.DistanceWithMIL' of type float64.
+// Vehicle.OBD.DistanceWithMIL: PID 21 - Distance traveled with MIL on
+// Unit: 'km'
+func ToOBDDistanceWithMIL0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToOBDEngineLoad0 converts data from field 'engineLoad' of type float64 to 'Vehicle.OBD.EngineLoad' of type float64.
 // Vehicle.OBD.EngineLoad: PID 04 - Engine load in percent - 0 = no load, 100 = full load
 // Unit: 'percent'
@@ -175,10 +196,37 @@ func ToOBDIntakeTemp0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
+// ToOBDLongTermFuelTrim10 converts data from field 'longTermFuelTrim1' of type float64 to 'Vehicle.OBD.LongTermFuelTrim1' of type float64.
+// Vehicle.OBD.LongTermFuelTrim1: PID 07 - Long Term (learned) Fuel Trim - Bank 1 - negative percent leaner, positive percent richer
+// Unit: 'percent'
+func ToOBDLongTermFuelTrim10(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToOBDMAP0 converts data from field 'intakePressure' of type float64 to 'Vehicle.OBD.MAP' of type float64.
+// Vehicle.OBD.MAP: PID 0B - Intake manifold pressure
+// Unit: 'kPa'
+func ToOBDMAP0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToOBDRunTime0 converts data from field 'runTime' of type float64 to 'Vehicle.OBD.RunTime' of type float64.
 // Vehicle.OBD.RunTime: PID 1F - Engine run time
 // Unit: 's'
 func ToOBDRunTime0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToOBDShortTermFuelTrim10 converts data from field 'shortTermFuelTrim1' of type float64 to 'Vehicle.OBD.ShortTermFuelTrim1' of type float64.
+// Vehicle.OBD.ShortTermFuelTrim1: PID 06 - Short Term (immediate) Fuel Trim - Bank 1 - negative percent leaner, positive percent richer
+// Unit: 'percent'
+func ToOBDShortTermFuelTrim10(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToOBDWarmupsSinceDTCClear0 converts data from field 'warmupsSinceDtcClear' of type float64 to 'Vehicle.OBD.WarmupsSinceDTCClear' of type float64.
+// Vehicle.OBD.WarmupsSinceDTCClear: PID 30 - Number of warm-ups since codes cleared
+func ToOBDWarmupsSinceDTCClear0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
