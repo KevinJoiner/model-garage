@@ -304,14 +304,14 @@
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.LongTermFuelTrim1
   conversions: 
-    - originalName: longFuelTrim
+    - originalName: longTermFuelTrim1
       originalType: float64
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.ShortTermFuelTrim1
   conversions: 
-    - originalName: shortFuelTrim
+    - originalName: shortTermFuelTrim1
       originalType: float64
       isArray: false
   requiredPrivileges:
