@@ -72,7 +72,6 @@ type OriginalNameInfo struct {
 
 // TemplateData contains the data to be used during template execution.
 type TemplateData struct {
-	PackageName   string
 	ModelName     string
 	Signals       []*SignalInfo
 	OriginalNames []*OriginalNameInfo

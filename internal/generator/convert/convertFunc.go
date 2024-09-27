@@ -27,34 +27,12 @@ type functionInfo struct {
 	Body     []byte
 }
 
-// createConvertFuncs generates conversion functions based on the provided template data.
-// It writes the generated functions to the specified output directory.
-// If copyComments is true, it will copy existing comments from the original functions.
-// The existingFuncs map contains information about existing functions in the output directory.
-func createConvertFuncs(tmplData *schema.TemplateData, outputDir string, copyComments bool, convertFunc []funcTmplData, existingFuncs map[string]functionInfo) error {
-	convertFuncTemplate, err := createConvertFuncTemplate()
-	if err != nil {
-		return err
-	}
-	if len(convertFunc) == 0 {
-		return nil
-	}
-
-	convertFuncFileName := fmt.Sprintf(convertFuncFileNameFormat, strings.ToLower(tmplData.ModelName))
-	filePath := filepath.Join(outputDir, convertFuncFileName)
-	err = writeConvertFuncs(convertFunc, existingFuncs, convertFuncTemplate, filePath, tmplData.PackageName, copyComments)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
 // getConversionFunctions returns the signals that need conversion functions.
 func getConversionFunctions(signals []*schema.SignalInfo) []funcTmplData {
 	var convertFunc []funcTmplData
 	for _, signal := range signals {
 		for i := range signal.Conversions {
-			funcName := convertName(signal) + strconv.Itoa(i)
+			funcName := "To" + signal.GOName + strconv.Itoa(i)
 			convData := funcTmplData{
 				Signal:     signal,
 				Conversion: signal.Conversions[i],
@@ -141,11 +119,6 @@ func getDeclaredFunctionsForFile(fset *token.FileSet, filePath string) (map[stri
 		}
 	}
 	return declaredFunctions, nil
-}
-
-// convertName returns the conversion function name for a given signal.
-func convertName(signal *schema.SignalInfo) string {
-	return "To" + signal.GOName
 }
 
 // writeConvertFuncs writes the generated conversion functions to a file.

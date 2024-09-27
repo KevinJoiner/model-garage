@@ -22,8 +22,7 @@ func main() {
 	outputDir := flag.String("output", ".", "Output directory for the generated Go file")
 	vspecPath := flag.String("spec", "", "Path to the vspec CSV file if empty, the embedded vspec will be used")
 	definitionPath := flag.String("definitions", "", "Path to the definitions file if empty, the definitions will be used")
-	packageName := flag.String("package", "vspec", "Name of the package to generate")
-	generators := flag.String("generators", "all", "Comma separated list of generators to run. Options: all, model, convert, custom.")
+	generators := flag.String("generators", "all", "Comma separated list of generators to run. Options: all, convert, custom.")
 	// Convert flags
 	copyComments := flag.Bool("convert.copy-comments", false, "Copy through comments on conversion functions. Default is false.")
 	convertPackageName := flag.String("convert.package", "", "Name of the package to generate the conversion functions. If empty, the base package name is used.")
@@ -68,8 +67,7 @@ func main() {
 	gens := strings.Split(*generators, ",")
 
 	cfg := runner.Config{
-		PackageName: *packageName,
-		OutputDir:   *outputDir,
+		OutputDir: *outputDir,
 		Custom: custom.Config{
 			OutputFile:   *customOutFile,
 			TemplateFile: *customTemplateFile,
