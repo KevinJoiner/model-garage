@@ -35,7 +35,7 @@ func Generate(tmplData *schema.TemplateData, cfg Config) error {
 	}
 
 	// create a new Custom file template.
-	customFileTmpl, err := createCustomFileTemplate(cfg.OutputFile)
+	customFileTmpl, err := createCustomFileTemplate(cfg.TemplateFile)
 	if err != nil {
 		return err
 	}
