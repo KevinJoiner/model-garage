@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	// convertFuncFileNameFormat is the name of the Go file that will contain the conversion functions.
-	convertFuncFileNameFormat = "%s-convert-funcs_gen.go"
+	// DefaultConversionFile is the default name of the conversion file.
+	DefaultConversionFile = "convert-funcs_gen.go"
 )
 
 //go:embed convertFunc.tmpl
@@ -30,9 +30,9 @@ package %s
 type Config struct {
 	// CopyComments determines if comments for the conversion functions should be copied through.
 	CopyComments bool
-	// OutputDir is the output directory for the generated conversion files.
+	// OutputFile is the output directory for the generated conversion files.
 	// if empty, the base output directory is used.
-	OutputDir string
+	OutputFile string
 	// PackageName is the name of the package to generate the conversion functions.
 	PackageName string
 }
@@ -58,9 +58,10 @@ type convertTmplData struct {
 
 // Generate creates a conversion functions for each field of a model struct.
 // as well as the entire model struct.
-func Generate(tmplData *schema.TemplateData, outputDir string, cfg Config) (err error) {
-	if cfg.OutputDir != "" {
-		outputDir = cfg.OutputDir
+func Generate(tmplData *schema.TemplateData, cfg Config) (err error) {
+	cfg.OutputFile = filepath.Clean(cfg.OutputFile)
+	if cfg.OutputFile == "" {
+		cfg.OutputFile = DefaultConversionFile
 	}
 	if cfg.PackageName == "" {
 		cfg.PackageName = strings.ToLower(tmplData.ModelName)
@@ -72,6 +73,7 @@ func Generate(tmplData *schema.TemplateData, outputDir string, cfg Config) (err 
 		return nil
 	}
 
+	outputDir := filepath.Dir(cfg.OutputFile)
 	// Get existing functions in the output directory.
 	existingFuncs, err := GetDeclaredFunctions(outputDir)
 	if err != nil {
@@ -84,10 +86,7 @@ func Generate(tmplData *schema.TemplateData, outputDir string, cfg Config) (err 
 		return err
 	}
 
-	convertFuncFileName := fmt.Sprintf(convertFuncFileNameFormat, strings.ToLower(tmplData.ModelName))
-	filePath := filepath.Join(outputDir, convertFuncFileName)
-
-	err = writeConvertFuncs(convertFunc, existingFuncs, convertFuncTemplate, filePath, cfg.PackageName, cfg.CopyComments)
+	err = writeConvertFuncs(convertFunc, existingFuncs, convertFuncTemplate, cfg.OutputFile, cfg.PackageName, cfg.CopyComments)
 	if err != nil {
 		return err
 	}

@@ -74,7 +74,7 @@ clickhouse:
 	go run ./cmd/clickhouse-container
 
 generate:
-	go run ./cmd/codegen -convert.package=convert -generators=convert -convert.output=./pkg/nativestatus/convert
+	go run ./cmd/codegen -convert.package=convert -generators=convert -convert.output-file=./pkg/nativestatus/convert/vehicle-convert-funcs_gen.go
 	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/nativestatus/convert/vehicle-v1-convert_gen.go -custom.template-file=./pkg/nativestatus/convertv1.tmpl -custom.format=true
 	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/nativestatus/convert/vehicle-v2-convert_gen.go -custom.template-file=./pkg/nativestatus/convertv2.tmpl -custom.format=true
-	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/vss/vehicle-structs.go -custom.template-file=./internal/generator/model/vehicle.tmpl -custom.format=true
+	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/vss/vehicle-structs.go -custom.template-file=./internal/generator/vehicle.tmpl -custom.format=true

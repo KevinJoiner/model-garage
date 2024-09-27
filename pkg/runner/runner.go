@@ -8,7 +8,6 @@ import (
 
 	"github.com/DIMO-Network/model-garage/internal/generator/convert"
 	"github.com/DIMO-Network/model-garage/internal/generator/custom"
-	"github.com/DIMO-Network/model-garage/pkg/codegen"
 	"github.com/DIMO-Network/model-garage/pkg/schema"
 )
 
@@ -23,10 +22,8 @@ const (
 
 // Config is the configuration for the code generation tool.
 type Config struct {
-	PackageName string
-	OutputDir   string
-	Custom      custom.Config
-	Convert     convert.Config
+	Custom  custom.Config
+	Convert convert.Config
 }
 
 // Execute runs the code generation tool.
@@ -43,25 +40,20 @@ func Execute(vspecReader, definitionsReader io.Reader, generators []string, cfg 
 		return fmt.Errorf("no generator selected")
 	}
 
-	err := codegen.EnsureDir(cfg.OutputDir)
-	if err != nil {
-		return fmt.Errorf("failed to ensure output directory: %w", err)
-	}
-
 	tmplData, err := schema.GetDefinedSignals(vspecReader, definitionsReader)
 	if err != nil {
 		return fmt.Errorf("failed to get defined signals: %w", err)
 	}
 
 	if slices.Contains(generators, AllGenerator) || slices.Contains(generators, ConvertGenerator) {
-		err = convert.Generate(tmplData, cfg.OutputDir, cfg.Convert)
+		err = convert.Generate(tmplData, cfg.Convert)
 		if err != nil {
 			return fmt.Errorf("failed to generate convert file: %w", err)
 		}
 	}
 
 	if slices.Contains(generators, AllGenerator) || slices.Contains(generators, CustomGenerator) {
-		err = custom.Generate(tmplData, cfg.OutputDir, cfg.Custom)
+		err = custom.Generate(tmplData, cfg.Custom)
 		if err != nil {
 			return fmt.Errorf("failed to generate custom file: %w", err)
 		}
