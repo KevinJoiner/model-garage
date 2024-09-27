@@ -21,18 +21,18 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal {{ .ModelPackagePrefix }}S
 	var retErrs error
 	{{ $root := . }}
 	switch signalName {
-	{{- range $i, $convs := .Conversions }}
-	case "{{ (index $convs 0).Conversion.OriginalName }}":
-		{{- range $j, $conv := $convs }}
-		val{{ $j }}, err := {{ $conv.Signal.GOName }}FromV2Data(originalDoc, valResult)
+	{{- range $i, $origInfo := .TemplateData.OriginalNames }}
+	case "{{ $origInfo.Name }}":
+		{{- range $j, $sig := $origInfo.Signals }}
+		val{{ $j }}, err := {{ $sig.GOName }}FromV2Data(originalDoc, valResult)
 		if err != nil {
-			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert '{{ $conv.Conversion.OriginalName }}': %w", err))
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert '{{ $origInfo.Name }}': %w", err))
 		} else {
 			sig := {{ $root.ModelPackagePrefix }}Signal{
 				TokenID: baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source: baseSignal.Source,
-				Name: "{{ $conv.Signal.JSONName }}",
+				Name: "{{ $sig.JSONName }}",
 			}
 			sig.SetValue(val{{ $j }})
 			ret = append(ret, sig)

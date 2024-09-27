@@ -3,11 +3,9 @@ package convert
 
 import (
 	"bytes"
-	"cmp"
 	_ "embed"
 	"fmt"
 	"path/filepath"
-	"slices"
 	"strings"
 	"text/template"
 
@@ -25,12 +23,6 @@ const (
 	// convertFuncFileNameFormat is the name of the Go file that will contain the conversion functions.
 	convertFuncFileNameFormat = "%s-convert-funcs_gen.go"
 )
-
-type conversionData struct {
-	FuncName string
-	Signal   *schema.SignalInfo
-	convIdx  int
-}
 
 //go:embed convertv1.tmpl
 var convertV1TemplateStr string
@@ -62,25 +54,24 @@ type Config struct {
 	OutputDir string
 }
 
+// funcTmplData contains the data to be used during template execution for writing a single conversion function.
 type funcTmplData struct {
-	Signal      *schema.SignalInfo
-	FuncName    string
-	PackageName string
-	Conversion  *schema.ConversionInfo
-	DocComment  string
-	Body        string
+	// Signal is the signal that we are converting to.
+	Signal *schema.SignalInfo
+	// Conversion is the information about the signal we are converting from.
+	Conversion *schema.ConversionInfo
+	// FuncName is the name of the conversion function.
+	FuncName string
+	// DocComment is the original doc comment for the conversion function if it exists.
+	DocComment string
+	// Body of the original conversion function if it exists.
+	Body string
 }
 
+// convertTmplData contains the data to be used during template execution for writing the conversion functions.
 type convertTmplData struct {
 	*schema.TemplateData
-	// Group of conversions by original field name.
-	Conversions        [][]*singleConversions
 	ModelPackagePrefix string
-}
-
-type singleConversions struct {
-	Signal     *schema.SignalInfo
-	Conversion *schema.ConversionInfo
 }
 
 // Generate creates a conversion functions for each field of a model struct.
@@ -94,17 +85,18 @@ func Generate(tmplData *schema.TemplateData, outputDir string, cfg Config) (err 
 	if cfg.OutputDir != "" {
 		outputDir = cfg.OutputDir
 	}
-	err = createStructConversion(tmplData, outputDir, modelPackagePrefix)
+
+	convertFunc := getConversionFunctions(tmplData.Signals)
+
+	err = createStructConversion(tmplData, convertFunc, outputDir, modelPackagePrefix)
 	if err != nil {
 		return err
 	}
 
-	existingFuncs, err := getDeclaredFunctions(outputDir)
+	existingFuncs, err := GetDeclaredFunctions(outputDir)
 	if err != nil {
 		return fmt.Errorf("error getting declared functions: %w", err)
 	}
-
-	convertFunc := getConversionFunctions(tmplData.Signals)
 
 	err = createConvertFuncs(tmplData, outputDir, cfg.CopyComments, convertFunc, existingFuncs)
 	if err != nil {
@@ -115,7 +107,7 @@ func Generate(tmplData *schema.TemplateData, outputDir string, cfg Config) (err 
 }
 
 // createStructConversion creates the conversion function for converting JSON data to a model struct.
-func createStructConversion(tmplData *schema.TemplateData, outputDir, modelPackagePrefix string) error {
+func createStructConversion(tmplData *schema.TemplateData, conversionFunc []funcTmplData, outputDir, modelPackagePrefix string) error {
 	convV1Tmpl, err := createConvV1Template()
 	if err != nil {
 		return err
@@ -126,10 +118,10 @@ func createStructConversion(tmplData *schema.TemplateData, outputDir, modelPacka
 		return err
 	}
 
-	convSlice := gatherAllConversionsFromSignals(tmplData)
+	// convSlice := gatherAllConversionsFromSignals3(conversionFunc)
 	convTmplData := &convertTmplData{
-		TemplateData:       tmplData,
-		Conversions:        convSlice,
+		TemplateData: tmplData,
+		// Conversions:        convSlice,
 		ModelPackagePrefix: modelPackagePrefix,
 	}
 
@@ -179,28 +171,4 @@ func createConvV2Template() (*template.Template, error) {
 		return nil, fmt.Errorf("error parsing conversion v2 template: %w", err)
 	}
 	return tmpl, nil
-}
-
-// gatherAllConversionsFromSignals gathers all conversions from the signals.
-// and returns them in the format [][]*singleConversions.
-// Where the outer slice is grouped by the original field name.
-// And the inner slice contains a list of conversions for that field and their corresponding signal.
-func gatherAllConversionsFromSignals(tmplData *schema.TemplateData) [][]*singleConversions {
-	conversions := make(map[string][]*singleConversions, len(tmplData.Signals))
-	for _, signal := range tmplData.Signals {
-		for _, conv := range signal.Conversions {
-			conversions[conv.OriginalName] = append(conversions[conv.OriginalName], &singleConversions{
-				Signal:     signal,
-				Conversion: conv,
-			})
-		}
-	}
-	convSlice := [][]*singleConversions{}
-	for _, convs := range conversions {
-		convSlice = append(convSlice, convs)
-	}
-	slices.SortFunc(convSlice, func(i, j []*singleConversions) int {
-		return cmp.Compare(i[0].Conversion.OriginalName, j[0].Conversion.OriginalName)
-	})
-	return convSlice
 }
