@@ -7,6 +7,20 @@ import "math"
 // any conversion functions already defined in this package will be coppied through.
 // note: DO NOT mutate the orginalDoc parameter which is shared between all conversion functions.
 
+// ToAngularVelocityYaw0 converts data from field 'yawRate' of type float64 to 'Vehicle.AngularVelocity.Yaw' of type float64.
+// Vehicle.AngularVelocity.Yaw: Vehicle rotation rate along Z (vertical).
+// Unit: 'degrees/s'
+func ToAngularVelocityYaw0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToChassisAxleRow1WheelLeftSpeed0 converts data from field 'frontLeftWheelSpeed' of type float64 to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Speed' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Speed: Rotational speed of a vehicle's wheel.
+// Unit: 'km/h'
+func ToChassisAxleRow1WheelLeftSpeed0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToChassisAxleRow1WheelLeftTirePressure0 converts data from field 'tires.frontLeft' of type float64 to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
@@ -18,6 +32,13 @@ func ToChassisAxleRow1WheelLeftTirePressure0(originalDoc []byte, val float64) (f
 // Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
 func ToChassisAxleRow1WheelLeftTirePressure1(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToChassisAxleRow1WheelRightSpeed0 converts data from field 'frontRightWheelSpeed' of type float64 to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Speed' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Speed: Rotational speed of a vehicle's wheel.
+// Unit: 'km/h'
+func ToChassisAxleRow1WheelRightSpeed0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
@@ -297,6 +318,13 @@ func ToPowertrainCombustionEngineTPS0(originalDoc []byte, val float64) (float64,
 	if hasV1Schema(schemaVersion) {
 		return val * 100, nil
 	}
+	return val, nil
+}
+
+// ToPowertrainElectricMotorCoolantTemperature0 converts data from field 'hvBatteryCoolantTemperature' of type float64 to 'Vehicle.Powertrain.ElectricMotor.CoolantTemperature' of type float64.
+// Vehicle.Powertrain.ElectricMotor.CoolantTemperature: Motor coolant temperature (if applicable).
+// Unit: 'celsius'
+func ToPowertrainElectricMotorCoolantTemperature0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 

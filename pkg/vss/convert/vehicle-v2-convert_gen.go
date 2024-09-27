@@ -237,6 +237,34 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
+	case "frontLeftWheelSpeed":
+		val0, err := ChassisAxleRow1WheelLeftSpeedFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'frontLeftWheelSpeed': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "chassisAxleRow1WheelLeftSpeed",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
+	case "frontRightWheelSpeed":
+		val0, err := ChassisAxleRow1WheelRightSpeedFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'frontRightWheelSpeed': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "chassisAxleRow1WheelRightSpeed",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
 	case "fuelLevel":
 		val0, err := PowertrainFuelSystemRelativeLevelFromV2Data(originalDoc, valResult)
 		if err != nil {
@@ -316,6 +344,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
 				Name:      "dimoAftermarketHDOP",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
+	case "hvBatteryCoolantTemperature":
+		val0, err := PowertrainElectricMotorCoolantTemperatureFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'hvBatteryCoolantTemperature': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "powertrainElectricMotorCoolantTemperature",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -781,10 +823,58 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
+	case "yawRate":
+		val0, err := AngularVelocityYawFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'yawRate': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "angularVelocityYaw",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
 	default:
 		// do nothing
 	}
 	return ret, retErrs
+}
+
+// AngularVelocityYawFromData converts the given JSON data to a float64.
+func AngularVelocityYawFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToAngularVelocityYaw0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'yawRate': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'yawRate' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// ChassisAxleRow1WheelLeftSpeedFromData converts the given JSON data to a float64.
+func ChassisAxleRow1WheelLeftSpeedFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToChassisAxleRow1WheelLeftSpeed0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'frontLeftWheelSpeed': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'frontLeftWheelSpeed' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
 }
 
 // ChassisAxleRow1WheelLeftTirePressureFromData converts the given JSON data to a float64.
@@ -809,6 +899,23 @@ func ChassisAxleRow1WheelLeftTirePressureFromV2Data(originalDoc []byte, result g
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'tiresFrontLeft': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'tiresFrontLeft' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// ChassisAxleRow1WheelRightSpeedFromData converts the given JSON data to a float64.
+func ChassisAxleRow1WheelRightSpeedFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToChassisAxleRow1WheelRightSpeed0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'frontRightWheelSpeed': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'frontRightWheelSpeed' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
 
 	return ret, errs
@@ -1399,6 +1506,23 @@ func PowertrainCombustionEngineTPSFromV2Data(originalDoc []byte, result gjson.Re
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'throttlePosition': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'throttlePosition' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// PowertrainElectricMotorCoolantTemperatureFromData converts the given JSON data to a float64.
+func PowertrainElectricMotorCoolantTemperatureFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToPowertrainElectricMotorCoolantTemperature0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'hvBatteryCoolantTemperature': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'hvBatteryCoolantTemperature' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
 
 	return ret, errs

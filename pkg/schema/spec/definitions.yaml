@@ -344,3 +344,31 @@
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.AngularVelocity.Yaw
+  conversions: 
+    - originalName: yawRate
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.ElectricMotor.CoolantTemperature
+  conversions: 
+    - originalName: hvBatteryCoolantTemperature 
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Left.Speed
+  conversions: 
+    - originalName: frontLeftWheelSpeed
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Right.Speed
+  conversions: 
+    - originalName: frontRightWheelSpeed
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA

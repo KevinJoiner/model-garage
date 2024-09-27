@@ -2,8 +2,14 @@
 package vss
 
 const (
+	// FieldAngularVelocityYaw Vehicle rotation rate along Z (vertical).
+	FieldAngularVelocityYaw = "angularVelocityYaw"
+	// FieldChassisAxleRow1WheelLeftSpeed Rotational speed of a vehicle's wheel.
+	FieldChassisAxleRow1WheelLeftSpeed = "chassisAxleRow1WheelLeftSpeed"
 	// FieldChassisAxleRow1WheelLeftTirePressure Tire pressure in kilo-Pascal.
 	FieldChassisAxleRow1WheelLeftTirePressure = "chassisAxleRow1WheelLeftTirePressure"
+	// FieldChassisAxleRow1WheelRightSpeed Rotational speed of a vehicle's wheel.
+	FieldChassisAxleRow1WheelRightSpeed = "chassisAxleRow1WheelRightSpeed"
 	// FieldChassisAxleRow1WheelRightTirePressure Tire pressure in kilo-Pascal.
 	FieldChassisAxleRow1WheelRightTirePressure = "chassisAxleRow1WheelRightTirePressure"
 	// FieldChassisAxleRow2WheelLeftTirePressure Tire pressure in kilo-Pascal.
@@ -64,6 +70,8 @@ const (
 	FieldPowertrainCombustionEngineSpeed = "powertrainCombustionEngineSpeed"
 	// FieldPowertrainCombustionEngineTPS Current throttle position.
 	FieldPowertrainCombustionEngineTPS = "powertrainCombustionEngineTPS"
+	// FieldPowertrainElectricMotorCoolantTemperature Motor coolant temperature (if applicable).
+	FieldPowertrainElectricMotorCoolantTemperature = "powertrainElectricMotorCoolantTemperature"
 	// FieldPowertrainFuelSystemAbsoluteLevel Current available fuel in the fuel tank expressed in liters.
 	FieldPowertrainFuelSystemAbsoluteLevel = "powertrainFuelSystemAbsoluteLevel"
 	// FieldPowertrainFuelSystemRelativeLevel Level in fuel tank as percent of capacity. 0 = empty. 100 = full.
