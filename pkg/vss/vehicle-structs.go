@@ -2,8 +2,14 @@
 package vss
 
 const (
+	// FieldAngularVelocityYaw Vehicle rotation rate along Z (vertical).
+	FieldAngularVelocityYaw = "angularVelocityYaw"
+	// FieldChassisAxleRow1WheelLeftSpeed Rotational speed of a vehicle's wheel.
+	FieldChassisAxleRow1WheelLeftSpeed = "chassisAxleRow1WheelLeftSpeed"
 	// FieldChassisAxleRow1WheelLeftTirePressure Tire pressure in kilo-Pascal.
 	FieldChassisAxleRow1WheelLeftTirePressure = "chassisAxleRow1WheelLeftTirePressure"
+	// FieldChassisAxleRow1WheelRightSpeed Rotational speed of a vehicle's wheel.
+	FieldChassisAxleRow1WheelRightSpeed = "chassisAxleRow1WheelRightSpeed"
 	// FieldChassisAxleRow1WheelRightTirePressure Tire pressure in kilo-Pascal.
 	FieldChassisAxleRow1WheelRightTirePressure = "chassisAxleRow1WheelRightTirePressure"
 	// FieldChassisAxleRow2WheelLeftTirePressure Tire pressure in kilo-Pascal.
@@ -82,6 +88,8 @@ const (
 	FieldPowertrainTractionBatteryGrossCapacity = "powertrainTractionBatteryGrossCapacity"
 	// FieldPowertrainTractionBatteryStateOfChargeCurrent Physical state of charge of the high voltage battery, relative to net capacity. This is not necessarily the state of charge being displayed to the customer.
 	FieldPowertrainTractionBatteryStateOfChargeCurrent = "powertrainTractionBatteryStateOfChargeCurrent"
+	// FieldPowertrainTractionBatteryTemperatureAverage Current average temperature of the battery cells.
+	FieldPowertrainTractionBatteryTemperatureAverage = "powertrainTractionBatteryTemperatureAverage"
 	// FieldPowertrainTransmissionTravelledDistance Odometer reading, total distance travelled during the lifetime of the transmission.
 	FieldPowertrainTransmissionTravelledDistance = "powertrainTransmissionTravelledDistance"
 	// FieldPowertrainType Defines the powertrain type of the vehicle.

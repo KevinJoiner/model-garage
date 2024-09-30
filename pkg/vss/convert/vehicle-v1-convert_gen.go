@@ -20,6 +20,38 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 	var err error
 	var errs []error
 
+	val, err = AngularVelocityYawFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'AngularVelocityYaw': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "angularVelocityYaw",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = ChassisAxleRow1WheelLeftSpeedFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'ChassisAxleRow1WheelLeftSpeed': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "chassisAxleRow1WheelLeftSpeed",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
 	val, err = ChassisAxleRow1WheelLeftTirePressureFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -28,6 +60,22 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 	} else {
 		sig := vss.Signal{
 			Name:      "chassisAxleRow1WheelLeftTirePressure",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = ChassisAxleRow1WheelRightSpeedFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'ChassisAxleRow1WheelRightSpeed': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "chassisAxleRow1WheelRightSpeed",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -660,6 +708,22 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 		retSignals = append(retSignals, sig)
 	}
 
+	val, err = PowertrainTractionBatteryTemperatureAverageFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryTemperatureAverage': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "powertrainTractionBatteryTemperatureAverage",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
 	val, err = PowertrainTransmissionTravelledDistanceFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -710,6 +774,56 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 	return retSignals, errs
 }
 
+// AngularVelocityYawFromV1Data converts the given JSON data to a float64.
+func AngularVelocityYawFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.yawRate")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToAngularVelocityYaw0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.yawRate': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.yawRate' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'AngularVelocityYaw'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// ChassisAxleRow1WheelLeftSpeedFromV1Data converts the given JSON data to a float64.
+func ChassisAxleRow1WheelLeftSpeedFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.frontlLeftWheelSpeed")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftSpeed0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.frontlLeftWheelSpeed': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.frontlLeftWheelSpeed' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'ChassisAxleRow1WheelLeftSpeed'", errNotFound)
+	}
+
+	return ret, errs
+}
+
 // ChassisAxleRow1WheelLeftTirePressureFromV1Data converts the given JSON data to a float64.
 func ChassisAxleRow1WheelLeftTirePressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
@@ -743,6 +857,31 @@ func ChassisAxleRow1WheelLeftTirePressureFromV1Data(jsonData []byte) (ret float6
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'ChassisAxleRow1WheelLeftTirePressure'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// ChassisAxleRow1WheelRightSpeedFromV1Data converts the given JSON data to a float64.
+func ChassisAxleRow1WheelRightSpeedFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.frontRightWheelSpeed")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightSpeed0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.frontRightWheelSpeed': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.frontRightWheelSpeed' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'ChassisAxleRow1WheelRightSpeed'", errNotFound)
 	}
 
 	return ret, errs
@@ -1835,6 +1974,31 @@ func PowertrainTractionBatteryStateOfChargeCurrentFromV1Data(jsonData []byte) (r
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'PowertrainTractionBatteryStateOfChargeCurrent'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// PowertrainTractionBatteryTemperatureAverageFromV1Data converts the given JSON data to a float64.
+func PowertrainTractionBatteryTemperatureAverageFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.hvBatteryCoolantTemperature")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainTractionBatteryTemperatureAverage0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.hvBatteryCoolantTemperature': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.hvBatteryCoolantTemperature' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'PowertrainTractionBatteryTemperatureAverage'", errNotFound)
 	}
 
 	return ret, errs
