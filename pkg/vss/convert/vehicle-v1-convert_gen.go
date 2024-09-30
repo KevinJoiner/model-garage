@@ -564,22 +564,6 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 		retSignals = append(retSignals, sig)
 	}
 
-	val, err = PowertrainElectricMotorCoolantTemperatureFromV1Data(jsonData)
-	if err != nil {
-		if !errors.Is(err, errNotFound) {
-			errs = append(errs, fmt.Errorf("failed to get 'PowertrainElectricMotorCoolantTemperature': %w", err))
-		}
-	} else {
-		sig := vss.Signal{
-			Name:      "powertrainElectricMotorCoolantTemperature",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
-		}
-		sig.SetValue(val)
-		retSignals = append(retSignals, sig)
-	}
-
 	val, err = PowertrainFuelSystemAbsoluteLevelFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -716,6 +700,22 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 	} else {
 		sig := vss.Signal{
 			Name:      "powertrainTractionBatteryStateOfChargeCurrent",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = PowertrainTractionBatteryTemperatureFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryTemperature': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "powertrainTractionBatteryTemperature",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -1741,31 +1741,6 @@ func PowertrainCombustionEngineTPSFromV1Data(jsonData []byte) (ret float64, err 
 	return ret, errs
 }
 
-// PowertrainElectricMotorCoolantTemperatureFromV1Data converts the given JSON data to a float64.
-func PowertrainElectricMotorCoolantTemperatureFromV1Data(jsonData []byte) (ret float64, err error) {
-	var errs error
-	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.hvBatteryCoolantTemperature")
-	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(float64)
-		if ok {
-			retVal, err := ToPowertrainElectricMotorCoolantTemperature0(jsonData, val)
-			if err == nil {
-				return retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.hvBatteryCoolantTemperature': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.hvBatteryCoolantTemperature' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-		}
-	}
-
-	if errs == nil {
-		return ret, fmt.Errorf("%w 'PowertrainElectricMotorCoolantTemperature'", errNotFound)
-	}
-
-	return ret, errs
-}
-
 // PowertrainFuelSystemAbsoluteLevelFromV1Data converts the given JSON data to a float64.
 func PowertrainFuelSystemAbsoluteLevelFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
@@ -1999,6 +1974,31 @@ func PowertrainTractionBatteryStateOfChargeCurrentFromV1Data(jsonData []byte) (r
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'PowertrainTractionBatteryStateOfChargeCurrent'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// PowertrainTractionBatteryTemperatureFromV1Data converts the given JSON data to a .
+func PowertrainTractionBatteryTemperatureFromV1Data(jsonData []byte) (ret, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.hvBatteryCoolantTemperature")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainTractionBatteryTemperature0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.hvBatteryCoolantTemperature': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.hvBatteryCoolantTemperature' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'PowertrainTractionBatteryTemperature'", errNotFound)
 	}
 
 	return ret, errs

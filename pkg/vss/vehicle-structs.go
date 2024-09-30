@@ -70,8 +70,6 @@ const (
 	FieldPowertrainCombustionEngineSpeed = "powertrainCombustionEngineSpeed"
 	// FieldPowertrainCombustionEngineTPS Current throttle position.
 	FieldPowertrainCombustionEngineTPS = "powertrainCombustionEngineTPS"
-	// FieldPowertrainElectricMotorCoolantTemperature Motor coolant temperature (if applicable).
-	FieldPowertrainElectricMotorCoolantTemperature = "powertrainElectricMotorCoolantTemperature"
 	// FieldPowertrainFuelSystemAbsoluteLevel Current available fuel in the fuel tank expressed in liters.
 	FieldPowertrainFuelSystemAbsoluteLevel = "powertrainFuelSystemAbsoluteLevel"
 	// FieldPowertrainFuelSystemRelativeLevel Level in fuel tank as percent of capacity. 0 = empty. 100 = full.
@@ -90,6 +88,8 @@ const (
 	FieldPowertrainTractionBatteryGrossCapacity = "powertrainTractionBatteryGrossCapacity"
 	// FieldPowertrainTractionBatteryStateOfChargeCurrent Physical state of charge of the high voltage battery, relative to net capacity. This is not necessarily the state of charge being displayed to the customer.
 	FieldPowertrainTractionBatteryStateOfChargeCurrent = "powertrainTractionBatteryStateOfChargeCurrent"
+	// FieldPowertrainTractionBatteryTemperature Temperature Information for the battery pack.
+	FieldPowertrainTractionBatteryTemperature = "powertrainTractionBatteryTemperature"
 	// FieldPowertrainTransmissionTravelledDistance Odometer reading, total distance travelled during the lifetime of the transmission.
 	FieldPowertrainTransmissionTravelledDistance = "powertrainTransmissionTravelledDistance"
 	// FieldPowertrainType Defines the powertrain type of the vehicle.

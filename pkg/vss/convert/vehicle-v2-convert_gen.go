@@ -349,7 +349,7 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			ret = append(ret, sig)
 		}
 	case "hvBatteryCoolantTemperature":
-		val0, err := PowertrainElectricMotorCoolantTemperatureFromV2Data(originalDoc, valResult)
+		val0, err := PowertrainTractionBatteryTemperatureFromV2Data(originalDoc, valResult)
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'hvBatteryCoolantTemperature': %w", err))
 		} else {
@@ -357,7 +357,7 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 				TokenID:   baseSignal.TokenID,
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
-				Name:      "powertrainElectricMotorCoolantTemperature",
+				Name:      "powertrainTractionBatteryTemperature",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -1511,23 +1511,6 @@ func PowertrainCombustionEngineTPSFromV2Data(originalDoc []byte, result gjson.Re
 	return ret, errs
 }
 
-// PowertrainElectricMotorCoolantTemperatureFromData converts the given JSON data to a float64.
-func PowertrainElectricMotorCoolantTemperatureFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
-	var errs error
-	val0, ok := result.Value().(float64)
-	if ok {
-		ret, err = ToPowertrainElectricMotorCoolantTemperature0(originalDoc, val0)
-		if err == nil {
-			return ret, nil
-		}
-		errs = errors.Join(errs, fmt.Errorf("failed to convert 'hvBatteryCoolantTemperature': %w", err))
-	} else {
-		errs = errors.Join(errs, fmt.Errorf("%w, field 'hvBatteryCoolantTemperature' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
-	}
-
-	return ret, errs
-}
-
 // PowertrainFuelSystemAbsoluteLevelFromData converts the given JSON data to a float64.
 func PowertrainFuelSystemAbsoluteLevelFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
@@ -1686,6 +1669,23 @@ func PowertrainTractionBatteryStateOfChargeCurrentFromV2Data(originalDoc []byte,
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'soc': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'soc' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// PowertrainTractionBatteryTemperatureFromData converts the given JSON data to a .
+func PowertrainTractionBatteryTemperatureFromV2Data(originalDoc []byte, result gjson.Result) (ret, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToPowertrainTractionBatteryTemperature0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'hvBatteryCoolantTemperature': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'hvBatteryCoolantTemperature' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
 
 	return ret, errs
