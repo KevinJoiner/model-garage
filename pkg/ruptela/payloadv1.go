@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/DIMO-Network/model-garage/pkg/convert"
 	"github.com/DIMO-Network/model-garage/pkg/vss"
 	"github.com/tidwall/gjson"
 )
@@ -20,13 +21,13 @@ type TokenIDGetter interface {
 func SignalsFromV1Payload(ctx context.Context, tokenGetter TokenIDGetter, jsonData []byte) ([]vss.Signal, error) {
 	ts, err := TimestampFromV1Data(jsonData)
 	if err != nil {
-		return nil, ConversionError{
+		return nil, convert.ConversionError{
 			Errors: []error{fmt.Errorf("error getting timestamp: %w", err)},
 		}
 	}
 	tokenID, err := TokenIDFromV1Data(ctx, jsonData, tokenGetter)
 	if err != nil {
-		return nil, ConversionError{
+		return nil, convert.ConversionError{
 			Errors: []error{fmt.Errorf("error getting tokenId: %w", err)},
 		}
 	}
@@ -39,7 +40,7 @@ func SignalsFromV1Payload(ctx context.Context, tokenGetter TokenIDGetter, jsonDa
 	}
 	sigs, errs := SignalsFromV1Data(baseSignal, jsonData)
 	if errs != nil {
-		return nil, ConversionError{
+		return nil, convert.ConversionError{
 			TokenID:        tokenID,
 			Source:         source,
 			DecodedSignals: sigs,
@@ -53,7 +54,7 @@ func SignalsFromV1Payload(ctx context.Context, tokenGetter TokenIDGetter, jsonDa
 func SubjectFromV1Data(jsonData []byte) (string, error) {
 	result := gjson.GetBytes(jsonData, "subject")
 	if !result.Exists() {
-		return "", FieldNotFoundError{Field: "subject", Lookup: "subject"}
+		return "", convert.FieldNotFoundError{Field: "subject", Lookup: "subject"}
 	}
 	sub, ok := result.Value().(string)
 	if !ok {
@@ -66,7 +67,7 @@ func SubjectFromV1Data(jsonData []byte) (string, error) {
 func TimestampFromV1Data(jsonData []byte) (time.Time, error) {
 	result := gjson.GetBytes(jsonData, "time")
 	if !result.Exists() {
-		return time.Time{}, FieldNotFoundError{Field: "timestamp", Lookup: "time"}
+		return time.Time{}, convert.FieldNotFoundError{Field: "timestamp", Lookup: "time"}
 	}
 
 	timeStr, ok := result.Value().(string)
@@ -92,7 +93,7 @@ func TokenIDFromV1Data(ctx context.Context, jsonData []byte, tokenGetter TokenID
 	if err == nil {
 		return tokenID, nil
 	}
-	if !errors.As(err, &FieldNotFoundError{}) {
+	if !errors.As(err, &convert.FieldNotFoundError{}) {
 		return 0, err
 	}
 
@@ -117,7 +118,7 @@ func TokenIDFromData(jsonData []byte) (uint32, error) {
 	lookupKey := "vehicleTokenId"
 	tokenID := gjson.GetBytes(jsonData, lookupKey)
 	if !tokenID.Exists() {
-		return 0, FieldNotFoundError{Field: "tokenID", Lookup: lookupKey}
+		return 0, convert.FieldNotFoundError{Field: "tokenID", Lookup: lookupKey}
 	}
 	id, ok := tokenID.Value().(float64)
 	if !ok {
