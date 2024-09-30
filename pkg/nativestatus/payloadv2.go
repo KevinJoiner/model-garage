@@ -1,10 +1,11 @@
-package convert
+package nativestatus
 
 import (
 	"errors"
 	"fmt"
 	"time"
 
+	"github.com/DIMO-Network/model-garage/pkg/convert"
 	"github.com/DIMO-Network/model-garage/pkg/vss"
 	"github.com/tidwall/gjson"
 )
@@ -13,23 +14,23 @@ import (
 func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 	tokenID, err := TokenIDFromData(jsonData)
 	if err != nil {
-		return nil, ConversionError{
+		return nil, convert.ConversionError{
 			Errors: []error{fmt.Errorf("error getting tokenId: %w", err)},
 		}
 	}
 	source, err := SourceFromData(jsonData)
 	if err != nil {
-		return nil, ConversionError{
+		return nil, convert.ConversionError{
 			TokenID: tokenID,
 			Errors:  []error{fmt.Errorf("error getting source: %w", err)},
 		}
 	}
 	signals := gjson.GetBytes(jsonData, "data.vehicle.signals")
 	if !signals.Exists() {
-		return nil, ConversionError{
+		return nil, convert.ConversionError{
 			TokenID: tokenID,
 			Source:  source,
-			Errors:  []error{FieldNotFoundError{Field: "signals", Lookup: "data.vehicle.signals"}},
+			Errors:  []error{convert.FieldNotFoundError{Field: "signals", Lookup: "data.vehicle.signals"}},
 		}
 	}
 	if !signals.IsArray() {
@@ -37,7 +38,7 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 			// If the signals array is NULL treat it like an empty array.
 			return []vss.Signal{}, nil
 		}
-		return nil, ConversionError{
+		return nil, convert.ConversionError{
 			TokenID: tokenID,
 			Source:  source,
 			Errors:  []error{errors.New("signals field is not an array")},
@@ -49,7 +50,7 @@ func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
 		Source:  source,
 	}
 
-	conversionErrors := ConversionError{
+	conversionErrors := convert.ConversionError{
 		TokenID: tokenID,
 		Source:  source,
 	}
@@ -86,7 +87,7 @@ func TimestampFromV2Signal(sigResult gjson.Result) (time.Time, error) {
 	lookupKey := "timestamp"
 	timestamp := sigResult.Get(lookupKey)
 	if !timestamp.Exists() {
-		return time.Time{}, FieldNotFoundError{Field: "timestamp", Lookup: lookupKey}
+		return time.Time{}, convert.FieldNotFoundError{Field: "timestamp", Lookup: lookupKey}
 	}
 	return time.UnixMilli(timestamp.Int()).UTC(), nil
 }
@@ -96,7 +97,7 @@ func NameFromV2Signal(sigResult gjson.Result) (string, error) {
 	lookupKey := "name"
 	signalName := sigResult.Get(lookupKey)
 	if !signalName.Exists() {
-		return "", FieldNotFoundError{Field: "name", Lookup: lookupKey}
+		return "", convert.FieldNotFoundError{Field: "name", Lookup: lookupKey}
 	}
 	return signalName.String(), nil
 }

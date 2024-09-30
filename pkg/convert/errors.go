@@ -1,6 +1,7 @@
 package convert
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -62,4 +63,11 @@ func (e ConversionError) Error() string {
 // Unwrap returns all errors that occurred during conversion.
 func (e ConversionError) Unwrap() []error {
 	return e.Errors
+}
+
+var errInvalidType = errors.New("invalid type")
+
+// InvalidTypeError is returned when a field is not of the expected type or not found.
+func InvalidTypeError() error {
+	return errInvalidType
 }
