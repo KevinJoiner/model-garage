@@ -446,6 +446,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
+	case "lateralAcceleration":
+		val0, err := AccelerationLateralFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'lateralAcceleration': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "accelerationLateral",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
 	case "latitude":
 		val0, err := CurrentLocationLatitudeFromV2Data(originalDoc, valResult)
 		if err != nil {
@@ -883,6 +897,23 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 		// do nothing
 	}
 	return ret, retErrs
+}
+
+// AccelerationLateralFromData converts the given JSON data to a float64.
+func AccelerationLateralFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToAccelerationLateral0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'lateralAcceleration': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'lateralAcceleration' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
 }
 
 // AngularVelocityYawFromData converts the given JSON data to a float64.
