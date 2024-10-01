@@ -715,30 +715,472 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 func ChassisAxleRow1WheelLeftTirePressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.tires.frontLeft")
+	result = gjson.GetBytes(jsonData, "data.signals.256")
 	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(float64)
+		val, ok := result.Value().(string)
 		if ok {
 			retVal, err := ToChassisAxleRow1WheelLeftTirePressure0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tires.frontLeft': %w", err))
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.256': %w", err))
 		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.tires.frontLeft' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.256' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
-	result = gjson.GetBytes(jsonData, "data.tiresFrontLeft")
+	result = gjson.GetBytes(jsonData, "data.signals.257")
 	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(float64)
+		val, ok := result.Value().(string)
 		if ok {
 			retVal, err := ToChassisAxleRow1WheelLeftTirePressure1(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tiresFrontLeft': %w", err))
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.257': %w", err))
 		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.tiresFrontLeft' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.257' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.258")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure2(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.258': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.258' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.259")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure3(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.259': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.259' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.260")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure4(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.260': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.260' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.261")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure5(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.261': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.261' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.262")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure6(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.262': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.262' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.263")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure7(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.263': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.263' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.264")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure8(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.264': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.264' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.265")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure9(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.265': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.265' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.266")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure10(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.266': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.266' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.267")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure11(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.267': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.267' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.268")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure12(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.268': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.268' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.269")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure13(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.269': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.269' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.270")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure14(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.270': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.270' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.271")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure15(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.271': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.271' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.272")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure16(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.272': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.272' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.273")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure17(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.273': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.273' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.274")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure18(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.274': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.274' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.275")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure19(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.275': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.275' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.276")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure20(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.276': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.276' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.277")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure21(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.277': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.277' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.278")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure22(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.278': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.278' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.279")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure23(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.279': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.279' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.280")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure24(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.280': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.280' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.281")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure25(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.281': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.281' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.282")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure26(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.282': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.282' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.283")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure27(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.283': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.283' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.284")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure28(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.284': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.284' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.285")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure29(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.285': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.285' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.286")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure30(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.286': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.286' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.287")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure31(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.287': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.287' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.288")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure32(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.288': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.288' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.289")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure33(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.289': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.289' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.290")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure34(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.290': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.290' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.291")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftTirePressure35(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.291': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.291' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 
@@ -753,30 +1195,472 @@ func ChassisAxleRow1WheelLeftTirePressureFromV1Data(jsonData []byte) (ret float6
 func ChassisAxleRow1WheelRightTirePressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.tires.frontRight")
+	result = gjson.GetBytes(jsonData, "data.signals.256")
 	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(float64)
+		val, ok := result.Value().(string)
 		if ok {
 			retVal, err := ToChassisAxleRow1WheelRightTirePressure0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tires.frontRight': %w", err))
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.256': %w", err))
 		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.tires.frontRight' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.256' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
-	result = gjson.GetBytes(jsonData, "data.tiresFrontRight")
+	result = gjson.GetBytes(jsonData, "data.signals.257")
 	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(float64)
+		val, ok := result.Value().(string)
 		if ok {
 			retVal, err := ToChassisAxleRow1WheelRightTirePressure1(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tiresFrontRight': %w", err))
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.257': %w", err))
 		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.tiresFrontRight' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.257' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.258")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure2(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.258': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.258' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.259")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure3(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.259': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.259' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.260")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure4(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.260': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.260' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.261")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure5(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.261': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.261' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.262")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure6(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.262': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.262' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.263")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure7(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.263': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.263' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.264")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure8(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.264': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.264' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.265")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure9(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.265': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.265' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.266")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure10(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.266': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.266' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.267")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure11(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.267': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.267' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.268")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure12(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.268': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.268' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.269")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure13(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.269': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.269' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.270")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure14(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.270': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.270' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.271")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure15(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.271': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.271' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.272")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure16(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.272': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.272' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.273")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure17(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.273': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.273' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.274")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure18(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.274': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.274' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.275")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure19(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.275': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.275' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.276")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure20(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.276': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.276' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.277")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure21(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.277': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.277' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.278")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure22(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.278': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.278' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.279")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure23(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.279': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.279' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.280")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure24(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.280': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.280' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.281")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure25(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.281': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.281' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.282")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure26(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.282': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.282' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.283")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure27(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.283': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.283' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.284")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure28(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.284': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.284' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.285")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure29(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.285': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.285' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.286")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure30(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.286': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.286' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.287")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure31(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.287': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.287' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.288")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure32(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.288': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.288' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.289")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure33(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.289': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.289' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.290")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure34(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.290': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.290' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.291")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightTirePressure35(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.291': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.291' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 
@@ -791,30 +1675,472 @@ func ChassisAxleRow1WheelRightTirePressureFromV1Data(jsonData []byte) (ret float
 func ChassisAxleRow2WheelLeftTirePressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.tires.backLeft")
+	result = gjson.GetBytes(jsonData, "data.signals.256")
 	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(float64)
+		val, ok := result.Value().(string)
 		if ok {
 			retVal, err := ToChassisAxleRow2WheelLeftTirePressure0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tires.backLeft': %w", err))
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.256': %w", err))
 		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.tires.backLeft' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.256' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
-	result = gjson.GetBytes(jsonData, "data.tiresBackLeft")
+	result = gjson.GetBytes(jsonData, "data.signals.257")
 	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(float64)
+		val, ok := result.Value().(string)
 		if ok {
 			retVal, err := ToChassisAxleRow2WheelLeftTirePressure1(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tiresBackLeft': %w", err))
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.257': %w", err))
 		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.tiresBackLeft' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.257' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.258")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure2(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.258': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.258' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.259")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure3(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.259': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.259' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.260")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure4(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.260': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.260' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.261")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure5(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.261': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.261' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.262")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure6(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.262': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.262' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.263")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure7(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.263': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.263' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.264")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure8(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.264': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.264' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.265")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure9(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.265': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.265' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.266")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure10(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.266': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.266' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.267")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure11(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.267': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.267' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.268")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure12(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.268': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.268' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.269")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure13(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.269': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.269' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.270")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure14(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.270': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.270' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.271")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure15(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.271': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.271' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.272")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure16(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.272': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.272' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.273")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure17(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.273': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.273' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.274")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure18(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.274': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.274' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.275")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure19(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.275': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.275' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.276")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure20(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.276': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.276' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.277")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure21(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.277': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.277' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.278")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure22(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.278': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.278' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.279")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure23(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.279': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.279' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.280")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure24(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.280': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.280' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.281")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure25(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.281': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.281' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.282")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure26(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.282': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.282' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.283")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure27(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.283': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.283' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.284")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure28(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.284': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.284' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.285")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure29(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.285': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.285' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.286")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure30(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.286': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.286' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.287")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure31(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.287': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.287' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.288")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure32(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.288': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.288' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.289")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure33(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.289': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.289' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.290")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure34(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.290': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.290' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.291")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelLeftTirePressure35(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.291': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.291' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 
@@ -829,30 +2155,472 @@ func ChassisAxleRow2WheelLeftTirePressureFromV1Data(jsonData []byte) (ret float6
 func ChassisAxleRow2WheelRightTirePressureFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.tires.backRight")
+	result = gjson.GetBytes(jsonData, "data.signals.256")
 	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(float64)
+		val, ok := result.Value().(string)
 		if ok {
 			retVal, err := ToChassisAxleRow2WheelRightTirePressure0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tires.backRight': %w", err))
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.256': %w", err))
 		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.tires.backRight' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.256' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
-	result = gjson.GetBytes(jsonData, "data.tiresBackRight")
+	result = gjson.GetBytes(jsonData, "data.signals.257")
 	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(float64)
+		val, ok := result.Value().(string)
 		if ok {
 			retVal, err := ToChassisAxleRow2WheelRightTirePressure1(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.tiresBackRight': %w", err))
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.257': %w", err))
 		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.tiresBackRight' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.257' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.258")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure2(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.258': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.258' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.259")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure3(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.259': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.259' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.260")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure4(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.260': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.260' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.261")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure5(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.261': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.261' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.262")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure6(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.262': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.262' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.263")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure7(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.263': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.263' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.264")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure8(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.264': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.264' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.265")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure9(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.265': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.265' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.266")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure10(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.266': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.266' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.267")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure11(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.267': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.267' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.268")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure12(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.268': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.268' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.269")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure13(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.269': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.269' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.270")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure14(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.270': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.270' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.271")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure15(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.271': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.271' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.272")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure16(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.272': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.272' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.273")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure17(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.273': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.273' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.274")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure18(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.274': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.274' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.275")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure19(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.275': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.275' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.276")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure20(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.276': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.276' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.277")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure21(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.277': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.277' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.278")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure22(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.278': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.278' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.279")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure23(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.279': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.279' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.280")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure24(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.280': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.280' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.281")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure25(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.281': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.281' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.282")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure26(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.282': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.282' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.283")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure27(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.283': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.283' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.284")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure28(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.284': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.284' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.285")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure29(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.285': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.285' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.286")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure30(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.286': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.286' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.287")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure31(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.287': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.287' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.288")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure32(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.288': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.288' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.289")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure33(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.289': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.289' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.290")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure34(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.290': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.290' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.291")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToChassisAxleRow2WheelRightTirePressure35(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.291': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.291' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 

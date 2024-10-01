@@ -2,7 +2,6 @@ package ruptela_test
 
 import (
 	"cmp"
-	"context"
 	"slices"
 	"testing"
 	"time"
@@ -12,16 +11,9 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-type tokenGetter struct{}
-
-func (*tokenGetter) TokenIDFromSubject(context.Context, string) (uint32, error) {
-	return 123, nil
-}
-
 func TestFullFromDataConversion(t *testing.T) {
 	t.Parallel()
-	getter := &tokenGetter{}
-	actualSignals, err := ruptela.SignalsFromV1Payload(context.Background(), getter, []byte(fullInputJSON))
+	actualSignals, err := ruptela.SignalsFromV1Payload([]byte(fullInputJSON))
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
 
 	// sort the signals so diffs are easier to read
@@ -102,7 +94,7 @@ var (
 	ts = time.Date(2024, 9, 27, 8, 33, 26, 0, time.UTC)
 
 	expectedSignals = []vss.Signal{
-		{TokenID: 0, Timestamp: ts, Name: vss.FieldCurrentLocationLatitude, ValueNumber: 522721466, Source: "ruptela/TODO"},
-		{TokenID: 0, Timestamp: ts, Name: vss.FieldCurrentLocationLongitude, ValueNumber: -9014316, Source: "ruptela/TODO"},
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldCurrentLocationLatitude, ValueNumber: 52.2721466, Source: "ruptela/TODO"},
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldCurrentLocationLongitude, ValueNumber: -90.14316, Source: "ruptela/TODO"},
 	}
 )

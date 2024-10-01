@@ -5,67 +5,1019 @@ package ruptela
 // any conversion functions already defined in this package will be coppied through.
 // note: DO NOT mutate the orginalDoc parameter which is shared between all conversion functions.
 
-// ToChassisAxleRow1WheelLeftTirePressure0 converts data from field 'tires.frontLeft' of type float64 to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// ToChassisAxleRow1WheelLeftTirePressure0 converts data from field 'signals.256' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
-func ToChassisAxleRow1WheelLeftTirePressure0(originalDoc []byte, val float64) (float64, error) {
-	return val, nil
+func ToChassisAxleRow1WheelLeftTirePressure0(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
 }
 
-// ToChassisAxleRow1WheelLeftTirePressure1 converts data from field 'tiresFrontLeft' of type float64 to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// ToChassisAxleRow1WheelLeftTirePressure1 converts data from field 'signals.257' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
-func ToChassisAxleRow1WheelLeftTirePressure1(originalDoc []byte, val float64) (float64, error) {
-	return val, nil
+func ToChassisAxleRow1WheelLeftTirePressure1(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
 }
 
-// ToChassisAxleRow1WheelRightTirePressure0 converts data from field 'tires.frontRight' of type float64 to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// ToChassisAxleRow1WheelLeftTirePressure2 converts data from field 'signals.258' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure2(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure3 converts data from field 'signals.259' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure3(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure4 converts data from field 'signals.260' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure4(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure5 converts data from field 'signals.261' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure5(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure6 converts data from field 'signals.262' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure6(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure7 converts data from field 'signals.263' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure7(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure8 converts data from field 'signals.264' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure8(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure9 converts data from field 'signals.265' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure9(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure10 converts data from field 'signals.266' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure10(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure11 converts data from field 'signals.267' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure11(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure12 converts data from field 'signals.268' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure12(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure13 converts data from field 'signals.269' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure13(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure14 converts data from field 'signals.270' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure14(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure15 converts data from field 'signals.271' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure15(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure16 converts data from field 'signals.272' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure16(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure17 converts data from field 'signals.273' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure17(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure18 converts data from field 'signals.274' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure18(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure19 converts data from field 'signals.275' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure19(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure20 converts data from field 'signals.276' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure20(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure21 converts data from field 'signals.277' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure21(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure22 converts data from field 'signals.278' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure22(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure23 converts data from field 'signals.279' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure23(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure24 converts data from field 'signals.280' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure24(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure25 converts data from field 'signals.281' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure25(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure26 converts data from field 'signals.282' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure26(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure27 converts data from field 'signals.283' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure27(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure28 converts data from field 'signals.284' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure28(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure29 converts data from field 'signals.285' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure29(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure30 converts data from field 'signals.286' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure30(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure31 converts data from field 'signals.287' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure31(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure32 converts data from field 'signals.288' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure32(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure33 converts data from field 'signals.289' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure33(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure34 converts data from field 'signals.290' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure34(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelLeftTirePressure35 converts data from field 'signals.291' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelLeftTirePressure35(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure0 converts data from field 'signals.256' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
-func ToChassisAxleRow1WheelRightTirePressure0(originalDoc []byte, val float64) (float64, error) {
-	return val, nil
+func ToChassisAxleRow1WheelRightTirePressure0(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
 }
 
-// ToChassisAxleRow1WheelRightTirePressure1 converts data from field 'tiresFrontRight' of type float64 to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// ToChassisAxleRow1WheelRightTirePressure1 converts data from field 'signals.257' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
-func ToChassisAxleRow1WheelRightTirePressure1(originalDoc []byte, val float64) (float64, error) {
-	return val, nil
+func ToChassisAxleRow1WheelRightTirePressure1(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
 }
 
-// ToChassisAxleRow2WheelLeftTirePressure0 converts data from field 'tires.backLeft' of type float64 to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// ToChassisAxleRow1WheelRightTirePressure2 converts data from field 'signals.258' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure2(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure3 converts data from field 'signals.259' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure3(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure4 converts data from field 'signals.260' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure4(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure5 converts data from field 'signals.261' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure5(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure6 converts data from field 'signals.262' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure6(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure7 converts data from field 'signals.263' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure7(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure8 converts data from field 'signals.264' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure8(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure9 converts data from field 'signals.265' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure9(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure10 converts data from field 'signals.266' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure10(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure11 converts data from field 'signals.267' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure11(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure12 converts data from field 'signals.268' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure12(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure13 converts data from field 'signals.269' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure13(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure14 converts data from field 'signals.270' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure14(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure15 converts data from field 'signals.271' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure15(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure16 converts data from field 'signals.272' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure16(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure17 converts data from field 'signals.273' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure17(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure18 converts data from field 'signals.274' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure18(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure19 converts data from field 'signals.275' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure19(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure20 converts data from field 'signals.276' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure20(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure21 converts data from field 'signals.277' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure21(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure22 converts data from field 'signals.278' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure22(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure23 converts data from field 'signals.279' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure23(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure24 converts data from field 'signals.280' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure24(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure25 converts data from field 'signals.281' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure25(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure26 converts data from field 'signals.282' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure26(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure27 converts data from field 'signals.283' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure27(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure28 converts data from field 'signals.284' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure28(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure29 converts data from field 'signals.285' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure29(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure30 converts data from field 'signals.286' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure30(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure31 converts data from field 'signals.287' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure31(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure32 converts data from field 'signals.288' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure32(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure33 converts data from field 'signals.289' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure33(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure34 converts data from field 'signals.290' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure34(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow1WheelRightTirePressure35 converts data from field 'signals.291' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow1WheelRightTirePressure35(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow1WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure0 converts data from field 'signals.256' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
-func ToChassisAxleRow2WheelLeftTirePressure0(originalDoc []byte, val float64) (float64, error) {
-	return val, nil
+func ToChassisAxleRow2WheelLeftTirePressure0(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
 }
 
-// ToChassisAxleRow2WheelLeftTirePressure1 converts data from field 'tiresBackLeft' of type float64 to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// ToChassisAxleRow2WheelLeftTirePressure1 converts data from field 'signals.257' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
-func ToChassisAxleRow2WheelLeftTirePressure1(originalDoc []byte, val float64) (float64, error) {
-	return val, nil
+func ToChassisAxleRow2WheelLeftTirePressure1(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
 }
 
-// ToChassisAxleRow2WheelRightTirePressure0 converts data from field 'tires.backRight' of type float64 to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
-// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// ToChassisAxleRow2WheelLeftTirePressure2 converts data from field 'signals.258' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
-func ToChassisAxleRow2WheelRightTirePressure0(originalDoc []byte, val float64) (float64, error) {
-	return val, nil
+func ToChassisAxleRow2WheelLeftTirePressure2(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
 }
 
-// ToChassisAxleRow2WheelRightTirePressure1 converts data from field 'tiresBackRight' of type float64 to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// ToChassisAxleRow2WheelLeftTirePressure3 converts data from field 'signals.259' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure3(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure4 converts data from field 'signals.260' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure4(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure5 converts data from field 'signals.261' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure5(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure6 converts data from field 'signals.262' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure6(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure7 converts data from field 'signals.263' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure7(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure8 converts data from field 'signals.264' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure8(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure9 converts data from field 'signals.265' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure9(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure10 converts data from field 'signals.266' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure10(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure11 converts data from field 'signals.267' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure11(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure12 converts data from field 'signals.268' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure12(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure13 converts data from field 'signals.269' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure13(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure14 converts data from field 'signals.270' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure14(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure15 converts data from field 'signals.271' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure15(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure16 converts data from field 'signals.272' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure16(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure17 converts data from field 'signals.273' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure17(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure18 converts data from field 'signals.274' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure18(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure19 converts data from field 'signals.275' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure19(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure20 converts data from field 'signals.276' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure20(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure21 converts data from field 'signals.277' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure21(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure22 converts data from field 'signals.278' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure22(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure23 converts data from field 'signals.279' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure23(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure24 converts data from field 'signals.280' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure24(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure25 converts data from field 'signals.281' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure25(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure26 converts data from field 'signals.282' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure26(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure27 converts data from field 'signals.283' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure27(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure28 converts data from field 'signals.284' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure28(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure29 converts data from field 'signals.285' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure29(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure30 converts data from field 'signals.286' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure30(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure31 converts data from field 'signals.287' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure31(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure32 converts data from field 'signals.288' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure32(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure33 converts data from field 'signals.289' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure33(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure34 converts data from field 'signals.290' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure34(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelLeftTirePressure35 converts data from field 'signals.291' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelLeftTirePressure35(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelLeftTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure0 converts data from field 'signals.256' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
-func ToChassisAxleRow2WheelRightTirePressure1(originalDoc []byte, val float64) (float64, error) {
-	return val, nil
+func ToChassisAxleRow2WheelRightTirePressure0(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure1 converts data from field 'signals.257' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure1(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure2 converts data from field 'signals.258' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure2(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure3 converts data from field 'signals.259' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure3(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure4 converts data from field 'signals.260' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure4(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure5 converts data from field 'signals.261' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure5(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure6 converts data from field 'signals.262' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure6(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure7 converts data from field 'signals.263' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure7(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure8 converts data from field 'signals.264' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure8(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure9 converts data from field 'signals.265' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure9(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure10 converts data from field 'signals.266' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure10(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure11 converts data from field 'signals.267' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure11(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure12 converts data from field 'signals.268' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure12(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure13 converts data from field 'signals.269' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure13(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure14 converts data from field 'signals.270' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure14(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure15 converts data from field 'signals.271' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure15(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure16 converts data from field 'signals.272' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure16(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure17 converts data from field 'signals.273' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure17(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure18 converts data from field 'signals.274' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure18(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure19 converts data from field 'signals.275' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure19(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure20 converts data from field 'signals.276' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure20(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure21 converts data from field 'signals.277' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure21(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure22 converts data from field 'signals.278' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure22(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure23 converts data from field 'signals.279' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure23(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure24 converts data from field 'signals.280' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure24(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure25 converts data from field 'signals.281' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure25(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure26 converts data from field 'signals.282' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure26(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure27 converts data from field 'signals.283' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure27(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure28 converts data from field 'signals.284' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure28(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure29 converts data from field 'signals.285' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure29(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure30 converts data from field 'signals.286' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure30(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure31 converts data from field 'signals.287' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure31(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure32 converts data from field 'signals.288' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure32(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure33 converts data from field 'signals.289' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure33(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure34 converts data from field 'signals.290' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure34(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
+}
+
+// ToChassisAxleRow2WheelRightTirePressure35 converts data from field 'signals.291' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
+// Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
+// Unit: 'kPa'
+func ToChassisAxleRow2WheelRightTirePressure35(originalDoc []byte, val string) (float64, error) {
+	return ToChassisAxleRow2WheelRightTirePressure(val)
 }
 
 // ToCurrentLocationAltitude0 converts data from field 'altitude' of type float64 to 'Vehicle.CurrentLocation.Altitude' of type float64.
 // Vehicle.CurrentLocation.Altitude: Current altitude relative to WGS 84 reference ellipsoid, as measured at the position of GNSS receiver antenna.
 // Unit: 'm'
 func ToCurrentLocationAltitude0(originalDoc []byte, val float64) (float64, error) {
-	return val, nil
+	return val / 10, nil
 }
 
 // ToCurrentLocationIsRedacted0 converts data from field 'isRedacted' of type bool to 'Vehicle.CurrentLocation.IsRedacted' of type float64.
@@ -78,14 +1030,14 @@ func ToCurrentLocationIsRedacted0(originalDoc []byte, val bool) (float64, error)
 // Vehicle.CurrentLocation.Latitude: Current latitude of vehicle in WGS 84 geodetic coordinates, as measured at the position of GNSS receiver antenna.
 // Unit: 'degrees' Min: '-90' Max: '90'
 func ToCurrentLocationLatitude0(originalDoc []byte, val float64) (float64, error) {
-	return val, nil
+	return val / 10000000, nil
 }
 
 // ToCurrentLocationLongitude0 converts data from field 'pos.lon' of type float64 to 'Vehicle.CurrentLocation.Longitude' of type float64.
 // Vehicle.CurrentLocation.Longitude: Current longitude of vehicle in WGS 84 geodetic coordinates, as measured at the position of GNSS receiver antenna.
 // Unit: 'degrees' Min: '-180' Max: '180'
 func ToCurrentLocationLongitude0(originalDoc []byte, val float64) (float64, error) {
-	return val, nil
+	return val / 10000000, nil
 }
 
 // ToDIMOAftermarketHDOP0 converts data from field 'hdop' of type float64 to 'Vehicle.DIMO.Aftermarket.HDOP' of type float64.

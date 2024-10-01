@@ -2,7 +2,6 @@
 package ruptela
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"time"
@@ -12,20 +11,15 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-// TokenIDGetter is an interface to get a tokenID from a subject.
-type TokenIDGetter interface {
-	TokenIDFromSubject(ctx context.Context, subject string) (uint32, error)
-}
-
 // SignalsFromV1Payload gets a slice signals from a v1 payload.
-func SignalsFromV1Payload(ctx context.Context, tokenGetter TokenIDGetter, jsonData []byte) ([]vss.Signal, error) {
+func SignalsFromV1Payload(jsonData []byte) ([]vss.Signal, error) {
 	ts, err := TimestampFromV1Data(jsonData)
 	if err != nil {
 		return nil, convert.ConversionError{
 			Errors: []error{fmt.Errorf("error getting timestamp: %w", err)},
 		}
 	}
-	tokenID, err := TokenIDFromV1Data(ctx, jsonData, tokenGetter)
+	tokenID, err := TokenIDFromData(jsonData)
 	if err != nil {
 		return nil, convert.ConversionError{
 			Errors: []error{fmt.Errorf("error getting tokenId: %w", err)},
@@ -83,34 +77,6 @@ func TimestampFromV1Data(jsonData []byte) (time.Time, error) {
 		return time.Time{}, fmt.Errorf("error parsing time: %w", err)
 	}
 	return ts, nil
-}
-
-// TokenIDFromV1Data gets a tokenID from a v1 payload.
-// attempts to get the tokenID from the vehicleTokenId field.
-// If the field is not found and tokenGetter is not nil it will attempt to get the tokenId using the subject field and the tokenGetter.
-func TokenIDFromV1Data(ctx context.Context, jsonData []byte, tokenGetter TokenIDGetter) (uint32, error) {
-	tokenID, err := TokenIDFromData(jsonData)
-	if err == nil {
-		return tokenID, nil
-	}
-	if !errors.As(err, &convert.FieldNotFoundError{}) {
-		return 0, err
-	}
-
-	// if the tokenGetter is nil then we cannot get the tokenID from the subject
-	if tokenGetter == nil {
-		return 0, err
-	}
-
-	sub, err := SubjectFromV1Data(jsonData)
-	if err != nil {
-		return 0, err
-	}
-	tokenID, err = tokenGetter.TokenIDFromSubject(ctx, sub)
-	if err != nil {
-		return 0, fmt.Errorf("error getting tokenID: %w", err)
-	}
-	return tokenID, nil
 }
 
 // TokenIDFromData gets a tokenID from a V2 payload.
