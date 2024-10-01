@@ -33,12 +33,12 @@ func main() {
 	customFormat := flag.Bool("custom.format", false, "Format the generated file with goimports.")
 
 	flag.CommandLine.Usage = func() {
-		fmt.Fprintf(flag.CommandLine.Output(), `
+		_, _ = fmt.Fprintf(flag.CommandLine.Output(), `
 codegen is a tool to generate code for the model-garage project.
 Available generators:
 	- custom: Runs a given golang template with pkg/schema.TemplateData data.
 	- convert: Generates conversion functions for converting between raw data into signals.`)
-		fmt.Fprintf(flag.CommandLine.Output(), "Usage:\n")
+		_, _ = fmt.Fprintf(flag.CommandLine.Output(), "Usage:\n")
 		flag.PrintDefaults()
 	}
 

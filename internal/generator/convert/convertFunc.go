@@ -22,7 +22,7 @@ import (
 	"github.com/DIMO-Network/model-garage/pkg/schema"
 )
 
-type functionInfo struct {
+type FunctionInfo struct {
 	Comments string
 	Body     []byte
 }
@@ -56,9 +56,9 @@ func createConvertFuncTemplate() (*template.Template, error) {
 
 // GetDeclaredFunctions returns a map of function names to their corresponding function information for a given directory.
 // The function information includes comments and body.
-func GetDeclaredFunctions(outputPath string) (map[string]functionInfo, error) {
+func GetDeclaredFunctions(outputPath string) (map[string]FunctionInfo, error) {
 	fset := token.NewFileSet()
-	declaredFunctions := make(map[string]functionInfo)
+	declaredFunctions := make(map[string]FunctionInfo)
 
 	list, err := os.ReadDir(outputPath)
 	if err != nil {
@@ -82,8 +82,8 @@ func GetDeclaredFunctions(outputPath string) (map[string]functionInfo, error) {
 	return declaredFunctions, nil
 }
 
-func getDeclaredFunctionsForFile(fset *token.FileSet, filePath string) (map[string]functionInfo, error) {
-	declaredFunctions := make(map[string]functionInfo)
+func getDeclaredFunctionsForFile(fset *token.FileSet, filePath string) (map[string]FunctionInfo, error) {
+	declaredFunctions := make(map[string]FunctionInfo)
 	src, err := parser.ParseFile(fset, filePath, nil, parser.ParseComments)
 	if err != nil {
 		return nil, fmt.Errorf("error parsing file: %w", err)
@@ -113,7 +113,7 @@ func getDeclaredFunctionsForFile(fset *token.FileSet, filePath string) (map[stri
 			return nil, fmt.Errorf("error formating function: %w", err)
 		}
 
-		declaredFunctions[fn.Name.Name] = functionInfo{
+		declaredFunctions[fn.Name.Name] = FunctionInfo{
 			Comments: strings.Join(docComments, "\n"),
 			Body:     buf.Bytes(),
 		}
@@ -122,7 +122,7 @@ func getDeclaredFunctionsForFile(fset *token.FileSet, filePath string) (map[stri
 }
 
 // writeConvertFuncs writes the generated conversion functions to a file.
-func writeConvertFuncs(convertFunc []funcTmplData, existingFuncs map[string]functionInfo, tmpl *template.Template, outputPath string, packageName string, copyComments bool) error {
+func writeConvertFuncs(convertFunc []funcTmplData, existingFuncs map[string]FunctionInfo, tmpl *template.Template, outputPath string, packageName string, copyComments bool) error {
 	var convertBuff bytes.Buffer
 	convertBuff.WriteString(fmt.Sprintf(header, packageName))
 	slices.SortStableFunc(convertFunc, func(a, b funcTmplData) int {

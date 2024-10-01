@@ -51,11 +51,6 @@ type funcTmplData struct {
 	Body string
 }
 
-// convertTmplData contains the data to be used during template execution for writing the conversion functions.
-type convertTmplData struct {
-	*schema.TemplateData
-}
-
 // Generate creates a conversion functions for each field of a model struct.
 // as well as the entire model struct.
 func Generate(tmplData *schema.TemplateData, cfg Config) (err error) {
