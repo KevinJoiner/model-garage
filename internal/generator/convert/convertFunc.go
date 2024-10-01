@@ -126,7 +126,31 @@ func writeConvertFuncs(convertFunc []funcTmplData, existingFuncs map[string]Func
 	var convertBuff bytes.Buffer
 	convertBuff.WriteString(fmt.Sprintf(header, packageName))
 	slices.SortStableFunc(convertFunc, func(a, b funcTmplData) int {
-		return cmp.Compare(a.FuncName, b.FuncName)
+		// split funcName to get digits at the end and compare the name then by the digit value
+		// get the function name without the digits at the end
+		aFuncName := a.FuncName
+		aDigits := 0
+		bFuncName := b.FuncName
+		bDigits := 0
+		for i := len(aFuncName) - 1; i >= 0; i-- {
+			if aFuncName[i] < '0' || aFuncName[i] > '9' {
+				aFuncName = aFuncName[:i+1]
+				aDigits, _ = strconv.Atoi(a.FuncName[i+1:])
+				break
+			}
+		}
+		for i := len(bFuncName) - 1; i >= 0; i-- {
+			if bFuncName[i] < '0' || bFuncName[i] > '9' {
+				bFuncName = bFuncName[:i+1]
+				bDigits, _ = strconv.Atoi(b.FuncName[i+1:])
+				break
+			}
+		}
+		val := cmp.Compare(aFuncName, bFuncName)
+		if val != 0 {
+			return val
+		}
+		return cmp.Compare(aDigits, bDigits)
 	})
 
 	// Add or update existing functions
