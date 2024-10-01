@@ -2,6 +2,8 @@
 package vss
 
 const (
+	// FieldAccelerationLateral Vehicle acceleration in Y (lateral acceleration).
+	FieldAccelerationLateral = "accelerationLateral"
 	// FieldAngularVelocityYaw Vehicle rotation rate along Z (vertical).
 	FieldAngularVelocityYaw = "angularVelocityYaw"
 	// FieldChassisAxleRow1WheelLeftSpeed Rotational speed of a vehicle's wheel.
@@ -46,6 +48,8 @@ const (
 	FieldOBDDistanceWithMIL = "obdDistanceWithMIL"
 	// FieldOBDEngineLoad PID 04 - Engine load in percent - 0 = no load, 100 = full load
 	FieldOBDEngineLoad = "obdEngineLoad"
+	// FieldOBDFuelPressure PID 0A - Fuel pressure
+	FieldOBDFuelPressure = "obdFuelPressure"
 	// FieldOBDIntakeTemp PID 0F - Intake temperature
 	FieldOBDIntakeTemp = "obdIntakeTemp"
 	// FieldOBDLongTermFuelTrim1 PID 07 - Long Term (learned) Fuel Trim - Bank 1 - negative percent leaner, positive percent richer
@@ -70,6 +74,8 @@ const (
 	FieldPowertrainCombustionEngineSpeed = "powertrainCombustionEngineSpeed"
 	// FieldPowertrainCombustionEngineTPS Current throttle position.
 	FieldPowertrainCombustionEngineTPS = "powertrainCombustionEngineTPS"
+	// FieldPowertrainCombustionEngineTorque Current engine torque. Shall be reported as 0 during engine breaking.
+	FieldPowertrainCombustionEngineTorque = "powertrainCombustionEngineTorque"
 	// FieldPowertrainFuelSystemAbsoluteLevel Current available fuel in the fuel tank expressed in liters.
 	FieldPowertrainFuelSystemAbsoluteLevel = "powertrainFuelSystemAbsoluteLevel"
 	// FieldPowertrainFuelSystemRelativeLevel Level in fuel tank as percent of capacity. 0 = empty. 100 = full.
@@ -90,6 +96,8 @@ const (
 	FieldPowertrainTractionBatteryStateOfChargeCurrent = "powertrainTractionBatteryStateOfChargeCurrent"
 	// FieldPowertrainTractionBatteryTemperatureAverage Current average temperature of the battery cells.
 	FieldPowertrainTractionBatteryTemperatureAverage = "powertrainTractionBatteryTemperatureAverage"
+	// FieldPowertrainTransmissionCurrentGear The current gear. 0=Neutral, 1/2/..=Forward, -1/-2/..=Reverse.
+	FieldPowertrainTransmissionCurrentGear = "powertrainTransmissionCurrentGear"
 	// FieldPowertrainTransmissionTravelledDistance Odometer reading, total distance travelled during the lifetime of the transmission.
 	FieldPowertrainTransmissionTravelledDistance = "powertrainTransmissionTravelledDistance"
 	// FieldPowertrainType Defines the powertrain type of the vehicle.

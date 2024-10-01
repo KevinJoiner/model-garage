@@ -237,6 +237,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
+	case "engineTorque":
+		val0, err := PowertrainCombustionEngineTorqueFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'engineTorque': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "powertrainCombustionEngineTorque",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
 	case "frontRightWheelSpeed":
 		val0, err := ChassisAxleRow1WheelRightSpeedFromV2Data(originalDoc, valResult)
 		if err != nil {
@@ -307,6 +321,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
+	case "fuelTankPressure":
+		val0, err := OBDFuelPressureFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'fuelTankPressure': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "obdFuelPressure",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
 	case "fuelType":
 		val0, err := PowertrainFuelSystemSupportedFuelTypesFromV2Data(originalDoc, valResult)
 		if err != nil {
@@ -332,6 +360,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 				Name:      "powertrainType",
 			}
 			sig.SetValue(val1)
+			ret = append(ret, sig)
+		}
+	case "gearSelection":
+		val0, err := PowertrainTransmissionCurrentGearFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'gearSelection': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "powertrainTransmissionCurrentGear",
+			}
+			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
 	case "hdop":
@@ -400,6 +442,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
 				Name:      "currentLocationIsRedacted",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
+	case "lateralAcceleration":
+		val0, err := AccelerationLateralFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'lateralAcceleration': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "accelerationLateral",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -841,6 +897,23 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 		// do nothing
 	}
 	return ret, retErrs
+}
+
+// AccelerationLateralFromData converts the given JSON data to a float64.
+func AccelerationLateralFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToAccelerationLateral0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'lateralAcceleration': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'lateralAcceleration' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
 }
 
 // AngularVelocityYawFromData converts the given JSON data to a float64.
@@ -1287,6 +1360,23 @@ func OBDEngineLoadFromV2Data(originalDoc []byte, result gjson.Result) (ret float
 	return ret, errs
 }
 
+// OBDFuelPressureFromData converts the given JSON data to a float64.
+func OBDFuelPressureFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToOBDFuelPressure0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'fuelTankPressure': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'fuelTankPressure' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
 // OBDIntakeTempFromData converts the given JSON data to a float64.
 func OBDIntakeTempFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
@@ -1511,6 +1601,23 @@ func PowertrainCombustionEngineTPSFromV2Data(originalDoc []byte, result gjson.Re
 	return ret, errs
 }
 
+// PowertrainCombustionEngineTorqueFromData converts the given JSON data to a float64.
+func PowertrainCombustionEngineTorqueFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToPowertrainCombustionEngineTorque0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'engineTorque': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'engineTorque' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
 // PowertrainFuelSystemAbsoluteLevelFromData converts the given JSON data to a float64.
 func PowertrainFuelSystemAbsoluteLevelFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
@@ -1686,6 +1793,23 @@ func PowertrainTractionBatteryTemperatureAverageFromV2Data(originalDoc []byte, r
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'hvBatteryCoolantTemperature': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'hvBatteryCoolantTemperature' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// PowertrainTransmissionCurrentGearFromData converts the given JSON data to a float64.
+func PowertrainTransmissionCurrentGearFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToPowertrainTransmissionCurrentGear0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'gearSelection': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'gearSelection' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
 
 	return ret, errs
