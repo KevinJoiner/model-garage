@@ -202,7 +202,7 @@ func ToPowertrainType1(originalDoc []byte, val string) (string, error) {
 	return val, nil
 }
 
-// ToSpeed0 converts data from field 'signals.95' of type float64 to 'Vehicle.Speed' of type float64.
+// ToSpeed0 converts data from field 'signals.95' of type string to 'Vehicle.Speed' of type float64.
 // Vehicle.Speed: Vehicle speed.
 // Unit: 'km/h'
 func ToSpeed0(originalDoc []byte, val string) (float64, error) {
