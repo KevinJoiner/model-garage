@@ -7,13 +7,6 @@ import "math"
 // any conversion functions already defined in this package will be coppied through.
 // note: DO NOT mutate the orginalDoc parameter which is shared between all conversion functions.
 
-// ToAccelerationLateral0 converts data from field 'lateralAcceleration' of type float64 to 'Vehicle.Acceleration.Lateral' of type float64.
-// Vehicle.Acceleration.Lateral: Vehicle acceleration in Y (lateral acceleration).
-// Unit: 'm/s^2'
-func ToAccelerationLateral0(originalDoc []byte, val float64) (float64, error) {
-	return val, nil
-}
-
 // ToAngularVelocityYaw0 converts data from field 'yawRate' of type float64 to 'Vehicle.AngularVelocity.Yaw' of type float64.
 // Vehicle.AngularVelocity.Yaw: Vehicle rotation rate along Z (vertical).
 // Unit: 'degrees/s'
