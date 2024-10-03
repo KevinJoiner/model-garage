@@ -847,7 +847,7 @@ func AngularVelocityYawFromV2Data(originalDoc []byte, result gjson.Result) (ret 
 		}
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'yawRate': %w", err))
 	} else {
-		errs = errors.Join(errs, fmt.Errorf("%w, field 'yawRate' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'yawRate' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 	}
 
 	return ret, errs
@@ -864,7 +864,7 @@ func ChassisAxleRow1WheelLeftSpeedFromV2Data(originalDoc []byte, result gjson.Re
 		}
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'frontlLeftWheelSpeed': %w", err))
 	} else {
-		errs = errors.Join(errs, fmt.Errorf("%w, field 'frontlLeftWheelSpeed' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'frontlLeftWheelSpeed' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 	}
 
 	return ret, errs
@@ -908,7 +908,7 @@ func ChassisAxleRow1WheelRightSpeedFromV2Data(originalDoc []byte, result gjson.R
 		}
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'frontRightWheelSpeed': %w", err))
 	} else {
-		errs = errors.Join(errs, fmt.Errorf("%w, field 'frontRightWheelSpeed' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'frontRightWheelSpeed' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 	}
 
 	return ret, errs
@@ -1678,7 +1678,7 @@ func PowertrainTractionBatteryTemperatureAverageFromV2Data(originalDoc []byte, r
 		}
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'hvBatteryCoolantTemperature': %w", err))
 	} else {
-		errs = errors.Join(errs, fmt.Errorf("%w, field 'hvBatteryCoolantTemperature' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'hvBatteryCoolantTemperature' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 	}
 
 	return ret, errs

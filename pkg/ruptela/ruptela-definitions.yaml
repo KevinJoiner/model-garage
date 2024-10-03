@@ -113,8 +113,8 @@
   conversions:
     - originalName: "signals.98" # OBD fuel level
       originalType: string
-    # - originalName: "signals.207" # CAN fuel level1
-    #   originalType: string
+    - originalName: "signals.207" # CAN fuel level1
+      originalType: string
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 

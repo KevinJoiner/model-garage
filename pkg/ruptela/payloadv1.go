@@ -25,8 +25,14 @@ func SignalsFromV1Payload(jsonData []byte) ([]vss.Signal, error) {
 			Errors: []error{fmt.Errorf("error getting tokenId: %w", err)},
 		}
 	}
+	source, err := SourceFromData(jsonData)
+	if err != nil {
+		return nil, convert.ConversionError{
+			TokenID: tokenID,
+			Errors:  []error{fmt.Errorf("error getting source: %w", err)},
+		}
+	}
 
-	source := "ruptela/TODO"
 	baseSignal := vss.Signal{
 		TokenID:   tokenID,
 		Timestamp: ts,
@@ -91,4 +97,18 @@ func TokenIDFromData(jsonData []byte) (uint32, error) {
 		return 0, fmt.Errorf("%s field is not a number", lookupKey)
 	}
 	return uint32(id), nil
+}
+
+// SourceFromData gets a source from a V2 payload.
+func SourceFromData(jsonData []byte) (string, error) {
+	lookupKey := "source"
+	source := gjson.GetBytes(jsonData, lookupKey)
+	if !source.Exists() {
+		return "", convert.FieldNotFoundError{Field: "source", Lookup: lookupKey}
+	}
+	src, ok := source.Value().(string)
+	if !ok {
+		return "", errors.New("source field is not a string")
+	}
+	return src, nil
 }

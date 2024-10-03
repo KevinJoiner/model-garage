@@ -833,6 +833,19 @@ func PowertrainFuelSystemRelativeLevelFromV1Data(jsonData []byte) (ret float64, 
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.98' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.signals.207")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToPowertrainFuelSystemRelativeLevel1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.207': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.207' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'PowertrainFuelSystemRelativeLevel'", errNotFound)

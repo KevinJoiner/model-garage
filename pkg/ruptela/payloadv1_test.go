@@ -22,13 +22,13 @@ func TestFullFromDataConversion(t *testing.T) {
 	}
 	slices.SortFunc(expectedSignals, sortFunc)
 	slices.SortFunc(actualSignals, sortFunc)
-
 	require.Equal(t, expectedSignals, actualSignals, "converted vehicle does not match expected vehicle")
 }
 
 var (
 	fullInputJSON = `
 {
+	"source": "ruptela/TODO",
 	"data": {
 		"pos": {
 			"alt": 1048,
@@ -94,7 +94,23 @@ var (
 	ts = time.Date(2024, 9, 27, 8, 33, 26, 0, time.UTC)
 
 	expectedSignals = []vss.Signal{
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldCurrentLocationAltitude, ValueNumber: 104.8, Source: "ruptela/TODO"},
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldDIMOAftermarketHDOP, ValueNumber: 6, Source: "ruptela/TODO"},
 		{TokenID: 0, Timestamp: ts, Name: vss.FieldCurrentLocationLatitude, ValueNumber: 52.2721466, Source: "ruptela/TODO"},
-		{TokenID: 0, Timestamp: ts, Name: vss.FieldCurrentLocationLongitude, ValueNumber: -90.14316, Source: "ruptela/TODO"},
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldCurrentLocationLongitude, ValueNumber: -0.9014316, Source: "ruptela/TODO"},
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldDIMOAftermarketNSAT, ValueNumber: 20, Source: "ruptela/TODO"},
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldPowertrainType, ValueString: "0", Source: "ruptela/TODO"},
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldPowertrainFuelSystemRelativeLevel, ValueNumber: 0, Source: "ruptela/TODO"},
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldPowertrainTractionBatteryStateOfChargeCurrent, ValueNumber: 0xFF, Source: "ruptela/TODO"},
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldPowertrainRange, ValueNumber: 65535000, Source: "ruptela/TODO"},
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldExteriorAirTemperature, ValueNumber: 215, Source: "ruptela/TODO"},
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldPowertrainFuelSystemAbsoluteLevel, ValueNumber: 0xFFFF, Source: "ruptela/TODO"},
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldOBDRunTime, ValueNumber: 0, Source: "ruptela/TODO"},
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldOBDDistanceWithMIL, ValueNumber: 0, Source: "ruptela/TODO"},
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldPowertrainCombustionEngineECT, ValueNumber: 215, Source: "ruptela/TODO"},
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldPowertrainCombustionEngineTPS, ValueNumber: 0, Source: "ruptela/TODO"},
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldPowertrainTransmissionTravelledDistance, ValueNumber: 0xFFFFFFFF, Source: "ruptela/TODO"},
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldLowVoltageBatteryCurrentVoltage, ValueNumber: 4224, Source: "ruptela/TODO"},
+		{TokenID: 0, Timestamp: ts, Name: vss.FieldSpeed, ValueNumber: 0, Source: "ruptela/TODO"},
 	}
 )
