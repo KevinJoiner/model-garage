@@ -1,4 +1,4 @@
-// Package convert provides a function to generate conversion functions for a vehicle struct.
+// Package ruptela provides a funcions for managing Ruptela payloads.
 package ruptela
 
 import (

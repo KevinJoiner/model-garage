@@ -1,3 +1,4 @@
+// Package convert provides common functions for handling signal conversion.
 package convert
 
 import (
