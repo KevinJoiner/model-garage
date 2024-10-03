@@ -3,6 +3,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -19,22 +20,29 @@ import (
 func main() {
 	// Command-line flags
 	printVersion := flag.Bool("version", false, "Print the version of the codegen tool")
-	outputDir := flag.String("output", ".", "Output directory for the generated Go file")
 	vspecPath := flag.String("spec", "", "Path to the vspec CSV file if empty, the embedded vspec will be used")
 	definitionPath := flag.String("definitions", "", "Path to the definitions file if empty, the definitions will be used")
-	packageName := flag.String("package", "vspec", "Name of the package to generate")
-	generators := flag.String("generators", "all", "Comma separated list of generators to run. Options: all, model, convert, custom.")
+	generators := flag.String("generators", "", "Comma separated list of generators to run. Options: convert, custom.")
 	// Convert flags
 	copyComments := flag.Bool("convert.copy-comments", false, "Copy through comments on conversion functions. Default is false.")
-	convertPackageName := flag.String("convert.package", "", "Name of the package to generate the conversion functions. If empty, the base package name is used.")
-	convertOutputDir := flag.String("convert.output", "", "Output directory for the generated conversion files. If empty, the output directory is used.")
+	convertPackageName := flag.String("convert.package", "", "Name of the package to generate the conversion functions. If empty, the base model name is used.")
+	convertOutputFile := flag.String("convert.output-file", convert.DefaultConversionFile, "Output file for the conversion functions.")
 	// Custom flags
-	customOutFile := flag.String("custom.output-file", "", "Path of the generate gql file that is appened to the outputDir.")
+	customOutFile := flag.String("custom.output-file", custom.DefaultFilePath, "Path of the generate gql file")
 	customTemplateFile := flag.String("custom.template-file", "", "Path to the template file. Which is executed with codegen.TemplateData data.")
 	customFormat := flag.Bool("custom.format", false, "Format the generated file with goimports.")
 
-	flag.Parse()
+	flag.CommandLine.Usage = func() {
+		_, _ = fmt.Fprintf(flag.CommandLine.Output(), `
+codegen is a tool to generate code for the model-garage project.
+Available generators:
+	- custom: Runs a given golang template with pkg/schema.TemplateData data.
+	- convert: Generates conversion functions for converting between raw data into signals.`)
+		_, _ = fmt.Fprintf(flag.CommandLine.Output(), "Usage:\n")
+		flag.PrintDefaults()
+	}
 
+	flag.Parse()
 	if *printVersion {
 		log.Printf("codegen version: %s", version.GetVersion())
 		return
@@ -68,8 +76,6 @@ func main() {
 	gens := strings.Split(*generators, ",")
 
 	cfg := runner.Config{
-		PackageName: *packageName,
-		OutputDir:   *outputDir,
 		Custom: custom.Config{
 			OutputFile:   *customOutFile,
 			TemplateFile: *customTemplateFile,
@@ -78,7 +84,7 @@ func main() {
 		Convert: convert.Config{
 			CopyComments: *copyComments,
 			PackageName:  *convertPackageName,
-			OutputDir:    *convertOutputDir,
+			OutputFile:   *convertOutputFile,
 		},
 	}
 

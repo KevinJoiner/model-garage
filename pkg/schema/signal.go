@@ -64,6 +64,19 @@ type DefinitionInfo struct {
 	RequiredPrivileges []string          `json:"requiredPrivileges" yaml:"requiredPrivileges"`
 }
 
+// OriginalNameInfo contains the original name and signals that are derived from it.
+type OriginalNameInfo struct {
+	Name    string
+	Signals []*SignalInfo
+}
+
+// TemplateData contains the data to be used during template execution.
+type TemplateData struct {
+	ModelName     string
+	Signals       []*SignalInfo
+	OriginalNames []*OriginalNameInfo
+}
+
 // Definitions is a map of definitions from clickhouse Name to definition info.
 type Definitions struct {
 	// FromName contains a mapping from VSS name to definition info.

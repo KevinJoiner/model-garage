@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/DIMO-Network/model-garage/pkg/nativestatus/convert"
 	"github.com/DIMO-Network/model-garage/pkg/vss"
-	"github.com/DIMO-Network/model-garage/pkg/vss/convert"
 )
 
 func TestVersionComparison(t *testing.T) {

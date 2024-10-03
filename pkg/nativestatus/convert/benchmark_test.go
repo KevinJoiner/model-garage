@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/DIMO-Network/model-garage/pkg/vss/convert"
+	"github.com/DIMO-Network/model-garage/pkg/nativestatus/convert"
 )
 
 func BenchmarkConvertFromV1DataConversion(b *testing.B) {

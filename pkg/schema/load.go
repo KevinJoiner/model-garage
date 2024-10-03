@@ -55,13 +55,6 @@ func LoadDefinitionFile(r io.Reader) (*Definitions, error) {
 	return definitions, nil
 }
 
-// TemplateData contains the data to be used during template execution.
-type TemplateData struct {
-	PackageName string
-	ModelName   string
-	Signals     []*SignalInfo
-}
-
 // GetDefinedSignals reads the signals and definitions files and merges them.
 func GetDefinedSignals(specReader, definitionReader io.Reader) (*TemplateData, error) {
 	signals, err := LoadSignalsCSV(specReader)
@@ -82,10 +75,56 @@ func GetDefinedSignals(specReader, definitionReader io.Reader) (*TemplateData, e
 			modelName = cases.Title(language.English).String(modelName)
 		}
 	}
+
+	originalNameMap := map[string]map[string]*SignalInfo{}
+	for _, signal := range signals {
+		for _, conv := range signal.Conversions {
+			signalsForName := originalNameMap[conv.OriginalName]
+			if signalsForName == nil {
+				signalsForName = map[string]*SignalInfo{}
+			}
+			signalsForName[signal.Name] = signal
+			originalNameMap[conv.OriginalName] = signalsForName
+		}
+	}
+
 	tmplData := &TemplateData{
-		Signals:   signals,
-		ModelName: modelName,
+		Signals:       signals,
+		ModelName:     modelName,
+		OriginalNames: createListOfOriginalNames(signals),
 	}
 
 	return tmplData, nil
+}
+
+// createListOfOriginalNames reverse the mapping of signalInfo => []conversions to conversions.OriginalName => []signalsInfo
+func createListOfOriginalNames(signals []*SignalInfo) []*OriginalNameInfo {
+	originalNameMap := map[string]map[string]*SignalInfo{}
+	for _, signal := range signals {
+		for _, conv := range signal.Conversions {
+			signalsForName := originalNameMap[conv.OriginalName]
+			if signalsForName == nil {
+				signalsForName = map[string]*SignalInfo{}
+			}
+			signalsForName[signal.Name] = signal
+			originalNameMap[conv.OriginalName] = signalsForName
+		}
+	}
+	originalNameMapList := []*OriginalNameInfo{}
+	for originalName, signalsForName := range originalNameMap {
+		origNameInfo := &OriginalNameInfo{
+			Name: originalName,
+		}
+		for _, signal := range signalsForName {
+			origNameInfo.Signals = append(origNameInfo.Signals, signal)
+		}
+		slices.SortStableFunc(origNameInfo.Signals, func(a, b *SignalInfo) int {
+			return strings.Compare(a.Name, b.Name)
+		})
+		originalNameMapList = append(originalNameMapList, origNameInfo)
+	}
+	slices.SortStableFunc(originalNameMapList, func(a, b *OriginalNameInfo) int {
+		return strings.Compare(a.Name, b.Name)
+	})
+	return originalNameMapList
 }

@@ -2,41 +2,18 @@
 package convert
 
 import (
-	"bytes"
-	"cmp"
 	_ "embed"
 	"fmt"
 	"path/filepath"
-	"slices"
 	"strings"
-	"text/template"
 
-	"github.com/DIMO-Network/model-garage/pkg/codegen"
 	"github.com/DIMO-Network/model-garage/pkg/schema"
 )
 
 const (
-	// convertV1FileNameFormat is the name of the Go file that will convert v1 JSON data to the signals.
-	convertV1FileNameFormat = "%s-v1-convert_gen.go"
-
-	// convertV2FileNameFormat is the name of the Go file that will convert v2 JSON data to the signals.
-	convertV2FileNameFormat = "%s-v2-convert_gen.go"
-
-	// convertFuncFileNameFormat is the name of the Go file that will contain the conversion functions.
-	convertFuncFileNameFormat = "%s-convert-funcs_gen.go"
+	// DefaultConversionFile is the default name of the conversion file.
+	DefaultConversionFile = "convert-funcs_gen.go"
 )
-
-type conversionData struct {
-	FuncName string
-	Signal   *schema.SignalInfo
-	convIdx  int
-}
-
-//go:embed convertv1.tmpl
-var convertV1TemplateStr string
-
-//go:embed convertv2.tmpl
-var convertV2TemplateStr string
 
 //go:embed convertFunc.tmpl
 var convertFuncTemplateStr string
@@ -53,154 +30,60 @@ package %s
 type Config struct {
 	// CopyComments determines if comments for the conversion functions should be copied through.
 	CopyComments bool
-	// PackageName is the name of the package to generate the conversion functions.
-	// This is separate from the model package name.
-	// if empty, the model package name is used.
-	PackageName string
-	// OutputDir is the output directory for the generated conversion files.
+	// OutputFile is the output directory for the generated conversion files.
 	// if empty, the base output directory is used.
-	OutputDir string
-}
-
-type funcTmplData struct {
-	Signal      *schema.SignalInfo
-	FuncName    string
+	OutputFile string
+	// PackageName is the name of the package to generate the conversion functions.
 	PackageName string
-	Conversion  *schema.ConversionInfo
-	DocComment  string
-	Body        string
 }
 
-type convertTmplData struct {
-	*schema.TemplateData
-	// Group of conversions by original field name.
-	Conversions        [][]*singleConversions
-	ModelPackagePrefix string
-}
-
-type singleConversions struct {
-	Signal     *schema.SignalInfo
+// funcTmplData contains the data to be used during template execution for writing a single conversion function.
+type funcTmplData struct {
+	// Signal is the signal that we are converting to.
+	Signal *schema.SignalInfo
+	// Conversion is the information about the signal we are converting from.
 	Conversion *schema.ConversionInfo
+	// FuncName is the name of the conversion function.
+	FuncName string
+	// DocComment is the original doc comment for the conversion function if it exists.
+	DocComment string
+	// Body of the original conversion function if it exists.
+	Body string
 }
 
 // Generate creates a conversion functions for each field of a model struct.
 // as well as the entire model struct.
-func Generate(tmplData *schema.TemplateData, outputDir string, cfg Config) (err error) {
-	modelPackagePrefix := ""
-	if cfg.PackageName != "" {
-		modelPackagePrefix = tmplData.PackageName + "."
-		tmplData.PackageName = cfg.PackageName
+func Generate(tmplData *schema.TemplateData, cfg Config) (err error) {
+	cfg.OutputFile = filepath.Clean(cfg.OutputFile)
+	if cfg.OutputFile == "" {
+		cfg.OutputFile = DefaultConversionFile
 	}
-	if cfg.OutputDir != "" {
-		outputDir = cfg.OutputDir
-	}
-	err = createStructConversion(tmplData, outputDir, modelPackagePrefix)
-	if err != nil {
-		return err
+	if cfg.PackageName == "" {
+		cfg.PackageName = strings.ToLower(tmplData.ModelName)
 	}
 
-	existingFuncs, err := getDeclaredFunctions(outputDir)
+	// Get the conversion functions that need to be generated.
+	convertFunc := getConversionFunctions(tmplData.Signals)
+	if len(convertFunc) == 0 {
+		return nil
+	}
+
+	outputDir := filepath.Dir(cfg.OutputFile)
+	// Get existing functions in the output directory.
+	existingFuncs, err := GetDeclaredFunctions(outputDir)
 	if err != nil {
 		return fmt.Errorf("error getting declared functions: %w", err)
 	}
 
-	convertFunc := getConversionFunctions(tmplData.Signals)
-
-	err = createConvertFuncs(tmplData, outputDir, cfg.CopyComments, convertFunc, existingFuncs)
+	// Create the conversion functions.
+	convertFuncTemplate, err := createConvertFuncTemplate()
 	if err != nil {
 		return err
 	}
 
+	err = writeConvertFuncs(convertFunc, existingFuncs, convertFuncTemplate, cfg.OutputFile, cfg.PackageName, cfg.CopyComments)
+	if err != nil {
+		return err
+	}
 	return nil
-}
-
-// createStructConversion creates the conversion function for converting JSON data to a model struct.
-func createStructConversion(tmplData *schema.TemplateData, outputDir, modelPackagePrefix string) error {
-	convV1Tmpl, err := createConvV1Template()
-	if err != nil {
-		return err
-	}
-
-	convV2Tmpl, err := createConvV2Template()
-	if err != nil {
-		return err
-	}
-
-	convSlice := gatherAllConversionsFromSignals(tmplData)
-	convTmplData := &convertTmplData{
-		TemplateData:       tmplData,
-		Conversions:        convSlice,
-		ModelPackagePrefix: modelPackagePrefix,
-	}
-
-	var outBuf bytes.Buffer
-	if err = convV1Tmpl.Execute(&outBuf, &convTmplData); err != nil {
-		return fmt.Errorf("error executing template: %w", err)
-	}
-	convertV1FileName := fmt.Sprintf(convertV1FileNameFormat, strings.ToLower(tmplData.ModelName))
-	goOutputPath := filepath.Join(outputDir, convertV1FileName)
-	// format and write the go file.
-	err = codegen.FormatAndWriteToFile(outBuf.Bytes(), goOutputPath)
-	if err != nil {
-		return fmt.Errorf("error formatting and writing to file: %w", err)
-	}
-
-	outBuf.Reset()
-	if err = convV2Tmpl.Execute(&outBuf, &convTmplData); err != nil {
-		return fmt.Errorf("error executing template: %w", err)
-	}
-	convertV2FileName := fmt.Sprintf(convertV2FileNameFormat, strings.ToLower(tmplData.ModelName))
-	goOutputPath = filepath.Join(outputDir, convertV2FileName)
-	err = codegen.FormatAndWriteToFile(outBuf.Bytes(), goOutputPath)
-	if err != nil {
-		return fmt.Errorf("error formatting and writing to file: %w", err)
-	}
-
-	return nil
-}
-
-func createConvV1Template() (*template.Template, error) {
-	tmpl, err := template.New("convertV1Template").Funcs(template.FuncMap{
-		"convertName": convertName,
-		"lower":       strings.ToLower,
-	}).Parse(convertV1TemplateStr)
-	if err != nil {
-		return nil, fmt.Errorf("error parsing conversion v1 template: %w", err)
-	}
-	return tmpl, nil
-}
-
-func createConvV2Template() (*template.Template, error) {
-	tmpl, err := template.New("convertV2Template").Funcs(template.FuncMap{
-		"convertName": convertName,
-		"lower":       strings.ToLower,
-	}).Parse(convertV2TemplateStr)
-	if err != nil {
-		return nil, fmt.Errorf("error parsing conversion v2 template: %w", err)
-	}
-	return tmpl, nil
-}
-
-// gatherAllConversionsFromSignals gathers all conversions from the signals.
-// and returns them in the format [][]*singleConversions.
-// Where the outer slice is grouped by the original field name.
-// And the inner slice contains a list of conversions for that field and their corresponding signal.
-func gatherAllConversionsFromSignals(tmplData *schema.TemplateData) [][]*singleConversions {
-	conversions := make(map[string][]*singleConversions, len(tmplData.Signals))
-	for _, signal := range tmplData.Signals {
-		for _, conv := range signal.Conversions {
-			conversions[conv.OriginalName] = append(conversions[conv.OriginalName], &singleConversions{
-				Signal:     signal,
-				Conversion: conv,
-			})
-		}
-	}
-	convSlice := [][]*singleConversions{}
-	for _, convs := range conversions {
-		convSlice = append(convSlice, convs)
-	}
-	slices.SortFunc(convSlice, func(i, j []*singleConversions) int {
-		return cmp.Compare(i[0].Conversion.OriginalName, j[0].Conversion.OriginalName)
-	})
-	return convSlice
 }
