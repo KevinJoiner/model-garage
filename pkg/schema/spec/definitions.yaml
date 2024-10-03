@@ -386,13 +386,6 @@
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA 
-- vspecName: Vehicle.Acceleration.Lateral
-  conversions: 
-    - originalName: lateralAcceleration
-      originalType: float64
-      isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA 
 - vspecName: Vehicle.OBD.FuelPressure
   conversions: 
     - originalName: fuelTankPressure

@@ -2,8 +2,6 @@
 package vss
 
 const (
-	// FieldAccelerationLateral Vehicle acceleration in Y (lateral acceleration).
-	FieldAccelerationLateral = "accelerationLateral"
 	// FieldAngularVelocityYaw Vehicle rotation rate along Z (vertical).
 	FieldAngularVelocityYaw = "angularVelocityYaw"
 	// FieldChassisAxleRow1WheelLeftSpeed Rotational speed of a vehicle's wheel.
