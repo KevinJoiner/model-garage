@@ -1,4 +1,4 @@
-package convert
+package nativestatus
 
 import (
 	"context"
@@ -7,6 +7,7 @@ import (
 	"math"
 	"strings"
 
+	"github.com/DIMO-Network/model-garage/pkg/convert"
 	"github.com/DIMO-Network/model-garage/pkg/vss"
 	"github.com/tidwall/gjson"
 	"golang.org/x/mod/semver"
@@ -31,7 +32,7 @@ func SignalsFromPayload(ctx context.Context, tokenGetter TokenIDGetter, jsonData
 	case semver.Compare(StatusV2, version) == 0:
 		return SignalsFromV2Payload(jsonData)
 	default:
-		return nil, VersionError{Version: version}
+		return nil, convert.VersionError{Version: version}
 	}
 }
 
@@ -51,7 +52,7 @@ func TokenIDFromData(jsonData []byte) (uint32, error) {
 	lookupKey := "vehicleTokenId"
 	tokenID := gjson.GetBytes(jsonData, lookupKey)
 	if !tokenID.Exists() {
-		return 0, FieldNotFoundError{Field: "tokenID", Lookup: lookupKey}
+		return 0, convert.FieldNotFoundError{Field: "tokenID", Lookup: lookupKey}
 	}
 	id, ok := tokenID.Value().(float64)
 	if !ok {
@@ -65,7 +66,7 @@ func SourceFromData(jsonData []byte) (string, error) {
 	lookupKey := "source"
 	source := gjson.GetBytes(jsonData, lookupKey)
 	if !source.Exists() {
-		return "", FieldNotFoundError{Field: "source", Lookup: lookupKey}
+		return "", convert.FieldNotFoundError{Field: "source", Lookup: lookupKey}
 	}
 	src, ok := source.Value().(string)
 	if !ok {

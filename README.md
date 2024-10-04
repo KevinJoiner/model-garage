@@ -36,22 +36,46 @@ The `codegen` directory contains the code generation tool for creating models fr
 Example usage:
 
 ```bash
-go run github.com/DIMO-Network/model-garage/cmd/codegen -output=pkg/vss  -generators=all
+go run github.com/DIMO-Network/model-garage/cmd/codegen -generators=custom -custom.output-file=./pkg/vss/vehicle-structs.go -custom.template-file=./internal/generator/vehicle.tmpl -custom.format=true
+```
+
+```
+codegen is a tool to generate code for the model-garage project.
+Available generators:
+        - custom: Runs a given golang template with pkg/schema.TemplateData data.
+        - convert: Generates conversion functions for converting between raw data into signals.Usage:
+  -convert.copy-comments
+        Copy through comments on conversion functions. Default is false.
+  -convert.output-file string
+        Output file for the conversion functions. (default "convert-funcs_gen.go")
+  -convert.package string
+        Name of the package to generate the conversion functions. If empty, the base model name is used.
+  -custom.format
+        Format the generated file with goimports.
+  -custom.output-file string
+        Path of the generate gql file (default "custom.txt")
+  -custom.template-file string
+        Path to the template file. Which is executed with codegen.TemplateData data.
+  -definitions string
+        Path to the definitions file if empty, the definitions will be used
+  -generators string
+        Comma separated list of generators to run. Options: convert, custom. (default "all")
+  -spec string
+        Path to the vspec CSV file if empty, the embedded vspec will be used
 ```
 
 #### Generation Info
 
-The Model generation is handled by packages in `internal/codegen`. They are responsible for creating Go structs, Clickhouse tables, and conversion functions from the vspec CSV schema and definitions file. definitions file is a YAML file that specifies the conversions for each field in the vspec schema. The conversion functions are meant to be overridden with custom logic as needed. When generation is re-run, the conversion functions are not overwritten.
+The codegen tool is typically used to create files based on arbitrary signal definitions. The tool reads the signal definitions and custom templates and executes the templates to create the output files.
 
-##### Generation Process
+#### Custom Generator
 
-1. First, the vspec CSV schema and definitions file are parsed.
-2. Then a struct is created for each signal in the vpsec schema that is specified in the definitions file. With Clickhouse and JSON tags for each field. The CH and JSON names are the same as the vspec except `.` are replaced with `_`.
-3. Next, a Clickhouse table is created for the struct. The table name is the same as the package name. The table is created with the same fields as the struct with corresponding Clickhouse types.
-4. Finally, conversion functions are created for each struct. These functions convert the original data in the form of a JSON document to the struct.
+The custom generator takes in a custom template file and output file. The template file is a Go template that is executed with the signal definitions. The data struct passed into the template is defined by [pkg/schema/signal.go.(TemplateData)](pkg/schema/signal.go)
+see [vehicle.tmpl](internal/generator/vehicle.tmpl) for an example template.
 
-**Conversion Functions**
-For each field, a conversion function is created. If a conversion is specified in the definitions file, the conversion function will use the specified conversion. If no conversion is specified, the conversion info function will assume a direct copy. The conversion functions are meant to be overridden with custom logic as needed. When generation is re-run, the conversion functions are not overwritten.
+#### Convert Generator
+
+The convert generator is a built-in generator that creates conversion functions for each signal. The conversion functions are created based on the signal definitions. The conversion functions are meant to be overridden with custom logic as needed. When generation is re-run, the conversion functions are not overwritten.
 
 ## Typical use cases
 
@@ -62,12 +86,21 @@ For each field, a conversion function is created. If a conversion is specified i
 3. PR and github release
 
 Make the mappings take across our pipeline
+
 1. In the https://github.com/DIMO-Network/benthos-plugin/ repo, update the `go.mod` version for the model-garage dependency.
 2. PR and github release
 3. In the https://github.com/DIMO-Network/stream-es repo, in `values.yaml` update the container `image.tag` to point to the latest benthos-plugin release commit hash (copy it from release view).
 4. Push to main, then go to argo to sync it to prod
+5. In the https://github.com/DIMO-Network/telemetry-api/ repo, update the `go.mod` version for the model-garage dependency.
+6. PR and github release
+7. argo to sync it to prod
 
 ### Add signals to DIMO VSS spec
 
 This is when the COVESA standard does not have a signal for something we get from an external integration.
+
 1. Look at this repo: https://github.com/DIMO-Network/VSS/blob/main/overlays/DIMO/dimo.vspec and follow readme there.
+
+```
+
+```

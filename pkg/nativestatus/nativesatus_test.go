@@ -1,4 +1,4 @@
-package convert_test
+package nativestatus_test
 
 import (
 	"context"
@@ -7,8 +7,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/DIMO-Network/model-garage/pkg/convert"
+	"github.com/DIMO-Network/model-garage/pkg/nativestatus"
 	"github.com/DIMO-Network/model-garage/pkg/vss"
-	"github.com/DIMO-Network/model-garage/pkg/vss/convert"
 )
 
 func TestVersionComparison(t *testing.T) {
@@ -149,7 +150,7 @@ func TestVersionComparison(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
-			signals, err := convert.SignalsFromPayload(context.Background(), tokenGetter, test.jsonData)
+			signals, err := nativestatus.SignalsFromPayload(context.Background(), tokenGetter, test.jsonData)
 			if !reflect.DeepEqual(signals, test.expected) {
 				t.Errorf("Unexpected signals. Expected: %v, Got: %v", test.expected, signals)
 			}

@@ -1,12 +1,12 @@
-package convert_test
+package nativestatus_test
 
 import (
 	"context"
 	"testing"
 	"time"
 
+	"github.com/DIMO-Network/model-garage/pkg/nativestatus"
 	"github.com/DIMO-Network/model-garage/pkg/vss"
-	"github.com/DIMO-Network/model-garage/pkg/vss/convert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -14,7 +14,7 @@ const tokenID = uint32(123)
 
 func TestFullFromV2DataConversion(t *testing.T) {
 	t.Parallel()
-	actualSignals, err := convert.SignalsFromPayload(context.Background(), nil, []byte(fullV2InputJSON))
+	actualSignals, err := nativestatus.SignalsFromPayload(context.Background(), nil, []byte(fullV2InputJSON))
 
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
 	require.Len(t, actualSignals, len(expectedV2Signals), "actual signals length does not match expected")
@@ -178,7 +178,7 @@ var expectedV2Signals = []vss.Signal{
 
 func TestNullSignals(t *testing.T) {
 	t.Parallel()
-	actualSignals, err := convert.SignalsFromPayload(context.Background(), nil, []byte(nilSignalsJSON))
+	actualSignals, err := nativestatus.SignalsFromPayload(context.Background(), nil, []byte(nilSignalsJSON))
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
 	require.Equalf(t, []vss.Signal{}, actualSignals, "converted vehicle does not match expected vehicle")
 }

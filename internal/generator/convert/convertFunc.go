@@ -1,5 +1,7 @@
 package convert
 
+// This package provides functions for converting data between different formats.
+
 import (
 	"bytes"
 	"cmp"
@@ -20,45 +22,30 @@ import (
 	"github.com/DIMO-Network/model-garage/pkg/schema"
 )
 
-type functionInfo struct {
+type FunctionInfo struct {
 	Comments string
 	Body     []byte
 }
 
-func createConvertFuncs(tmplData *schema.TemplateData, outputDir string, copyComments bool, convertFunc []conversionData, existingFuncs map[string]functionInfo) error {
-	convertFuncTemplate, err := createConvertFuncTemplate()
-	if err != nil {
-		return err
-	}
-	if len(convertFunc) == 0 {
-		return nil
-	}
-
-	convertFuncFileName := fmt.Sprintf(convertFuncFileNameFormat, strings.ToLower(tmplData.ModelName))
-	filePath := filepath.Join(outputDir, convertFuncFileName)
-	err = writeConvertFuncs(convertFunc, existingFuncs, convertFuncTemplate, filePath, tmplData.PackageName, copyComments)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
 // getConversionFunctions returns the signals that need conversion functions.
-func getConversionFunctions(signals []*schema.SignalInfo) []conversionData {
-	var convertFunc []conversionData
+func getConversionFunctions(signals []*schema.SignalInfo) []funcTmplData {
+	var convertFunc []funcTmplData
 	for _, signal := range signals {
-		if len(signal.Conversions) == 0 {
-			continue
-		}
 		for i := range signal.Conversions {
-			funcName := convertName(signal) + strconv.Itoa(i)
-			convData := conversionData{Signal: signal, convIdx: i, FuncName: funcName}
+			funcName := "To" + signal.GOName + strconv.Itoa(i)
+			convData := funcTmplData{
+				Signal:     signal,
+				Conversion: signal.Conversions[i],
+				FuncName:   funcName,
+			}
+
 			convertFunc = append(convertFunc, convData)
 		}
 	}
 	return convertFunc
 }
 
+// createConvertFuncTemplate creates a template for generating conversion functions.
 func createConvertFuncTemplate() (*template.Template, error) {
 	tmpl, err := template.New("convertFuncTemplate").Parse(convertFuncTemplateStr)
 	if err != nil {
@@ -67,9 +54,11 @@ func createConvertFuncTemplate() (*template.Template, error) {
 	return tmpl, nil
 }
 
-func getDeclaredFunctions(outputPath string) (map[string]functionInfo, error) {
+// GetDeclaredFunctions returns a map of function names to their corresponding function information for a given directory.
+// The function information includes comments and body.
+func GetDeclaredFunctions(outputPath string) (map[string]FunctionInfo, error) {
 	fset := token.NewFileSet()
-	declaredFunctions := make(map[string]functionInfo)
+	declaredFunctions := make(map[string]FunctionInfo)
 
 	list, err := os.ReadDir(outputPath)
 	if err != nil {
@@ -81,19 +70,23 @@ func getDeclaredFunctions(outputPath string) (map[string]functionInfo, error) {
 			continue
 		}
 		filename := filepath.Join(outputPath, d.Name())
-		err = addFileDeclarations(fset, filename, declaredFunctions)
+		fileDeclaredFunctions, err := getDeclaredFunctionsForFile(fset, filename)
 		if err != nil {
 			return nil, err
+		}
+		for k, v := range fileDeclaredFunctions {
+			declaredFunctions[k] = v
 		}
 	}
 
 	return declaredFunctions, nil
 }
 
-func addFileDeclarations(fset *token.FileSet, filePath string, declaredFunctions map[string]functionInfo) error {
+func getDeclaredFunctionsForFile(fset *token.FileSet, filePath string) (map[string]FunctionInfo, error) {
+	declaredFunctions := make(map[string]FunctionInfo)
 	src, err := parser.ParseFile(fset, filePath, nil, parser.ParseComments)
 	if err != nil {
-		return fmt.Errorf("error parsing file: %w", err)
+		return nil, fmt.Errorf("error parsing file: %w", err)
 	}
 	for _, decl := range src.Decls {
 		fn, ok := decl.(*ast.FuncDecl)
@@ -117,46 +110,60 @@ func addFileDeclarations(fset *token.FileSet, filePath string, declaredFunctions
 			Comments: src.Comments,
 		})
 		if err != nil {
-			return fmt.Errorf("error formating function: %w", err)
+			return nil, fmt.Errorf("error formating function: %w", err)
 		}
 
-		declaredFunctions[fn.Name.Name] = functionInfo{
+		declaredFunctions[fn.Name.Name] = FunctionInfo{
 			Comments: strings.Join(docComments, "\n"),
 			Body:     buf.Bytes(),
 		}
 	}
-	return nil
+	return declaredFunctions, nil
 }
 
-func convertName(signal *schema.SignalInfo) string {
-	return "To" + signal.GOName
-}
-
-func writeConvertFuncs(convertFunc []conversionData, existingFuncs map[string]functionInfo, tmpl *template.Template, outputPath string, packageName string, copyComments bool) error {
+// writeConvertFuncs writes the generated conversion functions to a file.
+func writeConvertFuncs(convertFunc []funcTmplData, existingFuncs map[string]FunctionInfo, tmpl *template.Template, outputPath string, packageName string, copyComments bool) error {
 	var convertBuff bytes.Buffer
 	convertBuff.WriteString(fmt.Sprintf(header, packageName))
-	// Add or update existing functions
-	slices.SortFunc(convertFunc, func(a, b conversionData) int {
-		return cmp.Compare(a.FuncName, b.FuncName)
-	})
-
-	for _, convData := range convertFunc {
-		funcName := convData.FuncName
-		var docComment, body string
-		if fnInfo, exists := existingFuncs[funcName]; exists {
-			body = string(fnInfo.Body)
-			if copyComments {
-				docComment = fnInfo.Comments
+	slices.SortStableFunc(convertFunc, func(a, b funcTmplData) int {
+		// split funcName to get digits at the end and compare the name then by the digit value
+		// get the function name without the digits at the end
+		aFuncName := a.FuncName
+		aDigits := 0
+		bFuncName := b.FuncName
+		bDigits := 0
+		for i := len(aFuncName) - 1; i >= 0; i-- {
+			if aFuncName[i] < '0' || aFuncName[i] > '9' {
+				aFuncName = aFuncName[:i+1]
+				aDigits, _ = strconv.Atoi(a.FuncName[i+1:])
+				break
 			}
 		}
-		err := tmpl.Execute(&convertBuff, funcTmplData{
-			PackageName: packageName,
-			Signal:      convData.Signal,
-			FuncName:    funcName,
-			Conversion:  convData.Signal.Conversions[convData.convIdx],
-			DocComment:  docComment,
-			Body:        body,
-		})
+		for i := len(bFuncName) - 1; i >= 0; i-- {
+			if bFuncName[i] < '0' || bFuncName[i] > '9' {
+				bFuncName = bFuncName[:i+1]
+				bDigits, _ = strconv.Atoi(b.FuncName[i+1:])
+				break
+			}
+		}
+		val := cmp.Compare(aFuncName, bFuncName)
+		if val != 0 {
+			return val
+		}
+		return cmp.Compare(aDigits, bDigits)
+	})
+
+	// Add or update existing functions
+	for _, convData := range convertFunc {
+		funcName := convData.FuncName
+		if fnInfo, exists := existingFuncs[funcName]; exists {
+			convData.Body = string(fnInfo.Body)
+			if copyComments {
+				convData.DocComment = fnInfo.Comments
+			}
+		}
+
+		err := tmpl.Execute(&convertBuff, convData)
 		if err != nil {
 			return fmt.Errorf("error executing template for function %s: %w", funcName, err)
 		}

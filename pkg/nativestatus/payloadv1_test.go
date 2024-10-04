@@ -1,4 +1,4 @@
-package convert_test
+package nativestatus_test
 
 import (
 	"cmp"
@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/DIMO-Network/model-garage/pkg/nativestatus"
 	"github.com/DIMO-Network/model-garage/pkg/vss"
-	"github.com/DIMO-Network/model-garage/pkg/vss/convert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -21,7 +21,7 @@ func (*tokenGetter) TokenIDFromSubject(context.Context, string) (uint32, error) 
 func TestFullFromDataConversion(t *testing.T) {
 	t.Parallel()
 	getter := &tokenGetter{}
-	actualSignals, err := convert.SignalsFromPayload(context.Background(), getter, []byte(fullInputJSON))
+	actualSignals, err := nativestatus.SignalsFromPayload(context.Background(), getter, []byte(fullInputJSON))
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
 
 	// sort the signals so diffs are easier to read
@@ -124,7 +124,7 @@ var (
 func TestSkipNulls(t *testing.T) {
 	t.Parallel()
 	getter := &tokenGetter{}
-	actualSignals, err := convert.SignalsFromPayload(context.Background(), getter, []byte(inputJSONWithNull))
+	actualSignals, err := nativestatus.SignalsFromPayload(context.Background(), getter, []byte(inputJSONWithNull))
 	require.NoErrorf(t, err, "error converting input data: %v", err)
 	require.ElementsMatchf(t, expectedSignalsWithoutNull, actualSignals, "converted vehicle does not match expected vehicle")
 }
@@ -152,7 +152,7 @@ var (
 
 func TestWithTokenId(t *testing.T) {
 	t.Parallel()
-	actualSignals, err := convert.SignalsFromPayload(context.Background(), nil, []byte(inputJSONWithTokenID))
+	actualSignals, err := nativestatus.SignalsFromPayload(context.Background(), nil, []byte(inputJSONWithTokenID))
 	require.NoErrorf(t, err, "error converting input data: %v", err)
 	require.ElementsMatchf(t, expectedSignalsWithFromTokenID, actualSignals, "converted vehicle does not match expected vehicle")
 }

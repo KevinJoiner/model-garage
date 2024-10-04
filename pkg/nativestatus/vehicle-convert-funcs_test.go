@@ -1,10 +1,10 @@
-package convert_test
+package nativestatus_test
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/DIMO-Network/model-garage/pkg/vss/convert"
+	"github.com/DIMO-Network/model-garage/pkg/nativestatus"
 	"github.com/stretchr/testify/require"
 )
 
@@ -62,7 +62,7 @@ func TestToPowertrainFuelSystemSupportedFuelTypes0(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := convert.ToPowertrainFuelSystemSupportedFuelTypes0(nil, test.input)
+			result, err := nativestatus.ToPowertrainFuelSystemSupportedFuelTypes0(nil, test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -127,7 +127,7 @@ func TestToPowertrainType0(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := convert.ToPowertrainType0(nil, test.input)
+			result, err := nativestatus.ToPowertrainType0(nil, test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -198,7 +198,7 @@ func TestToPowertrainCombustionEngineEngineOilLevel0(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := convert.ToPowertrainCombustionEngineEngineOilLevel0(nil, test.input)
+			result, err := nativestatus.ToPowertrainCombustionEngineEngineOilLevel0(nil, test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -245,7 +245,7 @@ func TestToPowertrainTractionBatteryCurrentPower1(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := convert.ToPowertrainTractionBatteryCurrentPower0(nil, test.input)
+			result, err := nativestatus.ToPowertrainTractionBatteryCurrentPower0(nil, test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -286,7 +286,7 @@ func TestToCurrentLocationIsRedacted0(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := convert.ToCurrentLocationIsRedacted0(nil, test.input)
+			result, err := nativestatus.ToCurrentLocationIsRedacted0(nil, test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
@@ -340,7 +340,7 @@ func TestPowertrainTransmissionTravelledDistance(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			result, err := convert.ToPowertrainTransmissionTravelledDistance0(nil, test.input)
+			result, err := nativestatus.ToPowertrainTransmissionTravelledDistance0(nil, test.input)
 			if test.expectedError {
 				require.Error(t, err, "Expected an error but got none")
 			} else {
