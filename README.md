@@ -91,6 +91,9 @@ Make the mappings take across our pipeline
 2. PR and github release
 3. In the https://github.com/DIMO-Network/stream-es repo, in `values.yaml` update the container `image.tag` to point to the latest benthos-plugin release commit hash (copy it from release view).
 4. Push to main, then go to argo to sync it to prod
+5. In the https://github.com/DIMO-Network/telemetry-api/ repo, update the `go.mod` version for the model-garage dependency.
+6. PR and github release
+7. argo to sync it to prod
 
 ### Add signals to DIMO VSS spec
 
