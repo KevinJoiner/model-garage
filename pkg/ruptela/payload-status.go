@@ -100,7 +100,7 @@ func TokenIDFromData(jsonData []byte) (uint32, error) {
 	if err != nil {
 		return 0, fmt.Errorf("error decoding subject: %w", err)
 	}
-	return uint32(subjectDID.TokenID), nil
+	return subjectDID.TokenID, nil
 }
 
 // SourceFromData gets a source from a V2 payload.

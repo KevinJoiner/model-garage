@@ -25,6 +25,7 @@ func TestLocationPayload(t *testing.T) {
 	slices.SortFunc(actualSignals, sortFunc)
 	require.Equal(t, expected, actualSignals, "converted vehicle does not match expected vehicle")
 }
+
 func expectedLocationSignals() []vss.Signal {
 	ts = time.Unix(1727360340, 0).UTC()
 	return []vss.Signal{
@@ -43,8 +44,7 @@ func expectedLocationSignals() []vss.Signal {
 	}
 }
 
-var (
-	locationInputJSON = `
+var locationInputJSON = `
 	{
 		"subject": "did:nft:1:0xbA5738a18d83D41847dfFbDC6101d37C69c9B0cF_33",
 		"source": "ruptela/TODO",
@@ -80,4 +80,3 @@ var (
 		"signature": "0xb6b130b31b4cd73182008d286fe878bc311a2259b8cfc1ba785495d9c88a028c55e489608191518b3ad26e8226c35a4dfd032f03aac930712ac038e2afeeefc81c",
 		"time": "2024-09-26T14:19:14Z"
 	}`
-)

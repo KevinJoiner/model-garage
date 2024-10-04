@@ -10,7 +10,7 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-// SignalsFromV2Payload extracts signals from a V2 payload.
+// SignalsFromLocationPayload extracts signals from a V2 payload.
 func SignalsFromLocationPayload(jsonData []byte) ([]vss.Signal, error) {
 	tokenID, err := TokenIDFromData(jsonData)
 	if err != nil {
@@ -91,7 +91,7 @@ func SignalsFromLocationPayload(jsonData []byte) ([]vss.Signal, error) {
 	return retSignals, nil
 }
 
-// TimestampFromV2Signal gets a timestamp from a V2 signal.
+// TimestampFromLocationSignal gets a timestamp from a V2 signal.
 func TimestampFromLocationSignal(sigResult gjson.Result) (time.Time, error) {
 	lookupKey := "ts"
 	timestamp := sigResult.Get(lookupKey)

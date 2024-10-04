@@ -13,7 +13,7 @@ var errInvalidDID = errors.New("invalid DID")
 type DID struct {
 	ChainID         string `json:"chainId"`
 	ContractAddress string `json:"contract"`
-	TokenID         int    `json:"tokenId"`
+	TokenID         uint32 `json:"tokenId"`
 }
 
 // DecodeDID decodes a DID string into a DID struct.
@@ -30,13 +30,13 @@ func DecodeDID(did string) (DID, error) {
 	if len(nftParts) != 2 {
 		return DID{}, errInvalidDID
 	}
-	tokenID, err := strconv.Atoi(nftParts[1])
+	tokenID, err := strconv.ParseUint(nftParts[1], 10, 32)
 	if err != nil {
 		return DID{}, fmt.Errorf("invalid tokenID: %w", err)
 	}
 	return DID{
 		ChainID:         parts[2],
 		ContractAddress: nftParts[0],
-		TokenID:         tokenID,
+		TokenID:         uint32(tokenID),
 	}, nil
 }
