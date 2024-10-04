@@ -210,6 +210,13 @@ func ToOBDEngineLoad0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
+// ToOBDFuelPressure0 converts data from field 'fuelTankPressure' of type float64 to 'Vehicle.OBD.FuelPressure' of type float64.
+// Vehicle.OBD.FuelPressure: PID 0A - Fuel pressure
+// Unit: 'kPa'
+func ToOBDFuelPressure0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToOBDIntakeTemp0 converts data from field 'intakeTemp' of type float64 to 'Vehicle.OBD.IntakeTemp' of type float64.
 // Vehicle.OBD.IntakeTemp: PID 0F - Intake temperature
 // Unit: 'celsius'
@@ -321,6 +328,13 @@ func ToPowertrainCombustionEngineTPS0(originalDoc []byte, val float64) (float64,
 	return val, nil
 }
 
+// ToPowertrainCombustionEngineTorque0 converts data from field 'engineTorque' of type float64 to 'Vehicle.Powertrain.CombustionEngine.Torque' of type float64.
+// Vehicle.Powertrain.CombustionEngine.Torque: Current engine torque. Shall be reported as 0 during engine breaking.
+// Unit: 'Nm'
+func ToPowertrainCombustionEngineTorque0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToPowertrainFuelSystemAbsoluteLevel0 converts data from field 'fuelLevelLiters' of type float64 to 'Vehicle.Powertrain.FuelSystem.AbsoluteLevel' of type float64.
 // Vehicle.Powertrain.FuelSystem.AbsoluteLevel: Current available fuel in the fuel tank expressed in liters.
 // Unit: 'l'
@@ -415,6 +429,12 @@ func ToPowertrainTractionBatteryStateOfChargeCurrent0(originalDoc []byte, val fl
 // Vehicle.Powertrain.TractionBattery.Temperature.Average: Current average temperature of the battery cells.
 // Unit: 'celsius'
 func ToPowertrainTractionBatteryTemperatureAverage0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToPowertrainTransmissionCurrentGear0 converts data from field 'gearSelection' of type float64 to 'Vehicle.Powertrain.Transmission.CurrentGear' of type float64.
+// Vehicle.Powertrain.Transmission.CurrentGear: The current gear. 0=Neutral, 1/2/..=Forward, -1/-2/..=Reverse.
+func ToPowertrainTransmissionCurrentGear0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
