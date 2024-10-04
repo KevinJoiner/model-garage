@@ -1333,7 +1333,7 @@ func OBDFuelPressureFromV2Data(originalDoc []byte, result gjson.Result) (ret flo
 		}
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'fuelTankPressure': %w", err))
 	} else {
-		errs = errors.Join(errs, fmt.Errorf("%w, field 'fuelTankPressure' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'fuelTankPressure' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 	}
 
 	return ret, errs
@@ -1574,7 +1574,7 @@ func PowertrainCombustionEngineTorqueFromV2Data(originalDoc []byte, result gjson
 		}
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'engineTorque': %w", err))
 	} else {
-		errs = errors.Join(errs, fmt.Errorf("%w, field 'engineTorque' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'engineTorque' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 	}
 
 	return ret, errs
@@ -1771,7 +1771,7 @@ func PowertrainTransmissionCurrentGearFromV2Data(originalDoc []byte, result gjso
 		}
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'gearSelection': %w", err))
 	} else {
-		errs = errors.Join(errs, fmt.Errorf("%w, field 'gearSelection' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'gearSelection' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 	}
 
 	return ret, errs
