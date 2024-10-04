@@ -87,16 +87,20 @@ func TimestampFromV1Data(jsonData []byte) (time.Time, error) {
 
 // TokenIDFromData gets a tokenID from a V2 payload.
 func TokenIDFromData(jsonData []byte) (uint32, error) {
-	lookupKey := "vehicleTokenId"
-	tokenID := gjson.GetBytes(jsonData, lookupKey)
-	if !tokenID.Exists() {
+	lookupKey := "subject"
+	subject := gjson.GetBytes(jsonData, lookupKey)
+	if !subject.Exists() {
 		return 0, convert.FieldNotFoundError{Field: "tokenID", Lookup: lookupKey}
 	}
-	id, ok := tokenID.Value().(float64)
+	subjectStr, ok := subject.Value().(string)
 	if !ok {
-		return 0, fmt.Errorf("%s field is not a number", lookupKey)
+		return 0, fmt.Errorf("%s field is not a string", lookupKey)
 	}
-	return uint32(id), nil
+	subjectDID, err := convert.DecodeDID(subjectStr)
+	if err != nil {
+		return 0, fmt.Errorf("error decoding subject: %w", err)
+	}
+	return subjectDID.TokenID, nil
 }
 
 // SourceFromData gets a source from a V2 payload.
