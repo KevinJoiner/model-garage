@@ -12,6 +12,7 @@ import (
 	"github.com/99designs/gqlgen/codegen/templates"
 	"github.com/DIMO-Network/model-garage/pkg/codegen"
 	"github.com/DIMO-Network/model-garage/pkg/schema"
+	"github.com/Masterminds/sprig/v3"
 )
 
 const DefaultFilePath = "custom.txt"
@@ -69,9 +70,9 @@ func Generate(tmplData *schema.TemplateData, cfg Config) error {
 
 func createCustomFileTemplate(templateFile string) (*template.Template, error) {
 	tmplName := path.Base(templateFile)
-	tmpl, err := template.New(tmplName).Funcs(template.FuncMap{
-		"GQLGenResolverName": templates.ToGo,
-	}).ParseFiles(templateFile)
+	funcMap := sprig.FuncMap()
+	funcMap["GQLGenResolverName"] = templates.ToGo
+	tmpl, err := template.New(tmplName).Funcs(funcMap).ParseFiles(templateFile)
 	if err != nil {
 		return nil, fmt.Errorf("error parsing Custom file template: %w", err)
 	}
