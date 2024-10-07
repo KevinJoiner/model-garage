@@ -12,13 +12,13 @@ func TestDecodeDID(t *testing.T) {
 	tests := []struct {
 		name          string
 		input         string
-		expectedDID   cloudevent.DID
+		expectedDID   cloudevent.NFTDID
 		expectedError bool
 	}{
 		{
 			name:  "valid DID",
 			input: "did:nft:137:0xbA5738a18d83D41847dfFbDC6101d37C69c9B0cF_123",
-			expectedDID: cloudevent.DID{
+			expectedDID: cloudevent.NFTDID{
 				ChainID:         "137",
 				ContractAddress: common.HexToAddress("0xbA5738a18d83D41847dfFbDC6101d37C69c9B0cF"),
 				TokenID:         123,
@@ -27,32 +27,32 @@ func TestDecodeDID(t *testing.T) {
 		{
 			name:          "invalid format - wrong part count",
 			input:         "did:nft:1",
-			expectedDID:   cloudevent.DID{},
+			expectedDID:   cloudevent.NFTDID{},
 			expectedError: true,
 		},
 		{
 			name:          "invalid format - wrong token part count",
 			input:         "did:nft:1:0xbA5738a18d83D41847dfFbDC6101d37C69c9B0cF",
-			expectedDID:   cloudevent.DID{},
+			expectedDID:   cloudevent.NFTDID{},
 			expectedError: true,
 		},
 		{
 			name:          "invalid tokenID",
 			input:         "did:nft:1:0xbA5738a18d83D41847dfFbDC6101d37C69c9B0cF_notanumber",
-			expectedDID:   cloudevent.DID{},
+			expectedDID:   cloudevent.NFTDID{},
 			expectedError: true,
 		},
 		{
 			name:          "invalid DID string - wrong prefix",
 			input:         "invalidprefix:nft:1:0xbA5738a18d83D41847dfFbDC6101d37C69c9B0cF_1",
-			expectedDID:   cloudevent.DID{},
+			expectedDID:   cloudevent.NFTDID{},
 			expectedError: true,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			did, err := cloudevent.DecodeDID(tt.input)
+			did, err := cloudevent.DecodeNFTDID(tt.input)
 
 			// Check if the error matches the expected error
 			if tt.expectedError {
