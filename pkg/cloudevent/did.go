@@ -1,4 +1,4 @@
-package convert
+package cloudevent
 
 import (
 	"errors"
