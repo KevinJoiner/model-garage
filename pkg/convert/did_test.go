@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/DIMO-Network/model-garage/pkg/convert"
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/stretchr/testify/require"
 )
 
@@ -19,7 +20,7 @@ func TestDecodeDID(t *testing.T) {
 			input: "did:nft:137:0xbA5738a18d83D41847dfFbDC6101d37C69c9B0cF_123",
 			expectedDID: convert.DID{
 				ChainID:         "137",
-				ContractAddress: "0xbA5738a18d83D41847dfFbDC6101d37C69c9B0cF",
+				ContractAddress: common.HexToAddress("0xbA5738a18d83D41847dfFbDC6101d37C69c9B0cF"),
 				TokenID:         123,
 			},
 		},

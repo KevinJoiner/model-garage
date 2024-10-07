@@ -5,15 +5,17 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/ethereum/go-ethereum/common"
 )
 
 var errInvalidDID = errors.New("invalid DID")
 
 // DID is a Decentralized Identifier for NFTs.
 type DID struct {
-	ChainID         string `json:"chainId"`
-	ContractAddress string `json:"contract"`
-	TokenID         uint32 `json:"tokenId"`
+	ChainID         string         `json:"chainId"`
+	ContractAddress common.Address `json:"contract"`
+	TokenID         uint32         `json:"tokenId"`
 }
 
 // DecodeDID decodes a DID string into a DID struct.
@@ -34,9 +36,14 @@ func DecodeDID(did string) (DID, error) {
 	if err != nil {
 		return DID{}, fmt.Errorf("invalid tokenID: %w", err)
 	}
+	addrBytes := nftParts[0]
+	if !common.IsHexAddress(addrBytes) {
+		return DID{}, errors.New("invalid contract address")
+	}
+
 	return DID{
 		ChainID:         parts[2],
-		ContractAddress: nftParts[0],
+		ContractAddress: common.HexToAddress(string(addrBytes)),
 		TokenID:         uint32(tokenID),
 	}, nil
 }
