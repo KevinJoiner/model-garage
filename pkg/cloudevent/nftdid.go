@@ -47,7 +47,7 @@ func DecodeNFTDID(did string) (NFTDID, error) {
 
 	return NFTDID{
 		ChainID:         chainID,
-		ContractAddress: common.HexToAddress(string(addrBytes)),
+		ContractAddress: common.HexToAddress(addrBytes),
 		TokenID:         uint32(tokenID),
 	}, nil
 }

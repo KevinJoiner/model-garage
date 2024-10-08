@@ -6,6 +6,7 @@ require (
 	github.com/99designs/gqlgen v0.17.54
 	github.com/DIMO-Network/clickhouse-infra v0.0.2
 	github.com/Masterminds/sprig/v3 v3.3.0
+	github.com/ethereum/go-ethereum v1.14.11
 	github.com/pressly/goose/v3 v3.22.1
 	github.com/stretchr/testify v1.9.0
 	github.com/tidwall/gjson v1.17.3
@@ -33,7 +34,6 @@ require (
 	github.com/docker/docker v27.2.0+incompatible // indirect
 	github.com/docker/go-connections v0.5.0 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
-	github.com/ethereum/go-ethereum v1.14.11 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/go-faster/city v1.0.1 // indirect
 	github.com/go-faster/errors v0.7.1 // indirect
