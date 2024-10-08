@@ -19,7 +19,7 @@ func TestDecodeDID(t *testing.T) {
 			name:  "valid DID",
 			input: "did:nft:137:0xbA5738a18d83D41847dfFbDC6101d37C69c9B0cF_123",
 			expectedDID: cloudevent.NFTDID{
-				ChainID:         "137",
+				ChainID:         137,
 				ContractAddress: common.HexToAddress("0xbA5738a18d83D41847dfFbDC6101d37C69c9B0cF"),
 				TokenID:         123,
 			},

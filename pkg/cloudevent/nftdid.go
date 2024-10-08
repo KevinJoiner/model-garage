@@ -13,7 +13,7 @@ var errInvalidDID = errors.New("invalid DID")
 
 // NFTDID is a Decentralized Identifier for NFTs.
 type NFTDID struct {
-	ChainID         string         `json:"chainId"`
+	ChainID         uint64         `json:"chainId"`
 	ContractAddress common.Address `json:"contract"`
 	TokenID         uint32         `json:"tokenId"`
 }
@@ -40,10 +40,19 @@ func DecodeNFTDID(did string) (NFTDID, error) {
 	if !common.IsHexAddress(addrBytes) {
 		return NFTDID{}, errors.New("invalid contract address")
 	}
+	chainID, err := strconv.ParseUint(parts[2], 10, 64)
+	if err != nil {
+		return NFTDID{}, fmt.Errorf("invalid chainID: %w", err)
+	}
 
 	return NFTDID{
-		ChainID:         parts[2],
+		ChainID:         chainID,
 		ContractAddress: common.HexToAddress(string(addrBytes)),
 		TokenID:         uint32(tokenID),
 	}, nil
+}
+
+// String returns the string representation of the NFTDID.
+func (d NFTDID) String() string {
+	return fmt.Sprintf("did:nft:%d:%s_%d", d.ChainID, d.ContractAddress.Hex(), d.TokenID)
 }
