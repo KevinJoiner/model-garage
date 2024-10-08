@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/DIMO-Network/model-garage/pkg/cloudevent"
 	"github.com/DIMO-Network/model-garage/pkg/convert"
 	"github.com/DIMO-Network/model-garage/pkg/vss"
 	"github.com/tidwall/gjson"
@@ -96,7 +97,7 @@ func TokenIDFromData(jsonData []byte) (uint32, error) {
 	if !ok {
 		return 0, fmt.Errorf("%s field is not a string", lookupKey)
 	}
-	subjectDID, err := convert.DecodeDID(subjectStr)
+	subjectDID, err := cloudevent.DecodeNFTDID(subjectStr)
 	if err != nil {
 		return 0, fmt.Errorf("error decoding subject: %w", err)
 	}
