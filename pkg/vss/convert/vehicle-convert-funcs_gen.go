@@ -185,6 +185,13 @@ func ToOBDCommandedEGR0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
+// ToOBDCommandedEVAP0 converts data from field 'evap' of type float64 to 'Vehicle.OBD.CommandedEVAP' of type float64.
+// Vehicle.OBD.CommandedEVAP: PID 2E - Commanded evaporative purge (EVAP) valve
+// Unit: 'percent'
+func ToOBDCommandedEVAP0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToOBDDistanceSinceDTCClear0 converts data from field 'distanceSinceDtcClear' of type float64 to 'Vehicle.OBD.DistanceSinceDTCClear' of type float64.
 // Vehicle.OBD.DistanceSinceDTCClear: PID 31 - Distance traveled since codes cleared
 // Unit: 'km'

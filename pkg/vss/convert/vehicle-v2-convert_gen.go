@@ -251,6 +251,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
+	case "evap":
+		val0, err := OBDCommandedEVAPFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'evap': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "obdCommandedEVAP",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
 	case "frontRightWheelSpeed":
 		val0, err := ChassisAxleRow1WheelRightSpeedFromV2Data(originalDoc, valResult)
 		if err != nil {
@@ -1273,6 +1287,23 @@ func OBDCommandedEGRFromV2Data(originalDoc []byte, result gjson.Result) (ret flo
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'commandedEgr': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'commandedEgr' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// OBDCommandedEVAPFromData converts the given JSON data to a float64.
+func OBDCommandedEVAPFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToOBDCommandedEVAP0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'evap': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'evap' is not of type 'float64' got '%v' of type '%T'", errInvalidType, result.Value(), result.Value()))
 	}
 
 	return ret, errs

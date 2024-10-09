@@ -393,9 +393,9 @@
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA 
-- vspecName: evap
+- vspecName: Vehicle.OBD.CommandedEVAP
   conversions: 
-    - originalName: Vehicle.OBD.CommandedEVAP 
+    - originalName: evap 
       originalType: float64
       isArray: false
   requiredPrivileges:

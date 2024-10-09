@@ -40,6 +40,8 @@ const (
 	FieldOBDBarometricPressure = "obdBarometricPressure"
 	// FieldOBDCommandedEGR PID 2C - Commanded exhaust gas recirculation (EGR)
 	FieldOBDCommandedEGR = "obdCommandedEGR"
+	// FieldOBDCommandedEVAP PID 2E - Commanded evaporative purge (EVAP) valve
+	FieldOBDCommandedEVAP = "obdCommandedEVAP"
 	// FieldOBDDistanceSinceDTCClear PID 31 - Distance traveled since codes cleared
 	FieldOBDDistanceSinceDTCClear = "obdDistanceSinceDTCClear"
 	// FieldOBDDistanceWithMIL PID 21 - Distance traveled with MIL on
