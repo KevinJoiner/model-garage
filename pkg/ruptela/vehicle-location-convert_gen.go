@@ -92,6 +92,21 @@ func SignalsFromLocationData(originalDoc []byte, baseSignal vss.Signal, signalNa
 			ret = append(ret, sig)
 		}
 
+	case "spd":
+		val0, err := SpeedFromLocationData(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'pos.spd': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "speed",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
+
 	default:
 		// do nothing
 	}
@@ -178,6 +193,33 @@ func DIMOAftermarketNSATFromLocationData(originalDoc []byte, result gjson.Result
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'pos.sat': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'pos.sat' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// SpeedFromLocationData converts the given JSON data to a float64.
+func SpeedFromLocationData(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(string)
+	if ok {
+		ret, err = ToSpeed0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'signals.95': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'signals.95' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+	}
+	val1, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToSpeed1(originalDoc, val1)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'pos.spd': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'pos.spd' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 	}
 
 	return ret, errs

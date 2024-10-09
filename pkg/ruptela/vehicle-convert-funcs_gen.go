@@ -37,6 +37,9 @@ func ToChassisAxleRow2WheelRightTirePressure0(originalDoc []byte, val string) (f
 // Vehicle.CurrentLocation.Altitude: Current altitude relative to WGS 84 reference ellipsoid, as measured at the position of GNSS receiver antenna.
 // Unit: 'm'
 func ToCurrentLocationAltitude0(originalDoc []byte, val float64) (float64, error) {
+	if val == 0x8000 {
+		return 0, errNotFound
+	}
 	return val / 10, nil
 }
 
@@ -44,6 +47,9 @@ func ToCurrentLocationAltitude0(originalDoc []byte, val float64) (float64, error
 // Vehicle.CurrentLocation.Latitude: Current latitude of vehicle in WGS 84 geodetic coordinates, as measured at the position of GNSS receiver antenna.
 // Unit: 'degrees' Min: '-90' Max: '90'
 func ToCurrentLocationLatitude0(originalDoc []byte, val float64) (float64, error) {
+	if val == 0x80000000 {
+		return 0, errNotFound
+	}
 	return val / 10000000, nil
 }
 
@@ -51,18 +57,27 @@ func ToCurrentLocationLatitude0(originalDoc []byte, val float64) (float64, error
 // Vehicle.CurrentLocation.Longitude: Current longitude of vehicle in WGS 84 geodetic coordinates, as measured at the position of GNSS receiver antenna.
 // Unit: 'degrees' Min: '-180' Max: '180'
 func ToCurrentLocationLongitude0(originalDoc []byte, val float64) (float64, error) {
+	if val == 0x80000000 {
+		return 0, errNotFound
+	}
 	return val / 10000000, nil
 }
 
 // ToDIMOAftermarketHDOP0 converts data from field 'pos.hdop' of type float64 to 'Vehicle.DIMO.Aftermarket.HDOP' of type float64.
 // Vehicle.DIMO.Aftermarket.HDOP: Horizontal dilution of precision of GPS
 func ToDIMOAftermarketHDOP0(originalDoc []byte, val float64) (float64, error) {
+	if val == 0xff {
+		return 0, errNotFound
+	}
 	return val, nil
 }
 
 // ToDIMOAftermarketNSAT0 converts data from field 'pos.sat' of type float64 to 'Vehicle.DIMO.Aftermarket.NSAT' of type float64.
 // Vehicle.DIMO.Aftermarket.NSAT: Number of sync satellites for GPS
 func ToDIMOAftermarketNSAT0(originalDoc []byte, val float64) (float64, error) {
+	if val == 0xff {
+		return 0, errNotFound
+	}
 	return val, nil
 }
 
@@ -184,4 +199,14 @@ func ToPowertrainType1(originalDoc []byte, val string) (string, error) {
 // Unit: 'km/h'
 func ToSpeed0(originalDoc []byte, val string) (float64, error) {
 	return Convert95(val)
+}
+
+// ToSpeed1 converts data from field 'pos.spd' of type float64 to 'Vehicle.Speed' of type float64.
+// Vehicle.Speed: Vehicle speed.
+// Unit: 'km/h'
+func ToSpeed1(originalDoc []byte, val float64) (float64, error) {
+	if val == 0xffff {
+		return 0, errNotFound
+	}
+	return val, nil
 }

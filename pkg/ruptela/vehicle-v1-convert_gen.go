@@ -997,6 +997,19 @@ func SpeedFromV1Data(jsonData []byte) (ret float64, err error) {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.95' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.pos.spd")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToSpeed1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.pos.spd': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.pos.spd' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'Speed'", errNotFound)

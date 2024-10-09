@@ -163,6 +163,8 @@
   conversions:
     - originalName: "signals.95" # OBD vehicle speed
       originalType: string
+    - originalName: "pos.spd"
+      originalType: float64
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 
