@@ -9,28 +9,28 @@ package ruptela
 // Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
 func ToChassisAxleRow1WheelLeftTirePressure0(originalDoc []byte, val string) (float64, error) {
-	panic("not implemented")
+	return 0, errNotFound // TODO need to get offset and multiplier
 }
 
 // ToChassisAxleRow1WheelRightTirePressure0 converts data from field 'signals.961' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
 func ToChassisAxleRow1WheelRightTirePressure0(originalDoc []byte, val string) (float64, error) {
-	panic("not implemented")
+	return 0, errNotFound // TODO need to get offset and multiplier
 }
 
 // ToChassisAxleRow2WheelLeftTirePressure0 converts data from field 'signals.962' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
 func ToChassisAxleRow2WheelLeftTirePressure0(originalDoc []byte, val string) (float64, error) {
-	panic("not implemented")
+	return 0, errNotFound // TODO need to get offset and multiplier
 }
 
 // ToChassisAxleRow2WheelRightTirePressure0 converts data from field 'signals.963' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
 func ToChassisAxleRow2WheelRightTirePressure0(originalDoc []byte, val string) (float64, error) {
-	panic("not implemented")
+	return 0, errNotFound // TODO need to get offset and multiplier
 }
 
 // ToCurrentLocationAltitude0 converts data from field 'pos.alt' of type float64 to 'Vehicle.CurrentLocation.Altitude' of type float64.
@@ -47,7 +47,7 @@ func ToCurrentLocationAltitude0(originalDoc []byte, val float64) (float64, error
 // Vehicle.CurrentLocation.Latitude: Current latitude of vehicle in WGS 84 geodetic coordinates, as measured at the position of GNSS receiver antenna.
 // Unit: 'degrees' Min: '-90' Max: '90'
 func ToCurrentLocationLatitude0(originalDoc []byte, val float64) (float64, error) {
-	if val == 0x80000000 {
+	if val == -0x80000000 {
 		return 0, errNotFound
 	}
 	return val / 10000000, nil
@@ -57,7 +57,7 @@ func ToCurrentLocationLatitude0(originalDoc []byte, val float64) (float64, error
 // Vehicle.CurrentLocation.Longitude: Current longitude of vehicle in WGS 84 geodetic coordinates, as measured at the position of GNSS receiver antenna.
 // Unit: 'degrees' Min: '-180' Max: '180'
 func ToCurrentLocationLongitude0(originalDoc []byte, val float64) (float64, error) {
-	if val == 0x80000000 {
+	if val == -0x80000000 {
 		return 0, errNotFound
 	}
 	return val / 10000000, nil
