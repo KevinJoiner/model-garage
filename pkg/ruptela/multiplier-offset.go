@@ -131,33 +131,6 @@ func Convert207(rawValue string) (float64, error) {
 	return float64(rawInt)*multiplier + offset, nil
 }
 
-// Convert30 converts the given raw value to a float64.
-// Unit: 'mV' Min: '0' Max: '65535'.
-func Convert30(rawValue string) (float64, error) {
-	const byteSize = 2
-	const offset = float64(0)
-	const nan = 1<<(byteSize*bitsInByte) - 1
-	const multiplier = float64(1)
-	rawInt, err := strconv.ParseUint(rawValue, 16, 64)
-	if err != nil {
-		return 0, fmt.Errorf("could not parse uint: %w", err)
-	}
-	if rawInt == nan {
-		return 0, errNotFound
-	}
-
-	if slices.Contains([]uint64{65535}, rawInt) {
-		return 0, errNotFound
-	}
-	if rawInt < 0 {
-		return 0, errNotFound
-	}
-	if rawInt > 65535 {
-		return 0, errNotFound
-	}
-	return float64(rawInt)*multiplier + offset, nil
-}
-
 // Convert483 converts the given raw value to a float64.
 // Unit: '-' Min: '0' Max: '250'.
 func Convert483(rawValue string) (float64, error) {

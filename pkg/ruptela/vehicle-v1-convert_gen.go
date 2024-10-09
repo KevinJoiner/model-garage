@@ -181,22 +181,6 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 		retSignals = append(retSignals, sig)
 	}
 
-	val, err = LowVoltageBatteryCurrentVoltageFromV1Data(jsonData)
-	if err != nil {
-		if !errors.Is(err, errNotFound) {
-			errs = append(errs, fmt.Errorf("failed to get 'LowVoltageBatteryCurrentVoltage': %w", err))
-		}
-	} else {
-		sig := vss.Signal{
-			Name:      "lowVoltageBatteryCurrentVoltage",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
-		}
-		sig.SetValue(val)
-		retSignals = append(retSignals, sig)
-	}
-
 	val, err = OBDDistanceWithMILFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -636,31 +620,6 @@ func ExteriorAirTemperatureFromV1Data(jsonData []byte) (ret float64, err error) 
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'ExteriorAirTemperature'", errNotFound)
-	}
-
-	return ret, errs
-}
-
-// LowVoltageBatteryCurrentVoltageFromV1Data converts the given JSON data to a float64.
-func LowVoltageBatteryCurrentVoltageFromV1Data(jsonData []byte) (ret float64, err error) {
-	var errs error
-	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.signals.30")
-	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(string)
-		if ok {
-			retVal, err := ToLowVoltageBatteryCurrentVoltage0(jsonData, val)
-			if err == nil {
-				return retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.30': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.30' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
-		}
-	}
-
-	if errs == nil {
-		return ret, fmt.Errorf("%w 'LowVoltageBatteryCurrentVoltage'", errNotFound)
 	}
 
 	return ret, errs
