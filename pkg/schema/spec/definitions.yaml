@@ -393,3 +393,31 @@
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA 
+- vspecName: Vehicle.Powertrain.Transmission.Temperature
+  conversions: 
+    - originalName: atfTemperature  
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA 
+- vspecName: Vehicle.OBD.O2WR.Sensor1.Voltage
+  conversions: 
+    - originalName: oxygenSensor1 
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA 
+- vspecName: Vehicle.OBD.O2WR.Sensor2.Voltage
+  conversions: 
+    - originalName: oxygenSensor2
+      originalType: float64
+      isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA 
+- vspecName: Vehicle.OBD.CommandedEVAP
+  conversions: 
+   - originalName: evap
+     originalType: float64
+     isArray: false
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
