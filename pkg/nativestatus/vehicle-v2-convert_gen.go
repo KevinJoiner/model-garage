@@ -62,6 +62,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
+	case "atfTemperature":
+		val0, err := PowertrainTransmissionTemperatureFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'atfTemperature': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "powertrainTransmissionTemperature",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
 	case "barometricPressure":
 		val0, err := OBDBarometricPressureFromV2Data(originalDoc, valResult)
 		if err != nil {
@@ -240,6 +254,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
 				Name:      "powertrainCombustionEngineTorque",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
+	case "evap":
+		val0, err := OBDCommandedEVAPFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'evap': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "obdCommandedEVAP",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -560,6 +588,34 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 				Timestamp: baseSignal.Timestamp,
 				Source:    baseSignal.Source,
 				Name:      "powertrainCombustionEngineEngineOilLevel",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
+	case "oxygenSensor1":
+		val0, err := OBDO2WRSensor1VoltageFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'oxygenSensor1': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "obdO2WRSensor1Voltage",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
+	case "oxygenSensor2":
+		val0, err := OBDO2WRSensor2VoltageFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'oxygenSensor2': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "obdO2WRSensor2Voltage",
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -1271,6 +1327,23 @@ func OBDCommandedEGRFromV2Data(originalDoc []byte, result gjson.Result) (ret flo
 	return ret, errs
 }
 
+// OBDCommandedEVAPFromData converts the given JSON data to a float64.
+func OBDCommandedEVAPFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToOBDCommandedEVAP0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'evap': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'evap' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
 // OBDDistanceSinceDTCClearFromData converts the given JSON data to a float64.
 func OBDDistanceSinceDTCClearFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
 	var errs error
@@ -1385,6 +1458,40 @@ func OBDMAPFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'intakePressure': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'intakePressure' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// OBDO2WRSensor1VoltageFromData converts the given JSON data to a float64.
+func OBDO2WRSensor1VoltageFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToOBDO2WRSensor1Voltage0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'oxygenSensor1': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'oxygenSensor1' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// OBDO2WRSensor2VoltageFromData converts the given JSON data to a float64.
+func OBDO2WRSensor2VoltageFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToOBDO2WRSensor2Voltage0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'oxygenSensor2': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'oxygenSensor2' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 	}
 
 	return ret, errs
@@ -1772,6 +1879,23 @@ func PowertrainTransmissionCurrentGearFromV2Data(originalDoc []byte, result gjso
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'gearSelection': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'gearSelection' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// PowertrainTransmissionTemperatureFromData converts the given JSON data to a float64.
+func PowertrainTransmissionTemperatureFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToPowertrainTransmissionTemperature0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'atfTemperature': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'atfTemperature' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 	}
 
 	return ret, errs
