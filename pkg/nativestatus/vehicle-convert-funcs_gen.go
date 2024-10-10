@@ -185,6 +185,13 @@ func ToOBDCommandedEGR0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
+// ToOBDCommandedEVAP0 converts data from field 'evap' of type float64 to 'Vehicle.OBD.CommandedEVAP' of type float64.
+// Vehicle.OBD.CommandedEVAP: PID 2E - Commanded evaporative purge (EVAP) valve
+// Unit: 'percent'
+func ToOBDCommandedEVAP0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToOBDDistanceSinceDTCClear0 converts data from field 'distanceSinceDtcClear' of type float64 to 'Vehicle.OBD.DistanceSinceDTCClear' of type float64.
 // Vehicle.OBD.DistanceSinceDTCClear: PID 31 - Distance traveled since codes cleared
 // Unit: 'km'
@@ -235,6 +242,20 @@ func ToOBDLongTermFuelTrim10(originalDoc []byte, val float64) (float64, error) {
 // Vehicle.OBD.MAP: PID 0B - Intake manifold pressure
 // Unit: 'kPa'
 func ToOBDMAP0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToOBDO2WRSensor1Voltage0 converts data from field 'oxygenSensor1' of type float64 to 'Vehicle.OBD.O2WR.Sensor1.Voltage' of type float64.
+// Vehicle.OBD.O2WR.Sensor1.Voltage: PID 2x (byte CD) - Voltage for wide range/band oxygen sensor
+// Unit: 'V'
+func ToOBDO2WRSensor1Voltage0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToOBDO2WRSensor2Voltage0 converts data from field 'oxygenSensor2' of type float64 to 'Vehicle.OBD.O2WR.Sensor2.Voltage' of type float64.
+// Vehicle.OBD.O2WR.Sensor2.Voltage: PID 2x (byte CD) - Voltage for wide range/band oxygen sensor
+// Unit: 'V'
+func ToOBDO2WRSensor2Voltage0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
@@ -435,6 +456,13 @@ func ToPowertrainTractionBatteryTemperatureAverage0(originalDoc []byte, val floa
 // ToPowertrainTransmissionCurrentGear0 converts data from field 'gearSelection' of type float64 to 'Vehicle.Powertrain.Transmission.CurrentGear' of type float64.
 // Vehicle.Powertrain.Transmission.CurrentGear: The current gear. 0=Neutral, 1/2/..=Forward, -1/-2/..=Reverse.
 func ToPowertrainTransmissionCurrentGear0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToPowertrainTransmissionTemperature0 converts data from field 'atfTemperature' of type float64 to 'Vehicle.Powertrain.Transmission.Temperature' of type float64.
+// Vehicle.Powertrain.Transmission.Temperature: The current gearbox temperature.
+// Unit: 'celsius'
+func ToPowertrainTransmissionTemperature0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 

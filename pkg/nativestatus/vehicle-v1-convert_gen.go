@@ -325,6 +325,22 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 		retSignals = append(retSignals, sig)
 	}
 
+	val, err = OBDCommandedEVAPFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'OBDCommandedEVAP': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "obdCommandedEVAP",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
 	val, err = OBDDistanceSinceDTCClearFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -429,6 +445,38 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 	} else {
 		sig := vss.Signal{
 			Name:      "obdMAP",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = OBDO2WRSensor1VoltageFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'OBDO2WRSensor1Voltage': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "obdO2WRSensor1Voltage",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = OBDO2WRSensor2VoltageFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'OBDO2WRSensor2Voltage': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "obdO2WRSensor2Voltage",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -765,6 +813,22 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 	} else {
 		sig := vss.Signal{
 			Name:      "powertrainTransmissionCurrentGear",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = PowertrainTransmissionTemperatureFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainTransmissionTemperature': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "powertrainTransmissionTemperature",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -1389,6 +1453,31 @@ func OBDCommandedEGRFromV1Data(jsonData []byte) (ret float64, err error) {
 	return ret, errs
 }
 
+// OBDCommandedEVAPFromV1Data converts the given JSON data to a float64.
+func OBDCommandedEVAPFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.evap")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToOBDCommandedEVAP0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.evap': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.evap' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'OBDCommandedEVAP'", errNotFound)
+	}
+
+	return ret, errs
+}
+
 // OBDDistanceSinceDTCClearFromV1Data converts the given JSON data to a float64.
 func OBDDistanceSinceDTCClearFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
@@ -1559,6 +1648,56 @@ func OBDMAPFromV1Data(jsonData []byte) (ret float64, err error) {
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'OBDMAP'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// OBDO2WRSensor1VoltageFromV1Data converts the given JSON data to a float64.
+func OBDO2WRSensor1VoltageFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.oxygenSensor1")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToOBDO2WRSensor1Voltage0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.oxygenSensor1': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.oxygenSensor1' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'OBDO2WRSensor1Voltage'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// OBDO2WRSensor2VoltageFromV1Data converts the given JSON data to a float64.
+func OBDO2WRSensor2VoltageFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.oxygenSensor2")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToOBDO2WRSensor2Voltage0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.oxygenSensor2': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.oxygenSensor2' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'OBDO2WRSensor2Voltage'", errNotFound)
 	}
 
 	return ret, errs
@@ -2123,6 +2262,31 @@ func PowertrainTransmissionCurrentGearFromV1Data(jsonData []byte) (ret float64, 
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'PowertrainTransmissionCurrentGear'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// PowertrainTransmissionTemperatureFromV1Data converts the given JSON data to a float64.
+func PowertrainTransmissionTemperatureFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.atfTemperature")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainTransmissionTemperature0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.atfTemperature': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.atfTemperature' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'PowertrainTransmissionTemperature'", errNotFound)
 	}
 
 	return ret, errs

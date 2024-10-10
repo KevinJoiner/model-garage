@@ -40,6 +40,8 @@ const (
 	FieldOBDBarometricPressure = "obdBarometricPressure"
 	// FieldOBDCommandedEGR PID 2C - Commanded exhaust gas recirculation (EGR)
 	FieldOBDCommandedEGR = "obdCommandedEGR"
+	// FieldOBDCommandedEVAP PID 2E - Commanded evaporative purge (EVAP) valve
+	FieldOBDCommandedEVAP = "obdCommandedEVAP"
 	// FieldOBDDistanceSinceDTCClear PID 31 - Distance traveled since codes cleared
 	FieldOBDDistanceSinceDTCClear = "obdDistanceSinceDTCClear"
 	// FieldOBDDistanceWithMIL PID 21 - Distance traveled with MIL on
@@ -54,6 +56,10 @@ const (
 	FieldOBDLongTermFuelTrim1 = "obdLongTermFuelTrim1"
 	// FieldOBDMAP PID 0B - Intake manifold pressure
 	FieldOBDMAP = "obdMAP"
+	// FieldOBDO2WRSensor1Voltage PID 2x (byte CD) - Voltage for wide range/band oxygen sensor
+	FieldOBDO2WRSensor1Voltage = "obdO2WRSensor1Voltage"
+	// FieldOBDO2WRSensor2Voltage PID 2x (byte CD) - Voltage for wide range/band oxygen sensor
+	FieldOBDO2WRSensor2Voltage = "obdO2WRSensor2Voltage"
 	// FieldOBDRunTime PID 1F - Engine run time
 	FieldOBDRunTime = "obdRunTime"
 	// FieldOBDShortTermFuelTrim1 PID 06 - Short Term (immediate) Fuel Trim - Bank 1 - negative percent leaner, positive percent richer
@@ -96,6 +102,8 @@ const (
 	FieldPowertrainTractionBatteryTemperatureAverage = "powertrainTractionBatteryTemperatureAverage"
 	// FieldPowertrainTransmissionCurrentGear The current gear. 0=Neutral, 1/2/..=Forward, -1/-2/..=Reverse.
 	FieldPowertrainTransmissionCurrentGear = "powertrainTransmissionCurrentGear"
+	// FieldPowertrainTransmissionTemperature The current gearbox temperature.
+	FieldPowertrainTransmissionTemperature = "powertrainTransmissionTemperature"
 	// FieldPowertrainTransmissionTravelledDistance Odometer reading, total distance travelled during the lifetime of the transmission.
 	FieldPowertrainTransmissionTravelledDistance = "powertrainTransmissionTravelledDistance"
 	// FieldPowertrainType Defines the powertrain type of the vehicle.
