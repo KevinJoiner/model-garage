@@ -181,7 +181,7 @@
       originalType: string
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
-    
+
 # TODO this is the voltage of the device not the vehicle
 # - vspecName: Vehicle.LowVoltageBattery.CurrentVoltage
 #   conversions:
