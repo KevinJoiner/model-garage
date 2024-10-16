@@ -11,7 +11,7 @@ const bitsInByte = 8
 func Convert{{ $oid }}(rawValue string) (float64, error) {
     const byteSize = {{ $rupSig.Size }}
     const offset = float64({{ $rupSig.Offset }})
-    const nan = 1 << (byteSize*bitsInByte) - 1
+    const maxSize = 1 << (byteSize*bitsInByte) - 1
     const multiplier = float64({{ $rupSig.Multiplier }})
     {{ if eq $rupSig.Type "Signed int." -}}
     rawInt, err := strconv.ParseInt(rawValue, 16, 64)
@@ -23,29 +23,36 @@ func Convert{{ $oid }}(rawValue string) (float64, error) {
     if err != nil {
         return 0, fmt.Errorf("could not parse uint: %w", err)
     }
-    if rawInt == nan {
+
+    // Check if the value is equal to the maximum value for the given size.
+    if rawInt == maxSize {
         return 0, errNotFound
     }
+
     {{ end -}}
     {{ if $rupSig.ErrorSet -}}
     {{ $sign := "uint64" }}
+    // Check if the value is in the error set.
     {{ if eq $rupSig.Type "Signed int." -}} {{ $sign := "int64" }} {{ end -}}
     if slices.Contains([]{{ $sign }}{ {{ range $_, $val := $rupSig.ErrorSet }}{{$val}}, {{end}} }, rawInt) {
 		return 0, errNotFound
 	}
     {{ end -}}
     {{ if $rupSig.ErrorRange -}}
+    // Check if the value is within the error range.
     if {{ $rupSig.ErrorRange.Min }} <= rawInt && rawInt <= {{ $rupSig.ErrorRange.Max }} {
         return 0, errNotFound
     }
     {{ end -}}
 
     {{ if $rupSig.MinBig -}}
+    // Check if the value is less than the minimum value.
     if rawInt < {{ bigText $rupSig.MinBig }} {
         return 0, errNotFound
     }
     {{ end -}}
     {{ if $rupSig.MaxBig -}}
+    // Check if the value is greater than the maximum value.
     if rawInt > {{ bigText $rupSig.MaxBig }} {
         return 0, errNotFound
     }
