@@ -3,6 +3,17 @@ package cloudevent
 
 import "time"
 
+const (
+	// TypeStatus is the event type for status updates.
+	TypeStatus = "dimo.status"
+
+	// TypeFingerprint is the event type for fingerprint updates.
+	TypeFingerprint = "dimo.fingerprint"
+
+	// TypeUnknown is the event type for unknown events.
+	TypeUnknown = "dimo.unknown"
+)
+
 // CloudEvent represents an event according to the CloudEvents spec.
 // See https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md
 type CloudEvent[A any] struct {
