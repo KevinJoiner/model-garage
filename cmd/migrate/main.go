@@ -1,5 +1,4 @@
-// This is custom goose binary with sqlite3 support only.
-
+// Package main is the entry point to run goose CLI with model-garage migrations.
 package main
 
 import (
