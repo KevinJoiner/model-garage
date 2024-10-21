@@ -3,15 +3,15 @@ module github.com/DIMO-Network/model-garage
 go 1.22.8
 
 require (
-	github.com/99designs/gqlgen v0.17.54
+	github.com/99designs/gqlgen v0.17.55
 	github.com/DIMO-Network/clickhouse-infra v0.0.3
 	github.com/Masterminds/sprig/v3 v3.3.0
 	github.com/ethereum/go-ethereum v1.14.11
 	github.com/pressly/goose/v3 v3.22.1
 	github.com/stretchr/testify v1.9.0
-	github.com/tidwall/gjson v1.17.3
+	github.com/tidwall/gjson v1.18.0
 	golang.org/x/mod v0.21.0
-	golang.org/x/text v0.18.0
+	golang.org/x/text v0.19.0
 	golang.org/x/tools v0.26.0
 	gopkg.in/yaml.v3 v3.0.1
 )
