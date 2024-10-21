@@ -11,6 +11,7 @@
 # binary only
 codegen
 migrate
+!migrate/
 clickhouse-container
 !codegen/
 !codegen/*
