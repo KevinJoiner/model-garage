@@ -2,31 +2,14 @@
 package fingerprint
 
 import (
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 
 	"github.com/DIMO-Network/model-garage/pkg/cloudevent"
 )
 
-// {
-// 	"source": "ruptela/TODO",
-// 	"data": {
-// 		"pos": {
-// 			"alt": 1048,
-// 			"dir": 19730,
-// 			"hdop": 6,
-// 			"lat": 522721466,
-// 			"lon": -9014316,
-// 			"sat": 20,
-// 			"spd": 0
-// 		},
-// 		"prt": 0,
-// 		"signals": {
-// 			"102": "0",
-// 			"103": "0",
-// 			"104": "53414C4C41414146",
-// 			"105": "3341413534343438",
-// 			"106": "3200000000000000",
+const vinLength = 17
 
 type fingerPrintSignals struct {
 	Signals signals `json:"signals"`
@@ -47,7 +30,20 @@ func DecodeFingerprint(payload []byte) (*cloudevent.FingerprintEvent, error) {
 	if event.Data.Signals.VINPart1 == "" || event.Data.Signals.VINPart2 == "" || event.Data.Signals.VINPart3 == "" {
 		return nil, fmt.Errorf("missing fingerprint data")
 	}
-	vin := event.Data.Signals.VINPart1 + event.Data.Signals.VINPart2 + event.Data.Signals.VINPart3
+	part1, err := hex.DecodeString(event.Data.Signals.VINPart1)
+	if err != nil {
+		return nil, fmt.Errorf("could not decode VIN part 1: %w", err)
+	}
+	part2, err := hex.DecodeString(event.Data.Signals.VINPart2)
+	if err != nil {
+		return nil, fmt.Errorf("could not decode VIN part 2: %w", err)
+	}
+	part3, err := hex.DecodeString(event.Data.Signals.VINPart3)
+	if err != nil {
+		return nil, fmt.Errorf("could not decode VIN part 3: %w", err)
+	}
+	vinBytes := append(append(part1, part2...), part3...)
+	vin := string(vinBytes[:vinLength])
 	return &cloudevent.FingerprintEvent{
 		CloudEventHeader: event.CloudEventHeader,
 		Data: cloudevent.Fingerprint{
