@@ -9,28 +9,28 @@ package ruptela
 // Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
 func ToChassisAxleRow1WheelLeftTirePressure0(originalDoc []byte, val string) (float64, error) {
-	return 0, errNotFound // TODO need to get offset and multiplier
+	return Convert960(val)
 }
 
 // ToChassisAxleRow1WheelRightTirePressure0 converts data from field 'signals.961' of type string to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
 func ToChassisAxleRow1WheelRightTirePressure0(originalDoc []byte, val string) (float64, error) {
-	return 0, errNotFound // TODO need to get offset and multiplier
+	return Convert961(val)
 }
 
 // ToChassisAxleRow2WheelLeftTirePressure0 converts data from field 'signals.962' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
 func ToChassisAxleRow2WheelLeftTirePressure0(originalDoc []byte, val string) (float64, error) {
-	return 0, errNotFound // TODO need to get offset and multiplier
+	return Convert962(val)
 }
 
 // ToChassisAxleRow2WheelRightTirePressure0 converts data from field 'signals.963' of type string to 'Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure' of type float64.
 // Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure: Tire pressure in kilo-Pascal.
 // Unit: 'kPa'
 func ToChassisAxleRow2WheelRightTirePressure0(originalDoc []byte, val string) (float64, error) {
-	return 0, errNotFound // TODO need to get offset and multiplier
+	return Convert963(val)
 }
 
 // ToCurrentLocationAltitude0 converts data from field 'pos.alt' of type float64 to 'Vehicle.CurrentLocation.Altitude' of type float64.
@@ -119,7 +119,7 @@ func ToPowertrainCombustionEngineECT0(originalDoc []byte, val string) (float64, 
 // ToPowertrainCombustionEngineEngineOilLevel0 converts data from field 'signals.964' of type string to 'Vehicle.Powertrain.CombustionEngine.EngineOilLevel' of type string.
 // Vehicle.Powertrain.CombustionEngine.EngineOilLevel: Engine oil level.
 func ToPowertrainCombustionEngineEngineOilLevel0(originalDoc []byte, val string) (string, error) {
-	return val, nil
+	return Convert964(val)
 }
 
 // ToPowertrainCombustionEngineTPS0 converts data from field 'signals.103' of type string to 'Vehicle.Powertrain.CombustionEngine.TPS' of type float64.
