@@ -13,7 +13,6 @@ func TestFullFromDataConversion(t *testing.T) {
 	fp, err := fingerprint.DecodeFingerprint([]byte(fullInputJSON))
 	require.NoError(t, err, "error decoding fingerprint")
 	require.Equal(t, expectedVIN, fp.Data.VIN, "decoded VIN does not match expected VIN")
-
 }
 
 var fullInputJSON = `
