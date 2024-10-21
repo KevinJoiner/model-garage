@@ -88,6 +88,13 @@ func ToExteriorAirTemperature0(originalDoc []byte, val string) (float64, error) 
 	return Convert97(val)
 }
 
+// ToLowVoltageBatteryCurrentVoltage0 converts data from field 'signals.29' of type string to 'Vehicle.LowVoltageBattery.CurrentVoltage' of type float64.
+// Vehicle.LowVoltageBattery.CurrentVoltage: Current Voltage of the low voltage battery.
+// Unit: 'V'
+func ToLowVoltageBatteryCurrentVoltage0(originalDoc []byte, val string) (float64, error) {
+	return Convert29(val)
+}
+
 // ToOBDDistanceWithMIL0 converts data from field 'signals.102' of type string to 'Vehicle.OBD.DistanceWithMIL' of type float64.
 // Vehicle.OBD.DistanceWithMIL: PID 21 - Distance traveled with MIL on
 // Unit: 'km'

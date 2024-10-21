@@ -182,21 +182,12 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
     
-# TODO this is the voltage of the device not the vehicle
-# - vspecName: Vehicle.LowVoltageBattery.CurrentVoltage
-#   conversions:
-#     - originalName: "signals.30" # Battery voltage
-#       originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
-
-# TODO this is the voltage of the device not the vehicle
-# - vspecName: Vehicle.LowVoltageBattery.CurrentVoltage
-#   conversions:
-#     - originalName: "signals.30" # Battery voltage
-#       originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.LowVoltageBattery.CurrentVoltage
+  conversions:
+    - originalName: "signals.29"
+      originalType: string
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
 
 # TODO we only get batteryCapacity in percent SOH
 # - vspecName: Vehicle.Powertrain.TractionBattery.GrossCapacity
