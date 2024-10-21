@@ -178,7 +178,22 @@ func ToPowertrainTransmissionTravelledDistance1(originalDoc []byte, val string) 
 // ToPowertrainType0 converts data from field 'signals.99' of type string to 'Vehicle.Powertrain.Type' of type string.
 // Vehicle.Powertrain.Type: Defines the powertrain type of the vehicle.
 func ToPowertrainType0(originalDoc []byte, val string) (string, error) {
-	return val, nil
+	num, err := Convert99(val)
+	if err != nil {
+		return "", err
+	}
+	// Encodings taken from https://en.wikipedia.org/wiki/OBD-II_PIDs#Fuel_Type_Coding
+	switch num {
+	case 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 23:
+		return "COMBUSTION", nil
+	case 8, 15:
+		return "ELECTRIC", nil
+	case 16, 17, 18, 19, 20, 21, 22:
+		return "HYBRID", nil
+	default:
+		return "", errNotFound
+
+	}
 }
 
 // ToPowertrainType1 converts data from field 'signals.483' of type string to 'Vehicle.Powertrain.Type' of type string.
