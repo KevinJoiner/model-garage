@@ -181,6 +181,22 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 		retSignals = append(retSignals, sig)
 	}
 
+	val, err = LowVoltageBatteryCurrentVoltageFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'LowVoltageBatteryCurrentVoltage': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "lowVoltageBatteryCurrentVoltage",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
 	val, err = OBDDistanceWithMILFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -237,6 +253,38 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 	} else {
 		sig := vss.Signal{
 			Name:      "powertrainCombustionEngineEngineOilLevel",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = PowertrainCombustionEngineEngineOilRelativeLevelFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineEngineOilRelativeLevel': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "powertrainCombustionEngineEngineOilRelativeLevel",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = PowertrainCombustionEngineSpeedFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineSpeed': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "powertrainCombustionEngineSpeed",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -625,6 +673,31 @@ func ExteriorAirTemperatureFromV1Data(jsonData []byte) (ret float64, err error) 
 	return ret, errs
 }
 
+// LowVoltageBatteryCurrentVoltageFromV1Data converts the given JSON data to a float64.
+func LowVoltageBatteryCurrentVoltageFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.signals.29")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToLowVoltageBatteryCurrentVoltage0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.29': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.29' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'LowVoltageBatteryCurrentVoltage'", errNotFound)
+	}
+
+	return ret, errs
+}
+
 // OBDDistanceWithMILFromV1Data converts the given JSON data to a float64.
 func OBDDistanceWithMILFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
@@ -725,6 +798,56 @@ func PowertrainCombustionEngineEngineOilLevelFromV1Data(jsonData []byte) (ret st
 	return ret, errs
 }
 
+// PowertrainCombustionEngineEngineOilRelativeLevelFromV1Data converts the given JSON data to a float64.
+func PowertrainCombustionEngineEngineOilRelativeLevelFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.signals.964")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToPowertrainCombustionEngineEngineOilRelativeLevel0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.964': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.964' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'PowertrainCombustionEngineEngineOilRelativeLevel'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// PowertrainCombustionEngineSpeedFromV1Data converts the given JSON data to a float64.
+func PowertrainCombustionEngineSpeedFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.signals.94")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToPowertrainCombustionEngineSpeed0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.94': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.94' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'PowertrainCombustionEngineSpeed'", errNotFound)
+	}
+
+	return ret, errs
+}
+
 // PowertrainCombustionEngineTPSFromV1Data converts the given JSON data to a float64.
 func PowertrainCombustionEngineTPSFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
@@ -765,6 +888,19 @@ func PowertrainFuelSystemAbsoluteLevelFromV1Data(jsonData []byte) (ret float64, 
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.642': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.642' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.signals.205")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToPowertrainFuelSystemAbsoluteLevel1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.205': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.205' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 

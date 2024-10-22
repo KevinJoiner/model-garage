@@ -250,6 +250,8 @@ func getMinOrMax(rawVal string) (*big.Int, error) {
 	if val == "" {
 		return nil, nil
 	}
+	// 65,535
+	val = strings.ReplaceAll(val, ",", "")
 	bigInt, ok := new(big.Int).SetString(val, 0)
 	if !ok {
 		return nil, fmt.Errorf("could not parse value: %s", val)
