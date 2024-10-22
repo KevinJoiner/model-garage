@@ -84,6 +84,13 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 
+- vspecName: Vehicle.Powertrain.CombustionEngine.EngineOilRelativeLevel
+  conversions:
+    - originalName: "signals.964" # OBD Oil Life remaining
+      originalType: string
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+
 - vspecName: Vehicle.Powertrain.CombustionEngine.TPS
   conversions:
     - originalName: "signals.103" # OBD accelerator pedal position
@@ -97,8 +104,8 @@
   conversions:
     - originalName: "signals.642" # OBD Fuel Level, L
       originalType: string
-    # - originalName: "signals.205" # CAN Fuel level liters
-    #   originalType: string
+    - originalName: "signals.205" # CAN Fuel level liters
+      originalType: string
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 
@@ -189,6 +196,16 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 
+- vspecName: Vehicle.Powertrain.CombustionEngine.Speed
+  conversions:
+    - originalName: "signals.94" # OBD Engine Speed
+      originalType: string
+    # - originalName: "signals.197" # CAN engine speed
+    #   originalType: string
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+
+
 # TODO we only get batteryCapacity in percent SOH
 # - vspecName: Vehicle.Powertrain.TractionBattery.GrossCapacity
 #   conversions:
@@ -205,13 +222,6 @@
 #   requiredPrivileges:
 #     - VEHICLE_NON_LOCATION_DATA
 
-# # TODO CAN ONLY
-# - vspecName: Vehicle.Powertrain.CombustionEngine.Speed
-#   conversions:
-#     - originalName: "signals.197" # CAN engine speed
-#       originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
 
 # # TODO CAN ONLY
 # - vspecName: Vehicle.OBD.EngineLoad
@@ -232,7 +242,7 @@
 #     - VEHICLE_NON_LOCATION_DATA
 
 # TODO haven't found a good value for this
-# do we want this signal? it is only the current fuel type
+# do we want this signal? we only get the current fuel type
 # - vspecName: Vehicle.Powertrain.FuelSystem.SupportedFuelTypes
 #   isArray: false
 #   conversions:
@@ -252,14 +262,6 @@
 #   requiredPrivileges:
 #     - VEHICLE_NON_LOCATION_DATA
 
-
-# TODO haven't found a good value for this
-# - vspecName: Vehicle.Powertrain.CombustionEngine.EngineOilRelativeLevel
-#   conversions:
-#     - originalName: "Unknown"
-#       originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
 
 # # TODO haven't found a good value for this
 # - vspecName: Vehicle.Powertrain.TractionBattery.CurrentPower

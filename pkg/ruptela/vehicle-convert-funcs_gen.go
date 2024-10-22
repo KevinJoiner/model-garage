@@ -92,7 +92,11 @@ func ToExteriorAirTemperature0(originalDoc []byte, val string) (float64, error) 
 // Vehicle.LowVoltageBattery.CurrentVoltage: Current Voltage of the low voltage battery.
 // Unit: 'V'
 func ToLowVoltageBatteryCurrentVoltage0(originalDoc []byte, val string) (float64, error) {
-	return Convert29(val)
+	mV, err := Convert29(val)
+	if err != nil {
+		return 0, err
+	}
+	return mV / 1000, nil
 }
 
 // ToOBDDistanceWithMIL0 converts data from field 'signals.102' of type string to 'Vehicle.OBD.DistanceWithMIL' of type float64.
@@ -119,7 +123,36 @@ func ToPowertrainCombustionEngineECT0(originalDoc []byte, val string) (float64, 
 // ToPowertrainCombustionEngineEngineOilLevel0 converts data from field 'signals.964' of type string to 'Vehicle.Powertrain.CombustionEngine.EngineOilLevel' of type string.
 // Vehicle.Powertrain.CombustionEngine.EngineOilLevel: Engine oil level.
 func ToPowertrainCombustionEngineEngineOilLevel0(originalDoc []byte, val string) (string, error) {
+	num, err := Convert964(val)
+	if err != nil {
+		return "", err
+	}
+	switch {
+	case num < 0.25:
+		return "CRITICALLY_LOW", nil
+	case num < 0.5:
+		return "LOW", nil
+	case num < 0.75:
+		return "NORMAL", nil
+	case num < .99:
+		return "HIGH", nil
+	default:
+		return "CRITICALLY_HIGH", nil
+	}
+}
+
+// ToPowertrainCombustionEngineEngineOilRelativeLevel0 converts data from field 'signals.964' of type string to 'Vehicle.Powertrain.CombustionEngine.EngineOilRelativeLevel' of type float64.
+// Vehicle.Powertrain.CombustionEngine.EngineOilRelativeLevel: Engine oil level as a percentage.
+// Unit: 'percent' Min: '0' Max: '100'
+func ToPowertrainCombustionEngineEngineOilRelativeLevel0(originalDoc []byte, val string) (float64, error) {
 	return Convert964(val)
+}
+
+// ToPowertrainCombustionEngineSpeed0 converts data from field 'signals.94' of type string to 'Vehicle.Powertrain.CombustionEngine.Speed' of type float64.
+// Vehicle.Powertrain.CombustionEngine.Speed: Engine speed measured as rotations per minute.
+// Unit: 'rpm'
+func ToPowertrainCombustionEngineSpeed0(originalDoc []byte, val string) (float64, error) {
+	return Convert94(val)
 }
 
 // ToPowertrainCombustionEngineTPS0 converts data from field 'signals.103' of type string to 'Vehicle.Powertrain.CombustionEngine.TPS' of type float64.
@@ -134,6 +167,13 @@ func ToPowertrainCombustionEngineTPS0(originalDoc []byte, val string) (float64, 
 // Unit: 'l'
 func ToPowertrainFuelSystemAbsoluteLevel0(originalDoc []byte, val string) (float64, error) {
 	return Convert642(val)
+}
+
+// ToPowertrainFuelSystemAbsoluteLevel1 converts data from field 'signals.205' of type string to 'Vehicle.Powertrain.FuelSystem.AbsoluteLevel' of type float64.
+// Vehicle.Powertrain.FuelSystem.AbsoluteLevel: Current available fuel in the fuel tank expressed in liters.
+// Unit: 'l'
+func ToPowertrainFuelSystemAbsoluteLevel1(originalDoc []byte, val string) (float64, error) {
+	return Convert205(val)
 }
 
 // ToPowertrainFuelSystemRelativeLevel0 converts data from field 'signals.98' of type string to 'Vehicle.Powertrain.FuelSystem.RelativeLevel' of type float64.

@@ -125,6 +125,34 @@ func Convert114(rawValue string) (float64, error) {
 	return float64(rawInt)*multiplier + offset, nil
 }
 
+// Convert205 converts the given raw value to a float64.
+// Unit: 'l' Min: '0' Max: '65535'.
+func Convert205(rawValue string) (float64, error) {
+	const byteSize = 2
+	const offset = float64(0)
+	const maxSize = 1<<(byteSize*bitsInByte) - 1
+	const multiplier = float64(1)
+	rawInt, err := strconv.ParseUint(rawValue, 16, 64)
+	if err != nil {
+		return 0, fmt.Errorf("could not parse uint: %w", err)
+	}
+
+	// Check if the value is equal to the maximum value for the given size.
+	if rawInt == maxSize {
+		return 0, errNotFound
+	}
+
+	// Check if the value is less than the minimum value.
+	if rawInt < 0 {
+		return 0, errNotFound
+	}
+	// Check if the value is greater than the maximum value.
+	if rawInt > 65535 {
+		return 0, errNotFound
+	}
+	return float64(rawInt)*multiplier + offset, nil
+}
+
 // Convert207 converts the given raw value to a float64.
 // Unit: '%' Min: '0' Max: '250'.
 func Convert207(rawValue string) (float64, error) {
@@ -320,6 +348,34 @@ func Convert723(rawValue string) (float64, error) {
 	const offset = float64(0)
 	const maxSize = 1<<(byteSize*bitsInByte) - 1
 	const multiplier = float64(1)
+	rawInt, err := strconv.ParseUint(rawValue, 16, 64)
+	if err != nil {
+		return 0, fmt.Errorf("could not parse uint: %w", err)
+	}
+
+	// Check if the value is equal to the maximum value for the given size.
+	if rawInt == maxSize {
+		return 0, errNotFound
+	}
+
+	// Check if the value is less than the minimum value.
+	if rawInt < 0 {
+		return 0, errNotFound
+	}
+	// Check if the value is greater than the maximum value.
+	if rawInt > 65535 {
+		return 0, errNotFound
+	}
+	return float64(rawInt)*multiplier + offset, nil
+}
+
+// Convert94 converts the given raw value to a float64.
+// Unit: 'RPM' Min: '0' Max: '65,535'.
+func Convert94(rawValue string) (float64, error) {
+	const byteSize = 2
+	const offset = float64(0)
+	const maxSize = 1<<(byteSize*bitsInByte) - 1
+	const multiplier = float64(0.25)
 	rawInt, err := strconv.ParseUint(rawValue, 16, 64)
 	if err != nil {
 		return 0, fmt.Errorf("could not parse uint: %w", err)
