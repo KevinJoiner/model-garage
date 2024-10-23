@@ -1,7 +1,14 @@
 // Package cloudevent provides types for working with CloudEvents.
 package cloudevent
 
-import "time"
+import (
+	"encoding/json"
+	"reflect"
+	"strings"
+	"time"
+
+	"github.com/tidwall/sjson"
+)
 
 const (
 	// TypeStatus is the event type for status updates.
@@ -14,12 +21,35 @@ const (
 	TypeUnknown = "dimo.unknown"
 )
 
+var definedCloudeEventHdrFields = getJSONFieldNames(reflect.TypeOf(CloudEventHeader{}))
+
 // CloudEvent represents an event according to the CloudEvents spec.
 // See https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md
 type CloudEvent[A any] struct {
 	CloudEventHeader
 	// Data contains domain-specific information about the event.
 	Data A `json:"data"`
+}
+
+// MarshalJSON implements custom JSON marshaling for CloudEvent
+func (c *CloudEvent[A]) UnmarshalJSON(data []byte) error {
+	var err error
+	c.CloudEventHeader, err = unmarshalCloudEvent(data, c.setDataField)
+	return err
+}
+
+// MarshalJSON implements custom JSON marshaling for CloudEventHeader
+func (c CloudEvent[A]) MarshalJSON() ([]byte, error) {
+	// Marshal the base struct
+	data, err := json.Marshal(c.CloudEventHeader)
+	if err != nil {
+		return nil, err
+	}
+	data, err = sjson.SetBytes(data, "data", c.Data)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
 }
 
 // CloudEventHeader contains the metadata for any CloudEvent.
@@ -60,4 +90,104 @@ type CloudEventHeader struct {
 
 	// DataVersion is the version of the data type.
 	DataVersion string `json:"dataversion,omitempty"`
+
+	// Extras contains any additional fields that are not part of the CloudEvent excluding the data field.
+	Extras map[string]any `json:"-"`
+}
+
+type hdrAlias CloudEventHeader
+
+func ignoreDataField(json.RawMessage) error { return nil }
+
+func (c *CloudEvent[A]) setDataField(data json.RawMessage) error {
+	return json.Unmarshal(data, &c.Data)
+}
+
+// UnmarshalJSON implements custom JSON unmarshaling for CloudEventHeader
+func (c *CloudEventHeader) UnmarshalJSON(data []byte) error {
+	var err error
+	*c, err = unmarshalCloudEvent(data, ignoreDataField)
+	return err
+}
+
+// MarshalJSON implements custom JSON marshaling for CloudEventHeader
+func (c CloudEventHeader) MarshalJSON() ([]byte, error) {
+	// Marshal the base struct
+	aux := (hdrAlias)(c)
+	data, err := json.Marshal(aux)
+	if err != nil {
+		return nil, err
+	}
+	// Add all extras using sjson]
+	for k, v := range c.Extras {
+		data, err = sjson.SetBytes(data, k, v)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return data, nil
+}
+
+func getJSONFieldNames(t reflect.Type) map[string]struct{} {
+	fields := map[string]struct{}{}
+
+	for i := range t.NumField() {
+		field := t.Field(i)
+
+		tag := field.Tag.Get("json")
+		if tag == "" {
+			continue
+		}
+
+		name := tag
+		if comma := strings.Index(tag, ","); comma != -1 {
+			name = tag[:comma]
+		}
+
+		if name == "-" {
+			continue
+		}
+
+		fields[name] = struct{}{}
+	}
+
+	return fields
+}
+
+func unmarshalCloudEvent(data []byte, dataFunc func(json.RawMessage) error) (CloudEventHeader, error) {
+	c := CloudEventHeader{}
+	aux := hdrAlias{}
+	// Unmarshal known fields directly into the struct
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return c, err
+	}
+	c = (CloudEventHeader)(aux)
+
+	// Create a map to hold all JSON fields
+	rawFields := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return c, err
+	}
+
+	c.Extras = map[string]any{}
+	// Separate known and unknown fields
+	for key, rawValue := range rawFields {
+		if _, ok := definedCloudeEventHdrFields[key]; ok {
+			// Skip defined fields
+			continue
+		}
+		if key == "data" {
+			if err := dataFunc(rawValue); err != nil {
+				return c, err
+			}
+			continue
+		}
+		var value any
+		if err := json.Unmarshal(rawValue, &value); err != nil {
+			return c, err
+		}
+		c.Extras[key] = value
+	}
+	return c, nil
 }
