@@ -11,7 +11,7 @@ const (
 	TypeFingerprint = "dimo.fingerprint"
 
 	// TypeVerifableCredential is the event type for verifiable credentials.
-	TypeVerifableCredential = "dimo.verifiablecredential" //nolint:gosec
+	TypeVerifableCredential = "dimo.verifiablecredential" //nolint:gosec // This is not a credential.
 
 	// TypeUnknown is the event type for unknown events.
 	TypeUnknown = "dimo.unknown"
