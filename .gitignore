@@ -23,6 +23,7 @@ settings.yaml
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+__debug*
 
 # Go workspace file
 go.work
