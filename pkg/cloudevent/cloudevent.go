@@ -22,11 +22,15 @@ const (
 
 	// TypeUnknown is the event type for unknown events.
 	TypeUnknown = "dimo.unknown"
+
+	// SpecVersion is the version of the CloudEvents spec.
+	SpecVersion = "1.0"
 )
 
 var definedCloudeEventHdrFields = getJSONFieldNames(reflect.TypeOf(CloudEventHeader{}))
 
 // CloudEvent represents an event according to the CloudEvents spec.
+// To Add extra headers to the CloudEvent, add them to the Extras map.
 // See https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md
 type CloudEvent[A any] struct {
 	CloudEventHeader
@@ -56,6 +60,7 @@ func (c CloudEvent[A]) MarshalJSON() ([]byte, error) {
 }
 
 // CloudEventHeader contains the metadata for any CloudEvent.
+// To add extra headers to the CloudEvent, add them to the Extras map.
 type CloudEventHeader struct {
 	// ID is an identifier for the event. The combination of ID and Source must
 	// be unique.
@@ -67,8 +72,8 @@ type CloudEventHeader struct {
 	// Producer is a specific instance, process or device that creates the data structure describing the CloudEvent.
 	Producer string `json:"producer"`
 
-	// SpecVersion is the version of CloudEvents specification used. For now,
-	// this is always "1.0".
+	// SpecVersion is the version of CloudEvents specification used.
+	// This is always hardcoded "1.0".
 	SpecVersion string `json:"specversion"`
 
 	// Subject is an optional field identifying the subject of the event within
@@ -117,6 +122,7 @@ func (c *CloudEventHeader) UnmarshalJSON(data []byte) error {
 func (c CloudEventHeader) MarshalJSON() ([]byte, error) {
 	// Marshal the base struct
 	aux := (hdrAlias)(c)
+	aux.SpecVersion = SpecVersion
 	data, err := json.Marshal(aux)
 	if err != nil {
 		return nil, err
@@ -165,8 +171,8 @@ func unmarshalCloudEvent(data []byte, dataFunc func(json.RawMessage) error) (Clo
 	if err := json.Unmarshal(data, &aux); err != nil {
 		return c, err
 	}
+	aux.SpecVersion = SpecVersion
 	c = (CloudEventHeader)(aux)
-
 	// Create a map to hold all JSON fields
 	rawFields := make(map[string]json.RawMessage)
 	if err := json.Unmarshal(data, &rawFields); err != nil {
