@@ -31,7 +31,7 @@ type CloudEvent[A any] struct {
 	Data A `json:"data"`
 }
 
-// MarshalJSON implements custom JSON marshaling for CloudEvent
+// UnmarshalJSON implements custom JSON unmarshaling for CloudEvent.
 func (c *CloudEvent[A]) UnmarshalJSON(data []byte) error {
 	var err error
 	c.CloudEventHeader, err = unmarshalCloudEvent(data, c.setDataField)
@@ -170,7 +170,6 @@ func unmarshalCloudEvent(data []byte, dataFunc func(json.RawMessage) error) (Clo
 		return c, err
 	}
 
-	c.Extras = map[string]any{}
 	// Separate known and unknown fields
 	for key, rawValue := range rawFields {
 		if _, ok := definedCloudeEventHdrFields[key]; ok {
@@ -182,6 +181,9 @@ func unmarshalCloudEvent(data []byte, dataFunc func(json.RawMessage) error) (Clo
 				return c, err
 			}
 			continue
+		}
+		if c.Extras == nil {
+			c.Extras = make(map[string]any)
 		}
 		var value any
 		if err := json.Unmarshal(rawValue, &value); err != nil {

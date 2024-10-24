@@ -2,83 +2,348 @@ package cloudevent_test
 
 import (
 	"encoding/json"
-	"reflect"
 	"testing"
 	"time"
 
 	"github.com/DIMO-Network/model-garage/pkg/cloudevent"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
-func TestCloudEventHeaderJSON(t *testing.T) {
-	now := time.Now().UTC()
+type TestData struct {
+	Message string `json:"message"`
+	Count   int    `json:"count"`
+}
 
-	// Test case with extra fields
-	jsonData := []byte(`{
-		"id": "123",
-		"source": "test-source",
-		"producer": "test-producer",
-		"specversion": "1.0",
-		"subject": "test-subject",
-		"time": "` + now.Format(time.RFC3339Nano) + `",
-		"type": "test.event",
-		"datacontenttype": "application/json",
-		"extra_field1": "value1",
-		"extra_field2": 42,
-		"extra_nested": {"key": "value"}
-	}`)
-
-	var event cloudevent.CloudEventHeader
-	if err := json.Unmarshal(jsonData, &event); err != nil {
-		t.Fatalf("Failed to unmarshal: %v", err)
+func TestCloudEvent_MarshalJSON(t *testing.T) {
+	t.Parallel()
+	now := time.Now().UTC().Truncate(time.Millisecond)
+	tests := []struct {
+		name     string
+		event    cloudevent.CloudEvent[TestData]
+		expected string
+	}{
+		{
+			name: "basic event",
+			event: cloudevent.CloudEvent[TestData]{
+				CloudEventHeader: cloudevent.CloudEventHeader{
+					ID:          "123",
+					Source:      "test-source",
+					Producer:    "test-producer",
+					SpecVersion: "1.0",
+					Subject:     "test-subject",
+					Time:        now,
+					Type:        cloudevent.TypeStatus,
+				},
+				Data: TestData{
+					Message: "hello",
+					Count:   42,
+				},
+			},
+			expected: `{
+				"id": "123",
+				"source": "test-source",
+				"producer": "test-producer",
+				"specversion": "1.0",
+				"subject": "test-subject",
+				"time": "` + now.Format(time.RFC3339Nano) + `",
+				"type": "dimo.status",
+				"data": {
+					"message": "hello",
+					"count": 42
+				}
+			}`,
+		},
+		{
+			name: "event with extras",
+			event: cloudevent.CloudEvent[TestData]{
+				CloudEventHeader: cloudevent.CloudEventHeader{
+					ID:          "456",
+					Source:      "test-source",
+					Producer:    "test-producer",
+					SpecVersion: "1.0",
+					Subject:     "test-subject",
+					Time:        now,
+					Type:        cloudevent.TypeFingerprint,
+					Extras: map[string]any{
+						"extra1": "value1",
+						"extra2": 123,
+					},
+				},
+				Data: TestData{
+					Message: "test",
+					Count:   1,
+				},
+			},
+			expected: `{
+				"id": "456",
+				"source": "test-source",
+				"producer": "test-producer",
+				"specversion": "1.0",
+				"subject": "test-subject",
+				"time": "` + now.Format(time.RFC3339Nano) + `",
+				"type": "dimo.fingerprint",
+				"extra1": "value1",
+				"extra2": 123,
+				"data": {
+					"message": "test",
+					"count": 1
+				}
+			}`,
+		},
 	}
 
-	// Verify known fields
-	if event.ID != "123" {
-		t.Errorf("Expected ID=123, got %s", event.ID)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			actual, err := json.Marshal(tt.event)
+			require.NoError(t, err)
+
+			// Compare JSON objects instead of strings to avoid formatting issues
+			var expectedObj, actualObj map[string]any
+			require.NoError(t, json.Unmarshal([]byte(tt.expected), &expectedObj))
+			require.NoError(t, json.Unmarshal(actual, &actualObj))
+
+			assert.Equal(t, expectedObj, actualObj)
+		})
 	}
-	if event.Source != "test-source" {
-		t.Errorf("Expected Source=test-source, got %s", event.Source)
+}
+
+func TestCloudEvent_UnmarshalJSON(t *testing.T) {
+	t.Parallel()
+	now := time.Now().UTC().Truncate(time.Millisecond)
+
+	tests := []struct {
+		name     string
+		json     string
+		expected cloudevent.CloudEvent[TestData]
+	}{
+		{
+			name: "basic event",
+			json: `{
+				"id": "123",
+				"source": "test-source",
+				"producer": "test-producer",
+				"specversion": "1.0",
+				"subject": "test-subject",
+				"time": "` + now.Format(time.RFC3339Nano) + `",
+				"type": "dimo.status",
+				"data": {
+					"message": "hello",
+					"count": 42
+				}
+			}`,
+			expected: cloudevent.CloudEvent[TestData]{
+				CloudEventHeader: cloudevent.CloudEventHeader{
+					ID:          "123",
+					Source:      "test-source",
+					Producer:    "test-producer",
+					SpecVersion: "1.0",
+					Subject:     "test-subject",
+					Time:        now,
+					Type:        cloudevent.TypeStatus,
+				},
+				Data: TestData{
+					Message: "hello",
+					Count:   42,
+				},
+			},
+		},
+		{
+			name: "event with extras",
+			json: `{
+				"id": "456",
+				"source": "test-source",
+				"producer": "test-producer",
+				"specversion": "1.0",
+				"subject": "test-subject",
+				"time": "` + now.Format(time.RFC3339Nano) + `",
+				"type": "dimo.fingerprint",
+				"extra1": "value1",
+				"extra2": 123,
+				"data": {
+					"message": "test",
+					"count": 1
+				}
+			}`,
+			expected: cloudevent.CloudEvent[TestData]{
+				CloudEventHeader: cloudevent.CloudEventHeader{
+					ID:          "456",
+					Source:      "test-source",
+					Producer:    "test-producer",
+					SpecVersion: "1.0",
+					Subject:     "test-subject",
+					Time:        now,
+					Type:        cloudevent.TypeFingerprint,
+					Extras: map[string]any{
+						"extra1": "value1",
+						"extra2": float64(123), // JSON numbers are unmarshaled as float64
+					},
+				},
+				Data: TestData{
+					Message: "test",
+					Count:   1,
+				},
+			},
+		},
 	}
 
-	// Verify extra fields
-	if val, ok := event.Extras["extra_field1"].(string); !ok || val != "value1" {
-		t.Errorf("Expected extra_field1=value1, got %v", event.Extras["extra_field1"])
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			var actual cloudevent.CloudEvent[TestData]
+			err := json.Unmarshal([]byte(tt.json), &actual)
+			require.NoError(t, err)
+			assert.Equal(t, tt.expected, actual)
+		})
 	}
-	if val, ok := event.Extras["extra_field2"].(float64); !ok || val != 42 {
-		t.Errorf("Expected extra_field2=42, got %v", event.Extras["extra_field2"])
-	}
-	if val, ok := event.Extras["extra_nested"].(map[string]any); !ok {
-		t.Errorf("Expected extra_nested to be a map, got %T", event.Extras["extra_nested"])
-		if nestedVal, ok := val["key"].(string); !ok || nestedVal != "value" {
-			t.Errorf("Expected extra_nested[key]=value, got %v", val["key"])
-		}
-		t.Errorf("Expected extra_nested[key]=value, got %v", event.Extras["extra_nested"])
+}
+
+func TestCloudEventHeader_MarshalJSON(t *testing.T) {
+	t.Parallel()
+	now := time.Now().UTC().Truncate(time.Millisecond)
+	tests := []struct {
+		name     string
+		header   cloudevent.CloudEventHeader
+		expected string
+	}{
+		{
+			name: "basic header",
+			header: cloudevent.CloudEventHeader{
+				ID:          "123",
+				Source:      "test-source",
+				Producer:    "test-producer",
+				SpecVersion: "1.0",
+				Subject:     "test-subject",
+				Time:        now,
+				Type:        cloudevent.TypeStatus,
+			},
+			expected: `{
+				"id": "123",
+				"source": "test-source",
+				"producer": "test-producer",
+				"specversion": "1.0",
+				"subject": "test-subject",
+				"time": "` + now.Format(time.RFC3339Nano) + `",
+				"type": "dimo.status"
+			}`,
+		},
+		{
+			name: "header with extras",
+			header: cloudevent.CloudEventHeader{
+				ID:          "456",
+				Source:      "test-source",
+				Producer:    "test-producer",
+				SpecVersion: "1.0",
+				Subject:     "test-subject",
+				Time:        now,
+				Type:        cloudevent.TypeFingerprint,
+				Extras: map[string]any{
+					"extra1": "value1",
+					"extra2": 123,
+				},
+			},
+			expected: `{
+				"id": "456",
+				"source": "test-source",
+				"producer": "test-producer",
+				"specversion": "1.0",
+				"subject": "test-subject",
+				"time": "` + now.Format(time.RFC3339Nano) + `",
+				"type": "dimo.fingerprint",
+				"extra1": "value1",
+				"extra2": 123
+			}`,
+		},
 	}
 
-	// Test marshaling back to JSON
-	output, err := json.Marshal(event)
-	if err != nil {
-		t.Fatalf("Failed to marshal: %v", err)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			actual, err := json.Marshal(tt.header)
+			require.NoError(t, err)
+
+			var expectedObj, actualObj map[string]any
+			require.NoError(t, json.Unmarshal([]byte(tt.expected), &expectedObj))
+			require.NoError(t, json.Unmarshal(actual, &actualObj))
+
+			assert.Equal(t, expectedObj, actualObj)
+		})
+	}
+}
+
+func TestCloudEventHeader_UnmarshalJSON(t *testing.T) {
+	t.Parallel()
+	now := time.Now().UTC().Truncate(time.Millisecond)
+
+	tests := []struct {
+		name     string
+		json     string
+		expected cloudevent.CloudEventHeader
+	}{
+		{
+			name: "basic header",
+			json: `{
+				"id": "123",
+				"source": "test-source",
+				"producer": "test-producer",
+				"specversion": "1.0",
+				"subject": "test-subject",
+				"time": "` + now.Format(time.RFC3339Nano) + `",
+				"type": "dimo.status"
+			}`,
+			expected: cloudevent.CloudEventHeader{
+				ID:          "123",
+				Source:      "test-source",
+				Producer:    "test-producer",
+				SpecVersion: "1.0",
+				Subject:     "test-subject",
+				Time:        now,
+				Type:        cloudevent.TypeStatus,
+			},
+		},
+		{
+			name: "header with optional fields",
+			json: `{
+				"id": "456",
+				"source": "test-source",
+				"producer": "test-producer",
+				"specversion": "1.0",
+				"subject": "test-subject",
+				"time": "` + now.Format(time.RFC3339Nano) + `",
+				"type": "dimo.fingerprint",
+				"datacontenttype": "application/json",
+				"dataschema": "https://example.com/schema",
+				"dataversion": "1.0",
+				"extra1": "value1",
+				"extra2": 123
+			}`,
+			expected: cloudevent.CloudEventHeader{
+				ID:              "456",
+				Source:          "test-source",
+				Producer:        "test-producer",
+				SpecVersion:     "1.0",
+				Subject:         "test-subject",
+				Time:            now,
+				Type:            cloudevent.TypeFingerprint,
+				DataContentType: "application/json",
+				DataSchema:      "https://example.com/schema",
+				DataVersion:     "1.0",
+				Extras: map[string]any{
+					"extra1": "value1",
+					"extra2": float64(123),
+				},
+			},
+		},
 	}
 
-	// Unmarshal both original and output JSON into maps for comparison
-	originalMap := map[string]any{}
-	outputMap := map[string]any{}
-	if err := json.Unmarshal(jsonData, &originalMap); err != nil {
-		t.Fatalf("Failed to unmarshal original JSON: %v", err)
-	}
-	if err := json.Unmarshal(output, &outputMap); err != nil {
-		t.Fatalf("Failed to unmarshal output JSON: %v", err)
-	}
-
-	// Compare maps
-	for k, v := range originalMap {
-		outputVal, exists := outputMap[k]
-		if !exists {
-			t.Errorf("Field %s missing from output", k)
-		}
-		if reflect.TypeOf(v).Comparable() && v != outputVal { // Skip exact time comparison
-			t.Errorf("Field %s value mismatch: expected %v, got %v", k, v, outputVal)
-		}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			var actual cloudevent.CloudEventHeader
+			err := json.Unmarshal([]byte(tt.json), &actual)
+			require.NoError(t, err)
+			assert.Equal(t, tt.expected, actual)
+		})
 	}
 }
