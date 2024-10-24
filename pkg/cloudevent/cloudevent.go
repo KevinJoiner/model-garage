@@ -22,6 +22,8 @@ const (
 
 	// TypeUnknown is the event type for unknown events.
 	TypeUnknown = "dimo.unknown"
+
+	specVersion = "1.0"
 )
 
 var definedCloudeEventHdrFields = getJSONFieldNames(reflect.TypeOf(CloudEventHeader{}))
@@ -117,6 +119,7 @@ func (c *CloudEventHeader) UnmarshalJSON(data []byte) error {
 func (c CloudEventHeader) MarshalJSON() ([]byte, error) {
 	// Marshal the base struct
 	aux := (hdrAlias)(c)
+	aux.SpecVersion = specVersion
 	data, err := json.Marshal(aux)
 	if err != nil {
 		return nil, err
@@ -165,8 +168,8 @@ func unmarshalCloudEvent(data []byte, dataFunc func(json.RawMessage) error) (Clo
 	if err := json.Unmarshal(data, &aux); err != nil {
 		return c, err
 	}
+	aux.SpecVersion = specVersion
 	c = (CloudEventHeader)(aux)
-
 	// Create a map to hold all JSON fields
 	rawFields := make(map[string]json.RawMessage)
 	if err := json.Unmarshal(data, &rawFields); err != nil {

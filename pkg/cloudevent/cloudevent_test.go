@@ -27,13 +27,12 @@ func TestCloudEvent_MarshalJSON(t *testing.T) {
 			name: "basic event",
 			event: cloudevent.CloudEvent[TestData]{
 				CloudEventHeader: cloudevent.CloudEventHeader{
-					ID:          "123",
-					Source:      "test-source",
-					Producer:    "test-producer",
-					SpecVersion: "1.0",
-					Subject:     "test-subject",
-					Time:        now,
-					Type:        cloudevent.TypeStatus,
+					ID:       "123",
+					Source:   "test-source",
+					Producer: "test-producer",
+					Subject:  "test-subject",
+					Time:     now,
+					Type:     cloudevent.TypeStatus,
 				},
 				Data: TestData{
 					Message: "hello",
@@ -124,7 +123,6 @@ func TestCloudEvent_UnmarshalJSON(t *testing.T) {
 				"id": "123",
 				"source": "test-source",
 				"producer": "test-producer",
-				"specversion": "1.0",
 				"subject": "test-subject",
 				"time": "` + now.Format(time.RFC3339Nano) + `",
 				"type": "dimo.status",
