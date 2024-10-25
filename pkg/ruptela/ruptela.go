@@ -1,5 +1,14 @@
 package ruptela
 
+const (
+	// StatusEventDS is the data version for status events.
+	StatusEventDS = "r/v0/s"
+	// DevStatusDS is the data version for device status events.
+	DevStatusDS = "r/v0/dev"
+	// LocationEventDS is the data version for location events.
+	LocationEventDS = "r/v0/loc"
+)
+
 // fuelTypeConversion Encodings taken from https://en.wikipedia.org/wiki/OBD-II_PIDs#Fuel_Type_Coding
 func fuelTypeConversion(val float64) (string, error) {
 	switch val {

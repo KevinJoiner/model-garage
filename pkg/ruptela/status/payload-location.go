@@ -1,4 +1,4 @@
-package ruptela
+package status
 
 import (
 	"errors"
@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/DIMO-Network/model-garage/pkg/convert"
+	"github.com/DIMO-Network/model-garage/pkg/ruptela"
 	"github.com/DIMO-Network/model-garage/pkg/vss"
 	"github.com/tidwall/gjson"
 )
@@ -74,7 +75,7 @@ func SignalsFromLocationPayload(jsonData []byte) ([]vss.Signal, error) {
 				return true
 			}
 			signalMeta.Timestamp = ts
-			sigs, err := SignalsFromLocationData(jsonData, signalMeta, key.String(), value)
+			sigs, err := ruptela.SignalsFromLocationData(jsonData, signalMeta, key.String(), value)
 			if err != nil {
 				conversionErrors.Errors = append(conversionErrors.Errors, err)
 				return true

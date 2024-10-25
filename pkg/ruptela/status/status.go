@@ -1,54 +1,40 @@
-// Package ruptela provides a funcions for managing Ruptela payloads.
-package ruptela
+// Package status holds decoding functions for Ruptela status payloads.
+package status
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"time"
 
 	"github.com/DIMO-Network/model-garage/pkg/cloudevent"
 	"github.com/DIMO-Network/model-garage/pkg/convert"
+	"github.com/DIMO-Network/model-garage/pkg/ruptela"
 	"github.com/DIMO-Network/model-garage/pkg/vss"
 	"github.com/tidwall/gjson"
 )
 
-// SignalsFromV1Payload gets a slice signals from a v1 payload.
-func SignalsFromV1Payload(jsonData []byte) ([]vss.Signal, error) {
-	ts, err := TimestampFromV1Data(jsonData)
+// DecodeStatusSignals decodes a status message into a slice of signals.
+func DecodeStatusSignals(msgBytes []byte) ([]vss.Signal, error) {
+	event := cloudevent.CloudEvent[struct{}]{}
+	err := json.Unmarshal(msgBytes, &event)
 	if err != nil {
-		return nil, convert.ConversionError{
-			Errors: []error{fmt.Errorf("error getting timestamp: %w", err)},
-		}
+		return nil, fmt.Errorf("failed to unmarshal message: %w", err)
 	}
-	tokenID, err := TokenIDFromData(jsonData)
-	if err != nil {
-		return nil, convert.ConversionError{
-			Errors: []error{fmt.Errorf("error getting tokenId: %w", err)},
-		}
-	}
-	source, err := SourceFromData(jsonData)
-	if err != nil {
-		return nil, convert.ConversionError{
-			TokenID: tokenID,
-			Errors:  []error{fmt.Errorf("error getting source: %w", err)},
-		}
+	var signals []vss.Signal
+	switch event.DataVersion {
+	case ruptela.StatusEventDS:
+		signals, err = SignalsFromV1Payload(msgBytes)
+	case ruptela.LocationEventDS:
+		signals, err = SignalsFromLocationPayload(msgBytes)
+	default:
+		return nil, fmt.Errorf("unknown data version: %s", event.DataVersion)
 	}
 
-	baseSignal := vss.Signal{
-		TokenID:   tokenID,
-		Timestamp: ts,
-		Source:    source,
+	if err != nil {
+		return nil, fmt.Errorf("failed to decode signals: %w", err)
 	}
-	sigs, errs := SignalsFromV1Data(baseSignal, jsonData)
-	if errs != nil {
-		return nil, convert.ConversionError{
-			TokenID:        tokenID,
-			Source:         source,
-			DecodedSignals: sigs,
-			Errors:         errs,
-		}
-	}
-	return sigs, nil
+	return signals, nil
 }
 
 // SubjectFromV1Data gets a subject from a v1 payload.
