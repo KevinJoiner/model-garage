@@ -173,7 +173,15 @@ func ToPowertrainFuelSystemAbsoluteLevel0(originalDoc []byte, val string) (float
 // Vehicle.Powertrain.FuelSystem.AbsoluteLevel: Current available fuel in the fuel tank expressed in liters.
 // Unit: 'l'
 func ToPowertrainFuelSystemAbsoluteLevel1(originalDoc []byte, val string) (float64, error) {
-	return Convert205(val)
+	num, err := Convert205(val)
+	if err != nil {
+		return 0, err
+	}
+	// CAN signal reports 0 when no value is available
+	if num == 0 {
+		return 0, errNotFound
+	}
+	return num, nil
 }
 
 // ToPowertrainFuelSystemRelativeLevel0 converts data from field 'signals.98' of type string to 'Vehicle.Powertrain.FuelSystem.RelativeLevel' of type float64.
@@ -187,7 +195,15 @@ func ToPowertrainFuelSystemRelativeLevel0(originalDoc []byte, val string) (float
 // Vehicle.Powertrain.FuelSystem.RelativeLevel: Level in fuel tank as percent of capacity. 0 = empty. 100 = full.
 // Unit: 'percent' Min: '0' Max: '100'
 func ToPowertrainFuelSystemRelativeLevel1(originalDoc []byte, val string) (float64, error) {
-	return Convert207(val)
+	num, err := Convert207(val)
+	if err != nil {
+		return 0, err
+	}
+	// CAN signal reports 0 when no value is available
+	if num == 0 {
+		return 0, errNotFound
+	}
+	return num, nil
 }
 
 // ToPowertrainRange0 converts data from field 'signals.723' of type string to 'Vehicle.Powertrain.Range' of type float64.
@@ -219,7 +235,15 @@ func ToPowertrainTransmissionTravelledDistance0(originalDoc []byte, val string) 
 // Vehicle.Powertrain.Transmission.TravelledDistance: Odometer reading, total distance travelled during the lifetime of the transmission.
 // Unit: 'km'
 func ToPowertrainTransmissionTravelledDistance1(originalDoc []byte, val string) (float64, error) {
-	return Convert114(val)
+	num, err := Convert114(val)
+	if err != nil {
+		return 0, err
+	}
+	// CAN signal reports 0 when no value is available
+	if num == 0 {
+		return 0, errNotFound
+	}
+	return num, nil
 }
 
 // ToPowertrainType0 converts data from field 'signals.99' of type string to 'Vehicle.Powertrain.Type' of type string.
@@ -229,24 +253,17 @@ func ToPowertrainType0(originalDoc []byte, val string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	// Encodings taken from https://en.wikipedia.org/wiki/OBD-II_PIDs#Fuel_Type_Coding
-	switch num {
-	case 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 23:
-		return "COMBUSTION", nil
-	case 8, 15:
-		return "ELECTRIC", nil
-	case 16, 17, 18, 19, 20, 21, 22:
-		return "HYBRID", nil
-	default:
-		return "", errNotFound
-
-	}
+	return fuelTypeConversion(num)
 }
 
 // ToPowertrainType1 converts data from field 'signals.483' of type string to 'Vehicle.Powertrain.Type' of type string.
 // Vehicle.Powertrain.Type: Defines the powertrain type of the vehicle.
 func ToPowertrainType1(originalDoc []byte, val string) (string, error) {
-	return val, nil
+	num, err := Convert483(val)
+	if err != nil {
+		return "", err
+	}
+	return fuelTypeConversion(num)
 }
 
 // ToSpeed0 converts data from field 'signals.95' of type string to 'Vehicle.Speed' of type float64.
