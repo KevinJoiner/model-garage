@@ -12,6 +12,10 @@ GOOS						?= $(DEFAULT_GOOS)
 INSTALL_DIR					?= $(DEFAULT_INSTALL_DIR)
 .DEFAULT_GOAL := run
 
+PLATFORMS=linux/amd64 linux/386 linux/arm linux/arm64 \
+         windows/amd64 windows/386 \
+         darwin/amd64 darwin/arm64
+
 # Get the app version from the git tag and commit
 GIT_COMMIT := $(shell git rev-parse --short HEAD)
 TAG := $(shell git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
@@ -30,6 +34,13 @@ build:
 		go build -ldflags "-X 'github.com/DIMO-Network/model-garage/pkg/version.version=$(VERSION)'" \
 		-o bin/$(BIN_NAME) ./cmd/$(BIN_NAME)
 
+build-all-ruptela-convert:
+	mkdir -p bin
+	$(foreach platform,$(PLATFORMS),\
+		$(eval OS := $(word 1,$(subst /, ,$(platform)))) \
+		$(eval ARCH := $(word 2,$(subst /, ,$(platform)))) \
+		GOOS=$(OS) GOARCH=$(ARCH) go build -o bin/ruptela-convert-$(OS)-$(ARCH)$(if $(filter windows,$(OS)),.exe,) ./pkg/ruptela/cmd/ruptela-convert/ || exit 1; \
+	)
 
 run: build
 	@./bin/$(BIN_NAME)
@@ -86,3 +97,4 @@ generate-ruptela: # Generate all files for ruptela
 	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/ruptela/vehicle-v1-convert_gen.go -custom.template-file=./pkg/ruptela/codegen/convert-status.tmpl -custom.format=true -definitions=./pkg/ruptela/schema/ruptela-definitions.yaml
 	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/ruptela/vehicle-location-convert_gen.go -custom.template-file=./pkg/ruptela/codegen/convert-location.tmpl -custom.format=true -definitions=./pkg/ruptela/schema/ruptela-definitions.yaml
 	go run ./pkg/ruptela/codegen 
+	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/ruptela/vehicle-convert-replace_gen.go -custom.template-file=./pkg/ruptela/codegen/convert-replace.tmpl -custom.format=true -definitions=./pkg/ruptela/schema/ruptela-definitions.yaml
