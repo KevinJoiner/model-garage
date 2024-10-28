@@ -1,4 +1,4 @@
-package ruptela_test
+package status_test
 
 import (
 	"cmp"
@@ -6,14 +6,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/DIMO-Network/model-garage/pkg/ruptela"
+	"github.com/DIMO-Network/model-garage/pkg/ruptela/status"
 	"github.com/DIMO-Network/model-garage/pkg/vss"
 	"github.com/stretchr/testify/require"
 )
 
 func TestLocationPayload(t *testing.T) {
 	t.Parallel()
-	actualSignals, err := ruptela.SignalsFromLocationPayload([]byte(locationInputJSON))
+	actualSignals, err := status.SignalsFromLocationPayload([]byte(locationInputJSON))
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
 
 	// sort the signals so diffs are easier to read

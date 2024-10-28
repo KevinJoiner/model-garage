@@ -103,6 +103,11 @@ type CloudEventHeader struct {
 	Extras map[string]any `json:"-"`
 }
 
+// Equals returns true if the two CloudEventHeaders share the same ID and Source.
+func (c *CloudEventHeader) Equals(other CloudEventHeader) bool {
+	return c.ID == other.ID && c.Source == other.Source
+}
+
 type hdrAlias CloudEventHeader
 
 func ignoreDataField(json.RawMessage) error { return nil }
@@ -111,7 +116,7 @@ func (c *CloudEvent[A]) setDataField(data json.RawMessage) error {
 	return json.Unmarshal(data, &c.Data)
 }
 
-// UnmarshalJSON implements custom JSON unmarshaling for CloudEventHeader
+// UnmarshalJSON implements custom JSON unmarshaling for CloudEventHeader.
 func (c *CloudEventHeader) UnmarshalJSON(data []byte) error {
 	var err error
 	*c, err = unmarshalCloudEvent(data, ignoreDataField)
