@@ -68,6 +68,13 @@ func main() {
 		fmt.Printf("Error parsing JSON: %v\n", err)
 		os.Exit(1)
 	}
+	if len(wrapper.Messages) == 0 {
+		wrapper.Messages = []Message{
+			{
+				Payload: bytes,
+			},
+		}
+	}
 
 	// Process each message
 	for i, msg := range wrapper.Messages {
