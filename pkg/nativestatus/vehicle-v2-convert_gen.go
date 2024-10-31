@@ -188,20 +188,6 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
-	case "dcConveterRequestedVoltage":
-		val0, err := PowertrainTractionBatteryChargingChargeVoltageDCFromV2Data(originalDoc, valResult)
-		if err != nil {
-			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'dcConveterRequestedVoltage': %w", err))
-		} else {
-			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainTractionBatteryChargingChargeVoltageDC",
-			}
-			sig.SetValue(val0)
-			ret = append(ret, sig)
-		}
 	case "distanceSinceDtcClear":
 		val0, err := OBDDistanceSinceDTCClearFromV2Data(originalDoc, valResult)
 		if err != nil {
@@ -1819,23 +1805,6 @@ func PowertrainTractionBatteryChargingChargeLimitFromV2Data(originalDoc []byte, 
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'chargeLimit': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'chargeLimit' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
-	}
-
-	return ret, errs
-}
-
-// PowertrainTractionBatteryChargingChargeVoltageDCFromData converts the given JSON data to a float64.
-func PowertrainTractionBatteryChargingChargeVoltageDCFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
-	var errs error
-	val0, ok := result.Value().(float64)
-	if ok {
-		ret, err = ToPowertrainTractionBatteryChargingChargeVoltageDC0(originalDoc, val0)
-		if err == nil {
-			return ret, nil
-		}
-		errs = errors.Join(errs, fmt.Errorf("failed to convert 'dcConveterRequestedVoltage': %w", err))
-	} else {
-		errs = errors.Join(errs, fmt.Errorf("%w, field 'dcConveterRequestedVoltage' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 	}
 
 	return ret, errs

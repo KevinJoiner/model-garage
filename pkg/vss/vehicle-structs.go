@@ -90,8 +90,6 @@ const (
 	FieldPowertrainRange = "powertrainRange"
 	// FieldPowertrainTractionBatteryChargingChargeLimit Target charge limit (state of charge) for battery.
 	FieldPowertrainTractionBatteryChargingChargeLimit = "powertrainTractionBatteryChargingChargeLimit"
-	// FieldPowertrainTractionBatteryChargingChargeVoltageDC Current DC charging voltage at charging inlet.
-	FieldPowertrainTractionBatteryChargingChargeVoltageDC = "powertrainTractionBatteryChargingChargeVoltageDC"
 	// FieldPowertrainTractionBatteryChargingIsCharging True if charging is ongoing. Charging is considered to be ongoing if energy is flowing from charger to vehicle.
 	FieldPowertrainTractionBatteryChargingIsCharging = "powertrainTractionBatteryChargingIsCharging"
 	// FieldPowertrainTractionBatteryCurrentPower Current electrical energy flowing in/out of battery. Positive = Energy flowing in to battery, e.g. during charging. Negative = Energy flowing out of battery, e.g. during driving.

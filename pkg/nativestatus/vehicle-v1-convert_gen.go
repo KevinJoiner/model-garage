@@ -725,22 +725,6 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 		retSignals = append(retSignals, sig)
 	}
 
-	val, err = PowertrainTractionBatteryChargingChargeVoltageDCFromV1Data(jsonData)
-	if err != nil {
-		if !errors.Is(err, errNotFound) {
-			errs = append(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryChargingChargeVoltageDC': %w", err))
-		}
-	} else {
-		sig := vss.Signal{
-			Name:      "powertrainTractionBatteryChargingChargeVoltageDC",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
-		}
-		sig.SetValue(val)
-		retSignals = append(retSignals, sig)
-	}
-
 	val, err = PowertrainTractionBatteryChargingIsChargingFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -2160,31 +2144,6 @@ func PowertrainTractionBatteryChargingChargeLimitFromV1Data(jsonData []byte) (re
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'PowertrainTractionBatteryChargingChargeLimit'", errNotFound)
-	}
-
-	return ret, errs
-}
-
-// PowertrainTractionBatteryChargingChargeVoltageDCFromV1Data converts the given JSON data to a float64.
-func PowertrainTractionBatteryChargingChargeVoltageDCFromV1Data(jsonData []byte) (ret float64, err error) {
-	var errs error
-	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.dcConveterRequestedVoltage")
-	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(float64)
-		if ok {
-			retVal, err := ToPowertrainTractionBatteryChargingChargeVoltageDC0(jsonData, val)
-			if err == nil {
-				return retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.dcConveterRequestedVoltage': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.dcConveterRequestedVoltage' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
-		}
-	}
-
-	if errs == nil {
-		return ret, fmt.Errorf("%w 'PowertrainTractionBatteryChargingChargeVoltageDC'", errNotFound)
 	}
 
 	return ret, errs

@@ -410,13 +410,6 @@ func ToPowertrainTractionBatteryChargingChargeLimit0(originalDoc []byte, val flo
 	return val * 100, nil
 }
 
-// ToPowertrainTractionBatteryChargingChargeVoltageDC0 converts data from field 'dcConveterRequestedVoltage' of type float64 to 'Vehicle.Powertrain.TractionBattery.Charging.ChargeVoltage.DC' of type float64.
-// Vehicle.Powertrain.TractionBattery.Charging.ChargeVoltage.DC: Current DC charging voltage at charging inlet.
-// Unit: 'V'
-func ToPowertrainTractionBatteryChargingChargeVoltageDC0(originalDoc []byte, val float64) (float64, error) {
-	return val, nil
-}
-
 // ToPowertrainTractionBatteryChargingIsCharging0 converts data from field 'charging' of type bool to 'Vehicle.Powertrain.TractionBattery.Charging.IsCharging' of type float64.
 // Vehicle.Powertrain.TractionBattery.Charging.IsCharging: True if charging is ongoing. Charging is considered to be ongoing if energy is flowing from charger to vehicle.
 func ToPowertrainTractionBatteryChargingIsCharging0(originalDoc []byte, val bool) (float64, error) {
