@@ -427,6 +427,13 @@ func ToPowertrainTractionBatteryCurrentPower0(originalDoc []byte, val float64) (
 	return 1000 * val, nil
 }
 
+// ToPowertrainTractionBatteryCurrentVoltage0 converts data from field 'hvBatteryVoltage' of type float64 to 'Vehicle.Powertrain.TractionBattery.CurrentVoltage' of type float64.
+// Vehicle.Powertrain.TractionBattery.CurrentVoltage: Current Voltage of the battery.
+// Unit: 'V'
+func ToPowertrainTractionBatteryCurrentVoltage0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToPowertrainTractionBatteryGrossCapacity0 converts data from field 'batteryCapacity' of type float64 to 'Vehicle.Powertrain.TractionBattery.GrossCapacity' of type float64.
 // Vehicle.Powertrain.TractionBattery.GrossCapacity: Gross capacity of the battery.
 // Unit: 'kWh'
@@ -488,6 +495,13 @@ func ToPowertrainType0(originalDoc []byte, val string) (string, error) {
 		return "ELECTRIC", nil
 	}
 	return "COMBUSTION", nil
+}
+
+// ToServiceDistanceToService0 converts data from field 'serviceInterval' of type float64 to 'Vehicle.Service.DistanceToService' of type float64.
+// Vehicle.Service.DistanceToService: Remaining distance to service (of any kind). Negative values indicate service overdue.
+// Unit: 'km'
+func ToServiceDistanceToService0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
 }
 
 // ToSpeed0 converts data from field 'vehicleSpeed' of type float64 to 'Vehicle.Speed' of type float64.
