@@ -243,7 +243,8 @@ func ToPowertrainTransmissionTravelledDistance1(originalDoc []byte, val string) 
 	if num == 0 {
 		return 0, errNotFound
 	}
-	return num, nil
+	// convert m to km
+	return num / 1000, nil
 }
 
 // ToPowertrainType0 converts data from field 'signals.99' of type string to 'Vehicle.Powertrain.Type' of type string.
