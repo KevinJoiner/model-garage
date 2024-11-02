@@ -188,7 +188,15 @@ func ToPowertrainFuelSystemAbsoluteLevel1(originalDoc []byte, val string) (float
 // Vehicle.Powertrain.FuelSystem.RelativeLevel: Level in fuel tank as percent of capacity. 0 = empty. 100 = full.
 // Unit: 'percent' Min: '0' Max: '100'
 func ToPowertrainFuelSystemRelativeLevel0(originalDoc []byte, val string) (float64, error) {
-	return Convert98(val)
+	num, err := Convert98(val)
+	if err != nil {
+		return 0, err
+	}
+	// This has been reported as 0 when no value is available
+	if num == 0 {
+		return 0, errNotFound
+	}
+	return num, nil
 }
 
 // ToPowertrainFuelSystemRelativeLevel1 converts data from field 'signals.207' of type string to 'Vehicle.Powertrain.FuelSystem.RelativeLevel' of type float64.
