@@ -45,7 +45,7 @@
 
 - vspecName: Vehicle.Exterior.AirTemperature
   conversions:
-    - originalName: "climate_state.outsite_temp"
+    - originalName: "climate_state.outside_temp" # I believe this is in Celsius.
       originalType: float64
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
