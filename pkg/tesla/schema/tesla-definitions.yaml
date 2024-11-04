@@ -1,0 +1,100 @@
+# This file defines mappings from Tesla /vehicle_data responses to VSS. See
+# https://developer.tesla.com/docs/fleet-api/endpoints/vehicle-endpoints#vehicle-data
+
+- vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure
+  conversions:
+    - originalName: "vehicle_state.tpms_pressure_fl"
+      originalType: float64
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+
+- vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure
+  conversions:
+    - originalName: "vehicle_state.tpms_pressure_fr"
+      originalType: float64
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+
+- vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure
+  conversions:
+    - originalName: "vehicle_state.tpms_pressure_rl"
+      originalType: float64
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+
+- vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure
+  conversions:
+    - originalName: "vehicle_state.tpms_pressure_rr"
+      originalType: float64
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+
+- vspecName: Vehicle.CurrentLocation.Latitude
+  conversions:
+    - originalName: drive_state.latitude
+      originalType: float64
+  requiredPrivileges:
+    - VEHICLE_ALL_TIME_LOCATION
+
+- vspecName: Vehicle.CurrentLocation.Longitude
+  conversions:
+    - originalName: drive_state.longitude
+      originalType: float64
+  requiredPrivileges:
+    - VEHICLE_ALL_TIME_LOCATION
+
+- vspecName: Vehicle.Exterior.AirTemperature
+  conversions:
+    - originalName: "climate_state.outsite_temp"
+      originalType: float64
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+
+- vspecName: Vehicle.Powertrain.Range
+  conversions:
+    - originalName: "charge_state.battery_range"
+      originalType: float64
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+
+- vspecName: Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit
+  conversions:
+    - originalName: "charge_state.charge_limit_soc"
+      originalType: float64
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+
+- vspecName: Vehicle.Powertrain.TractionBattery.Charging.IsCharging
+  conversions:
+    - originalName: "charge_state.charging_state"
+      originalType: "string"
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+
+- vspecName: Vehicle.Powertrain.TractionBattery.CurrentPower
+  conversions:
+    - originalName: "drive_state.current_power"
+      originalType: float64
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+
+- vspecName: Vehicle.Powertrain.TractionBattery.StateOfCharge.Current
+  conversions:
+    - originalName: "charge_state.battery_level"
+      originalType: float64
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+
+- vspecName: Vehicle.Powertrain.Transmission.TravelledDistance
+  conversions:
+    - originalName: "vehicle_state.odometer"
+      originalType: float64
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+
+- vspecName: Vehicle.Speed
+  conversions:
+    - originalName: drive_state.speed
+      originalType: float64
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
