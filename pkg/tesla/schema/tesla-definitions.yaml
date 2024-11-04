@@ -3,28 +3,28 @@
 
 - vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure
   conversions:
-    - originalName: "vehicle_state.tpms_pressure_fl"
+    - originalName: "vehicle_state.tpms_pressure_fl" # In bars
       originalType: float64
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure
   conversions:
-    - originalName: "vehicle_state.tpms_pressure_fr"
+    - originalName: "vehicle_state.tpms_pressure_fr" # In bars
       originalType: float64
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure
   conversions:
-    - originalName: "vehicle_state.tpms_pressure_rl"
+    - originalName: "vehicle_state.tpms_pressure_rl" # In bars
       originalType: float64
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure
   conversions:
-    - originalName: "vehicle_state.tpms_pressure_rr"
+    - originalName: "vehicle_state.tpms_pressure_rr" # In bars
       originalType: float64
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
@@ -52,49 +52,49 @@
 
 - vspecName: Vehicle.Powertrain.Range
   conversions:
-    - originalName: "charge_state.battery_range"
+    - originalName: "charge_state.battery_range" # In miles
       originalType: float64
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit
   conversions:
-    - originalName: "charge_state.charge_limit_soc"
+    - originalName: "charge_state.charge_limit_soc" # In percent
       originalType: float64
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Powertrain.TractionBattery.Charging.IsCharging
   conversions:
-    - originalName: "charge_state.charging_state"
+    - originalName: "charge_state.charging_state" # "Disconnected", "NoPower", "Starting", "Charging", "Complete", "Stopped"
       originalType: "string"
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Powertrain.TractionBattery.CurrentPower
   conversions:
-    - originalName: "drive_state.current_power"
+    - originalName: "drive_state.current_power" # I believe this is in kilowatts. Need to confirm.
       originalType: float64
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Powertrain.TractionBattery.StateOfCharge.Current
   conversions:
-    - originalName: "charge_state.battery_level"
+    - originalName: "charge_state.battery_level" # In percent
       originalType: float64
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Powertrain.Transmission.TravelledDistance
   conversions:
-    - originalName: "vehicle_state.odometer"
+    - originalName: "vehicle_state.odometer" # In miles.
       originalType: float64
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Speed
   conversions:
-    - originalName: drive_state.speed
+    - originalName: drive_state.speed # In miles per hour.
       originalType: float64
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
