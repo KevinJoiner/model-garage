@@ -85,7 +85,7 @@ func ToDIMOAftermarketNSAT0(originalDoc []byte, val float64) (float64, error) {
 // Vehicle.Exterior.AirTemperature: Air temperature outside the vehicle.
 // Unit: 'celsius'
 func ToExteriorAirTemperature0(originalDoc []byte, val string) (float64, error) {
-	return Convert103(val)
+	return Convert97(val)
 }
 
 // ToLowVoltageBatteryCurrentVoltage0 converts data from field 'signals.29' of type string to 'Vehicle.LowVoltageBattery.CurrentVoltage' of type float64.
@@ -161,7 +161,7 @@ func ToPowertrainCombustionEngineSpeed0(originalDoc []byte, val string) (float64
 // Unit: 'percent'  Max: '100'
 func ToPowertrainCombustionEngineTPS0(originalDoc []byte, val string) (float64, error) {
 	if ignitionOff(originalDoc) {
-		return ignoreZero(Convert95(val))
+		return ignoreZero(Convert103(val))
 	}
 	return Convert103(val)
 }
