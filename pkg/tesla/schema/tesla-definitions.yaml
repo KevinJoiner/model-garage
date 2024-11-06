@@ -73,7 +73,7 @@
 
 - vspecName: Vehicle.Powertrain.TractionBattery.CurrentPower
   conversions:
-    - originalName: "drive_state.current_power" # I believe this is in kilowatts. Need to confirm. Need to check that this is just charge_state.charger_power but better.
+    - originalName: "drive_state.power" # I believe this is in kilowatts. Need to confirm. Need to check that this is just charge_state.charger_power but better.
       originalType: float64
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
