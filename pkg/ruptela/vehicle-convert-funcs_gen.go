@@ -226,7 +226,9 @@ func ToPowertrainRange0(originalDoc []byte, val string) (float64, error) {
 	if err != nil {
 		return 0, err
 	}
-	return floatValKm * 1000, nil
+	// note: everyone is using km, but the unit is m
+	// return floatValKm * 1000, nil
+	return floatValKm, nil
 }
 
 // ToPowertrainTractionBatteryStateOfChargeCurrent0 converts data from field 'signals.722' of type string to 'Vehicle.Powertrain.TractionBattery.StateOfCharge.Current' of type float64.
