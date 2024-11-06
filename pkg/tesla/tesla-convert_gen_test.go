@@ -13,6 +13,9 @@ var baseDoc = []byte(`
 {
 	"charge_state": {
 		"battery_level": 23,
+		"battery_range": 341,
+		"charge_limit_soc": 80,
+		"charging_state": "Charging",
 		"timestamp": 1730728800
 	},
 	"climate_state": {
@@ -45,8 +48,10 @@ var expSignals = []vss.Signal{
 	{TokenID: 7, Timestamp: time.Unix(1730738800, 0), Name: "currentLocationLatitude", ValueNumber: 38.89, Source: "dimo/integration/26A5Dk3vvvQutjSyF0Jka2DP5lg"},
 	{TokenID: 7, Timestamp: time.Unix(1730738800, 0), Name: "currentLocationLongitude", ValueNumber: 77.03, Source: "dimo/integration/26A5Dk3vvvQutjSyF0Jka2DP5lg"},
 	{TokenID: 7, Timestamp: time.Unix(1730728802, 0), Name: "exteriorAirTemperature", ValueNumber: 19, Source: "dimo/integration/26A5Dk3vvvQutjSyF0Jka2DP5lg"},
-	{TokenID: 7, Timestamp: time.Unix(1730728805, 0), Name: "powertrainTransmissionTravelledDistance", ValueNumber: 9065.434752000001, Source: "dimo/integration/26A5Dk3vvvQutjSyF0Jka2DP5lg"},
-	{TokenID: 7, Timestamp: time.Unix(1730728800, 0), Name: "powertrainTractionBatteryCurrentPower", ValueNumber: 7000, Source: "dimo/integration/26A5Dk3vvvQutjSyF0Jka2DP5lg"},
+	{TokenID: 7, Timestamp: time.Unix(1730728800, 0), Name: "powertrainRange", ValueNumber: 548.7863040000001, Source: "dimo/integration/26A5Dk3vvvQutjSyF0Jka2DP5lg"},
+	{TokenID: 7, Timestamp: time.Unix(1730728800, 0), Name: "powertrainTractionBatteryChargingChargeLimit", ValueNumber: 80, Source: "dimo/integration/26A5Dk3vvvQutjSyF0Jka2DP5lg"},
+	{TokenID: 7, Timestamp: time.Unix(1730728800, 0), Name: "powertrainTractionBatteryChargingIsCharging", ValueNumber: 1, Source: "dimo/integration/26A5Dk3vvvQutjSyF0Jka2DP5lg"},
+	{TokenID: 7, Timestamp: time.Unix(1730738800, 0), Name: "powertrainTractionBatteryCurrentPower", ValueNumber: 7000, Source: "dimo/integration/26A5Dk3vvvQutjSyF0Jka2DP5lg"},
 	{TokenID: 7, Timestamp: time.Unix(1730728800, 0), Name: "powertrainTractionBatteryStateOfChargeCurrent", ValueNumber: 23, Source: "dimo/integration/26A5Dk3vvvQutjSyF0Jka2DP5lg"},
 	{TokenID: 7, Timestamp: time.Unix(1730728805, 0), Name: "powertrainTransmissionTravelledDistance", ValueNumber: 9065.434752000001, Source: "dimo/integration/26A5Dk3vvvQutjSyF0Jka2DP5lg"},
 	{TokenID: 7, Timestamp: time.Unix(1730738800, 0), Name: "speed", ValueNumber: 40.2336, Source: "dimo/integration/26A5Dk3vvvQutjSyF0Jka2DP5lg"},
