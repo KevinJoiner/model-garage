@@ -114,6 +114,20 @@ func ToOBDRunTime0(originalDoc []byte, val string) (float64, error) {
 	return ignoreZero(Convert107(val))
 }
 
+// ToPowertrainCombustionEngineDieselExhaustFluidCapacity0 converts data from field 'signals.1148' of type string to 'Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Capacity' of type float64.
+// Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Capacity: Capacity in liters of the Diesel Exhaust Fluid Tank.
+// Unit: 'l'
+func ToPowertrainCombustionEngineDieselExhaustFluidCapacity0(originalDoc []byte, val string) (float64, error) {
+	panic("not implemented")
+}
+
+// ToPowertrainCombustionEngineDieselExhaustFluidCapacity1 converts data from field 'signals.1149' of type string to 'Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Capacity' of type float64.
+// Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Capacity: Capacity in liters of the Diesel Exhaust Fluid Tank.
+// Unit: 'l'
+func ToPowertrainCombustionEngineDieselExhaustFluidCapacity1(originalDoc []byte, val string) (float64, error) {
+	panic("not implemented")
+}
+
 // ToPowertrainCombustionEngineECT0 converts data from field 'signals.96' of type string to 'Vehicle.Powertrain.CombustionEngine.ECT' of type float64.
 // Vehicle.Powertrain.CombustionEngine.ECT: Engine coolant temperature.
 // Unit: 'celsius'
