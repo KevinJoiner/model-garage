@@ -53,7 +53,7 @@ func LoadDefinitionFile(r io.Reader) (map[string]*DefinitionInfo, error) {
 	return fromName, nil
 }
 
-// LoadConversionsFile loads the definitions from a definitions.yaml file.
+// LoadConversionFile loads the definitions from a definitions.yaml file.
 func LoadConversionFile(r io.Reader) (map[string]*ConversionDefinition, error) {
 	decoder := yaml.NewDecoder(r)
 	var defInfos []*ConversionDefinition

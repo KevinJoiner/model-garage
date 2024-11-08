@@ -1,3 +1,4 @@
+// Package schema information for converting native dimo status objects
 package schema
 
 import (
