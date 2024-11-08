@@ -181,6 +181,10 @@
       isArray: false
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.TractionBattery.Charging.AddedEnergy
+  conversions:
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit
   conversions:
     - originalName: chargeLimit

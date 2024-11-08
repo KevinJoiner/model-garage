@@ -57,6 +57,13 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 
+- vspecName: Vehicle.Powertrain.TractionBattery.Charging.AddedEnergy
+  conversions:
+    - originalName: "charge_state.charge_energy_added" # In kilowatt-hours.
+      originalType: float64
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+
 - vspecName: Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit
   conversions:
     - originalName: "charge_state.charge_limit_soc" # In percent
@@ -66,7 +73,7 @@
 
 - vspecName: Vehicle.Powertrain.TractionBattery.Charging.IsCharging
   conversions:
-    - originalName: "charge_state.charging_state" # "Disconnected", "NoPower", "Starting", "Charging", "Complete", "Stopped"
+    - originalName: "charge_state.charging_state" # Observed values: "Disconnected", "NoPower", "Starting", "Charging", "Complete", "Stopped"
       originalType: "string"
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA

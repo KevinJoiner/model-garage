@@ -73,7 +73,7 @@ tools: tools-golangci-lint
 clickhouse:
 	go run ./cmd/clickhouse-container
 
-generate: generate-nativestatus generate-ruptela # Generate all files for the repository
+generate: generate-nativestatus generate-ruptela generate-tesla # Generate all files for the repository
 	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/vss/vehicle-structs.go -custom.template-file=./internal/generator/vehicle.tmpl -custom.format=true
 
 generate-nativestatus: # Generate all files for nativestatus
@@ -86,3 +86,6 @@ generate-ruptela: # Generate all files for ruptela
 	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/ruptela/vehicle-v1-convert_gen.go -custom.template-file=./pkg/ruptela/codegen/convert-status.tmpl -custom.format=true -definitions=./pkg/ruptela/schema/ruptela-definitions.yaml
 	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/ruptela/vehicle-location-convert_gen.go -custom.template-file=./pkg/ruptela/codegen/convert-location.tmpl -custom.format=true -definitions=./pkg/ruptela/schema/ruptela-definitions.yaml
 	go run ./pkg/ruptela/codegen 
+
+generate-tesla: # Generate all files for tesla
+	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/tesla/tesla-convert_gen.go -custom.template-file=./pkg/tesla/codegen/convert-status.tmpl -custom.format=true -definitions=./pkg/tesla/schema/tesla-definitions.yaml
