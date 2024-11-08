@@ -1167,7 +1167,7 @@ IO elements 684 and 685 (""iQFreeze errors"") should be combined (8B + 8B) and s
 719,DOUT activation by Rollover,1,Unsigned int.,0,3,-,-,-,0 - DOUT activtion mechanism is disabled; 1 - DOUT activation mechanism is enabled; 2 - DOUT is activated; 3 - DOUT is deactivated;,No,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,,,,
 720,CAN EV Battery2 State of charge % (SOC),1,Unsigned int.,0,255,0.5; 0,%,0xFF,Remaining charge percentage for battery 2,No,No,Yes,No,Yes,Yes,No,No,Yes,No,No,No,No,No,No,No,No,No,Yes,Yes,No,No,Yes,Yes,,,,
 721,CAN EV Battery2 charging state,1,Unsigned int.,0,255,1; 0,-,0xFF,Charging status for battery 2,No,Yes,Yes,No,Yes,Yes,No,No,Yes,No,No,No,No,No,No,No,No,No,Yes,Yes,No,No,Yes,Yes,,,,
-722,OBD EV State of charge % (SOC),1,Unsigned int.,0,255,100/255; 0,%,-,Remaining electrical vehicle battery level percentage (OBD),No,No,Yes,No,Yes,Yes,No,No,Yes,No,No,No,No,No,No,No,No,No,No,Yes,No,No,No,No,,,,
+722,OBD EV State of charge % (SOC),1,Unsigned int.,0,255,1; 0,%,-,Remaining electrical vehicle battery level percentage (OBD),No,No,Yes,No,Yes,Yes,No,No,Yes,No,No,No,No,No,No,No,No,No,No,Yes,No,No,No,No,,,,
 723,OBD EV Distance until recharge,2,Unsigned int.,0,65535,1; 0,km,-,Remaining electrical vehicle driving distance in kilometers (OBD),No,No,Yes,No,Yes,Yes,No,No,Yes,No,No,No,No,No,No,No,No,No,No,Yes,No,No,No,No,,,,
 724,CAN Total idle fuel used,4,Unsigned int.,0,0xFFFFFFFF,0.5; 0,l,-,"0.5 l/bit, J1939 PGN 65244, SPN 236",No,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,,,,
 725,CAN Total idle hours,4,Unsigned int.,0,0xFFFFFFFF,0.05; 0,h,-,"0.05 h/bit, J1939 PGN 65244, SPN 235",No,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,,,,
