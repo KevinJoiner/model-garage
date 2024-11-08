@@ -46,14 +46,14 @@ func {{ $sig.GOName }}FromTesla(jsonData []byte) (ret {{ $sig.GOType }}, ts time
     var result gjson.Result
 
 	{{- range $j, $conv := .Conversions }}
-    result = gjson.GetBytes(jsonData, "{{ $conv.OriginalName }}")
+    result = gjson.GetBytes(jsonData, "data.{{ $conv.OriginalName }}")
     if result.Exists() && result.Value() != nil {
         val, ok := result.Value().({{ $conv.OriginalType }})
         if ok {
             retVal, err := To{{ $sig.GOName }}{{ $j }}(jsonData, val)
             if err == nil {
 				endpoint, _, _ := strings.Cut("{{ $conv.OriginalName }}", ".")
-				result := gjson.GetBytes(jsonData, endpoint + ".timestamp")
+				result := gjson.GetBytes(jsonData, "data." + endpoint + ".timestamp")
 
 				if result.Exists() && result.Value() != nil {
 					if unix, ok := result.Value().(float64); ok {

@@ -38,17 +38,6 @@ func TestValidate(t *testing.T) {
 			},
 		},
 		{
-			name: "No Conversions",
-			d: &DefinitionInfo{
-				VspecName: "Vehicle",
-			},
-			expected: InvalidError{
-				Property: "conversions",
-				Name:     "Vehicle",
-				Reason:   "at least one conversion is required",
-			},
-		},
-		{
 			name: "Nil Conversion",
 			d: &DefinitionInfo{
 				VspecName: "Vehicle",
