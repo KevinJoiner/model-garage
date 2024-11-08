@@ -17,6 +17,7 @@ var baseDoc = []byte(`
 		"charge_state": {
 			"battery_level": 23,
 			"battery_range": 341,
+			"charge_energy_added": 42,
 			"charge_limit_soc": 80,
 			"charging_state": "Charging",
 			"timestamp": 1730728800
@@ -43,21 +44,24 @@ var baseDoc = []byte(`
 }	}
 `)
 
+const teslaConnection = "0x983110309620D911731Ac0932219af06091b6744"
+
 var expSignals = []vss.Signal{
-	{TokenID: 37, Timestamp: time.Unix(1730728805, 0), Name: "chassisAxleRow1WheelLeftTirePressure", ValueNumber: 312, Source: "0x983110309620D911731Ac0932219af06091b6744"},
-	{TokenID: 37, Timestamp: time.Unix(1730728805, 0), Name: "chassisAxleRow1WheelRightTirePressure", ValueNumber: 309, Source: "0x983110309620D911731Ac0932219af06091b6744"},
-	{TokenID: 37, Timestamp: time.Unix(1730728805, 0), Name: "chassisAxleRow2WheelLeftTirePressure", ValueNumber: 298, Source: "0x983110309620D911731Ac0932219af06091b6744"},
-	{TokenID: 37, Timestamp: time.Unix(1730728805, 0), Name: "chassisAxleRow2WheelRightTirePressure", ValueNumber: 299, Source: "0x983110309620D911731Ac0932219af06091b6744"},
-	{TokenID: 37, Timestamp: time.Unix(1730738800, 0), Name: "currentLocationLatitude", ValueNumber: 38.89, Source: "0x983110309620D911731Ac0932219af06091b6744"},
-	{TokenID: 37, Timestamp: time.Unix(1730738800, 0), Name: "currentLocationLongitude", ValueNumber: 77.03, Source: "0x983110309620D911731Ac0932219af06091b6744"},
-	{TokenID: 37, Timestamp: time.Unix(1730728802, 0), Name: "exteriorAirTemperature", ValueNumber: 19, Source: "0x983110309620D911731Ac0932219af06091b6744"},
-	{TokenID: 37, Timestamp: time.Unix(1730728800, 0), Name: "powertrainRange", ValueNumber: 548.7863040000001, Source: "0x983110309620D911731Ac0932219af06091b6744"},
-	{TokenID: 37, Timestamp: time.Unix(1730728800, 0), Name: "powertrainTractionBatteryChargingChargeLimit", ValueNumber: 80, Source: "0x983110309620D911731Ac0932219af06091b6744"},
-	{TokenID: 37, Timestamp: time.Unix(1730728800, 0), Name: "powertrainTractionBatteryChargingIsCharging", ValueNumber: 1, Source: "0x983110309620D911731Ac0932219af06091b6744"},
-	{TokenID: 37, Timestamp: time.Unix(1730738800, 0), Name: "powertrainTractionBatteryCurrentPower", ValueNumber: 7000, Source: "0x983110309620D911731Ac0932219af06091b6744"},
-	{TokenID: 37, Timestamp: time.Unix(1730728800, 0), Name: "powertrainTractionBatteryStateOfChargeCurrent", ValueNumber: 23, Source: "0x983110309620D911731Ac0932219af06091b6744"},
-	{TokenID: 37, Timestamp: time.Unix(1730728805, 0), Name: "powertrainTransmissionTravelledDistance", ValueNumber: 9065.434752000001, Source: "0x983110309620D911731Ac0932219af06091b6744"},
-	{TokenID: 37, Timestamp: time.Unix(1730738800, 0), Name: "speed", ValueNumber: 40.2336, Source: "0x983110309620D911731Ac0932219af06091b6744"},
+	{TokenID: 37, Timestamp: time.Unix(1730728805, 0), Name: "chassisAxleRow1WheelLeftTirePressure", ValueNumber: 312, Source: teslaConnection},
+	{TokenID: 37, Timestamp: time.Unix(1730728805, 0), Name: "chassisAxleRow1WheelRightTirePressure", ValueNumber: 309, Source: teslaConnection},
+	{TokenID: 37, Timestamp: time.Unix(1730728805, 0), Name: "chassisAxleRow2WheelLeftTirePressure", ValueNumber: 298, Source: teslaConnection},
+	{TokenID: 37, Timestamp: time.Unix(1730728805, 0), Name: "chassisAxleRow2WheelRightTirePressure", ValueNumber: 299, Source: teslaConnection},
+	{TokenID: 37, Timestamp: time.Unix(1730738800, 0), Name: "currentLocationLatitude", ValueNumber: 38.89, Source: teslaConnection},
+	{TokenID: 37, Timestamp: time.Unix(1730738800, 0), Name: "currentLocationLongitude", ValueNumber: 77.03, Source: teslaConnection},
+	{TokenID: 37, Timestamp: time.Unix(1730728802, 0), Name: "exteriorAirTemperature", ValueNumber: 19, Source: teslaConnection},
+	{TokenID: 37, Timestamp: time.Unix(1730728800, 0), Name: "powertrainRange", ValueNumber: 548.7863040000001, Source: teslaConnection},
+	{TokenID: 37, Timestamp: time.Unix(1730728800, 0), Name: "powertrainTractionBatteryChargingAddedEnergy", ValueNumber: 42, Source: teslaConnection},
+	{TokenID: 37, Timestamp: time.Unix(1730728800, 0), Name: "powertrainTractionBatteryChargingChargeLimit", ValueNumber: 80, Source: teslaConnection},
+	{TokenID: 37, Timestamp: time.Unix(1730728800, 0), Name: "powertrainTractionBatteryChargingIsCharging", ValueNumber: 1, Source: teslaConnection},
+	{TokenID: 37, Timestamp: time.Unix(1730738800, 0), Name: "powertrainTractionBatteryCurrentPower", ValueNumber: 7000, Source: teslaConnection},
+	{TokenID: 37, Timestamp: time.Unix(1730728800, 0), Name: "powertrainTractionBatteryStateOfChargeCurrent", ValueNumber: 23, Source: teslaConnection},
+	{TokenID: 37, Timestamp: time.Unix(1730728805, 0), Name: "powertrainTransmissionTravelledDistance", ValueNumber: 9065.434752000001, Source: teslaConnection},
+	{TokenID: 37, Timestamp: time.Unix(1730738800, 0), Name: "speed", ValueNumber: 40.2336, Source: teslaConnection},
 }
 
 func TestSignalsFromTesla(t *testing.T) {
