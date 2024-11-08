@@ -63,9 +63,6 @@ func LoadConversionFile(r io.Reader) (map[string]*ConversionDefinition, error) {
 	}
 	fromName := map[string]*ConversionDefinition{}
 	for _, info := range defInfos {
-		// if err := ValidateConversion(info); err != nil {
-		// 	return nil, fmt.Errorf("error validating definitions: %w", err)
-		// }
 		fromName[info.VspecName] = info
 	}
 
