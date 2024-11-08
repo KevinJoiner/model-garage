@@ -35,24 +35,41 @@ func LoadSignalsCSV(r io.Reader) ([]*SignalInfo, error) {
 }
 
 // LoadDefinitionFile loads the definitions from a definitions.yaml file.
-func LoadDefinitionFile(r io.Reader) (*Definitions, error) {
+func LoadDefinitionFile(r io.Reader) (map[string]*DefinitionInfo, error) {
 	decoder := yaml.NewDecoder(r)
 	var defInfos []*DefinitionInfo
 	err := decoder.Decode(&defInfos)
 	if err != nil {
 		return nil, fmt.Errorf("failed to decode json: %w", err)
 	}
-	definitions := &Definitions{
-		FromName: map[string]*DefinitionInfo{},
-	}
+	fromName := map[string]*DefinitionInfo{}
 	for _, info := range defInfos {
 		if err := Validate(info); err != nil {
 			return nil, fmt.Errorf("error validating definitions: %w", err)
 		}
-		definitions.FromName[info.VspecName] = info
+		fromName[info.VspecName] = info
 	}
 
-	return definitions, nil
+	return fromName, nil
+}
+
+// LoadConversionsFile loads the definitions from a definitions.yaml file.
+func LoadConversionFile(r io.Reader) (map[string]*ConversionDefinition, error) {
+	decoder := yaml.NewDecoder(r)
+	var defInfos []*ConversionDefinition
+	err := decoder.Decode(&defInfos)
+	if err != nil {
+		return nil, fmt.Errorf("failed to decode json: %w", err)
+	}
+	fromName := map[string]*ConversionDefinition{}
+	for _, info := range defInfos {
+		// if err := ValidateConversion(info); err != nil {
+		// 	return nil, fmt.Errorf("error validating definitions: %w", err)
+		// }
+		fromName[info.VspecName] = info
+	}
+
+	return fromName, nil
 }
 
 // GetDefinedSignals reads the signals and definitions files and merges them.
@@ -66,7 +83,36 @@ func GetDefinedSignals(specReader, definitionReader io.Reader) (*TemplateData, e
 	if err != nil {
 		return nil, fmt.Errorf("error reading definition file: %w", err)
 	}
-	signals = definitions.DefinedSignal(signals)
+	signals = DefinedSignalWithPrivilages(definitions, signals)
+	modelName := "Model"
+	if len(signals) > 0 {
+		idx := strings.IndexByte(signals[0].Name, '.')
+		if idx > 0 {
+			modelName = signals[0].Name[:idx]
+			modelName = cases.Title(language.English).String(modelName)
+		}
+	}
+
+	tmplData := &TemplateData{
+		Signals:   signals,
+		ModelName: modelName,
+	}
+
+	return tmplData, nil
+}
+
+// GetDefinedConversionSignals reads the signals and definitions files and merges them.
+func GetDefinedConversionSignals(specReader, definitionReader io.Reader) (*TemplateData, error) {
+	signals, err := LoadSignalsCSV(specReader)
+	if err != nil {
+		return nil, fmt.Errorf("error reading signals: %w", err)
+	}
+
+	conversions, err := LoadConversionFile(definitionReader)
+	if err != nil {
+		return nil, fmt.Errorf("error reading definition file: %w", err)
+	}
+	signals = DefinedSignalConversions(conversions, signals)
 	modelName := "Model"
 	if len(signals) > 0 {
 		idx := strings.IndexByte(signals[0].Name, '.')

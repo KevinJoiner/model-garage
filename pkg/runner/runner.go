@@ -4,7 +4,6 @@ package runner
 import (
 	"fmt"
 	"io"
-	"slices"
 
 	"github.com/DIMO-Network/model-garage/internal/generator/convert"
 	"github.com/DIMO-Network/model-garage/internal/generator/custom"
@@ -12,12 +11,12 @@ import (
 )
 
 const (
-	// AllGenerator is a constant to run all generators.
-	AllGenerator = "all"
 	// ConvertGenerator is a constant to run the convert generator.
 	ConvertGenerator = "convert"
-	// CustomGenerator is a constant to run the custom generator.
-	CustomGenerator = "custom"
+	// CustomDefinitionGenerator is a constant to run the custom generator.
+	CustomDefinitionGenerator = "custom-definition"
+	// CustomConvertGenerator is a constant to run both the custom and convert generators.
+	CustomConvertGenerator = "custom-conversions"
 )
 
 // Config is the configuration for the code generation tool.
@@ -27,36 +26,37 @@ type Config struct {
 }
 
 // Execute runs the code generation tool.
-func Execute(vspecReader, definitionsReader io.Reader, generators []string, cfg Config) error {
-	if len(generators) == 0 {
-		generators = []string{AllGenerator}
-	}
-	// if none of the generators are selected, return an error.
-	switch {
-	case slices.Contains(generators, AllGenerator):
-	case slices.Contains(generators, ConvertGenerator):
-	case slices.Contains(generators, CustomGenerator):
-	default:
-		return fmt.Errorf("no generator selected")
-	}
-
-	tmplData, err := schema.GetDefinedSignals(vspecReader, definitionsReader)
-	if err != nil {
-		return fmt.Errorf("failed to get defined signals: %w", err)
-	}
-
-	if slices.Contains(generators, AllGenerator) || slices.Contains(generators, ConvertGenerator) {
+func Execute(vspecReader, definitionsReader io.Reader, generator string, cfg Config) error {
+	switch generator {
+	case ConvertGenerator:
+		tmplData, err := schema.GetDefinedConversionSignals(vspecReader, definitionsReader)
+		if err != nil {
+			return fmt.Errorf("failed to get defined signals: %w", err)
+		}
 		err = convert.Generate(tmplData, cfg.Convert)
 		if err != nil {
 			return fmt.Errorf("failed to generate convert file: %w", err)
 		}
-	}
-
-	if slices.Contains(generators, AllGenerator) || slices.Contains(generators, CustomGenerator) {
+	case CustomDefinitionGenerator:
+		tmplData, err := schema.GetDefinedSignals(vspecReader, definitionsReader)
+		if err != nil {
+			return fmt.Errorf("failed to get defined signals: %w", err)
+		}
 		err = custom.Generate(tmplData, cfg.Custom)
 		if err != nil {
 			return fmt.Errorf("failed to generate custom file: %w", err)
 		}
+	case CustomConvertGenerator:
+		tmplData, err := schema.GetDefinedConversionSignals(vspecReader, definitionsReader)
+		if err != nil {
+			return fmt.Errorf("failed to get defined signals: %w", err)
+		}
+		err = custom.Generate(tmplData, cfg.Custom)
+		if err != nil {
+			return fmt.Errorf("failed to generate custom conversion file: %w", err)
+		}
+	default:
+		return fmt.Errorf("unknown generator: %s", generator)
 	}
 
 	return nil

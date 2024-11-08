@@ -4,53 +4,35 @@
     - originalName: "signals.960" # OBD tire pressure front left
       originalType: string
 
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
-
 - vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure
   conversions:
     - originalName: "signals.961" # OBD tire pressure front right
       originalType: string
-
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure
   conversions:
     - originalName: "signals.962" # OBD tire pressure rear left
       originalType: string
 
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
-
 - vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure
   conversions:
     - originalName: "signals.963" # OBD tire pressure rear right
       originalType: string
 
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
-
 - vspecName: Vehicle.CurrentLocation.Altitude
   conversions:
     - originalName: pos.alt
       originalType: float64
-  requiredPrivileges:
-    - VEHICLE_ALL_TIME_LOCATION
 
 - vspecName: Vehicle.CurrentLocation.Latitude
   conversions:
     - originalName: pos.lat
       originalType: float64
-  requiredPrivileges:
-    - VEHICLE_ALL_TIME_LOCATION
 
 - vspecName: Vehicle.CurrentLocation.Longitude
   conversions:
     - originalName: pos.lon
       originalType: float64
-  requiredPrivileges:
-    - VEHICLE_ALL_TIME_LOCATION
 
 - vspecName: Vehicle.Exterior.AirTemperature
   conversions:
@@ -58,15 +40,11 @@
       originalType: string
     # - originalName: "signals.89" # CAN ambient air temperature
     #   originalType: string
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.OBD.RunTime
   conversions:
     - originalName: "signals.107" # OBD time since engine start
       originalType: string
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Powertrain.CombustionEngine.ECT
   conversions:
@@ -74,22 +52,16 @@
       originalType: string
     # - originalName: "signals.115" # CAN engine coolant temperature
     #   originalType: string
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Powertrain.CombustionEngine.EngineOilLevel
   conversions:
     - originalName: "signals.964" # OBD Oil Life remaining
       originalType: string
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Powertrain.CombustionEngine.EngineOilRelativeLevel
   conversions:
     - originalName: "signals.964" # OBD Oil Life remaining
       originalType: string
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Powertrain.CombustionEngine.TPS
   conversions:
@@ -97,8 +69,6 @@
       originalType: string
     # - originalName: "signals.206" # CAN accelerator pedal position 1
     #   originalType: string
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Powertrain.FuelSystem.AbsoluteLevel
   conversions:
@@ -106,8 +76,6 @@
       originalType: string
     - originalName: "signals.205" # CAN Fuel level liters
       originalType: string
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Powertrain.FuelSystem.RelativeLevel
   conversions:
@@ -115,8 +83,6 @@
       originalType: string
     - originalName: "signals.207" # CAN fuel level1
       originalType: string
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 
 
 
@@ -126,8 +92,6 @@
       originalType: string
     # - originalName: "signals.516" # CAN EV Distance until recharge
     #   originalType: stringX
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 
 
 
@@ -138,8 +102,6 @@
       originalType: string
     # - originalName: "signals.515" # CAN EV State of charge % (SOC)
     #   originalType: string
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Powertrain.Transmission.TravelledDistance
   conversions:
@@ -147,8 +109,6 @@
       originalType: string
     - originalName: "signals.114" # CAN high resolution total vehicle distance
       originalType: string
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Powertrain.Type
   conversions:
@@ -156,8 +116,6 @@
       originalType: string
     - originalName: "signals.483" # Can fuel type
       originalType: string
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Speed
   conversions:
@@ -165,36 +123,26 @@
       originalType: string
     - originalName: "pos.spd"
       originalType: float64
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.DIMO.Aftermarket.HDOP
   conversions:
     - originalName: pos.hdop
       originalType: float64
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.DIMO.Aftermarket.NSAT
   conversions:
     - originalName: pos.sat
       originalType: float64
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.OBD.DistanceWithMIL
   conversions: 
     - originalName: "signals.102" # OBD distance traveled while MIL is activated
       originalType: string
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
     
 - vspecName: Vehicle.LowVoltageBattery.CurrentVoltage
   conversions:
     - originalName: "signals.29"
       originalType: string
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 
 - vspecName: Vehicle.Powertrain.CombustionEngine.Speed
   conversions:
@@ -202,8 +150,6 @@
       originalType: string
     # - originalName: "signals.197" # CAN engine speed
     #   originalType: string
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 
 
 # TODO we only get batteryCapacity in percent SOH
@@ -211,16 +157,14 @@
 #   conversions:
 #     - originalName: Unknown
 #       originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
+#
 
 # # TODO CAN ONLY
 # - vspecName: Vehicle.Powertrain.TractionBattery.Charging.IsCharging
 #   conversions:
 #     - originalName: "signals.517" # CAN EV Battery charging state
 #       originalType: "string"
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
+#
 
 
 # # TODO CAN ONLY
@@ -230,16 +174,14 @@
 #     #   originalType: string
 #     # - originalName: "signals.519" # CAN actual engine percent load, torque as a percent of reference engine torque
 #     #   originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
+#
 
 # # TODO CAN ONLY
 # - vspecName: Vehicle.OBD.IntakeTemp
 #   # conversions:
 #   #   - originalName: "signals.587" # CAN engine air intake temperature
 #   #     originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
+#
 
 # TODO haven't found a good value for this
 # do we want this signal? we only get the current fuel type
@@ -250,8 +192,7 @@
 #       originalType: string
 #     # - originalName: "signals.483" # Can fuel type
 #     #   originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
+#
 
 # # TODO haven't found a good value for this
 # # We have State of Charge not sure how this differs
@@ -259,8 +200,7 @@
 #   conversions:
 #     - originalName: "Unknown"
 #       originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
+#
 
 
 # # TODO haven't found a good value for this
@@ -268,48 +208,42 @@
 #   conversions:
 #     - originalName: "Unknown"
 #       originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
+#
 
 # # TODO haven't found a good value for this
 # - vspecName: Vehicle.Powertrain.CombustionEngine.MAF
 #   conversions:
 #     - originalName: "Unknown"
 #       originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
+#
 
 # # TODO haven't found a good value for this
 # - vspecName: Vehicle.DIMO.Aftermarket.WPAState
 #   conversions:
 #     - originalName: "Unknown"
 #       originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
+#
 
 # # TODO haven't found a good value for this
 # - vspecName: Vehicle.DIMO.Aftermarket.SSID
 #   conversions:
 #     - originalName: "Unknown"
 #       originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
+#
 
 # # TODO haven't found a good value for this
 # - vspecName: Vehicle.OBD.MAP
 #   conversions:
 #     - originalName: "Unknown"
 #       originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
+#
 
 #  # TODO haven't found a good value for this
 # - vspecName: Vehicle.OBD.LongTermFuelTrim1
 #   conversions: 
 #     - originalName: "Unknown"
 #       originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
+#
 
 
 # # TODO haven't found a good value for this
@@ -317,37 +251,32 @@
 #   conversions: 
 #     - originalName: "Unknown"
 #       originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
+#
 
 # # TODO haven't found a good value for this
 # - vspecName: Vehicle.OBD.DistanceSinceDTCClear
 #   conversions: 
 #     - originalName: "Unknown"
 #       originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
+#
 
 # # TODO haven't found a good value for this
 # - vspecName: Vehicle.OBD.CommandedEGR
 #   conversions: 
 #     - originalName: "Unknown"
 #       originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
+#
 
 # # TODO haven't found a good value for this
 # - vspecName: Vehicle.OBD.WarmupsSinceDTCClear
 #   conversions: 
 #     - originalName: "Unknown"
 #       originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
+#
 
 # TODO haven't found a good value for this
 # - vspecName: Vehicle.OBD.BarometricPressure
 #   conversions:
 #     - originalName: "Unknown"
 #       originalType: string
-#   requiredPrivileges:
-#     - VEHICLE_NON_LOCATION_DATA
+#

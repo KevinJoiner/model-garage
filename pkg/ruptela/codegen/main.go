@@ -26,7 +26,7 @@ func main() {
 
 	vssReader := strings.NewReader(schema.VssRel42DIMO())
 	defReader := strings.NewReader(rupschema.RuptelaDefinitionsYAML())
-	sigs, err := schema.GetDefinedSignals(vssReader, defReader)
+	sigs, err := schema.GetDefinedConversionSignals(vssReader, defReader)
 	if err != nil {
 		panic(err)
 	}

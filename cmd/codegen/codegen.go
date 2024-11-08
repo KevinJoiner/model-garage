@@ -22,13 +22,14 @@ func main() {
 	printVersion := flag.Bool("version", false, "Print the version of the codegen tool")
 	vspecPath := flag.String("spec", "", "Path to the vspec CSV file if empty, the embedded vspec will be used")
 	definitionPath := flag.String("definitions", "", "Path to the definitions file if empty, the definitions will be used")
-	generators := flag.String("generators", "", "Comma separated list of generators to run. Options: convert, custom.")
+	generator := flag.String("generator", "", "generator to use Options: convert, custom-conversions, and custom-definitions.")
 	// Convert flags
 	copyComments := flag.Bool("convert.copy-comments", false, "Copy through comments on conversion functions. Default is false.")
 	convertPackageName := flag.String("convert.package", "", "Name of the package to generate the conversion functions. If empty, the base model name is used.")
 	convertOutputFile := flag.String("convert.output-file", convert.DefaultConversionFile, "Output file for the conversion functions.")
+
 	// Custom flags
-	customOutFile := flag.String("custom.output-file", custom.DefaultFilePath, "Path of the generate gql file")
+	customOutFile := flag.String("custom.output-file", custom.DefaultFilePath, "Path of the generated file")
 	customTemplateFile := flag.String("custom.template-file", "", "Path to the template file. Which is executed with codegen.TemplateData data.")
 	customFormat := flag.Bool("custom.format", false, "Format the generated file with goimports.")
 
@@ -71,9 +72,8 @@ Available generators:
 		//nolint:errcheck // we don't care about the error since we are not writing to the file
 		defer f.Close()
 	} else {
-		definitionReader = strings.NewReader(schema.DefinitionsYAML())
+		definitionReader = strings.NewReader(schema.DefaultDefinitionsYAML())
 	}
-	gens := strings.Split(*generators, ",")
 
 	cfg := runner.Config{
 		Custom: custom.Config{
@@ -87,8 +87,13 @@ Available generators:
 			OutputFile:   *convertOutputFile,
 		},
 	}
+	// maintain backward compatibility
+	if *generator == "custom" {
+		log.Println("Warning: custom generator is deprecated, please use custom-definitions instead.")
+		*generator = "custom-definitions"
+	}
 
-	err := runner.Execute(vspecReader, definitionReader, gens, cfg)
+	err := runner.Execute(vspecReader, definitionReader, *generator, cfg)
 	if err != nil {
 		defer log.Fatal(err)
 		return

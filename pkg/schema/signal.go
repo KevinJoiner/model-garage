@@ -59,9 +59,14 @@ type ConversionInfo struct {
 
 // DefinitionInfo contains the definition information for a field.
 type DefinitionInfo struct {
-	VspecName          string            `json:"vspecName"          yaml:"vspecName"`
-	Conversions        []*ConversionInfo `json:"conversions"        yaml:"conversions"`
-	RequiredPrivileges []string          `json:"requiredPrivileges" yaml:"requiredPrivileges"`
+	VspecName          string   `json:"vspecName"          yaml:"vspecName"`
+	RequiredPrivileges []string `json:"requiredPrivileges" yaml:"requiredPrivileges"`
+}
+
+// ConversionDefinition contains the conversion information for a field.
+type ConversionDefinition struct {
+	VspecName   string            `json:"vspecName"          yaml:"vspecName"`
+	Conversions []*ConversionInfo `json:"conversions"        yaml:"conversions"`
 }
 
 // OriginalNameInfo contains the original name and signals that are derived from it.
@@ -77,18 +82,26 @@ type TemplateData struct {
 	OriginalNames []*OriginalNameInfo
 }
 
-// Definitions is a map of definitions from clickhouse Name to definition info.
-type Definitions struct {
-	// FromName contains a mapping from VSS name to definition info.
-	FromName map[string]*DefinitionInfo
-}
-
-// DefinedSignal returns a new slice of signals with the definition information applied.
+// DefinedSignalConversions returns a new slice of signals with the definition information applied.
 // excluding signals that are not in the definition file.
-func (m *Definitions) DefinedSignal(signal []*SignalInfo) []*SignalInfo {
+func DefinedSignalConversions(fromName map[string]*ConversionDefinition, signal []*SignalInfo) []*SignalInfo {
 	sigs := []*SignalInfo{}
 	for _, sig := range signal {
-		if definition, ok := m.FromName[sig.Name]; ok {
+		if definition, ok := fromName[sig.Name]; ok {
+			newSignal := *sig
+			newSignal.MergeWithConversion(definition)
+			sigs = append(sigs, &newSignal)
+		}
+	}
+	return sigs
+}
+
+// DefinedSignalWithPrivilages returns a new slice of signals with the privilege information applied.
+// excluding signals that do not have entries in the definition file.
+func DefinedSignalWithPrivilages(fromName map[string]*DefinitionInfo, signal []*SignalInfo) []*SignalInfo {
+	sigs := []*SignalInfo{}
+	for _, sig := range signal {
+		if definition, ok := fromName[sig.Name]; ok {
 			newSignal := *sig
 			newSignal.MergeWithDefinition(definition)
 			sigs = append(sigs, &newSignal)
@@ -132,15 +145,19 @@ func NewSignalInfo(record []string) *SignalInfo {
 
 // MergeWithDefinition merges the signal with the definition information.
 func (s *SignalInfo) MergeWithDefinition(definition *DefinitionInfo) {
-	if len(definition.Conversions) != 0 {
-		s.Conversions = definition.Conversions
+	s.Privileges = definition.RequiredPrivileges
+}
+
+// MergeWithConversion merges the signal with the conversion information.
+func (s *SignalInfo) MergeWithConversion(conversion *ConversionDefinition) {
+	if len(conversion.Conversions) != 0 {
+		s.Conversions = conversion.Conversions
 		for _, conv := range s.Conversions {
 			if conv.OriginalType == "" {
 				conv.OriginalType = s.GOType()
 			}
 		}
 	}
-	s.Privileges = definition.RequiredPrivileges
 }
 
 // GOType returns the golang type of the signal.

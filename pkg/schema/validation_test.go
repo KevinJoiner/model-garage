@@ -12,7 +12,6 @@ func TestValidate(t *testing.T) {
 			name: "Valid Definition",
 			d: &DefinitionInfo{
 				VspecName:          "Vehicle",
-				Conversions:        []*ConversionInfo{{OriginalName: "OriginalName"}},
 				RequiredPrivileges: []string{"VEHICLE_NON_LOCATION_DATA"},
 			},
 			expected: nil,
@@ -52,9 +51,6 @@ func TestValidate(t *testing.T) {
 			name: "Nil Conversion",
 			d: &DefinitionInfo{
 				VspecName: "Vehicle",
-				Conversions: []*ConversionInfo{
-					nil,
-				},
 			},
 			expected: InvalidError{
 				Property: "conversion",
@@ -66,9 +62,6 @@ func TestValidate(t *testing.T) {
 			name: "Empty OriginalName",
 			d: &DefinitionInfo{
 				VspecName: "Vehicle",
-				Conversions: []*ConversionInfo{
-					{OriginalName: ""},
-				},
 			},
 			expected: InvalidError{
 				Property: "originalName",
@@ -79,8 +72,7 @@ func TestValidate(t *testing.T) {
 		{
 			name: "No RequiredPrivileges",
 			d: &DefinitionInfo{
-				VspecName:   "Vehicle",
-				Conversions: []*ConversionInfo{{OriginalName: "OriginalName"}},
+				VspecName: "Vehicle",
 			},
 			expected: InvalidError{
 				Property: "requiredPrivileges",
@@ -92,7 +84,6 @@ func TestValidate(t *testing.T) {
 			name: "Invalid RequiredPrivilege",
 			d: &DefinitionInfo{
 				VspecName:          "Vehicle",
-				Conversions:        []*ConversionInfo{{OriginalName: "OriginalName"}},
 				RequiredPrivileges: []string{"INVALID_PRIVILEGE"},
 			},
 			expected: InvalidError{

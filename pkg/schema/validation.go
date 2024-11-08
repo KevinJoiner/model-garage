@@ -27,17 +27,6 @@ func Validate(d *DefinitionInfo) error {
 	if d.VspecName == "" {
 		return InvalidError{Property: "vspecName", Name: d.VspecName, Reason: "is empty"}
 	}
-	if len(d.Conversions) == 0 {
-		return InvalidError{Property: "conversions", Name: d.VspecName, Reason: "at least one conversion is required"}
-	}
-	for _, conv := range d.Conversions {
-		if conv == nil {
-			return InvalidError{Property: "conversion", Name: d.VspecName, Reason: "is nil"}
-		}
-		if conv.OriginalName == "" {
-			return InvalidError{Property: "originalName", Name: d.VspecName, Reason: "is empty"}
-		}
-	}
 	if len(d.RequiredPrivileges) == 0 {
 		return InvalidError{Property: "requiredPrivileges", Name: d.VspecName, Reason: "at least one privilege is required"}
 	}
