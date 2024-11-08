@@ -47,7 +47,7 @@ func ToCurrentLocationLongitude0(originalDoc []byte, val float64) (float64, erro
 	return val, nil
 }
 
-// ToExteriorAirTemperature0 converts data from field 'climate_state.outsite_temp' of type float64 to 'Vehicle.Exterior.AirTemperature' of type float64.
+// ToExteriorAirTemperature0 converts data from field 'climate_state.outside_temp' of type float64 to 'Vehicle.Exterior.AirTemperature' of type float64.
 // Vehicle.Exterior.AirTemperature: Air temperature outside the vehicle.
 // Unit: 'celsius'
 func ToExteriorAirTemperature0(originalDoc []byte, val float64) (float64, error) {
@@ -60,6 +60,13 @@ func ToExteriorAirTemperature0(originalDoc []byte, val float64) (float64, error)
 func ToPowertrainRange0(originalDoc []byte, val float64) (float64, error) {
 	// Note: We are converting to kilometers here, breaking with VSS. We need to fix this at some point.
 	return milesToKilometers(val), nil
+}
+
+// ToPowertrainTractionBatteryChargingAddedEnergy0 converts data from field 'charge_state.charge_energy_added' of type float64 to 'Vehicle.Powertrain.TractionBattery.Charging.AddedEnergy' of type float64.
+// Vehicle.Powertrain.TractionBattery.Charging.AddedEnergy: Amount of charge added to the high voltage battery during the current charging session, expressed in kilowatt-hours.
+// Unit: 'kWh'
+func ToPowertrainTractionBatteryChargingAddedEnergy0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
 }
 
 // ToPowertrainTractionBatteryChargingChargeLimit0 converts data from field 'charge_state.charge_limit_soc' of type float64 to 'Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit' of type float64.

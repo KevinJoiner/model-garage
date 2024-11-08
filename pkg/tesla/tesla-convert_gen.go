@@ -152,6 +152,22 @@ func SignalsFromTesla(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []e
 		retSignals = append(retSignals, sig)
 	}
 
+	val, ts, err = PowertrainTractionBatteryChargingAddedEnergyFromTesla(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to convert 'PowertrainTractionBatteryChargingAddedEnergy': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "powertrainTractionBatteryChargingAddedEnergy",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: ts,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
 	val, ts, err = PowertrainTractionBatteryChargingChargeLimitFromTesla(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -535,6 +551,42 @@ func PowertrainRangeFromTesla(jsonData []byte) (ret float64, ts time.Time, err e
 
 	if errs == nil {
 		return ret, zeroTime, fmt.Errorf("%w 'PowertrainRange'", errNotFound)
+	}
+
+	return ret, zeroTime, errs
+}
+
+// PowertrainTractionBatteryChargingAddedEnergyFromTesla converts the given JSON data to a float64.
+func PowertrainTractionBatteryChargingAddedEnergyFromTesla(jsonData []byte) (ret float64, ts time.Time, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.charge_state.charge_energy_added")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainTractionBatteryChargingAddedEnergy0(jsonData, val)
+			if err == nil {
+				endpoint, _, _ := strings.Cut("charge_state.charge_energy_added", ".")
+				result := gjson.GetBytes(jsonData, "data."+endpoint+".timestamp")
+
+				if result.Exists() && result.Value() != nil {
+					if unix, ok := result.Value().(float64); ok {
+						ts := time.Unix(int64(unix), 0)
+
+						return retVal, ts, nil
+					}
+				}
+
+				errs = errors.Join(errs, fmt.Errorf("couldn't find a timestamp for 'data.charge_state.charge_energy_added'"))
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.charge_state.charge_energy_added': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.charge_state.charge_energy_added' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, zeroTime, fmt.Errorf("%w 'PowertrainTractionBatteryChargingAddedEnergy'", errNotFound)
 	}
 
 	return ret, zeroTime, errs
