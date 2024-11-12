@@ -245,6 +245,22 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 		retSignals = append(retSignals, sig)
 	}
 
+	val, err = PowertrainCombustionEngineDieselExhaustFluidLevelFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineDieselExhaustFluidLevel': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "powertrainCombustionEngineDieselExhaustFluidLevel",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
 	val, err = PowertrainCombustionEngineECTFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -797,6 +813,31 @@ func PowertrainCombustionEngineDieselExhaustFluidCapacityFromV1Data(jsonData []b
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'PowertrainCombustionEngineDieselExhaustFluidCapacity'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// PowertrainCombustionEngineDieselExhaustFluidLevelFromV1Data converts the given JSON data to a float64.
+func PowertrainCombustionEngineDieselExhaustFluidLevelFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.signals.1150")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToPowertrainCombustionEngineDieselExhaustFluidLevel0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.1150': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.1150' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'PowertrainCombustionEngineDieselExhaustFluidLevel'", errNotFound)
 	}
 
 	return ret, errs
