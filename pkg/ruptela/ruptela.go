@@ -42,3 +42,11 @@ func ignitionOff(originalDoc []byte) bool {
 	}
 	return result.Str == "0"
 }
+
+func unplugged(originalDoc []byte) bool {
+	result := gjson.GetBytes(originalDoc, "data.signals.985")
+	if !result.Exists() || result.Type != gjson.String {
+		return false
+	}
+	return result.Str == "1"
+}
