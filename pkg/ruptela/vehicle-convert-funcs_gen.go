@@ -118,21 +118,21 @@ func ToOBDRunTime0(originalDoc []byte, val string) (float64, error) {
 // Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Capacity: Capacity in liters of the Diesel Exhaust Fluid Tank.
 // Unit: 'l'
 func ToPowertrainCombustionEngineDieselExhaustFluidCapacity0(originalDoc []byte, val string) (float64, error) {
-	return Convert107(val)
+	return Convert1148(val)
 }
 
 // ToPowertrainCombustionEngineDieselExhaustFluidCapacity1 converts data from field 'signals.1149' of type string to 'Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Capacity' of type float64.
 // Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Capacity: Capacity in liters of the Diesel Exhaust Fluid Tank.
 // Unit: 'l'
 func ToPowertrainCombustionEngineDieselExhaustFluidCapacity1(originalDoc []byte, val string) (float64, error) {
-	return ignoreZero(Convert107(val))
+	return ignoreZero(Convert1149(val))
 }
 
 // ToPowertrainCombustionEngineDieselExhaustFluidLevel0 converts data from field 'signals.1150' of type string to 'Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Level' of type float64.
 // Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Level: Level of the Diesel Exhaust Fluid tank as percent of capacity. 0 = empty. 100 = full.
 // Unit: 'percent' Min: '0' Max: '100'
 func ToPowertrainCombustionEngineDieselExhaustFluidLevel0(originalDoc []byte, val string) (float64, error) {
-	return Convert107(val)
+	return Convert1150(val)
 }
 
 // ToPowertrainCombustionEngineECT0 converts data from field 'signals.96' of type string to 'Vehicle.Powertrain.CombustionEngine.ECT' of type float64.
