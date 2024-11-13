@@ -66,6 +66,10 @@ const (
 	FieldOBDShortTermFuelTrim1 = "obdShortTermFuelTrim1"
 	// FieldOBDWarmupsSinceDTCClear PID 30 - Number of warm-ups since codes cleared
 	FieldOBDWarmupsSinceDTCClear = "obdWarmupsSinceDTCClear"
+	// FieldPowertrainCombustionEngineDieselExhaustFluidCapacity Capacity in liters of the Diesel Exhaust Fluid Tank.
+	FieldPowertrainCombustionEngineDieselExhaustFluidCapacity = "powertrainCombustionEngineDieselExhaustFluidCapacity"
+	// FieldPowertrainCombustionEngineDieselExhaustFluidLevel Level of the Diesel Exhaust Fluid tank as percent of capacity. 0 = empty. 100 = full.
+	FieldPowertrainCombustionEngineDieselExhaustFluidLevel = "powertrainCombustionEngineDieselExhaustFluidLevel"
 	// FieldPowertrainCombustionEngineECT Engine coolant temperature.
 	FieldPowertrainCombustionEngineECT = "powertrainCombustionEngineECT"
 	// FieldPowertrainCombustionEngineEngineOilLevel Engine oil level.
