@@ -13,7 +13,7 @@ import (
 
 func Decode(msgBytes []byte) ([]vss.Signal, error) {
 	// Only interested in the top-level CloudEvent fields.
-	var ce cloudevent.CloudEvent[struct{}]
+	var ce cloudevent.CloudEventHeader
 
 	if err := json.Unmarshal(msgBytes, &ce); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal payload: %w", err)
