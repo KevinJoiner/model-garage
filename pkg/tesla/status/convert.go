@@ -1,3 +1,4 @@
+// Package status converts Tesla CloudEvents to ClickHouse-ready slices of signals.
 package status
 
 import (
