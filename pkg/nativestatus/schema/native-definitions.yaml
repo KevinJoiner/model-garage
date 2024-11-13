@@ -16,9 +16,6 @@
     - originalName: tiresFrontLeft
       originalType: float64
       isArray: false
-  # requiredPrivileges: The list of privileges required to access the field
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure
   conversions:
     - originalName: tires.frontRight
@@ -27,8 +24,6 @@
     - originalName: tiresFrontRight #  name used for aftermarket devices since they do not allow '.'
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure
   conversions:
     - originalName: tires.backLeft
@@ -37,8 +32,6 @@
     - originalName: tiresBackLeft #  name used for aftermarket devices since they do not allow '.'
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure
   conversions:
     - originalName: tires.backRight
@@ -47,29 +40,21 @@
     - originalName: tiresBackRight #  name used for aftermarket devices since they do not allow '.'
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.CurrentLocation.Altitude
   conversions:
     - originalName: altitude
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.CurrentLocation.Latitude
   conversions:
     - originalName: latitude
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.CurrentLocation.Longitude
   conversions:
     - originalName: longitude
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.Exterior.AirTemperature
   conversions:
     - originalName: ambientAirTemp # dataschema v2
@@ -78,50 +63,36 @@
     - originalName: ambientTemp # dataschema v1
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.LowVoltageBattery.CurrentVoltage
   conversions:
     - originalName: batteryVoltage
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.BarometricPressure
   conversions:
     - originalName: barometricPressure
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.EngineLoad
   conversions:
     - originalName: engineLoad
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.IntakeTemp
   conversions:
     - originalName: intakeTemp
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.RunTime
   conversions:
     - originalName: runTime
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.ECT
   conversions:
     - originalName: coolantTemp
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.EngineOilLevel
   conversions:
     - originalName: oil
@@ -130,8 +101,6 @@
     - originalName: oilLife
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.Speed
   conversions:
     - originalName: rpm # dataschema v2
@@ -140,22 +109,16 @@
     - originalName: engineSpeed # dataschema v1
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.TPS
   conversions:
     - originalName: throttlePosition
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.FuelSystem.AbsoluteLevel
   conversions:
     - originalName: fuelLevelLiters #added for pids we have that are meassured in liters for fuelLevel
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.FuelSystem.RelativeLevel
   conversions:
     - originalName: fuelLevel # dataschema v2
@@ -164,72 +127,52 @@
     - originalName: fuelPercentRemaining # dataschema v1
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.FuelSystem.SupportedFuelTypes
   isArray: false
   conversions:
     - originalName: fuelType
       originalType: string
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.Range
   conversions:
     - originalName: range
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit
   conversions:
     - originalName: chargeLimit
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.Charging.IsCharging
   conversions:
     - originalName: charging
       originalType: bool
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.CurrentPower
   conversions:
     - originalName: charger.power
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.GrossCapacity
   conversions:
     - originalName: batteryCapacity
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.StateOfCharge.Current
   conversions:
     - originalName: soc
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.Transmission.TravelledDistance
   conversions:
     - originalName: odometer
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.Type
   conversions:
     - originalName: fuelType
       originalType: string
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Speed
   conversions:
     - originalName: vehicleSpeed # dataschema v2
@@ -238,29 +181,21 @@
     - originalName: speed # dataschema v1
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.MAF
   conversions:
     - originalName: maf
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.HDOP
   conversions:
     - originalName: hdop
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.NSAT
   conversions:
     - originalName: nsat
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.WPAState
   conversions:
     - originalName: wpa_state # dataschema v2
@@ -269,8 +204,6 @@
     - originalName: wifi.wpaState # dataschema v1
       originalType: string
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.DIMO.Aftermarket.SSID
   conversions:
     - originalName: ssid # dataschema v2
@@ -279,160 +212,114 @@
     - originalName: wifi.ssid # dataschema v1
       originalType: string
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.CurrentLocation.IsRedacted
   conversions:
     - originalName: isRedacted
       originalType: bool
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_ALL_TIME_LOCATION
 - vspecName: Vehicle.Powertrain.CombustionEngine.EngineOilRelativeLevel
   conversions:
     - originalName: oil
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.MAP
   conversions:
     - originalName: intakePressure
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.LongTermFuelTrim1
   conversions: 
     - originalName: longTermFuelTrim1
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.ShortTermFuelTrim1
   conversions: 
     - originalName: shortTermFuelTrim1
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.DistanceWithMIL
   conversions: 
     - originalName: distanceWMil
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.DistanceSinceDTCClear
   conversions: 
     - originalName: distanceSinceDtcClear
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.CommandedEGR
   conversions: 
     - originalName: commandedEgr
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.OBD.WarmupsSinceDTCClear
   conversions: 
     - originalName: warmupsSinceDtcClear
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.AngularVelocity.Yaw
   conversions: 
     - originalName: yawRate
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.Temperature.Average
   conversions: 
     - originalName: hvBatteryCoolantTemperature
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Left.Speed
   conversions: 
     - originalName: frontlLeftWheelSpeed
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Right.Speed
   conversions: 
     - originalName: frontRightWheelSpeed
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.CombustionEngine.Torque
   conversions: 
     - originalName: engineTorque
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.Transmission.CurrentGear
   conversions: 
     - originalName: gearSelection
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA 
 - vspecName: Vehicle.OBD.FuelPressure
   conversions: 
     - originalName: fuelTankPressure
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA 
 - vspecName: Vehicle.Powertrain.Transmission.Temperature
   conversions: 
     - originalName: atfTemperature  
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA 
 - vspecName: Vehicle.OBD.O2WR.Sensor1.Voltage
   conversions: 
     - originalName: oxygenSensor1 
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA 
 - vspecName: Vehicle.OBD.O2WR.Sensor2.Voltage
   conversions: 
     - originalName: oxygenSensor2
       originalType: float64
       isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA 
 - vspecName: Vehicle.OBD.CommandedEVAP
   conversions: 
    - originalName: evap
      originalType: float64
      isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Service.DistanceToService
   conversions: 
    - originalName: serviceInterval
      originalType: float64
      isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.CurrentVoltage
   conversions: 
    - originalName: hvBatteryVoltage 
      originalType: float64
      isArray: false
-  requiredPrivileges:
-    - VEHICLE_NON_LOCATION_DATA
 

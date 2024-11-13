@@ -2,13 +2,15 @@ package schema
 
 import (
 	_ "embed"
+
+	"github.com/DIMO-Network/model-garage/pkg/nativestatus/schema"
 )
 
 //go:embed spec/vss_rel_4.2-DIMO-*.csv
 var vssRel42DIMO string
 
-//go:embed spec/definitions.yaml
-var definitionsYAML string
+//go:embed spec/default-definitions.yaml
+var defaultDefinitionsYAML string
 
 // VssRel42DIMO is the embedded CSV file containing the VSS schema for DIMO.
 func VssRel42DIMO() string {
@@ -16,6 +18,13 @@ func VssRel42DIMO() string {
 }
 
 // DefinitionsYAML is the embedded YAML file containing the definitions.yaml for the VSS schema.
+//
+// Deprecated: Use pkg/nativestatus/shema.DefinitionsYAML instead.
 func DefinitionsYAML() string {
-	return definitionsYAML
+	return schema.DefinitionsYAML()
+}
+
+// DefaultDefinitionsYAML is the embedded YAML file containing information about what signals will be displayed and used by the DIMO Node.
+func DefaultDefinitionsYAML() string {
+	return defaultDefinitionsYAML
 }

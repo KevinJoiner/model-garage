@@ -1,0 +1,172 @@
+# This file contains a list of vspec names that are displayed by DIMO
+
+# vspecName: The name of the VSpec field in the VSS schema
+- vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure
+  # requiredPrivileges: The list of privileges required to access the field
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Left.Tire.Pressure
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Chassis.Axle.Row2.Wheel.Right.Tire.Pressure
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.CurrentLocation.Altitude
+  requiredPrivileges:
+    - VEHICLE_ALL_TIME_LOCATION
+- vspecName: Vehicle.CurrentLocation.Latitude
+  requiredPrivileges:
+    - VEHICLE_ALL_TIME_LOCATION
+- vspecName: Vehicle.CurrentLocation.Longitude
+  requiredPrivileges:
+    - VEHICLE_ALL_TIME_LOCATION
+- vspecName: Vehicle.Exterior.AirTemperature
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.LowVoltageBattery.CurrentVoltage
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.OBD.BarometricPressure
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.OBD.EngineLoad
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.OBD.IntakeTemp
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.OBD.RunTime
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.CombustionEngine.ECT
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.CombustionEngine.EngineOilLevel
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.CombustionEngine.Speed
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.CombustionEngine.TPS
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.FuelSystem.AbsoluteLevel
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.FuelSystem.RelativeLevel
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.FuelSystem.SupportedFuelTypes
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.Range
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.TractionBattery.Charging.IsCharging
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.TractionBattery.CurrentPower
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.TractionBattery.GrossCapacity
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.TractionBattery.StateOfCharge.Current
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.Transmission.TravelledDistance
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.Type
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Speed
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.CombustionEngine.MAF
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.DIMO.Aftermarket.HDOP
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.DIMO.Aftermarket.NSAT
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.DIMO.Aftermarket.WPAState
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.DIMO.Aftermarket.SSID
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.CurrentLocation.IsRedacted
+  requiredPrivileges:
+    - VEHICLE_ALL_TIME_LOCATION
+- vspecName: Vehicle.Powertrain.CombustionEngine.EngineOilRelativeLevel
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.OBD.MAP
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.OBD.LongTermFuelTrim1
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.OBD.ShortTermFuelTrim1
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.OBD.DistanceWithMIL
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.OBD.DistanceSinceDTCClear
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.OBD.CommandedEGR
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.OBD.WarmupsSinceDTCClear
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.AngularVelocity.Yaw
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.TractionBattery.Temperature.Average
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Left.Speed
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Chassis.Axle.Row1.Wheel.Right.Speed
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.CombustionEngine.Torque
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.Transmission.CurrentGear
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA 
+- vspecName: Vehicle.OBD.FuelPressure
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA 
+- vspecName: Vehicle.Powertrain.Transmission.Temperature
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA 
+- vspecName: Vehicle.OBD.O2WR.Sensor1.Voltage
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA 
+- vspecName: Vehicle.OBD.O2WR.Sensor2.Voltage
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA 
+- vspecName: Vehicle.OBD.CommandedEVAP
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Service.DistanceToService
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.TractionBattery.CurrentVoltage
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA

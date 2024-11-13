@@ -77,9 +77,9 @@ generate: generate-nativestatus generate-ruptela # Generate all files for the re
 	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/vss/vehicle-structs.go -custom.template-file=./internal/generator/vehicle.tmpl -custom.format=true
 
 generate-nativestatus: # Generate all files for nativestatus
-	go run ./cmd/codegen -convert.package=nativestatus -generators=convert -convert.output-file=./pkg/nativestatus/vehicle-convert-funcs_gen.go
-	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/nativestatus/vehicle-v1-convert_gen.go -custom.template-file=./pkg/nativestatus/convertv1.tmpl -custom.format=true
-	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/nativestatus/vehicle-v2-convert_gen.go -custom.template-file=./pkg/nativestatus/convertv2.tmpl -custom.format=true
+	go run ./cmd/codegen -convert.package=nativestatus -generators=convert -convert.output-file=./pkg/nativestatus/vehicle-convert-funcs_gen.go -definitions=./pkg/nativestatus/schema/native-definitions.yaml
+	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/nativestatus/vehicle-v1-convert_gen.go -custom.template-file=./pkg/nativestatus/convertv1.tmpl -custom.format=true -definitions=./pkg/nativestatus/schema/native-definitions.yaml
+	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/nativestatus/vehicle-v2-convert_gen.go -custom.template-file=./pkg/nativestatus/convertv2.tmpl -custom.format=true -definitions=./pkg/nativestatus/schema/native-definitions.yaml
 
 generate-ruptela: # Generate all files for ruptela
 	go run ./cmd/codegen -convert.package=ruptela -generators=convert -convert.output-file=./pkg/ruptela/vehicle-convert-funcs_gen.go -definitions=./pkg/ruptela/schema/ruptela-definitions.yaml

@@ -38,17 +38,6 @@ func TestValidate(t *testing.T) {
 			},
 		},
 		{
-			name: "No Conversions",
-			d: &DefinitionInfo{
-				VspecName: "Vehicle",
-			},
-			expected: InvalidError{
-				Property: "conversions",
-				Name:     "Vehicle",
-				Reason:   "at least one conversion is required",
-			},
-		},
-		{
 			name: "Nil Conversion",
 			d: &DefinitionInfo{
 				VspecName: "Vehicle",
@@ -74,18 +63,6 @@ func TestValidate(t *testing.T) {
 				Property: "originalName",
 				Name:     "Vehicle",
 				Reason:   "is empty",
-			},
-		},
-		{
-			name: "No RequiredPrivileges",
-			d: &DefinitionInfo{
-				VspecName:   "Vehicle",
-				Conversions: []*ConversionInfo{{OriginalName: "OriginalName"}},
-			},
-			expected: InvalidError{
-				Property: "requiredPrivileges",
-				Name:     "Vehicle",
-				Reason:   "at least one privilege is required",
 			},
 		},
 		{
