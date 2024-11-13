@@ -205,6 +205,21 @@
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
 
+- vspecName: Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Capacity
+  conversions:
+    - originalName: "signals.1148" # OBD AdBlue capacity
+      originalType: string
+    - originalName: "signals.1149" # CAN AdBlue capacity
+      originalType: string
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+
+- vspecName: Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Level
+  conversions:
+    - originalName: "signals.1150" # OBD AdBlue level
+      originalType: string
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
 
 # TODO we only get batteryCapacity in percent SOH
 # - vspecName: Vehicle.Powertrain.TractionBattery.GrossCapacity

@@ -92,10 +92,14 @@ func ToExteriorAirTemperature0(originalDoc []byte, val string) (float64, error) 
 // Vehicle.LowVoltageBattery.CurrentVoltage: Current Voltage of the low voltage battery.
 // Unit: 'V'
 func ToLowVoltageBatteryCurrentVoltage0(originalDoc []byte, val string) (float64, error) {
-	mV, err := Convert29(val)
+	if unplugged(originalDoc) {
+		return 0, errNotFound
+	}
+	mV, err := ignoreZero(Convert29(val))
 	if err != nil {
 		return 0, err
 	}
+
 	return mV / 1000, nil
 }
 
@@ -110,7 +114,28 @@ func ToOBDDistanceWithMIL0(originalDoc []byte, val string) (float64, error) {
 // Vehicle.OBD.RunTime: PID 1F - Engine run time
 // Unit: 's'
 func ToOBDRunTime0(originalDoc []byte, val string) (float64, error) {
-	return Convert107(val)
+	return ignoreZero(Convert107(val))
+}
+
+// ToPowertrainCombustionEngineDieselExhaustFluidCapacity0 converts data from field 'signals.1148' of type string to 'Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Capacity' of type float64.
+// Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Capacity: Capacity in liters of the Diesel Exhaust Fluid Tank.
+// Unit: 'l'
+func ToPowertrainCombustionEngineDieselExhaustFluidCapacity0(originalDoc []byte, val string) (float64, error) {
+	return Convert1148(val)
+}
+
+// ToPowertrainCombustionEngineDieselExhaustFluidCapacity1 converts data from field 'signals.1149' of type string to 'Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Capacity' of type float64.
+// Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Capacity: Capacity in liters of the Diesel Exhaust Fluid Tank.
+// Unit: 'l'
+func ToPowertrainCombustionEngineDieselExhaustFluidCapacity1(originalDoc []byte, val string) (float64, error) {
+	return ignoreZero(Convert1149(val))
+}
+
+// ToPowertrainCombustionEngineDieselExhaustFluidLevel0 converts data from field 'signals.1150' of type string to 'Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Level' of type float64.
+// Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Level: Level of the Diesel Exhaust Fluid tank as percent of capacity. 0 = empty. 100 = full.
+// Unit: 'percent' Min: '0' Max: '100'
+func ToPowertrainCombustionEngineDieselExhaustFluidLevel0(originalDoc []byte, val string) (float64, error) {
+	return Convert1150(val)
 }
 
 // ToPowertrainCombustionEngineECT0 converts data from field 'signals.96' of type string to 'Vehicle.Powertrain.CombustionEngine.ECT' of type float64.
@@ -145,20 +170,23 @@ func ToPowertrainCombustionEngineEngineOilLevel0(originalDoc []byte, val string)
 // Vehicle.Powertrain.CombustionEngine.EngineOilRelativeLevel: Engine oil level as a percentage.
 // Unit: 'percent' Min: '0' Max: '100'
 func ToPowertrainCombustionEngineEngineOilRelativeLevel0(originalDoc []byte, val string) (float64, error) {
-	return Convert964(val)
+	return ignoreZero(Convert964(val))
 }
 
 // ToPowertrainCombustionEngineSpeed0 converts data from field 'signals.94' of type string to 'Vehicle.Powertrain.CombustionEngine.Speed' of type float64.
 // Vehicle.Powertrain.CombustionEngine.Speed: Engine speed measured as rotations per minute.
 // Unit: 'rpm'
 func ToPowertrainCombustionEngineSpeed0(originalDoc []byte, val string) (float64, error) {
-	return Convert94(val)
+	return ignoreZero(Convert94(val))
 }
 
 // ToPowertrainCombustionEngineTPS0 converts data from field 'signals.103' of type string to 'Vehicle.Powertrain.CombustionEngine.TPS' of type float64.
 // Vehicle.Powertrain.CombustionEngine.TPS: Current throttle position.
 // Unit: 'percent'  Max: '100'
 func ToPowertrainCombustionEngineTPS0(originalDoc []byte, val string) (float64, error) {
+	if ignitionOff(originalDoc) {
+		return ignoreZero(Convert103(val))
+	}
 	return Convert103(val)
 }
 
@@ -173,45 +201,21 @@ func ToPowertrainFuelSystemAbsoluteLevel0(originalDoc []byte, val string) (float
 // Vehicle.Powertrain.FuelSystem.AbsoluteLevel: Current available fuel in the fuel tank expressed in liters.
 // Unit: 'l'
 func ToPowertrainFuelSystemAbsoluteLevel1(originalDoc []byte, val string) (float64, error) {
-	num, err := Convert205(val)
-	if err != nil {
-		return 0, err
-	}
-	// CAN signal reports 0 when no value is available
-	if num == 0 {
-		return 0, errNotFound
-	}
-	return num, nil
+	return ignoreZero(Convert205(val))
 }
 
 // ToPowertrainFuelSystemRelativeLevel0 converts data from field 'signals.98' of type string to 'Vehicle.Powertrain.FuelSystem.RelativeLevel' of type float64.
 // Vehicle.Powertrain.FuelSystem.RelativeLevel: Level in fuel tank as percent of capacity. 0 = empty. 100 = full.
 // Unit: 'percent' Min: '0' Max: '100'
 func ToPowertrainFuelSystemRelativeLevel0(originalDoc []byte, val string) (float64, error) {
-	num, err := Convert98(val)
-	if err != nil {
-		return 0, err
-	}
-	// This has been reported as 0 when no value is available
-	if num == 0 {
-		return 0, errNotFound
-	}
-	return num, nil
+	return ignoreZero(Convert98(val))
 }
 
 // ToPowertrainFuelSystemRelativeLevel1 converts data from field 'signals.207' of type string to 'Vehicle.Powertrain.FuelSystem.RelativeLevel' of type float64.
 // Vehicle.Powertrain.FuelSystem.RelativeLevel: Level in fuel tank as percent of capacity. 0 = empty. 100 = full.
 // Unit: 'percent' Min: '0' Max: '100'
 func ToPowertrainFuelSystemRelativeLevel1(originalDoc []byte, val string) (float64, error) {
-	num, err := Convert207(val)
-	if err != nil {
-		return 0, err
-	}
-	// CAN signal reports 0 when no value is available
-	if num == 0 {
-		return 0, errNotFound
-	}
-	return num, nil
+	return ignoreZero(Convert207(val))
 }
 
 // ToPowertrainRange0 converts data from field 'signals.723' of type string to 'Vehicle.Powertrain.Range' of type float64.
@@ -243,13 +247,9 @@ func ToPowertrainTransmissionTravelledDistance0(originalDoc []byte, val string) 
 // Vehicle.Powertrain.Transmission.TravelledDistance: Odometer reading, total distance travelled during the lifetime of the transmission.
 // Unit: 'km'
 func ToPowertrainTransmissionTravelledDistance1(originalDoc []byte, val string) (float64, error) {
-	num, err := Convert114(val)
+	num, err := ignoreZero(Convert114(val))
 	if err != nil {
 		return 0, err
-	}
-	// CAN signal reports 0 when no value is available
-	if num == 0 {
-		return 0, errNotFound
 	}
 	// convert m to km
 	return num / 1000, nil
@@ -279,6 +279,9 @@ func ToPowertrainType1(originalDoc []byte, val string) (string, error) {
 // Vehicle.Speed: Vehicle speed.
 // Unit: 'km/h'
 func ToSpeed0(originalDoc []byte, val string) (float64, error) {
+	if ignitionOff(originalDoc) {
+		return ignoreZero(Convert95(val))
+	}
 	return Convert95(val)
 }
 

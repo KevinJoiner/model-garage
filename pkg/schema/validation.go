@@ -35,9 +35,6 @@ func Validate(d *DefinitionInfo) error {
 			return InvalidError{Property: "originalName", Name: d.VspecName, Reason: "is empty"}
 		}
 	}
-	if len(d.RequiredPrivileges) == 0 {
-		return InvalidError{Property: "requiredPrivileges", Name: d.VspecName, Reason: "at least one privilege is required"}
-	}
 	for _, priv := range d.RequiredPrivileges {
 		if !slices.Contains(privileges, priv) {
 			return InvalidError{Property: "requiredPrivileges", Name: d.VspecName, Reason: fmt.Sprintf("must be one of %v", privileges)}

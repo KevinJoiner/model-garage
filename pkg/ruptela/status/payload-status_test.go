@@ -94,7 +94,6 @@ var (
 
 	expectedSignals = []vss.Signal{
 		{TokenID: 33, Timestamp: ts, Name: vss.FieldLowVoltageBatteryCurrentVoltage, ValueNumber: 14.335, Source: "ruptela/TODO"},
-		{TokenID: 33, Timestamp: ts, Name: vss.FieldPowertrainCombustionEngineSpeed, ValueNumber: 0, Source: "ruptela/TODO"},
 		{TokenID: 33, Timestamp: ts, Name: vss.FieldPowertrainFuelSystemAbsoluteLevel, ValueNumber: 5, Source: "ruptela/TODO"},
 		{TokenID: 33, Timestamp: ts, Name: vss.FieldCurrentLocationAltitude, ValueNumber: 104.8, Source: "ruptela/TODO"},
 		{TokenID: 33, Timestamp: ts, Name: vss.FieldDIMOAftermarketHDOP, ValueNumber: 6, Source: "ruptela/TODO"},
@@ -103,7 +102,6 @@ var (
 		{TokenID: 33, Timestamp: ts, Name: vss.FieldDIMOAftermarketNSAT, ValueNumber: 20, Source: "ruptela/TODO"},
 		{TokenID: 33, Timestamp: ts, Name: vss.FieldPowertrainType, ValueString: "COMBUSTION", Source: "ruptela/TODO"},
 		{TokenID: 33, Timestamp: ts, Name: vss.FieldPowertrainFuelSystemRelativeLevel, ValueNumber: 2, Source: "ruptela/TODO"},
-		{TokenID: 33, Timestamp: ts, Name: vss.FieldOBDRunTime, ValueNumber: 0, Source: "ruptela/TODO"},
 		{TokenID: 33, Timestamp: ts, Name: vss.FieldOBDDistanceWithMIL, ValueNumber: 0, Source: "ruptela/TODO"},
 		{TokenID: 33, Timestamp: ts, Name: vss.FieldPowertrainCombustionEngineTPS, ValueNumber: 0, Source: "ruptela/TODO"},
 		{TokenID: 33, Timestamp: ts, Name: vss.FieldPowertrainTransmissionTravelledDistance, ValueNumber: 8, Source: "ruptela/TODO"},
