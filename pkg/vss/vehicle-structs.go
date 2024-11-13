@@ -88,6 +88,8 @@ const (
 	FieldPowertrainFuelSystemSupportedFuelTypes = "powertrainFuelSystemSupportedFuelTypes"
 	// FieldPowertrainRange Remaining range in meters using all energy sources available in the vehicle.
 	FieldPowertrainRange = "powertrainRange"
+	// FieldPowertrainTractionBatteryChargingAddedEnergy Amount of charge added to the high voltage battery during the current charging session, expressed in kilowatt-hours.
+	FieldPowertrainTractionBatteryChargingAddedEnergy = "powertrainTractionBatteryChargingAddedEnergy"
 	// FieldPowertrainTractionBatteryChargingChargeLimit Target charge limit (state of charge) for battery.
 	FieldPowertrainTractionBatteryChargingChargeLimit = "powertrainTractionBatteryChargingChargeLimit"
 	// FieldPowertrainTractionBatteryChargingIsCharging True if charging is ongoing. Charging is considered to be ongoing if energy is flowing from charger to vehicle.
