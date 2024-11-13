@@ -71,7 +71,7 @@ Available generators:
 		//nolint:errcheck // we don't care about the error since we are not writing to the file
 		defer f.Close()
 	} else {
-		definitionReader = strings.NewReader(schema.DefinitionsYAML())
+		definitionReader = strings.NewReader(schema.DefaultDefinitionsYAML())
 	}
 	gens := strings.Split(*generators, ",")
 
