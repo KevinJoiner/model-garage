@@ -173,3 +173,9 @@
 - vspecName: Vehicle.Powertrain.TractionBattery.CurrentVoltage
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Capacity
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Level
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
