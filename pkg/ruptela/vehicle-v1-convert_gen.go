@@ -373,14 +373,14 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 		retSignals = append(retSignals, sig)
 	}
 
-	val, err = PowertrainRangeFromV1Data(jsonData)
+	val, err = PowertrainTractionBatteryRangeFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
-			errs = append(errs, fmt.Errorf("failed to get 'PowertrainRange': %w", err))
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryRange': %w", err))
 		}
 	} else {
 		sig := vss.Signal{
-			Name:      "powertrainRange",
+			Name:      "powertrainTractionBatteryRange",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -1044,15 +1044,15 @@ func PowertrainFuelSystemRelativeLevelFromV1Data(jsonData []byte) (ret float64, 
 	return ret, errs
 }
 
-// PowertrainRangeFromV1Data converts the given JSON data to a float64.
-func PowertrainRangeFromV1Data(jsonData []byte) (ret float64, err error) {
+// PowertrainTractionBatteryRangeFromV1Data converts the given JSON data to a float64.
+func PowertrainTractionBatteryRangeFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
 	result = gjson.GetBytes(jsonData, "data.signals.723")
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(string)
 		if ok {
-			retVal, err := ToPowertrainRange0(jsonData, val)
+			retVal, err := ToPowertrainTractionBatteryRange0(jsonData, val)
 			if err == nil {
 				return retVal, nil
 			}
@@ -1063,7 +1063,7 @@ func PowertrainRangeFromV1Data(jsonData []byte) (ret float64, err error) {
 	}
 
 	if errs == nil {
-		return ret, fmt.Errorf("%w 'PowertrainRange'", errNotFound)
+		return ret, fmt.Errorf("%w 'PowertrainTractionBatteryRange'", errNotFound)
 	}
 
 	return ret, errs
