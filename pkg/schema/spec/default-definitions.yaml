@@ -80,6 +80,9 @@
 - vspecName: Vehicle.Powertrain.TractionBattery.GrossCapacity
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Powertrain.TractionBattery.Range
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
 - vspecName: Vehicle.Powertrain.TractionBattery.StateOfCharge.Current
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA

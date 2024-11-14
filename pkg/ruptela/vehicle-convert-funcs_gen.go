@@ -218,15 +218,16 @@ func ToPowertrainFuelSystemRelativeLevel1(originalDoc []byte, val string) (float
 	return ignoreZero(Convert207(val))
 }
 
-// ToPowertrainRange0 converts data from field 'signals.723' of type string to 'Vehicle.Powertrain.Range' of type float64.
-// Vehicle.Powertrain.Range: Remaining range in meters using all energy sources available in the vehicle.
+// ToPowertrainTractionBatteryRange0 converts data from field 'signals.723' of type string to 'Vehicle.Powertrain.TractionBattery.Range' of type float64.
+// Vehicle.Powertrain.TractionBattery.Range: Remaining range in meters using only battery.
 // Unit: 'm'
-func ToPowertrainRange0(originalDoc []byte, val string) (float64, error) {
+func ToPowertrainTractionBatteryRange0(originalDoc []byte, val string) (float64, error) {
 	floatValKm, err := Convert723(val)
 	if err != nil {
 		return 0, err
 	}
-	return floatValKm * 1000, nil
+	// convert km to m
+	return floatValKm / 1000, nil
 }
 
 // ToPowertrainTractionBatteryStateOfChargeCurrent0 converts data from field 'signals.722' of type string to 'Vehicle.Powertrain.TractionBattery.StateOfCharge.Current' of type float64.

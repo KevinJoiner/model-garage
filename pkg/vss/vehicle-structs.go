@@ -104,6 +104,8 @@ const (
 	FieldPowertrainTractionBatteryCurrentVoltage = "powertrainTractionBatteryCurrentVoltage"
 	// FieldPowertrainTractionBatteryGrossCapacity Gross capacity of the battery.
 	FieldPowertrainTractionBatteryGrossCapacity = "powertrainTractionBatteryGrossCapacity"
+	// FieldPowertrainTractionBatteryRange Remaining range in meters using only battery.
+	FieldPowertrainTractionBatteryRange = "powertrainTractionBatteryRange"
 	// FieldPowertrainTractionBatteryStateOfChargeCurrent Physical state of charge of the high voltage battery, relative to net capacity. This is not necessarily the state of charge being displayed to the customer.
 	FieldPowertrainTractionBatteryStateOfChargeCurrent = "powertrainTractionBatteryStateOfChargeCurrent"
 	// FieldPowertrainTractionBatteryTemperatureAverage Current average temperature of the battery cells.

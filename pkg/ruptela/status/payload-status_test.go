@@ -68,7 +68,7 @@ var (
 			"642": "FFFF",
 			"645": "FFFFFFFF",
 			"722": "FF",
-			"723": "FFFF",
+			"723": "EA42",
 			"754": "FB8F",
 			"92": "0",
 			"93": "0",
@@ -106,5 +106,6 @@ var (
 		{TokenID: 33, Timestamp: ts, Name: vss.FieldPowertrainCombustionEngineTPS, ValueNumber: 0, Source: "ruptela/TODO"},
 		{TokenID: 33, Timestamp: ts, Name: vss.FieldPowertrainTransmissionTravelledDistance, ValueNumber: 8, Source: "ruptela/TODO"},
 		{TokenID: 33, Timestamp: ts, Name: vss.FieldSpeed, ValueNumber: 0, Source: "ruptela/TODO"},
+		{TokenID: 33, Timestamp: ts, Name: vss.FieldPowertrainTractionBatteryRange, ValueNumber: 59.97, Source: "ruptela/TODO"},
 	}
 )
