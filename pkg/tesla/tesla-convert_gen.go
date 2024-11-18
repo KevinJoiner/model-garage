@@ -281,12 +281,9 @@ func ChassisAxleRow1WheelLeftTirePressureFromTesla(jsonData []byte) (ret float64
 				endpoint, _, _ := strings.Cut("vehicle_state.tpms_pressure_fl", ".")
 				result := gjson.GetBytes(jsonData, "data."+endpoint+".timestamp")
 
-				if result.Exists() && result.Value() != nil {
-					if unix, ok := result.Value().(float64); ok {
-						ts := time.Unix(int64(unix), 0)
-
-						return retVal, ts, nil
-					}
+				if result.Exists() && result.Type == gjson.Number {
+					ts := time.UnixMilli(result.Int())
+					return retVal, ts, nil
 				}
 
 				errs = errors.Join(errs, fmt.Errorf("couldn't find a timestamp for 'data.vehicle_state.tpms_pressure_fl'"))
@@ -317,12 +314,9 @@ func ChassisAxleRow1WheelRightTirePressureFromTesla(jsonData []byte) (ret float6
 				endpoint, _, _ := strings.Cut("vehicle_state.tpms_pressure_fr", ".")
 				result := gjson.GetBytes(jsonData, "data."+endpoint+".timestamp")
 
-				if result.Exists() && result.Value() != nil {
-					if unix, ok := result.Value().(float64); ok {
-						ts := time.Unix(int64(unix), 0)
-
-						return retVal, ts, nil
-					}
+				if result.Exists() && result.Type == gjson.Number {
+					ts := time.UnixMilli(result.Int())
+					return retVal, ts, nil
 				}
 
 				errs = errors.Join(errs, fmt.Errorf("couldn't find a timestamp for 'data.vehicle_state.tpms_pressure_fr'"))
@@ -353,12 +347,9 @@ func ChassisAxleRow2WheelLeftTirePressureFromTesla(jsonData []byte) (ret float64
 				endpoint, _, _ := strings.Cut("vehicle_state.tpms_pressure_rl", ".")
 				result := gjson.GetBytes(jsonData, "data."+endpoint+".timestamp")
 
-				if result.Exists() && result.Value() != nil {
-					if unix, ok := result.Value().(float64); ok {
-						ts := time.Unix(int64(unix), 0)
-
-						return retVal, ts, nil
-					}
+				if result.Exists() && result.Type == gjson.Number {
+					ts := time.UnixMilli(result.Int())
+					return retVal, ts, nil
 				}
 
 				errs = errors.Join(errs, fmt.Errorf("couldn't find a timestamp for 'data.vehicle_state.tpms_pressure_rl'"))
@@ -389,12 +380,9 @@ func ChassisAxleRow2WheelRightTirePressureFromTesla(jsonData []byte) (ret float6
 				endpoint, _, _ := strings.Cut("vehicle_state.tpms_pressure_rr", ".")
 				result := gjson.GetBytes(jsonData, "data."+endpoint+".timestamp")
 
-				if result.Exists() && result.Value() != nil {
-					if unix, ok := result.Value().(float64); ok {
-						ts := time.Unix(int64(unix), 0)
-
-						return retVal, ts, nil
-					}
+				if result.Exists() && result.Type == gjson.Number {
+					ts := time.UnixMilli(result.Int())
+					return retVal, ts, nil
 				}
 
 				errs = errors.Join(errs, fmt.Errorf("couldn't find a timestamp for 'data.vehicle_state.tpms_pressure_rr'"))
@@ -425,12 +413,9 @@ func CurrentLocationLatitudeFromTesla(jsonData []byte) (ret float64, ts time.Tim
 				endpoint, _, _ := strings.Cut("drive_state.latitude", ".")
 				result := gjson.GetBytes(jsonData, "data."+endpoint+".timestamp")
 
-				if result.Exists() && result.Value() != nil {
-					if unix, ok := result.Value().(float64); ok {
-						ts := time.Unix(int64(unix), 0)
-
-						return retVal, ts, nil
-					}
+				if result.Exists() && result.Type == gjson.Number {
+					ts := time.UnixMilli(result.Int())
+					return retVal, ts, nil
 				}
 
 				errs = errors.Join(errs, fmt.Errorf("couldn't find a timestamp for 'data.drive_state.latitude'"))
@@ -461,12 +446,9 @@ func CurrentLocationLongitudeFromTesla(jsonData []byte) (ret float64, ts time.Ti
 				endpoint, _, _ := strings.Cut("drive_state.longitude", ".")
 				result := gjson.GetBytes(jsonData, "data."+endpoint+".timestamp")
 
-				if result.Exists() && result.Value() != nil {
-					if unix, ok := result.Value().(float64); ok {
-						ts := time.Unix(int64(unix), 0)
-
-						return retVal, ts, nil
-					}
+				if result.Exists() && result.Type == gjson.Number {
+					ts := time.UnixMilli(result.Int())
+					return retVal, ts, nil
 				}
 
 				errs = errors.Join(errs, fmt.Errorf("couldn't find a timestamp for 'data.drive_state.longitude'"))
@@ -497,12 +479,9 @@ func ExteriorAirTemperatureFromTesla(jsonData []byte) (ret float64, ts time.Time
 				endpoint, _, _ := strings.Cut("climate_state.outside_temp", ".")
 				result := gjson.GetBytes(jsonData, "data."+endpoint+".timestamp")
 
-				if result.Exists() && result.Value() != nil {
-					if unix, ok := result.Value().(float64); ok {
-						ts := time.Unix(int64(unix), 0)
-
-						return retVal, ts, nil
-					}
+				if result.Exists() && result.Type == gjson.Number {
+					ts := time.UnixMilli(result.Int())
+					return retVal, ts, nil
 				}
 
 				errs = errors.Join(errs, fmt.Errorf("couldn't find a timestamp for 'data.climate_state.outside_temp'"))
@@ -533,12 +512,9 @@ func PowertrainRangeFromTesla(jsonData []byte) (ret float64, ts time.Time, err e
 				endpoint, _, _ := strings.Cut("charge_state.battery_range", ".")
 				result := gjson.GetBytes(jsonData, "data."+endpoint+".timestamp")
 
-				if result.Exists() && result.Value() != nil {
-					if unix, ok := result.Value().(float64); ok {
-						ts := time.Unix(int64(unix), 0)
-
-						return retVal, ts, nil
-					}
+				if result.Exists() && result.Type == gjson.Number {
+					ts := time.UnixMilli(result.Int())
+					return retVal, ts, nil
 				}
 
 				errs = errors.Join(errs, fmt.Errorf("couldn't find a timestamp for 'data.charge_state.battery_range'"))
@@ -569,12 +545,9 @@ func PowertrainTractionBatteryChargingAddedEnergyFromTesla(jsonData []byte) (ret
 				endpoint, _, _ := strings.Cut("charge_state.charge_energy_added", ".")
 				result := gjson.GetBytes(jsonData, "data."+endpoint+".timestamp")
 
-				if result.Exists() && result.Value() != nil {
-					if unix, ok := result.Value().(float64); ok {
-						ts := time.Unix(int64(unix), 0)
-
-						return retVal, ts, nil
-					}
+				if result.Exists() && result.Type == gjson.Number {
+					ts := time.UnixMilli(result.Int())
+					return retVal, ts, nil
 				}
 
 				errs = errors.Join(errs, fmt.Errorf("couldn't find a timestamp for 'data.charge_state.charge_energy_added'"))
@@ -605,12 +578,9 @@ func PowertrainTractionBatteryChargingChargeLimitFromTesla(jsonData []byte) (ret
 				endpoint, _, _ := strings.Cut("charge_state.charge_limit_soc", ".")
 				result := gjson.GetBytes(jsonData, "data."+endpoint+".timestamp")
 
-				if result.Exists() && result.Value() != nil {
-					if unix, ok := result.Value().(float64); ok {
-						ts := time.Unix(int64(unix), 0)
-
-						return retVal, ts, nil
-					}
+				if result.Exists() && result.Type == gjson.Number {
+					ts := time.UnixMilli(result.Int())
+					return retVal, ts, nil
 				}
 
 				errs = errors.Join(errs, fmt.Errorf("couldn't find a timestamp for 'data.charge_state.charge_limit_soc'"))
@@ -641,12 +611,9 @@ func PowertrainTractionBatteryChargingIsChargingFromTesla(jsonData []byte) (ret 
 				endpoint, _, _ := strings.Cut("charge_state.charging_state", ".")
 				result := gjson.GetBytes(jsonData, "data."+endpoint+".timestamp")
 
-				if result.Exists() && result.Value() != nil {
-					if unix, ok := result.Value().(float64); ok {
-						ts := time.Unix(int64(unix), 0)
-
-						return retVal, ts, nil
-					}
+				if result.Exists() && result.Type == gjson.Number {
+					ts := time.UnixMilli(result.Int())
+					return retVal, ts, nil
 				}
 
 				errs = errors.Join(errs, fmt.Errorf("couldn't find a timestamp for 'data.charge_state.charging_state'"))
@@ -677,12 +644,9 @@ func PowertrainTractionBatteryCurrentPowerFromTesla(jsonData []byte) (ret float6
 				endpoint, _, _ := strings.Cut("drive_state.power", ".")
 				result := gjson.GetBytes(jsonData, "data."+endpoint+".timestamp")
 
-				if result.Exists() && result.Value() != nil {
-					if unix, ok := result.Value().(float64); ok {
-						ts := time.Unix(int64(unix), 0)
-
-						return retVal, ts, nil
-					}
+				if result.Exists() && result.Type == gjson.Number {
+					ts := time.UnixMilli(result.Int())
+					return retVal, ts, nil
 				}
 
 				errs = errors.Join(errs, fmt.Errorf("couldn't find a timestamp for 'data.drive_state.power'"))
@@ -713,12 +677,9 @@ func PowertrainTractionBatteryStateOfChargeCurrentFromTesla(jsonData []byte) (re
 				endpoint, _, _ := strings.Cut("charge_state.battery_level", ".")
 				result := gjson.GetBytes(jsonData, "data."+endpoint+".timestamp")
 
-				if result.Exists() && result.Value() != nil {
-					if unix, ok := result.Value().(float64); ok {
-						ts := time.Unix(int64(unix), 0)
-
-						return retVal, ts, nil
-					}
+				if result.Exists() && result.Type == gjson.Number {
+					ts := time.UnixMilli(result.Int())
+					return retVal, ts, nil
 				}
 
 				errs = errors.Join(errs, fmt.Errorf("couldn't find a timestamp for 'data.charge_state.battery_level'"))
@@ -749,12 +710,9 @@ func PowertrainTransmissionTravelledDistanceFromTesla(jsonData []byte) (ret floa
 				endpoint, _, _ := strings.Cut("vehicle_state.odometer", ".")
 				result := gjson.GetBytes(jsonData, "data."+endpoint+".timestamp")
 
-				if result.Exists() && result.Value() != nil {
-					if unix, ok := result.Value().(float64); ok {
-						ts := time.Unix(int64(unix), 0)
-
-						return retVal, ts, nil
-					}
+				if result.Exists() && result.Type == gjson.Number {
+					ts := time.UnixMilli(result.Int())
+					return retVal, ts, nil
 				}
 
 				errs = errors.Join(errs, fmt.Errorf("couldn't find a timestamp for 'data.vehicle_state.odometer'"))
@@ -785,12 +743,9 @@ func SpeedFromTesla(jsonData []byte) (ret float64, ts time.Time, err error) {
 				endpoint, _, _ := strings.Cut("drive_state.speed", ".")
 				result := gjson.GetBytes(jsonData, "data."+endpoint+".timestamp")
 
-				if result.Exists() && result.Value() != nil {
-					if unix, ok := result.Value().(float64); ok {
-						ts := time.Unix(int64(unix), 0)
-
-						return retVal, ts, nil
-					}
+				if result.Exists() && result.Type == gjson.Number {
+					ts := time.UnixMilli(result.Int())
+					return retVal, ts, nil
 				}
 
 				errs = errors.Join(errs, fmt.Errorf("couldn't find a timestamp for 'data.drive_state.speed'"))
