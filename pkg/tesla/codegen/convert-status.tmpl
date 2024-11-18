@@ -55,12 +55,9 @@ func {{ $sig.GOName }}FromTesla(jsonData []byte) (ret {{ $sig.GOType }}, ts time
 				endpoint, _, _ := strings.Cut("{{ $conv.OriginalName }}", ".")
 				result := gjson.GetBytes(jsonData, "data." + endpoint + ".timestamp")
 
-				if result.Exists() && result.Value() != nil {
-					if unix, ok := result.Value().(float64); ok {
-						ts := time.Unix(int64(unix), 0)
-
-						return retVal, ts, nil
-					}
+				if result.Exists() && result.Type == gjson.Number {
+					ts := time.UnixMilli(result.Int())
+					return retVal, ts, nil
 				}
 
 				errs = errors.Join(errs, fmt.Errorf("couldn't find a timestamp for 'data.{{ $conv.OriginalName }}'"))
