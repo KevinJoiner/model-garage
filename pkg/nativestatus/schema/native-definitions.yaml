@@ -138,6 +138,11 @@
     - originalName: range
       originalType: float64
       isArray: false
+- vspecName: Vehicle.Powertrain.TractionBattery.Charging.AddedEnergy
+  conversions:
+    - originalName: "chargeEnergyAdded"
+      originalType: float64
+      isArray: false
 - vspecName: Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit
   conversions:
     - originalName: chargeLimit

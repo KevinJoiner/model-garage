@@ -402,6 +402,13 @@ func ToPowertrainRange0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
+// ToPowertrainTractionBatteryChargingAddedEnergy0 converts data from field 'chargeEnergyAdded' of type float64 to 'Vehicle.Powertrain.TractionBattery.Charging.AddedEnergy' of type float64.
+// Vehicle.Powertrain.TractionBattery.Charging.AddedEnergy: Amount of charge added to the high voltage battery during the current charging session, expressed in kilowatt-hours.
+// Unit: 'kWh'
+func ToPowertrainTractionBatteryChargingAddedEnergy0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToPowertrainTractionBatteryChargingChargeLimit0 converts data from field 'chargeLimit' of type float64 to 'Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit' of type float64.
 // Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit: Target charge limit (state of charge) for battery.
 // Unit: 'percent' Min: '0' Max: '100'

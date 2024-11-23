@@ -118,6 +118,20 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			sig.SetValue(val0)
 			ret = append(ret, sig)
 		}
+	case "chargeEnergyAdded":
+		val0, err := PowertrainTractionBatteryChargingAddedEnergyFromV2Data(originalDoc, valResult)
+		if err != nil {
+			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'chargeEnergyAdded': %w", err))
+		} else {
+			sig := vss.Signal{
+				TokenID:   baseSignal.TokenID,
+				Timestamp: baseSignal.Timestamp,
+				Source:    baseSignal.Source,
+				Name:      "powertrainTractionBatteryChargingAddedEnergy",
+			}
+			sig.SetValue(val0)
+			ret = append(ret, sig)
+		}
 	case "chargeLimit":
 		val0, err := PowertrainTractionBatteryChargingChargeLimitFromV2Data(originalDoc, valResult)
 		if err != nil {
@@ -1788,6 +1802,23 @@ func PowertrainRangeFromV2Data(originalDoc []byte, result gjson.Result) (ret flo
 		errs = errors.Join(errs, fmt.Errorf("failed to convert 'range': %w", err))
 	} else {
 		errs = errors.Join(errs, fmt.Errorf("%w, field 'range' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+	}
+
+	return ret, errs
+}
+
+// PowertrainTractionBatteryChargingAddedEnergyFromData converts the given JSON data to a float64.
+func PowertrainTractionBatteryChargingAddedEnergyFromV2Data(originalDoc []byte, result gjson.Result) (ret float64, err error) {
+	var errs error
+	val0, ok := result.Value().(float64)
+	if ok {
+		ret, err = ToPowertrainTractionBatteryChargingAddedEnergy0(originalDoc, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(errs, fmt.Errorf("failed to convert 'chargeEnergyAdded': %w", err))
+	} else {
+		errs = errors.Join(errs, fmt.Errorf("%w, field 'chargeEnergyAdded' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 	}
 
 	return ret, errs
