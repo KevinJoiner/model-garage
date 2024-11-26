@@ -38,13 +38,13 @@ all: clean target
 
 clean:
 	@rm -rf $(PATHINSTBIN)
-	
+
 install: build
 	@install -d $(INSTALL_DIR)
 	@rm -f $(INSTALL_DIR)/$(BIN_NAME)
 	@cp $(PATHINSTBIN)/* $(INSTALL_DIR)/
 
-dep: 
+dep:
 	@go mod tidy
 
 test:
@@ -85,7 +85,11 @@ generate-ruptela: # Generate all files for ruptela
 	go run ./cmd/codegen -convert.package=ruptela -generators=convert -convert.output-file=./pkg/ruptela/vehicle-convert-funcs_gen.go -definitions=./pkg/ruptela/schema/ruptela-definitions.yaml
 	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/ruptela/vehicle-v1-convert_gen.go -custom.template-file=./pkg/ruptela/codegen/convert-status.tmpl -custom.format=true -definitions=./pkg/ruptela/schema/ruptela-definitions.yaml
 	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/ruptela/vehicle-location-convert_gen.go -custom.template-file=./pkg/ruptela/codegen/convert-location.tmpl -custom.format=true -definitions=./pkg/ruptela/schema/ruptela-definitions.yaml
-	go run ./pkg/ruptela/codegen 
+	go run ./pkg/ruptela/codegen
+
+generate-autopi: # Generate all files for nativestatus
+	go run ./cmd/codegen -convert.package=autopi -generators=convert -convert.output-file=./pkg/autopi/vehicle-convert-funcs_gen.go -definitions=./pkg/autopi/schema/autopi-definitions.yaml
+	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/autopi/vehicle-v2-convert_gen.go -custom.template-file=./pkg/autopi/codegen/convertv2.tmpl -custom.format=true -definitions=./pkg/autopi/schema/autopi-definitions.yaml
 
 generate-tesla: # Generate all files for tesla
 	go run ./cmd/codegen -convert.package=tesla -generators=convert -convert.output-file=./pkg/tesla/vehicle-convert-funcs_gen.go -definitions=./pkg/tesla/schema/tesla-definitions.yaml
