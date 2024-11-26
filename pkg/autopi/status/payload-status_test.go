@@ -1,8 +1,6 @@
 package status
 
 import (
-	"context"
-	"github.com/DIMO-Network/model-garage/pkg/nativestatus"
 	"github.com/stretchr/testify/require"
 	"testing"
 	"time"
@@ -176,7 +174,7 @@ var expectedV2Signals = []vss.Signal{
 
 func TestNullSignals(t *testing.T) {
 	t.Parallel()
-	actualSignals, err := nativestatus.SignalsFromPayload(context.Background(), nil, []byte(nilSignalsJSON))
+	actualSignals, err := SignalsFromV2Payload([]byte(nilSignalsJSON))
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
 	require.Equalf(t, []vss.Signal{}, actualSignals, "converted vehicle does not match expected vehicle")
 }
@@ -186,7 +184,7 @@ var nilSignalsJSON = `{
     "source": "dimo/integration/123",
     "specversion": "1.0",
     "dataschema": "testschema/v2.0",
-    "subject": "0x98D78d711C0ec544F6fb5d54fcf6559CF41546a9",
+    "subject": "did:nft:1:0xbA5738a18d83D41847dfFbDC6101d37C69c9B0cF_33",
     "time": "2024-04-18T17:20:46.436008782Z",
     "type": "com.dimo.device.status",
     "vehicleTokenId": 123,
