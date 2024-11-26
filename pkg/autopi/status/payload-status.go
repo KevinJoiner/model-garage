@@ -4,9 +4,10 @@ package status
 import (
 	"errors"
 	"fmt"
+	"time"
+
 	"github.com/DIMO-Network/model-garage/pkg/autopi"
 	"github.com/tidwall/gjson"
-	"time"
 
 	"github.com/DIMO-Network/model-garage/pkg/convert"
 	"github.com/DIMO-Network/model-garage/pkg/vss"
