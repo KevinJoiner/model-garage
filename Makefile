@@ -87,7 +87,7 @@ generate-ruptela: # Generate all files for ruptela
 	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/ruptela/vehicle-location-convert_gen.go -custom.template-file=./pkg/ruptela/codegen/convert-location.tmpl -custom.format=true -definitions=./pkg/ruptela/schema/ruptela-definitions.yaml
 	go run ./pkg/ruptela/codegen
 
-generate-autopi: # Generate all files for nativestatus
+generate-autopi: # Generate all files for autopi
 	go run ./cmd/codegen -convert.package=autopi -generators=convert -convert.output-file=./pkg/autopi/vehicle-convert-funcs_gen.go -definitions=./pkg/autopi/schema/autopi-definitions.yaml
 	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/autopi/vehicle-v2-convert_gen.go -custom.template-file=./pkg/autopi/codegen/convertv2.tmpl -custom.format=true -definitions=./pkg/autopi/schema/autopi-definitions.yaml
 
