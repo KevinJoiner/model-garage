@@ -24,7 +24,7 @@ const (
 
 type AutopiEvent struct {
 	Data           json.RawMessage `json:"data"`
-	VehicleTokenID *uint64         `json:"vehicleTokenId"`
+	VehicleTokenID *uint32         `json:"vehicleTokenId"`
 	DeviceTokenID  *uint32         `json:"deviceTokenId"`
 	Signature      string          `json:"signature"`
 	Time           string          `json:"time"`
@@ -100,11 +100,12 @@ func ConvertToCloudEvents(msgData []byte, chainID uint64, aftermarketContractAdd
 
 	// handle both status and fingerprint events
 	var eventType string
-	if event.Type == StatusEventType {
+	switch event.Type {
+	case StatusEventType:
 		eventType = cloudevent.TypeStatus
-	} else if event.Type == FingerprintEventType {
+	case FingerprintEventType:
 		eventType = cloudevent.TypeFingerprint
-	} else {
+	default:
 		return nil, fmt.Errorf("unknown event type: %s", event.Type)
 	}
 
@@ -121,7 +122,7 @@ func ConvertToCloudEvents(msgData []byte, chainID uint64, aftermarketContractAdd
 		subject = cloudevent.NFTDID{
 			ChainID:         chainID,
 			ContractAddress: common.HexToAddress(vehicleContractAddr),
-			TokenID:         uint32(*event.VehicleTokenID),
+			TokenID:         *event.VehicleTokenID,
 		}.String()
 	}
 
@@ -165,7 +166,7 @@ func convertToCloudEvent(event AutopiEvent, producer, subject, eventType string)
 func createCloudEvent(event AutopiEvent, producer, subject, eventType string) (cloudevent.CloudEvent[json.RawMessage], error) {
 	timeValue, err := time.Parse(time.RFC3339, event.Time)
 	if err != nil {
-		return cloudevent.CloudEvent[json.RawMessage]{}, fmt.Errorf("Failed to parse time: %v\n", err)
+		return cloudevent.CloudEvent[json.RawMessage]{}, fmt.Errorf("failed to parse time: %v\n", err)
 	}
 	return cloudevent.CloudEvent[json.RawMessage]{
 		CloudEventHeader: cloudevent.CloudEventHeader{
