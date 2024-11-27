@@ -1,4 +1,4 @@
-// Package status holds decoding functions for Ruptela status payloads.
+// Package autopi holds decoding functions for Ruptela status payloads.
 package autopi
 
 import (
@@ -28,7 +28,7 @@ func GetDataVersion(jsonData []byte) string {
 	return dataVersion.String()
 }
 
-// hasV1Data checks if the payload has the same sceham as a v1.0.0.
+// HasV1Data checks if the payload has the same version as v1.0.0.
 func HasV1Data(version string) bool {
 	return version == "" || semver.Compare(StatusV1, version) == 0 || semver.Compare(StatusV1Converted, version) == 0
 }

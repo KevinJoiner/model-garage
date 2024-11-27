@@ -3,11 +3,12 @@ package status
 import (
 	"errors"
 	"fmt"
+	"time"
+
 	"github.com/DIMO-Network/model-garage/pkg/autopi"
 	"github.com/DIMO-Network/model-garage/pkg/convert"
 	"github.com/DIMO-Network/model-garage/pkg/vss"
 	"github.com/tidwall/gjson"
-	"time"
 )
 
 // SignalsFromV1Payload gets a slice signals from a v1 payload.
