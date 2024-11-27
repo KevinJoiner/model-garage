@@ -4,6 +4,7 @@ package autopi
 import (
 	"errors"
 	"fmt"
+
 	"github.com/DIMO-Network/model-garage/pkg/cloudevent"
 	"github.com/DIMO-Network/model-garage/pkg/convert"
 	"github.com/tidwall/gjson"
