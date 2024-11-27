@@ -27,6 +27,7 @@ func TestFullFromDataConversion(t *testing.T) {
 var (
 	fullInputJSON = `{
 		"id": "randomIDnumber",
+	    "dataversion": "v1",
 		"specversion": "1.0",
 		"source": "dimo/integration/123",
 		"subject": "did:nft:1:0xbA5738a18d83D41847dfFbDC6101d37C69c9B0cF_123",
