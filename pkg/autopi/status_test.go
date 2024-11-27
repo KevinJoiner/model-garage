@@ -2,10 +2,11 @@ package autopi
 
 import (
 	"encoding/json"
+	"testing"
+
 	"github.com/DIMO-Network/model-garage/pkg/cloudevent"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
 )
 
 func TestConvertToCloudEvents(t *testing.T) {

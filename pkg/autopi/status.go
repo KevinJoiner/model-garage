@@ -166,7 +166,7 @@ func convertToCloudEvent(event AutopiEvent, producer, subject, eventType string)
 func createCloudEvent(event AutopiEvent, producer, subject, eventType string) (cloudevent.CloudEvent[json.RawMessage], error) {
 	timeValue, err := time.Parse(time.RFC3339, event.Time)
 	if err != nil {
-		return cloudevent.CloudEvent[json.RawMessage]{}, fmt.Errorf("failed to parse time: %v\n", err)
+		return cloudevent.CloudEvent[json.RawMessage]{}, fmt.Errorf("failed to parse time: %v", err)
 	}
 	return cloudevent.CloudEvent[json.RawMessage]{
 		CloudEventHeader: cloudevent.CloudEventHeader{
