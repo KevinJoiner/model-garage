@@ -2,11 +2,12 @@ package status
 
 import (
 	"cmp"
-	"github.com/DIMO-Network/model-garage/pkg/vss"
-	"github.com/stretchr/testify/require"
 	"slices"
 	"testing"
 	"time"
+
+	"github.com/DIMO-Network/model-garage/pkg/vss"
+	"github.com/stretchr/testify/require"
 )
 
 func TestFullFromDataConversion(t *testing.T) {
