@@ -15,13 +15,13 @@ import (
 
 // SignalsFromV2Payload extracts signals from a V2 payload.
 func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
-	tokenID, err := TokenIDFromData(jsonData)
+	tokenID, err := autopi.TokenIDFromData(jsonData)
 	if err != nil {
 		return nil, convert.ConversionError{
 			Errors: []error{fmt.Errorf("error getting tokenId: %w", err)},
 		}
 	}
-	source, err := SourceFromData(jsonData)
+	source, err := autopi.SourceFromData(jsonData)
 	if err != nil {
 		return nil, convert.ConversionError{
 			TokenID: tokenID,

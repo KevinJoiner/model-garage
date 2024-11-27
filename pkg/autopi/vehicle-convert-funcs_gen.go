@@ -210,6 +210,10 @@ func ToOBDDistanceWithMIL0(originalDoc []byte, val float64) (float64, error) {
 // Vehicle.OBD.EngineLoad: PID 04 - Engine load in percent - 0 = no load, 100 = full load
 // Unit: 'percent'
 func ToOBDEngineLoad0(originalDoc []byte, val float64) (float64, error) {
+	dataVersion := GetDataVersion(originalDoc)
+	if HasV1Data(dataVersion) {
+		return val * 100, nil
+	}
 	return val, nil
 }
 
@@ -338,6 +342,10 @@ func ToPowertrainCombustionEngineSpeed1(originalDoc []byte, val float64) (float6
 // Vehicle.Powertrain.CombustionEngine.TPS: Current throttle position.
 // Unit: 'percent'  Max: '100'
 func ToPowertrainCombustionEngineTPS0(originalDoc []byte, val float64) (float64, error) {
+	dataVersion := GetDataVersion(originalDoc)
+	if HasV1Data(dataVersion) {
+		return val * 100, nil
+	}
 	return val, nil
 }
 
@@ -437,6 +445,11 @@ func ToPowertrainTractionBatteryGrossCapacity0(originalDoc []byte, val float64) 
 // Vehicle.Powertrain.TractionBattery.StateOfCharge.Current: Physical state of charge of the high voltage battery, relative to net capacity. This is not necessarily the state of charge being displayed to the customer.
 // Unit: 'percent' Min: '0' Max: '100.0'
 func ToPowertrainTractionBatteryStateOfChargeCurrent0(originalDoc []byte, val float64) (float64, error) {
+	dataVersion := GetDataVersion(originalDoc)
+	if HasV1Data(dataVersion) {
+		// soc comes in as a value between 0 and 1, convert to percentage.
+		return val * 100, nil
+	}
 	return val, nil
 }
 

@@ -89,6 +89,7 @@ generate-ruptela: # Generate all files for ruptela
 
 generate-autopi: # Generate all files for autopi
 	go run ./cmd/codegen -convert.package=autopi -generators=convert -convert.output-file=./pkg/autopi/vehicle-convert-funcs_gen.go -definitions=./pkg/autopi/schema/autopi-definitions.yaml
+	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/autopi/vehicle-v1-convert_gen.go -custom.template-file=./pkg/autopi/codegen/convertv1.tmpl -custom.format=true -definitions=./pkg/autopi/schema/autopi-definitions.yaml
 	go run ./cmd/codegen -generators=custom -custom.output-file=./pkg/autopi/vehicle-v2-convert_gen.go -custom.template-file=./pkg/autopi/codegen/convertv2.tmpl -custom.format=true -definitions=./pkg/autopi/schema/autopi-definitions.yaml
 
 generate-tesla: # Generate all files for tesla

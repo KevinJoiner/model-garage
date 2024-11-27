@@ -186,7 +186,6 @@ var nilSignalsJSON = `{
     "id": "2fHbFXPWzrVActDb7WqWCfqeiYe",
     "source": "dimo/integration/123",
     "specversion": "1.0",
-    "dataschema": "testschema/v2.0",
     "subject": "did:nft:1:0xbA5738a18d83D41847dfFbDC6101d37C69c9B0cF_33",
     "time": "2024-04-18T17:20:46.436008782Z",
     "type": "com.dimo.device.status",
