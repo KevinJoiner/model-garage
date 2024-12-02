@@ -4,6 +4,10 @@ package vss
 const (
 	// FieldAngularVelocityYaw Vehicle rotation rate along Z (vertical).
 	FieldAngularVelocityYaw = "angularVelocityYaw"
+	// FieldCabinHVACCompressorEngaged AC compressor magnetic clutch engaged i.e. compressor on.
+	FieldCabinHVACCompressorEngaged = "cabinHVACCompressorEngaged"
+	// FieldCabinHVACCompressorPWM AC compressor controlled electrical frequency.
+	FieldCabinHVACCompressorPWM = "cabinHVACCompressorPWM"
 	// FieldChassisAxleRow1WheelLeftSpeed Rotational speed of a vehicle's wheel.
 	FieldChassisAxleRow1WheelLeftSpeed = "chassisAxleRow1WheelLeftSpeed"
 	// FieldChassisAxleRow1WheelLeftTirePressure Tire pressure in kilo-Pascal.

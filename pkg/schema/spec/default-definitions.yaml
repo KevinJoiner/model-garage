@@ -182,3 +182,9 @@
 - vspecName: Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Level
   requiredPrivileges:
     - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Cabin.HVAC.CompressorPWM
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
+- vspecName: Vehicle.Cabin.HVAC.CompressorEngaged
+  requiredPrivileges:
+    - VEHICLE_NON_LOCATION_DATA
