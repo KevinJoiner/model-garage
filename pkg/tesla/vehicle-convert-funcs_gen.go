@@ -89,7 +89,12 @@ func ToPowertrainTractionBatteryChargingIsCharging0(originalDoc []byte, val stri
 // Vehicle.Powertrain.TractionBattery.CurrentPower: Current electrical energy flowing in/out of battery. Positive = Energy flowing in to battery, e.g. during charging. Negative = Energy flowing out of battery, e.g. during driving.
 // Unit: 'W'
 func ToPowertrainTractionBatteryCurrentPower0(originalDoc []byte, val float64) (float64, error) {
-	return -kilowattsToWatts(val), nil
+	res := -kilowattsToWatts(val)
+	if res == 0 {
+		// Avoid returning -0.0 in the common case where val is 0.0.
+		return 0, nil
+	}
+	return res, nil
 }
 
 // ToPowertrainTractionBatteryStateOfChargeCurrent0 converts data from field 'charge_state.battery_level' of type float64 to 'Vehicle.Powertrain.TractionBattery.StateOfCharge.Current' of type float64.
