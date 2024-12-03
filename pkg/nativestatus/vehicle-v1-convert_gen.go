@@ -389,22 +389,6 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 		retSignals = append(retSignals, sig)
 	}
 
-	val, err = OBDFuelPressureFromV1Data(jsonData)
-	if err != nil {
-		if !errors.Is(err, errNotFound) {
-			errs = append(errs, fmt.Errorf("failed to get 'OBDFuelPressure': %w", err))
-		}
-	} else {
-		sig := vss.Signal{
-			Name:      "obdFuelPressure",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
-		}
-		sig.SetValue(val)
-		retSignals = append(retSignals, sig)
-	}
-
 	val, err = OBDIntakeTempFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -773,54 +757,6 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 		retSignals = append(retSignals, sig)
 	}
 
-	val, err = PowertrainTractionBatteryGrossCapacityFromV1Data(jsonData)
-	if err != nil {
-		if !errors.Is(err, errNotFound) {
-			errs = append(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryGrossCapacity': %w", err))
-		}
-	} else {
-		sig := vss.Signal{
-			Name:      "powertrainTractionBatteryGrossCapacity",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
-		}
-		sig.SetValue(val)
-		retSignals = append(retSignals, sig)
-	}
-
-	val, err = PowertrainTractionBatteryStateOfChargeCurrentFromV1Data(jsonData)
-	if err != nil {
-		if !errors.Is(err, errNotFound) {
-			errs = append(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryStateOfChargeCurrent': %w", err))
-		}
-	} else {
-		sig := vss.Signal{
-			Name:      "powertrainTractionBatteryStateOfChargeCurrent",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
-		}
-		sig.SetValue(val)
-		retSignals = append(retSignals, sig)
-	}
-
-	val, err = PowertrainTractionBatteryTemperatureAverageFromV1Data(jsonData)
-	if err != nil {
-		if !errors.Is(err, errNotFound) {
-			errs = append(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryTemperatureAverage': %w", err))
-		}
-	} else {
-		sig := vss.Signal{
-			Name:      "powertrainTractionBatteryTemperatureAverage",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
-		}
-		sig.SetValue(val)
-		retSignals = append(retSignals, sig)
-	}
-
 	val, err = PowertrainTransmissionCurrentGearFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -936,6 +872,19 @@ func AngularVelocityYawFromV1Data(jsonData []byte) (ret float64, err error) {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.yawRate' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.angularVelocityYaw")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToAngularVelocityYaw1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.angularVelocityYaw': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.angularVelocityYaw' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'AngularVelocityYaw'", errNotFound)
@@ -959,6 +908,19 @@ func ChassisAxleRow1WheelLeftSpeedFromV1Data(jsonData []byte) (ret float64, err 
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.frontlLeftWheelSpeed': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.frontlLeftWheelSpeed' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.chassisAxleRow1WheelLeftSpeed")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelLeftSpeed1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.chassisAxleRow1WheelLeftSpeed': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.chassisAxleRow1WheelLeftSpeed' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 
@@ -1022,6 +984,19 @@ func ChassisAxleRow1WheelRightSpeedFromV1Data(jsonData []byte) (ret float64, err
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.frontRightWheelSpeed': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.frontRightWheelSpeed' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.chassisAxleRow1WheelRightSpeed")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToChassisAxleRow1WheelRightSpeed1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.chassisAxleRow1WheelRightSpeed': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.chassisAxleRow1WheelRightSpeed' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 
@@ -1402,6 +1377,19 @@ func ExteriorAirTemperatureFromV1Data(jsonData []byte) (ret float64, err error) 
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.ambientTemp' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.exteriorAirTemperature")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToExteriorAirTemperature2(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.exteriorAirTemperature': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.exteriorAirTemperature' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'ExteriorAirTemperature'", errNotFound)
@@ -1425,6 +1413,19 @@ func LowVoltageBatteryCurrentVoltageFromV1Data(jsonData []byte) (ret float64, er
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.batteryVoltage': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.batteryVoltage' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.lowVoltageBatteryCurrentVoltage")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToLowVoltageBatteryCurrentVoltage1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.lowVoltageBatteryCurrentVoltage': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.lowVoltageBatteryCurrentVoltage' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 
@@ -1502,6 +1503,19 @@ func OBDCommandedEVAPFromV1Data(jsonData []byte) (ret float64, err error) {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.evap' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.commandedEVAP")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToOBDCommandedEVAP1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.commandedEVAP': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.commandedEVAP' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'OBDCommandedEVAP'", errNotFound)
@@ -1552,6 +1566,19 @@ func OBDDistanceWithMILFromV1Data(jsonData []byte) (ret float64, err error) {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.distanceWMil' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.distanceWithMIL")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToOBDDistanceWithMIL1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.distanceWithMIL': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.distanceWithMIL' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'OBDDistanceWithMIL'", errNotFound)
@@ -1580,31 +1607,6 @@ func OBDEngineLoadFromV1Data(jsonData []byte) (ret float64, err error) {
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'OBDEngineLoad'", errNotFound)
-	}
-
-	return ret, errs
-}
-
-// OBDFuelPressureFromV1Data converts the given JSON data to a float64.
-func OBDFuelPressureFromV1Data(jsonData []byte) (ret float64, err error) {
-	var errs error
-	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.fuelTankPressure")
-	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(float64)
-		if ok {
-			retVal, err := ToOBDFuelPressure0(jsonData, val)
-			if err == nil {
-				return retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.fuelTankPressure': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.fuelTankPressure' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
-		}
-	}
-
-	if errs == nil {
-		return ret, fmt.Errorf("%w 'OBDFuelPressure'", errNotFound)
 	}
 
 	return ret, errs
@@ -1664,7 +1666,7 @@ func OBDLongTermFuelTrim1FromV1Data(jsonData []byte) (ret float64, err error) {
 func OBDMAPFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
 	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.intakePressure")
+	result = gjson.GetBytes(jsonData, "data.MAP")
 	if result.Exists() && result.Value() != nil {
 		val, ok := result.Value().(float64)
 		if ok {
@@ -1672,9 +1674,9 @@ func OBDMAPFromV1Data(jsonData []byte) (ret float64, err error) {
 			if err == nil {
 				return retVal, nil
 			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.intakePressure': %w", err))
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.MAP': %w", err))
 		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.intakePressure' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.MAP' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 
@@ -1702,6 +1704,19 @@ func OBDO2WRSensor1VoltageFromV1Data(jsonData []byte) (ret float64, err error) {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.oxygenSensor1' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.o2WRSensor1Voltage")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToOBDO2WRSensor1Voltage1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.o2WRSensor1Voltage': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.o2WRSensor1Voltage' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'OBDO2WRSensor1Voltage'", errNotFound)
@@ -1725,6 +1740,19 @@ func OBDO2WRSensor2VoltageFromV1Data(jsonData []byte) (ret float64, err error) {
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.oxygenSensor2': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.oxygenSensor2' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.o2WRSensor2Voltage")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToOBDO2WRSensor2Voltage1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.o2WRSensor2Voltage': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.o2WRSensor2Voltage' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 
@@ -1827,6 +1855,19 @@ func PowertrainCombustionEngineECTFromV1Data(jsonData []byte) (ret float64, err 
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.coolantTemp' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.powertrainCombustionEngineECT")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainCombustionEngineECT1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.powertrainCombustionEngineECT': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.powertrainCombustionEngineECT' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'PowertrainCombustionEngineECT'", errNotFound)
@@ -1865,6 +1906,19 @@ func PowertrainCombustionEngineEngineOilLevelFromV1Data(jsonData []byte) (ret st
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.oilLife' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.powertrainCombustionEngineEngineOilLevel")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainCombustionEngineEngineOilLevel2(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.powertrainCombustionEngineEngineOilLevel': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.powertrainCombustionEngineEngineOilLevel' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'PowertrainCombustionEngineEngineOilLevel'", errNotFound)
@@ -1890,6 +1944,19 @@ func PowertrainCombustionEngineEngineOilRelativeLevelFromV1Data(jsonData []byte)
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.oil' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.powertrainCombustionEngineEngineOilRelativeLevel")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainCombustionEngineEngineOilRelativeLevel1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.powertrainCombustionEngineEngineOilRelativeLevel': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.powertrainCombustionEngineEngineOilRelativeLevel' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'PowertrainCombustionEngineEngineOilRelativeLevel'", errNotFound)
@@ -1913,6 +1980,19 @@ func PowertrainCombustionEngineMAFFromV1Data(jsonData []byte) (ret float64, err 
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.maf': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.maf' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.powertrainCombustionEngineMAF")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainCombustionEngineMAF1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.powertrainCombustionEngineMAF': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.powertrainCombustionEngineMAF' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 
@@ -1953,6 +2033,19 @@ func PowertrainCombustionEngineSpeedFromV1Data(jsonData []byte) (ret float64, er
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.engineSpeed' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.powertrainCombustionEngineSpeed")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainCombustionEngineSpeed2(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.powertrainCombustionEngineSpeed': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.powertrainCombustionEngineSpeed' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'PowertrainCombustionEngineSpeed'", errNotFound)
@@ -1976,6 +2069,19 @@ func PowertrainCombustionEngineTPSFromV1Data(jsonData []byte) (ret float64, err 
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.throttlePosition': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.throttlePosition' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.powertrainCombustionEngineTPS")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainCombustionEngineTPS1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.powertrainCombustionEngineTPS': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.powertrainCombustionEngineTPS' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 
@@ -2003,6 +2109,19 @@ func PowertrainCombustionEngineTorqueFromV1Data(jsonData []byte) (ret float64, e
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.engineTorque' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.powertrainCombustionEngineTorque")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainCombustionEngineTorque1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.powertrainCombustionEngineTorque': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.powertrainCombustionEngineTorque' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'PowertrainCombustionEngineTorque'", errNotFound)
@@ -2026,6 +2145,19 @@ func PowertrainFuelSystemAbsoluteLevelFromV1Data(jsonData []byte) (ret float64, 
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.fuelLevelLiters': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.fuelLevelLiters' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.powertrainFuelSystemAbsoluteLevel")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainFuelSystemAbsoluteLevel1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.powertrainFuelSystemAbsoluteLevel': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.powertrainFuelSystemAbsoluteLevel' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 
@@ -2066,6 +2198,19 @@ func PowertrainFuelSystemRelativeLevelFromV1Data(jsonData []byte) (ret float64, 
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.fuelPercentRemaining' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.powertrainfuelSystemRelativeLevel")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainFuelSystemRelativeLevel2(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.powertrainfuelSystemRelativeLevel': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.powertrainfuelSystemRelativeLevel' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'PowertrainFuelSystemRelativeLevel'", errNotFound)
@@ -2089,6 +2234,19 @@ func PowertrainFuelSystemSupportedFuelTypesFromV1Data(jsonData []byte) (ret stri
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.fuelType': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.fuelType' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.powertrainFuelSystemSupportedFuelTypes")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToPowertrainFuelSystemSupportedFuelTypes1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.powertrainFuelSystemSupportedFuelTypes': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.powertrainFuelSystemSupportedFuelTypes' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 
@@ -2116,6 +2274,19 @@ func PowertrainRangeFromV1Data(jsonData []byte) (ret float64, err error) {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.range' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.powertrainRange")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainRange1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.powertrainRange': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.powertrainRange' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'PowertrainRange'", errNotFound)
@@ -2139,6 +2310,19 @@ func PowertrainTractionBatteryChargingChargeLimitFromV1Data(jsonData []byte) (re
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.chargeLimit': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.chargeLimit' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.powertrainTractionBatteryChargingChargeLimit")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainTractionBatteryChargingChargeLimit1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.powertrainTractionBatteryChargingChargeLimit': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.powertrainTractionBatteryChargingChargeLimit' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 
@@ -2166,6 +2350,19 @@ func PowertrainTractionBatteryChargingIsChargingFromV1Data(jsonData []byte) (ret
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.charging' is not of type 'bool' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.powertrainTractionBatteryChargingIsCharging")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(bool)
+		if ok {
+			retVal, err := ToPowertrainTractionBatteryChargingIsCharging1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.powertrainTractionBatteryChargingIsCharging': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.powertrainTractionBatteryChargingIsCharging' is not of type 'bool' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'PowertrainTractionBatteryChargingIsCharging'", errNotFound)
@@ -2189,6 +2386,19 @@ func PowertrainTractionBatteryCurrentPowerFromV1Data(jsonData []byte) (ret float
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.charger.power': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.charger.power' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.vehiclePowertrainTractionBatteryCurrentPower")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainTractionBatteryCurrentPower1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.vehiclePowertrainTractionBatteryCurrentPower': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.vehiclePowertrainTractionBatteryCurrentPower' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 
@@ -2216,84 +2426,22 @@ func PowertrainTractionBatteryCurrentVoltageFromV1Data(jsonData []byte) (ret flo
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.hvBatteryVoltage' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.powertrainTractionBatteryCurrentVoltage")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainTractionBatteryCurrentVoltage1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.powertrainTractionBatteryCurrentVoltage': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.powertrainTractionBatteryCurrentVoltage' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'PowertrainTractionBatteryCurrentVoltage'", errNotFound)
-	}
-
-	return ret, errs
-}
-
-// PowertrainTractionBatteryGrossCapacityFromV1Data converts the given JSON data to a float64.
-func PowertrainTractionBatteryGrossCapacityFromV1Data(jsonData []byte) (ret float64, err error) {
-	var errs error
-	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.batteryCapacity")
-	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(float64)
-		if ok {
-			retVal, err := ToPowertrainTractionBatteryGrossCapacity0(jsonData, val)
-			if err == nil {
-				return retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.batteryCapacity': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.batteryCapacity' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
-		}
-	}
-
-	if errs == nil {
-		return ret, fmt.Errorf("%w 'PowertrainTractionBatteryGrossCapacity'", errNotFound)
-	}
-
-	return ret, errs
-}
-
-// PowertrainTractionBatteryStateOfChargeCurrentFromV1Data converts the given JSON data to a float64.
-func PowertrainTractionBatteryStateOfChargeCurrentFromV1Data(jsonData []byte) (ret float64, err error) {
-	var errs error
-	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.soc")
-	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(float64)
-		if ok {
-			retVal, err := ToPowertrainTractionBatteryStateOfChargeCurrent0(jsonData, val)
-			if err == nil {
-				return retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.soc': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.soc' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
-		}
-	}
-
-	if errs == nil {
-		return ret, fmt.Errorf("%w 'PowertrainTractionBatteryStateOfChargeCurrent'", errNotFound)
-	}
-
-	return ret, errs
-}
-
-// PowertrainTractionBatteryTemperatureAverageFromV1Data converts the given JSON data to a float64.
-func PowertrainTractionBatteryTemperatureAverageFromV1Data(jsonData []byte) (ret float64, err error) {
-	var errs error
-	var result gjson.Result
-	result = gjson.GetBytes(jsonData, "data.hvBatteryCoolantTemperature")
-	if result.Exists() && result.Value() != nil {
-		val, ok := result.Value().(float64)
-		if ok {
-			retVal, err := ToPowertrainTractionBatteryTemperatureAverage0(jsonData, val)
-			if err == nil {
-				return retVal, nil
-			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.hvBatteryCoolantTemperature': %w", err))
-		} else {
-			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.hvBatteryCoolantTemperature' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
-		}
-	}
-
-	if errs == nil {
-		return ret, fmt.Errorf("%w 'PowertrainTractionBatteryTemperatureAverage'", errNotFound)
 	}
 
 	return ret, errs
@@ -2314,6 +2462,19 @@ func PowertrainTransmissionCurrentGearFromV1Data(jsonData []byte) (ret float64, 
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.gearSelection': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.gearSelection' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.powertrainTransmissionCurrentGear")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainTransmissionCurrentGear1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.powertrainTransmissionCurrentGear': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.powertrainTransmissionCurrentGear' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 
@@ -2339,6 +2500,19 @@ func PowertrainTransmissionTemperatureFromV1Data(jsonData []byte) (ret float64, 
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.atfTemperature': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.atfTemperature' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.powertrainTransmissionTemperature")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToPowertrainTransmissionTemperature1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.powertrainTransmissionTemperature': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.powertrainTransmissionTemperature' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 
@@ -2391,6 +2565,19 @@ func PowertrainTypeFromV1Data(jsonData []byte) (ret string, err error) {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.fuelType' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
+	result = gjson.GetBytes(jsonData, "data.powertrainType")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToPowertrainType1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.powertrainType': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.powertrainType' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'PowertrainType'", errNotFound)
@@ -2414,6 +2601,19 @@ func ServiceDistanceToServiceFromV1Data(jsonData []byte) (ret float64, err error
 			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.serviceInterval': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.serviceInterval' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+	result = gjson.GetBytes(jsonData, "data.serviceDistanceToService")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(float64)
+		if ok {
+			retVal, err := ToServiceDistanceToService1(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.serviceDistanceToService': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.serviceDistanceToService' is not of type 'float64' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
 		}
 	}
 

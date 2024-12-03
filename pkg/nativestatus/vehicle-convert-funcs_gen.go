@@ -14,10 +14,24 @@ func ToAngularVelocityYaw0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
+// ToAngularVelocityYaw1 converts data from field 'angularVelocityYaw' of type float64 to 'Vehicle.AngularVelocity.Yaw' of type float64.
+// Vehicle.AngularVelocity.Yaw: Vehicle rotation rate along Z (vertical).
+// Unit: 'degrees/s'
+func ToAngularVelocityYaw1(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToChassisAxleRow1WheelLeftSpeed0 converts data from field 'frontlLeftWheelSpeed' of type float64 to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Speed' of type float64.
 // Vehicle.Chassis.Axle.Row1.Wheel.Left.Speed: Rotational speed of a vehicle's wheel.
 // Unit: 'km/h'
 func ToChassisAxleRow1WheelLeftSpeed0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToChassisAxleRow1WheelLeftSpeed1 converts data from field 'chassisAxleRow1WheelLeftSpeed' of type float64 to 'Vehicle.Chassis.Axle.Row1.Wheel.Left.Speed' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Left.Speed: Rotational speed of a vehicle's wheel.
+// Unit: 'km/h'
+func ToChassisAxleRow1WheelLeftSpeed1(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
@@ -39,6 +53,13 @@ func ToChassisAxleRow1WheelLeftTirePressure1(originalDoc []byte, val float64) (f
 // Vehicle.Chassis.Axle.Row1.Wheel.Right.Speed: Rotational speed of a vehicle's wheel.
 // Unit: 'km/h'
 func ToChassisAxleRow1WheelRightSpeed0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToChassisAxleRow1WheelRightSpeed1 converts data from field 'chassisAxleRow1WheelRightSpeed' of type float64 to 'Vehicle.Chassis.Axle.Row1.Wheel.Right.Speed' of type float64.
+// Vehicle.Chassis.Axle.Row1.Wheel.Right.Speed: Rotational speed of a vehicle's wheel.
+// Unit: 'km/h'
+func ToChassisAxleRow1WheelRightSpeed1(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
@@ -164,10 +185,24 @@ func ToExteriorAirTemperature1(originalDoc []byte, val float64) (float64, error)
 	return val, nil
 }
 
+// ToExteriorAirTemperature2 converts data from field 'exteriorAirTemperature' of type float64 to 'Vehicle.Exterior.AirTemperature' of type float64.
+// Vehicle.Exterior.AirTemperature: Air temperature outside the vehicle.
+// Unit: 'celsius'
+func ToExteriorAirTemperature2(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToLowVoltageBatteryCurrentVoltage0 converts data from field 'batteryVoltage' of type float64 to 'Vehicle.LowVoltageBattery.CurrentVoltage' of type float64.
 // Vehicle.LowVoltageBattery.CurrentVoltage: Current Voltage of the low voltage battery.
 // Unit: 'V'
 func ToLowVoltageBatteryCurrentVoltage0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToLowVoltageBatteryCurrentVoltage1 converts data from field 'lowVoltageBatteryCurrentVoltage' of type float64 to 'Vehicle.LowVoltageBattery.CurrentVoltage' of type float64.
+// Vehicle.LowVoltageBattery.CurrentVoltage: Current Voltage of the low voltage battery.
+// Unit: 'V'
+func ToLowVoltageBatteryCurrentVoltage1(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
@@ -192,6 +227,13 @@ func ToOBDCommandedEVAP0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
+// ToOBDCommandedEVAP1 converts data from field 'commandedEVAP' of type float64 to 'Vehicle.OBD.CommandedEVAP' of type float64.
+// Vehicle.OBD.CommandedEVAP: PID 2E - Commanded evaporative purge (EVAP) valve
+// Unit: 'percent'
+func ToOBDCommandedEVAP1(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToOBDDistanceSinceDTCClear0 converts data from field 'distanceSinceDtcClear' of type float64 to 'Vehicle.OBD.DistanceSinceDTCClear' of type float64.
 // Vehicle.OBD.DistanceSinceDTCClear: PID 31 - Distance traveled since codes cleared
 // Unit: 'km'
@@ -206,6 +248,13 @@ func ToOBDDistanceWithMIL0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
+// ToOBDDistanceWithMIL1 converts data from field 'distanceWithMIL' of type float64 to 'Vehicle.OBD.DistanceWithMIL' of type float64.
+// Vehicle.OBD.DistanceWithMIL: PID 21 - Distance traveled with MIL on
+// Unit: 'km'
+func ToOBDDistanceWithMIL1(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToOBDEngineLoad0 converts data from field 'engineLoad' of type float64 to 'Vehicle.OBD.EngineLoad' of type float64.
 // Vehicle.OBD.EngineLoad: PID 04 - Engine load in percent - 0 = no load, 100 = full load
 // Unit: 'percent'
@@ -214,13 +263,6 @@ func ToOBDEngineLoad0(originalDoc []byte, val float64) (float64, error) {
 	if hasV1Schema(schemaVersion) {
 		return val * 100, nil
 	}
-	return val, nil
-}
-
-// ToOBDFuelPressure0 converts data from field 'fuelTankPressure' of type float64 to 'Vehicle.OBD.FuelPressure' of type float64.
-// Vehicle.OBD.FuelPressure: PID 0A - Fuel pressure
-// Unit: 'kPa'
-func ToOBDFuelPressure0(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
@@ -238,7 +280,7 @@ func ToOBDLongTermFuelTrim10(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
-// ToOBDMAP0 converts data from field 'intakePressure' of type float64 to 'Vehicle.OBD.MAP' of type float64.
+// ToOBDMAP0 converts data from field 'MAP' of type float64 to 'Vehicle.OBD.MAP' of type float64.
 // Vehicle.OBD.MAP: PID 0B - Intake manifold pressure
 // Unit: 'kPa'
 func ToOBDMAP0(originalDoc []byte, val float64) (float64, error) {
@@ -252,10 +294,24 @@ func ToOBDO2WRSensor1Voltage0(originalDoc []byte, val float64) (float64, error) 
 	return val, nil
 }
 
+// ToOBDO2WRSensor1Voltage1 converts data from field 'o2WRSensor1Voltage' of type float64 to 'Vehicle.OBD.O2WR.Sensor1.Voltage' of type float64.
+// Vehicle.OBD.O2WR.Sensor1.Voltage: PID 2x (byte CD) - Voltage for wide range/band oxygen sensor
+// Unit: 'V'
+func ToOBDO2WRSensor1Voltage1(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToOBDO2WRSensor2Voltage0 converts data from field 'oxygenSensor2' of type float64 to 'Vehicle.OBD.O2WR.Sensor2.Voltage' of type float64.
 // Vehicle.OBD.O2WR.Sensor2.Voltage: PID 2x (byte CD) - Voltage for wide range/band oxygen sensor
 // Unit: 'V'
 func ToOBDO2WRSensor2Voltage0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToOBDO2WRSensor2Voltage1 converts data from field 'o2WRSensor2Voltage' of type float64 to 'Vehicle.OBD.O2WR.Sensor2.Voltage' of type float64.
+// Vehicle.OBD.O2WR.Sensor2.Voltage: PID 2x (byte CD) - Voltage for wide range/band oxygen sensor
+// Unit: 'V'
+func ToOBDO2WRSensor2Voltage1(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
@@ -286,6 +342,13 @@ func ToPowertrainCombustionEngineECT0(originalDoc []byte, val float64) (float64,
 	return val, nil
 }
 
+// ToPowertrainCombustionEngineECT1 converts data from field 'powertrainCombustionEngineECT' of type float64 to 'Vehicle.Powertrain.CombustionEngine.ECT' of type float64.
+// Vehicle.Powertrain.CombustionEngine.ECT: Engine coolant temperature.
+// Unit: 'celsius'
+func ToPowertrainCombustionEngineECT1(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToPowertrainCombustionEngineEngineOilLevel0 converts data from field 'oil' of type float64 to 'Vehicle.Powertrain.CombustionEngine.EngineOilLevel' of type string.
 // Vehicle.Powertrain.CombustionEngine.EngineOilLevel: Engine oil level.
 func ToPowertrainCombustionEngineEngineOilLevel0(originalDoc []byte, val float64) (string, error) {
@@ -309,6 +372,12 @@ func ToPowertrainCombustionEngineEngineOilLevel1(originalDoc []byte, val float64
 	panic("not implemented")
 }
 
+// ToPowertrainCombustionEngineEngineOilLevel2 converts data from field 'powertrainCombustionEngineEngineOilLevel' of type float64 to 'Vehicle.Powertrain.CombustionEngine.EngineOilLevel' of type string.
+// Vehicle.Powertrain.CombustionEngine.EngineOilLevel: Engine oil level.
+func ToPowertrainCombustionEngineEngineOilLevel2(originalDoc []byte, val float64) (string, error) {
+	panic("not implemented")
+}
+
 // ToPowertrainCombustionEngineEngineOilRelativeLevel0 converts data from field 'oil' of type float64 to 'Vehicle.Powertrain.CombustionEngine.EngineOilRelativeLevel' of type float64.
 // Vehicle.Powertrain.CombustionEngine.EngineOilRelativeLevel: Engine oil level as a percentage.
 // Unit: 'percent' Min: '0' Max: '100'
@@ -317,10 +386,24 @@ func ToPowertrainCombustionEngineEngineOilRelativeLevel0(originalDoc []byte, val
 	return val * 100, nil
 }
 
+// ToPowertrainCombustionEngineEngineOilRelativeLevel1 converts data from field 'powertrainCombustionEngineEngineOilRelativeLevel' of type float64 to 'Vehicle.Powertrain.CombustionEngine.EngineOilRelativeLevel' of type float64.
+// Vehicle.Powertrain.CombustionEngine.EngineOilRelativeLevel: Engine oil level as a percentage.
+// Unit: 'percent' Min: '0' Max: '100'
+func ToPowertrainCombustionEngineEngineOilRelativeLevel1(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToPowertrainCombustionEngineMAF0 converts data from field 'maf' of type float64 to 'Vehicle.Powertrain.CombustionEngine.MAF' of type float64.
 // Vehicle.Powertrain.CombustionEngine.MAF: Grams of air drawn into engine per second.
 // Unit: 'g/s'
 func ToPowertrainCombustionEngineMAF0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToPowertrainCombustionEngineMAF1 converts data from field 'powertrainCombustionEngineMAF' of type float64 to 'Vehicle.Powertrain.CombustionEngine.MAF' of type float64.
+// Vehicle.Powertrain.CombustionEngine.MAF: Grams of air drawn into engine per second.
+// Unit: 'g/s'
+func ToPowertrainCombustionEngineMAF1(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
@@ -338,6 +421,13 @@ func ToPowertrainCombustionEngineSpeed1(originalDoc []byte, val float64) (float6
 	return val, nil
 }
 
+// ToPowertrainCombustionEngineSpeed2 converts data from field 'powertrainCombustionEngineSpeed' of type float64 to 'Vehicle.Powertrain.CombustionEngine.Speed' of type float64.
+// Vehicle.Powertrain.CombustionEngine.Speed: Engine speed measured as rotations per minute.
+// Unit: 'rpm'
+func ToPowertrainCombustionEngineSpeed2(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToPowertrainCombustionEngineTPS0 converts data from field 'throttlePosition' of type float64 to 'Vehicle.Powertrain.CombustionEngine.TPS' of type float64.
 // Vehicle.Powertrain.CombustionEngine.TPS: Current throttle position.
 // Unit: 'percent'  Max: '100'
@@ -349,6 +439,13 @@ func ToPowertrainCombustionEngineTPS0(originalDoc []byte, val float64) (float64,
 	return val, nil
 }
 
+// ToPowertrainCombustionEngineTPS1 converts data from field 'powertrainCombustionEngineTPS' of type float64 to 'Vehicle.Powertrain.CombustionEngine.TPS' of type float64.
+// Vehicle.Powertrain.CombustionEngine.TPS: Current throttle position.
+// Unit: 'percent'  Max: '100'
+func ToPowertrainCombustionEngineTPS1(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToPowertrainCombustionEngineTorque0 converts data from field 'engineTorque' of type float64 to 'Vehicle.Powertrain.CombustionEngine.Torque' of type float64.
 // Vehicle.Powertrain.CombustionEngine.Torque: Current engine torque. Shall be reported as 0 during engine breaking.
 // Unit: 'Nm'
@@ -356,10 +453,24 @@ func ToPowertrainCombustionEngineTorque0(originalDoc []byte, val float64) (float
 	return val, nil
 }
 
+// ToPowertrainCombustionEngineTorque1 converts data from field 'powertrainCombustionEngineTorque' of type float64 to 'Vehicle.Powertrain.CombustionEngine.Torque' of type float64.
+// Vehicle.Powertrain.CombustionEngine.Torque: Current engine torque. Shall be reported as 0 during engine breaking.
+// Unit: 'Nm'
+func ToPowertrainCombustionEngineTorque1(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToPowertrainFuelSystemAbsoluteLevel0 converts data from field 'fuelLevelLiters' of type float64 to 'Vehicle.Powertrain.FuelSystem.AbsoluteLevel' of type float64.
 // Vehicle.Powertrain.FuelSystem.AbsoluteLevel: Current available fuel in the fuel tank expressed in liters.
 // Unit: 'l'
 func ToPowertrainFuelSystemAbsoluteLevel0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToPowertrainFuelSystemAbsoluteLevel1 converts data from field 'powertrainFuelSystemAbsoluteLevel' of type float64 to 'Vehicle.Powertrain.FuelSystem.AbsoluteLevel' of type float64.
+// Vehicle.Powertrain.FuelSystem.AbsoluteLevel: Current available fuel in the fuel tank expressed in liters.
+// Unit: 'l'
+func ToPowertrainFuelSystemAbsoluteLevel1(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
@@ -376,6 +487,13 @@ func ToPowertrainFuelSystemRelativeLevel0(originalDoc []byte, val float64) (floa
 func ToPowertrainFuelSystemRelativeLevel1(originalDoc []byte, val float64) (float64, error) {
 	// fuelPercentRemaining comes in as a value between 0 and 1, convert to percentage.
 	return val * 100, nil
+}
+
+// ToPowertrainFuelSystemRelativeLevel2 converts data from field 'powertrainfuelSystemRelativeLevel' of type float64 to 'Vehicle.Powertrain.FuelSystem.RelativeLevel' of type float64.
+// Vehicle.Powertrain.FuelSystem.RelativeLevel: Level in fuel tank as percent of capacity. 0 = empty. 100 = full.
+// Unit: 'percent' Min: '0' Max: '100'
+func ToPowertrainFuelSystemRelativeLevel2(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
 }
 
 // ToPowertrainFuelSystemSupportedFuelTypes0 converts data from field 'fuelType' of type string to 'Vehicle.Powertrain.FuelSystem.SupportedFuelTypes' of type string.
@@ -395,10 +513,23 @@ func ToPowertrainFuelSystemSupportedFuelTypes0(originalDoc []byte, val string) (
 	}
 }
 
+// ToPowertrainFuelSystemSupportedFuelTypes1 converts data from field 'powertrainFuelSystemSupportedFuelTypes' of type string to 'Vehicle.Powertrain.FuelSystem.SupportedFuelTypes' of type string.
+// Vehicle.Powertrain.FuelSystem.SupportedFuelTypes: High level information of fuel types supported
+func ToPowertrainFuelSystemSupportedFuelTypes1(originalDoc []byte, val string) (string, error) {
+	return val, nil
+}
+
 // ToPowertrainRange0 converts data from field 'range' of type float64 to 'Vehicle.Powertrain.Range' of type float64.
 // Vehicle.Powertrain.Range: Remaining range in meters using all energy sources available in the vehicle.
 // Unit: 'm'
 func ToPowertrainRange0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToPowertrainRange1 converts data from field 'powertrainRange' of type float64 to 'Vehicle.Powertrain.Range' of type float64.
+// Vehicle.Powertrain.Range: Remaining range in meters using all energy sources available in the vehicle.
+// Unit: 'm'
+func ToPowertrainRange1(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
@@ -410,6 +541,13 @@ func ToPowertrainTractionBatteryChargingChargeLimit0(originalDoc []byte, val flo
 	return val * 100, nil
 }
 
+// ToPowertrainTractionBatteryChargingChargeLimit1 converts data from field 'powertrainTractionBatteryChargingChargeLimit' of type float64 to 'Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit' of type float64.
+// Vehicle.Powertrain.TractionBattery.Charging.ChargeLimit: Target charge limit (state of charge) for battery.
+// Unit: 'percent' Min: '0' Max: '100'
+func ToPowertrainTractionBatteryChargingChargeLimit1(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToPowertrainTractionBatteryChargingIsCharging0 converts data from field 'charging' of type bool to 'Vehicle.Powertrain.TractionBattery.Charging.IsCharging' of type float64.
 // Vehicle.Powertrain.TractionBattery.Charging.IsCharging: True if charging is ongoing. Charging is considered to be ongoing if energy is flowing from charger to vehicle.
 func ToPowertrainTractionBatteryChargingIsCharging0(originalDoc []byte, val bool) (float64, error) {
@@ -417,6 +555,12 @@ func ToPowertrainTractionBatteryChargingIsCharging0(originalDoc []byte, val bool
 		return 1, nil
 	}
 	return 0, nil
+}
+
+// ToPowertrainTractionBatteryChargingIsCharging1 converts data from field 'powertrainTractionBatteryChargingIsCharging' of type bool to 'Vehicle.Powertrain.TractionBattery.Charging.IsCharging' of type float64.
+// Vehicle.Powertrain.TractionBattery.Charging.IsCharging: True if charging is ongoing. Charging is considered to be ongoing if energy is flowing from charger to vehicle.
+func ToPowertrainTractionBatteryChargingIsCharging1(originalDoc []byte, val bool) (float64, error) {
+	panic("not implemented")
 }
 
 // ToPowertrainTractionBatteryCurrentPower0 converts data from field 'charger.power' of type float64 to 'Vehicle.Powertrain.TractionBattery.CurrentPower' of type float64.
@@ -427,6 +571,13 @@ func ToPowertrainTractionBatteryCurrentPower0(originalDoc []byte, val float64) (
 	return 1000 * val, nil
 }
 
+// ToPowertrainTractionBatteryCurrentPower1 converts data from field 'vehiclePowertrainTractionBatteryCurrentPower' of type float64 to 'Vehicle.Powertrain.TractionBattery.CurrentPower' of type float64.
+// Vehicle.Powertrain.TractionBattery.CurrentPower: Current electrical energy flowing in/out of battery. Positive = Energy flowing in to battery, e.g. during charging. Negative = Energy flowing out of battery, e.g. during driving.
+// Unit: 'W'
+func ToPowertrainTractionBatteryCurrentPower1(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToPowertrainTractionBatteryCurrentVoltage0 converts data from field 'hvBatteryVoltage' of type float64 to 'Vehicle.Powertrain.TractionBattery.CurrentVoltage' of type float64.
 // Vehicle.Powertrain.TractionBattery.CurrentVoltage: Current Voltage of the battery.
 // Unit: 'V'
@@ -434,29 +585,10 @@ func ToPowertrainTractionBatteryCurrentVoltage0(originalDoc []byte, val float64)
 	return val, nil
 }
 
-// ToPowertrainTractionBatteryGrossCapacity0 converts data from field 'batteryCapacity' of type float64 to 'Vehicle.Powertrain.TractionBattery.GrossCapacity' of type float64.
-// Vehicle.Powertrain.TractionBattery.GrossCapacity: Gross capacity of the battery.
-// Unit: 'kWh'
-func ToPowertrainTractionBatteryGrossCapacity0(originalDoc []byte, val float64) (float64, error) {
-	return val, nil
-}
-
-// ToPowertrainTractionBatteryStateOfChargeCurrent0 converts data from field 'soc' of type float64 to 'Vehicle.Powertrain.TractionBattery.StateOfCharge.Current' of type float64.
-// Vehicle.Powertrain.TractionBattery.StateOfCharge.Current: Physical state of charge of the high voltage battery, relative to net capacity. This is not necessarily the state of charge being displayed to the customer.
-// Unit: 'percent' Min: '0' Max: '100.0'
-func ToPowertrainTractionBatteryStateOfChargeCurrent0(originalDoc []byte, val float64) (float64, error) {
-	schemaVersion := GetSchemaVersion(originalDoc)
-	if hasV1Schema(schemaVersion) {
-		// soc comes in as a value between 0 and 1, convert to percentage.
-		return val * 100, nil
-	}
-	return val, nil
-}
-
-// ToPowertrainTractionBatteryTemperatureAverage0 converts data from field 'hvBatteryCoolantTemperature' of type float64 to 'Vehicle.Powertrain.TractionBattery.Temperature.Average' of type float64.
-// Vehicle.Powertrain.TractionBattery.Temperature.Average: Current average temperature of the battery cells.
-// Unit: 'celsius'
-func ToPowertrainTractionBatteryTemperatureAverage0(originalDoc []byte, val float64) (float64, error) {
+// ToPowertrainTractionBatteryCurrentVoltage1 converts data from field 'powertrainTractionBatteryCurrentVoltage' of type float64 to 'Vehicle.Powertrain.TractionBattery.CurrentVoltage' of type float64.
+// Vehicle.Powertrain.TractionBattery.CurrentVoltage: Current Voltage of the battery.
+// Unit: 'V'
+func ToPowertrainTractionBatteryCurrentVoltage1(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
@@ -466,10 +598,23 @@ func ToPowertrainTransmissionCurrentGear0(originalDoc []byte, val float64) (floa
 	return val, nil
 }
 
+// ToPowertrainTransmissionCurrentGear1 converts data from field 'powertrainTransmissionCurrentGear' of type float64 to 'Vehicle.Powertrain.Transmission.CurrentGear' of type float64.
+// Vehicle.Powertrain.Transmission.CurrentGear: The current gear. 0=Neutral, 1/2/..=Forward, -1/-2/..=Reverse.
+func ToPowertrainTransmissionCurrentGear1(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
 // ToPowertrainTransmissionTemperature0 converts data from field 'atfTemperature' of type float64 to 'Vehicle.Powertrain.Transmission.Temperature' of type float64.
 // Vehicle.Powertrain.Transmission.Temperature: The current gearbox temperature.
 // Unit: 'celsius'
 func ToPowertrainTransmissionTemperature0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToPowertrainTransmissionTemperature1 converts data from field 'powertrainTransmissionTemperature' of type float64 to 'Vehicle.Powertrain.Transmission.Temperature' of type float64.
+// Vehicle.Powertrain.Transmission.Temperature: The current gearbox temperature.
+// Unit: 'celsius'
+func ToPowertrainTransmissionTemperature1(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
@@ -497,10 +642,23 @@ func ToPowertrainType0(originalDoc []byte, val string) (string, error) {
 	return "COMBUSTION", nil
 }
 
+// ToPowertrainType1 converts data from field 'powertrainType' of type string to 'Vehicle.Powertrain.Type' of type string.
+// Vehicle.Powertrain.Type: Defines the powertrain type of the vehicle.
+func ToPowertrainType1(originalDoc []byte, val string) (string, error) {
+	return val, nil
+}
+
 // ToServiceDistanceToService0 converts data from field 'serviceInterval' of type float64 to 'Vehicle.Service.DistanceToService' of type float64.
 // Vehicle.Service.DistanceToService: Remaining distance to service (of any kind). Negative values indicate service overdue.
 // Unit: 'km'
 func ToServiceDistanceToService0(originalDoc []byte, val float64) (float64, error) {
+	return val, nil
+}
+
+// ToServiceDistanceToService1 converts data from field 'serviceDistanceToService' of type float64 to 'Vehicle.Service.DistanceToService' of type float64.
+// Vehicle.Service.DistanceToService: Remaining distance to service (of any kind). Negative values indicate service overdue.
+// Unit: 'km'
+func ToServiceDistanceToService1(originalDoc []byte, val float64) (float64, error) {
 	return val, nil
 }
 
