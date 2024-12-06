@@ -108,7 +108,7 @@ func (c *CloudEventHeader) Equals(other CloudEventHeader) bool {
 	return c.ID == other.ID && c.Source == other.Source
 }
 
-type hdrAlias CloudEventHeader
+type cloudEventHeader CloudEventHeader
 
 func ignoreDataField(json.RawMessage) error { return nil }
 
@@ -126,7 +126,7 @@ func (c *CloudEventHeader) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements custom JSON marshaling for CloudEventHeader
 func (c CloudEventHeader) MarshalJSON() ([]byte, error) {
 	// Marshal the base struct
-	aux := (hdrAlias)(c)
+	aux := (cloudEventHeader)(c)
 	aux.SpecVersion = SpecVersion
 	data, err := json.Marshal(aux)
 	if err != nil {
@@ -171,7 +171,7 @@ func getJSONFieldNames(t reflect.Type) map[string]struct{} {
 
 func unmarshalCloudEvent(data []byte, dataFunc func(json.RawMessage) error) (CloudEventHeader, error) {
 	c := CloudEventHeader{}
-	aux := hdrAlias{}
+	aux := cloudEventHeader{}
 	// Unmarshal known fields directly into the struct
 	if err := json.Unmarshal(data, &aux); err != nil {
 		return c, err
