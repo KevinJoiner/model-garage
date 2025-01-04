@@ -3,10 +3,10 @@ package autopi
 
 var errNotFound = errors.New("field not found")
 
-// SignalsFromV1Data creates a slice of vss.Signal from the given v1 status JSON data.
+// SignalsFromV1Data creates a slice of vss.SignalValue from the given v1 status JSON data.
 // On error, partial results may be returned.
-func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []error) {
-	var retSignals []vss.Signal
+func SignalsFromV1Data(timestamp time.Time, jsonData []byte) ([]vss.SignalValue, []error) {
+	var retSignals []vss.SignalValue
 {{ $first := true -}}
 {{- $root := . }}
 {{- range $idx, $sig := .Signals }}
@@ -23,11 +23,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get '{{ $sig.GOName }}': %w", err))
 		}
 	}else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name: "{{ $sig.JSONName }}",
-			TokenID: baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source: baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)

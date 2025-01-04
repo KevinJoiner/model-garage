@@ -14,73 +14,48 @@ import (
 )
 
 // SignalsFromV2Payload extracts signals from a V2 payload.
-func SignalsFromV2Payload(jsonData []byte) ([]vss.Signal, error) {
-	tokenID, err := autopi.TokenIDFromData(jsonData)
-	if err != nil {
-		return nil, convert.ConversionError{
-			Errors: []error{fmt.Errorf("error getting tokenId: %w", err)},
-		}
-	}
-	source, err := autopi.SourceFromData(jsonData)
-	if err != nil {
-		return nil, convert.ConversionError{
-			TokenID: tokenID,
-			Errors:  []error{fmt.Errorf("error getting source: %w", err)},
-		}
-	}
+func SignalsFromV2Payload(jsonData []byte) ([]vss.SignalValue, error) {
 	signals := gjson.GetBytes(jsonData, "data.vehicle.signals")
 	if !signals.Exists() {
-		return nil, convert.ConversionError{
-			TokenID: tokenID,
-			Source:  source,
-			Errors:  []error{convert.FieldNotFoundError{Field: "signals", Lookup: "data.vehicle.signals"}},
+		return nil, convert.SignalValueConversionError{
+			Errors: []error{convert.FieldNotFoundError{Field: "signals", Lookup: "data.vehicle.signals"}},
 		}
 	}
 	if !signals.IsArray() {
 		if signals.Value() == nil {
 			// If the signals array is NULL treat it like an empty array.
-			return []vss.Signal{}, nil
+			return []vss.SignalValue{}, nil
 		}
-		return nil, convert.ConversionError{
-			TokenID: tokenID,
-			Source:  source,
-			Errors:  []error{errors.New("signals field is not an array")},
+		return nil, convert.SignalValueConversionError{
+			Errors: []error{errors.New("signals field is not an array")},
 		}
 	}
-	retSignals := []vss.Signal{}
-	signalMeta := vss.Signal{
-		TokenID: tokenID,
-		Source:  source,
-	}
+	retSignals := []vss.SignalValue{}
 
-	conversionErrors := convert.ConversionError{
-		TokenID: tokenID,
-		Source:  source,
-	}
+	SignalValueConversionErrors := convert.SignalValueConversionError{}
 	for _, sigData := range signals.Array() {
 		originalName, err := NameFromV2Signal(sigData)
 		if err != nil {
-			conversionErrors.Errors = append(conversionErrors.Errors, err)
+			SignalValueConversionErrors.Errors = append(SignalValueConversionErrors.Errors, err)
 			continue
 		}
 		ts, err := TimestampFromV2Signal(sigData)
 		if err != nil {
 			err = fmt.Errorf("error for '%s': %w", originalName, err)
-			conversionErrors.Errors = append(conversionErrors.Errors, err)
+			SignalValueConversionErrors.Errors = append(SignalValueConversionErrors.Errors, err)
 			continue
 		}
-		signalMeta.Timestamp = ts
-		sigs, err := autopi.SignalsFromV2Data(jsonData, signalMeta, originalName, sigData)
+		sigs, err := autopi.SignalsFromV2Data(jsonData, ts, originalName, sigData)
 		if err != nil {
-			conversionErrors.Errors = append(conversionErrors.Errors, err)
+			SignalValueConversionErrors.Errors = append(SignalValueConversionErrors.Errors, err)
 			continue
 		}
 		retSignals = append(retSignals, sigs...)
 	}
 
-	if len(conversionErrors.Errors) > 0 {
-		conversionErrors.DecodedSignals = retSignals
-		return nil, conversionErrors
+	if len(SignalValueConversionErrors.Errors) > 0 {
+		SignalValueConversionErrors.DecodedSignals = retSignals
+		return nil, SignalValueConversionErrors
 	}
 	return retSignals, nil
 }

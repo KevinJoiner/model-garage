@@ -16,7 +16,7 @@ func TestFullFromDataConversion(t *testing.T) {
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
 
 	// sort the signals so diffs are easier to read
-	sortFunc := func(a, b vss.Signal) int {
+	sortFunc := func(a, b vss.SignalValue) int {
 		return cmp.Compare(a.Name, b.Name)
 	}
 	slices.SortFunc(expectedSignals, sortFunc)
@@ -78,37 +78,37 @@ var (
 	}`
 	ts = time.Date(2022, 1, 1, 12, 34, 56, 0, time.UTC)
 
-	expectedSignals = []vss.Signal{
-		{TokenID: 123, Timestamp: ts, Name: "chassisAxleRow1WheelLeftTirePressure", ValueNumber: 30.5, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "chassisAxleRow1WheelRightTirePressure", ValueNumber: 31, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "chassisAxleRow2WheelLeftTirePressure", ValueNumber: 32.2, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "chassisAxleRow2WheelRightTirePressure", ValueNumber: 33.1, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainTractionBatteryCurrentPower", ValueNumber: 34000.0, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "currentLocationAltitude", ValueNumber: 100, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "currentLocationLatitude", ValueNumber: 37.7749, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "currentLocationLongitude", ValueNumber: -122.4194, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "currentLocationIsRedacted", ValueNumber: 1, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainCombustionEngineECT", ValueNumber: 90, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainCombustionEngineEngineOilLevel", ValueString: "CRITICALLY_LOW", Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainCombustionEngineEngineOilRelativeLevel", ValueNumber: 10, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainCombustionEngineSpeed", ValueNumber: 3000, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainCombustionEngineTPS", ValueNumber: 50, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainFuelSystemRelativeLevel", ValueNumber: 60, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainFuelSystemSupportedFuelTypes", ValueString: "GASOLINE", Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainRange", ValueNumber: 300, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainType", ValueString: "COMBUSTION", Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainTractionBatteryChargingChargeLimit", ValueNumber: 80, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainTractionBatteryChargingIsCharging", ValueNumber: 1, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainTractionBatteryGrossCapacity", ValueNumber: 60, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainTractionBatteryStateOfChargeCurrent", ValueNumber: 70, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainTransmissionTravelledDistance", ValueNumber: 50000, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "speed", ValueNumber: 60, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "exteriorAirTemperature", ValueNumber: 25, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "lowVoltageBatteryCurrentVoltage", ValueNumber: 12.5, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "obdBarometricPressure", ValueNumber: 1013.25, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "obdEngineLoad", ValueNumber: 75, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "obdIntakeTemp", ValueNumber: 30, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "obdRunTime", ValueNumber: 1200, Source: "dimo/integration/123"},
+	expectedSignals = []vss.SignalValue{
+		{Timestamp: ts, Name: "chassisAxleRow1WheelLeftTirePressure", ValueNumber: 30.5},
+		{Timestamp: ts, Name: "chassisAxleRow1WheelRightTirePressure", ValueNumber: 31},
+		{Timestamp: ts, Name: "chassisAxleRow2WheelLeftTirePressure", ValueNumber: 32.2},
+		{Timestamp: ts, Name: "chassisAxleRow2WheelRightTirePressure", ValueNumber: 33.1},
+		{Timestamp: ts, Name: "powertrainTractionBatteryCurrentPower", ValueNumber: 34000.0},
+		{Timestamp: ts, Name: "currentLocationAltitude", ValueNumber: 100},
+		{Timestamp: ts, Name: "currentLocationLatitude", ValueNumber: 37.7749},
+		{Timestamp: ts, Name: "currentLocationLongitude", ValueNumber: -122.4194},
+		{Timestamp: ts, Name: "currentLocationIsRedacted", ValueNumber: 1},
+		{Timestamp: ts, Name: "powertrainCombustionEngineECT", ValueNumber: 90},
+		{Timestamp: ts, Name: "powertrainCombustionEngineEngineOilLevel", ValueString: "CRITICALLY_LOW"},
+		{Timestamp: ts, Name: "powertrainCombustionEngineEngineOilRelativeLevel", ValueNumber: 10},
+		{Timestamp: ts, Name: "powertrainCombustionEngineSpeed", ValueNumber: 3000},
+		{Timestamp: ts, Name: "powertrainCombustionEngineTPS", ValueNumber: 50},
+		{Timestamp: ts, Name: "powertrainFuelSystemRelativeLevel", ValueNumber: 60},
+		{Timestamp: ts, Name: "powertrainFuelSystemSupportedFuelTypes", ValueString: "GASOLINE"},
+		{Timestamp: ts, Name: "powertrainRange", ValueNumber: 300},
+		{Timestamp: ts, Name: "powertrainType", ValueString: "COMBUSTION"},
+		{Timestamp: ts, Name: "powertrainTractionBatteryChargingChargeLimit", ValueNumber: 80},
+		{Timestamp: ts, Name: "powertrainTractionBatteryChargingIsCharging", ValueNumber: 1},
+		{Timestamp: ts, Name: "powertrainTractionBatteryGrossCapacity", ValueNumber: 60},
+		{Timestamp: ts, Name: "powertrainTractionBatteryStateOfChargeCurrent", ValueNumber: 70},
+		{Timestamp: ts, Name: "powertrainTransmissionTravelledDistance", ValueNumber: 50000},
+		{Timestamp: ts, Name: "speed", ValueNumber: 60},
+		{Timestamp: ts, Name: "exteriorAirTemperature", ValueNumber: 25},
+		{Timestamp: ts, Name: "lowVoltageBatteryCurrentVoltage", ValueNumber: 12.5},
+		{Timestamp: ts, Name: "obdBarometricPressure", ValueNumber: 1013.25},
+		{Timestamp: ts, Name: "obdEngineLoad", ValueNumber: 75},
+		{Timestamp: ts, Name: "obdIntakeTemp", ValueNumber: 30},
+		{Timestamp: ts, Name: "obdRunTime", ValueNumber: 1200},
 	}
 )
 
@@ -134,9 +134,9 @@ var (
 		}
 	}`
 
-	expectedSignalsWithoutNull = []vss.Signal{
-		{TokenID: 123, Timestamp: ts, Name: "speed", ValueNumber: 25.0, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainTransmissionTravelledDistance", ValueNumber: 5024, Source: "dimo/integration/123"},
+	expectedSignalsWithoutNull = []vss.SignalValue{
+		{Timestamp: ts, Name: "speed", ValueNumber: 25.0},
+		{Timestamp: ts, Name: "powertrainTransmissionTravelledDistance", ValueNumber: 5024},
 	}
 )
 
@@ -162,8 +162,8 @@ var (
 		}
 	}`
 
-	expectedSignalsWithFromTokenID = []vss.Signal{
-		{TokenID: 123, Timestamp: ts, Name: "speed", ValueNumber: 25.0, Source: "dimo/integration/123"},
-		{TokenID: 123, Timestamp: ts, Name: "powertrainTransmissionTravelledDistance", ValueNumber: 5024, Source: "dimo/integration/123"},
+	expectedSignalsWithFromTokenID = []vss.SignalValue{
+		{Timestamp: ts, Name: "speed", ValueNumber: 25.0},
+		{Timestamp: ts, Name: "powertrainTransmissionTravelledDistance", ValueNumber: 5024},
 	}
 )
