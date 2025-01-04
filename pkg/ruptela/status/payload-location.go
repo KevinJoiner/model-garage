@@ -12,49 +12,24 @@ import (
 )
 
 // SignalsFromLocationPayload extracts signals from a V2 payload.
-func SignalsFromLocationPayload(jsonData []byte) ([]vss.Signal, error) {
-	tokenID, err := TokenIDFromData(jsonData)
-	if err != nil {
-		return nil, convert.ConversionError{
-			Errors: []error{fmt.Errorf("error getting tokenId: %w", err)},
-		}
-	}
-	source, err := SourceFromData(jsonData)
-	if err != nil {
-		return nil, convert.ConversionError{
-			TokenID: tokenID,
-			Errors:  []error{fmt.Errorf("error getting source: %w", err)},
-		}
-	}
+func SignalsFromLocationPayload(jsonData []byte) ([]vss.SignalValue, error) {
 	signals := gjson.GetBytes(jsonData, "data.location")
 	if !signals.Exists() {
 		return nil, convert.ConversionError{
-			TokenID: tokenID,
-			Source:  source,
-			Errors:  []error{convert.FieldNotFoundError{Field: "signals", Lookup: "data.location"}},
+			Errors: []error{convert.FieldNotFoundError{Field: "signals", Lookup: "data.location"}},
 		}
 	}
 	if !signals.IsArray() {
 		if signals.Value() == nil {
 			// If the signals array is NULL treat it like an empty array.
-			return []vss.Signal{}, nil
+			return []vss.SignalValue{}, nil
 		}
 		return nil, convert.ConversionError{
-			TokenID: tokenID,
-			Source:  source,
-			Errors:  []error{errors.New("signals field is not an array")},
+			Errors: []error{errors.New("signals field is not an array")},
 		}
 	}
-	retSignals := []vss.Signal{}
-	signalMeta := vss.Signal{
-		TokenID: tokenID,
-		Source:  source,
-	}
-
-	conversionErrors := convert.ConversionError{
-		TokenID: tokenID,
-		Source:  source,
-	}
+	retSignals := []vss.SignalValue{}
+	conversionErrors := convert.ConversionError{}
 	for _, sigData := range signals.Array() {
 		if !sigData.IsObject() {
 			err := errors.New("signal data is not an object")
@@ -74,8 +49,7 @@ func SignalsFromLocationPayload(jsonData []byte) ([]vss.Signal, error) {
 				// skip the timestamp field
 				return true
 			}
-			signalMeta.Timestamp = ts
-			sigs, err := ruptela.SignalsFromLocationData(jsonData, signalMeta, key.String(), value)
+			sigs, err := ruptela.SignalsFromLocationData(jsonData, ts, key.String(), value)
 			if err != nil {
 				conversionErrors.Errors = append(conversionErrors.Errors, err)
 				return true

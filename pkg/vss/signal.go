@@ -27,9 +27,15 @@ const (
 // Signal represents a single signal collected from a device.
 // This is the data format that is stored in the database.
 type Signal struct {
+	SignalValue
 	// TokenID is the unique identifier of the device.
 	TokenID uint32 `ch:"token_id" json:"tokenId"`
+	// Source is the source of the signal collected.
+	Source string `ch:"source" json:"source"`
+}
 
+// SignalValue represents the value of a signal collected from a device.
+type SignalValue struct {
 	// Timestamp is when this data was collected.
 	Timestamp time.Time `ch:"timestamp" json:"timestamp"`
 
@@ -41,13 +47,10 @@ type Signal struct {
 
 	// ValueString is the value of the signal collected.
 	ValueString string `ch:"value_string" json:"valueString"`
-
-	// Source is the source of the signal collected.
-	Source string `ch:"source" json:"source"`
 }
 
 // SetValue dynamically set the appropriate value field based on the type of the value.
-func (s *Signal) SetValue(val any) {
+func (s *SignalValue) SetValue(val any) {
 	switch typedVal := val.(type) {
 	case float64:
 		s.ValueNumber = typedVal

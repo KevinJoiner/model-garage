@@ -2,6 +2,7 @@ package status_test
 
 import (
 	"cmp"
+	"fmt"
 	"slices"
 	"testing"
 	"time"
@@ -17,8 +18,11 @@ func TestFullFromDataConversion(t *testing.T) {
 	require.NoErrorf(t, err, "error converting full input data: %v", err)
 
 	// sort the signals so diffs are easier to read
-	sortFunc := func(a, b vss.Signal) int {
+	sortFunc := func(a, b vss.SignalValue) int {
 		return cmp.Compare(a.Name, b.Name)
+	}
+	for _, s := range actualSignals {
+		fmt.Printf("%+v\n", s)
 	}
 	slices.SortFunc(expectedSignals, sortFunc)
 	slices.SortFunc(actualSignals, sortFunc)
@@ -87,24 +91,25 @@ var (
 	"ds": "r/v0/s",
 	"signature": "0x6fb5849e21e66f3e0619f148bc032153aa4c90be4cd175e83c1f959e1bc551d940d516fe74f50aed380e432406675c583e75155bf1c77b9ec0761b1dbe1ab87e1c",
 	"subject": "did:nft:1:0xbA5738a18d83D41847dfFbDC6101d37C69c9B0cF_33",
-	"time": "2024-09-27T08:33:26Z",
+	"time": "2024-09-27T08:33:26Z"
+  }
 }`
 	ts = time.Date(2024, 9, 27, 8, 33, 26, 0, time.UTC)
 
-	expectedSignals = []vss.Signal{
-		{TokenID: 33, Timestamp: ts, Name: vss.FieldLowVoltageBatteryCurrentVoltage, ValueNumber: 14.335, Source: "ruptela/TODO"},
-		{TokenID: 33, Timestamp: ts, Name: vss.FieldPowertrainFuelSystemAbsoluteLevel, ValueNumber: 5, Source: "ruptela/TODO"},
-		{TokenID: 33, Timestamp: ts, Name: vss.FieldCurrentLocationAltitude, ValueNumber: 104.8, Source: "ruptela/TODO"},
-		{TokenID: 33, Timestamp: ts, Name: vss.FieldDIMOAftermarketHDOP, ValueNumber: 6, Source: "ruptela/TODO"},
-		{TokenID: 33, Timestamp: ts, Name: vss.FieldCurrentLocationLatitude, ValueNumber: 52.2721466, Source: "ruptela/TODO"},
-		{TokenID: 33, Timestamp: ts, Name: vss.FieldCurrentLocationLongitude, ValueNumber: -0.9014316, Source: "ruptela/TODO"},
-		{TokenID: 33, Timestamp: ts, Name: vss.FieldDIMOAftermarketNSAT, ValueNumber: 20, Source: "ruptela/TODO"},
-		{TokenID: 33, Timestamp: ts, Name: vss.FieldPowertrainType, ValueString: "COMBUSTION", Source: "ruptela/TODO"},
-		{TokenID: 33, Timestamp: ts, Name: vss.FieldPowertrainFuelSystemRelativeLevel, ValueNumber: 2, Source: "ruptela/TODO"},
-		{TokenID: 33, Timestamp: ts, Name: vss.FieldOBDDistanceWithMIL, ValueNumber: 0, Source: "ruptela/TODO"},
-		{TokenID: 33, Timestamp: ts, Name: vss.FieldPowertrainCombustionEngineTPS, ValueNumber: 0, Source: "ruptela/TODO"},
-		{TokenID: 33, Timestamp: ts, Name: vss.FieldPowertrainTransmissionTravelledDistance, ValueNumber: 8, Source: "ruptela/TODO"},
-		{TokenID: 33, Timestamp: ts, Name: vss.FieldSpeed, ValueNumber: 0, Source: "ruptela/TODO"},
-		{TokenID: 33, Timestamp: ts, Name: vss.FieldPowertrainTractionBatteryRange, ValueNumber: 59.97, Source: "ruptela/TODO"},
+	expectedSignals = []vss.SignalValue{
+		{Timestamp: ts, Name: vss.FieldLowVoltageBatteryCurrentVoltage, ValueNumber: 14.335},
+		{Timestamp: ts, Name: vss.FieldPowertrainFuelSystemAbsoluteLevel, ValueNumber: 5},
+		{Timestamp: ts, Name: vss.FieldCurrentLocationAltitude, ValueNumber: 104.8},
+		{Timestamp: ts, Name: vss.FieldDIMOAftermarketHDOP, ValueNumber: 6},
+		{Timestamp: ts, Name: vss.FieldCurrentLocationLatitude, ValueNumber: 52.2721466},
+		{Timestamp: ts, Name: vss.FieldCurrentLocationLongitude, ValueNumber: -0.9014316},
+		{Timestamp: ts, Name: vss.FieldDIMOAftermarketNSAT, ValueNumber: 20},
+		{Timestamp: ts, Name: vss.FieldPowertrainType, ValueString: "COMBUSTION"},
+		{Timestamp: ts, Name: vss.FieldPowertrainFuelSystemRelativeLevel, ValueNumber: 2},
+		{Timestamp: ts, Name: vss.FieldOBDDistanceWithMIL, ValueNumber: 0},
+		{Timestamp: ts, Name: vss.FieldPowertrainCombustionEngineTPS, ValueNumber: 0},
+		{Timestamp: ts, Name: vss.FieldPowertrainTransmissionTravelledDistance, ValueNumber: 8},
+		{Timestamp: ts, Name: vss.FieldSpeed, ValueNumber: 0},
+		{Timestamp: ts, Name: vss.FieldPowertrainTractionBatteryRange, ValueNumber: 59.97},
 	}
 )

@@ -2,7 +2,6 @@
 package status
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"time"
@@ -15,20 +14,16 @@ import (
 )
 
 // DecodeStatusSignals decodes a status message into a slice of signals.
-func DecodeStatusSignals(msgBytes []byte) ([]vss.Signal, error) {
-	event := cloudevent.CloudEvent[struct{}]{}
-	err := json.Unmarshal(msgBytes, &event)
-	if err != nil {
-		return nil, fmt.Errorf("failed to unmarshal message: %w", err)
-	}
-	var signals []vss.Signal
-	switch event.DataVersion {
+func DecodeStatusSignals(hdr cloudevent.CloudEventHeader, msgBytes []byte) ([]vss.SignalValue, error) {
+	var signals []vss.SignalValue
+	var err error
+	switch hdr.DataVersion {
 	case ruptela.StatusEventDS:
 		signals, err = SignalsFromV1Payload(msgBytes)
 	case ruptela.LocationEventDS:
 		signals, err = SignalsFromLocationPayload(msgBytes)
 	default:
-		return nil, fmt.Errorf("unknown data version: %s", event.DataVersion)
+		return nil, fmt.Errorf("unknown data version: %s", hdr.DataVersion)
 	}
 
 	if err != nil {

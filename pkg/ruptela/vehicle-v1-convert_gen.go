@@ -4,6 +4,7 @@ package ruptela
 import (
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/DIMO-Network/model-garage/pkg/convert"
 	"github.com/DIMO-Network/model-garage/pkg/vss"
@@ -12,10 +13,10 @@ import (
 
 var errNotFound = errors.New("field not found")
 
-// SignalsFromV1Data creates a slice of vss.Signal from the given v1 status JSON data.
+// SignalsFromV1Data creates a slice of vss.SignalValue from the given v1 status JSON data.
 // On error, partial results may be returned.
-func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []error) {
-	var retSignals []vss.Signal
+func SignalsFromV1Data(timestamp time.Time, jsonData []byte) ([]vss.SignalValue, []error) {
+	var retSignals []vss.SignalValue
 
 	var val any
 	var err error
@@ -27,11 +28,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'ChassisAxleRow1WheelLeftTirePressure': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "chassisAxleRow1WheelLeftTirePressure",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -43,11 +42,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'ChassisAxleRow1WheelRightTirePressure': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "chassisAxleRow1WheelRightTirePressure",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -59,11 +56,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'ChassisAxleRow2WheelLeftTirePressure': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "chassisAxleRow2WheelLeftTirePressure",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -75,11 +70,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'ChassisAxleRow2WheelRightTirePressure': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "chassisAxleRow2WheelRightTirePressure",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -91,11 +84,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'CurrentLocationAltitude': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "currentLocationAltitude",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -107,11 +98,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'CurrentLocationLatitude': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "currentLocationLatitude",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -123,11 +112,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'CurrentLocationLongitude': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "currentLocationLongitude",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -139,11 +126,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'DIMOAftermarketHDOP': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "dimoAftermarketHDOP",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -155,11 +140,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'DIMOAftermarketNSAT': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "dimoAftermarketNSAT",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -171,11 +154,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'ExteriorAirTemperature': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "exteriorAirTemperature",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -187,11 +168,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'LowVoltageBatteryCurrentVoltage': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "lowVoltageBatteryCurrentVoltage",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -203,11 +182,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'OBDDistanceWithMIL': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "obdDistanceWithMIL",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -219,11 +196,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'OBDRunTime': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "obdRunTime",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -235,11 +210,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineDieselExhaustFluidCapacity': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainCombustionEngineDieselExhaustFluidCapacity",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -251,11 +224,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineDieselExhaustFluidLevel': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainCombustionEngineDieselExhaustFluidLevel",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -267,11 +238,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineECT': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainCombustionEngineECT",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -283,11 +252,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineEngineOilLevel': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainCombustionEngineEngineOilLevel",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -299,11 +266,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineEngineOilRelativeLevel': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainCombustionEngineEngineOilRelativeLevel",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -315,11 +280,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineSpeed': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainCombustionEngineSpeed",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -331,11 +294,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'PowertrainCombustionEngineTPS': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainCombustionEngineTPS",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -347,11 +308,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'PowertrainFuelSystemAbsoluteLevel': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainFuelSystemAbsoluteLevel",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -363,11 +322,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'PowertrainFuelSystemRelativeLevel': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainFuelSystemRelativeLevel",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -379,11 +336,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryRange': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainTractionBatteryRange",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -395,11 +350,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryStateOfChargeCurrent': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainTractionBatteryStateOfChargeCurrent",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -411,11 +364,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'PowertrainTransmissionTravelledDistance': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainTransmissionTravelledDistance",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -427,11 +378,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'PowertrainType': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainType",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -443,11 +392,9 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 			errs = append(errs, fmt.Errorf("failed to get 'Speed': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "speed",
-			TokenID:   baseSignal.TokenID,
-			Timestamp: baseSignal.Timestamp,
-			Source:    baseSignal.Source,
+			Timestamp: timestamp,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)

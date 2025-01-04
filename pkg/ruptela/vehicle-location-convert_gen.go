@@ -4,6 +4,7 @@ package ruptela
 import (
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/DIMO-Network/model-garage/pkg/convert"
 	"github.com/DIMO-Network/model-garage/pkg/vss"
@@ -11,8 +12,8 @@ import (
 )
 
 // SignalsFromLocationData converts the given JSON data to a slice of signals.
-func SignalsFromLocationData(originalDoc []byte, baseSignal vss.Signal, signalName string, valResult gjson.Result) ([]vss.Signal, error) {
-	ret := make([]vss.Signal, 0)
+func SignalsFromLocationData(originalDoc []byte, timestamp time.Time, signalName string, valResult gjson.Result) ([]vss.SignalValue, error) {
+	ret := make([]vss.SignalValue, 0)
 	var retErrs error
 
 	switch signalName {
@@ -22,10 +23,8 @@ func SignalsFromLocationData(originalDoc []byte, baseSignal vss.Signal, signalNa
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'pos.alt': %w", err))
 		} else {
-			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
+			sig := vss.SignalValue{
+				Timestamp: timestamp,
 				Name:      "currentLocationAltitude",
 			}
 			sig.SetValue(val0)
@@ -37,10 +36,8 @@ func SignalsFromLocationData(originalDoc []byte, baseSignal vss.Signal, signalNa
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'pos.hdop': %w", err))
 		} else {
-			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
+			sig := vss.SignalValue{
+				Timestamp: timestamp,
 				Name:      "dimoAftermarketHDOP",
 			}
 			sig.SetValue(val0)
@@ -52,10 +49,8 @@ func SignalsFromLocationData(originalDoc []byte, baseSignal vss.Signal, signalNa
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'pos.lat': %w", err))
 		} else {
-			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
+			sig := vss.SignalValue{
+				Timestamp: timestamp,
 				Name:      "currentLocationLatitude",
 			}
 			sig.SetValue(val0)
@@ -67,10 +62,8 @@ func SignalsFromLocationData(originalDoc []byte, baseSignal vss.Signal, signalNa
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'pos.lon': %w", err))
 		} else {
-			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
+			sig := vss.SignalValue{
+				Timestamp: timestamp,
 				Name:      "currentLocationLongitude",
 			}
 			sig.SetValue(val0)
@@ -82,10 +75,8 @@ func SignalsFromLocationData(originalDoc []byte, baseSignal vss.Signal, signalNa
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'pos.sat': %w", err))
 		} else {
-			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
+			sig := vss.SignalValue{
+				Timestamp: timestamp,
 				Name:      "dimoAftermarketNSAT",
 			}
 			sig.SetValue(val0)
@@ -97,10 +88,8 @@ func SignalsFromLocationData(originalDoc []byte, baseSignal vss.Signal, signalNa
 		if err != nil {
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'pos.spd': %w", err))
 		} else {
-			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
+			sig := vss.SignalValue{
+				Timestamp: timestamp,
 				Name:      "speed",
 			}
 			sig.SetValue(val0)
