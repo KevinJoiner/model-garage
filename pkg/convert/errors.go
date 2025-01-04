@@ -34,10 +34,10 @@ func (e FieldNotFoundError) Error() string {
 // ConversionError is an error that occurs during conversion.
 type ConversionError struct {
 	// DecodedSignals is the list of signals that were successfully decoded.
-	DecodedSignals []vss.SignalValue `json:"decodedSignals"`
-	Errors         []error           `json:"errors"`
-	TokenID        uint32            `json:"tokenId"`
-	Source         string            `json:"source"`
+	DecodedSignals []vss.Signal `json:"decodedSignals"`
+	Errors         []error      `json:"errors"`
+	TokenID        uint32       `json:"tokenId"`
+	Source         string       `json:"source"`
 }
 
 // Error returns the error message.
@@ -71,4 +71,25 @@ var errInvalidType = errors.New("invalid type")
 // InvalidTypeError is returned when a field is not of the expected type or not found.
 func InvalidTypeError() error {
 	return errInvalidType
+}
+
+type SignalValueConversionError struct {
+	// DecodedSignals is the list of signals that were successfully decoded.
+	DecodedSignals []vss.SignalValue `json:"decodedSignals"`
+	Errors         []error           `json:"errors"`
+}
+
+// Error returns the error message.
+func (e SignalValueConversionError) Error() string {
+	var errBuilder strings.Builder
+	errBuilder.WriteString("conversion error")
+	if len(e.Errors) != 0 {
+		errBuilder.WriteString(fmt.Sprintf(": %v", e.Errors))
+	}
+	return errBuilder.String()
+}
+
+// Unwrap returns all errors that occurred during conversion.
+func (e SignalValueConversionError) Unwrap() []error {
+	return e.Errors
 }

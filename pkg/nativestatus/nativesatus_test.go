@@ -25,11 +25,13 @@ func TestVersionComparison(t *testing.T) {
 			jsonData: []byte(`{"dataschema":"dimo.zone.status/v2.0", "specversion":"1.0", "vehicleTokenId": 1, "source": "source1", "data": {"vehicle": {"signals": [{"name": "speed", "timestamp": 1734957240000, "value": 1.0}]}}}`),
 			expected: []vss.Signal{
 				{
-					TokenID:     1,
-					Timestamp:   time.Date(2024, 12, 23, 12, 34, 0, 0, time.UTC),
-					Name:        vss.FieldSpeed,
-					Source:      "source1",
-					ValueNumber: 1.0,
+					TokenID: 1,
+					Source:  "source1",
+					SignalValue: vss.SignalValue{
+						Timestamp:   time.Date(2024, 12, 23, 12, 34, 0, 0, time.UTC),
+						Name:        vss.FieldSpeed,
+						ValueNumber: 1.0,
+					},
 				},
 			},
 			expectedErr: nil,
@@ -39,11 +41,13 @@ func TestVersionComparison(t *testing.T) {
 			jsonData: []byte(`{"dataschema":"v2", "specversion":"1.0", "vehicleTokenId": 1, "source": "source1", "data": {"vehicle": {"signals": [{"name": "speed", "timestamp": 1734957240000, "value": 1.0}]}}}`),
 			expected: []vss.Signal{
 				{
-					TokenID:     1,
-					Timestamp:   time.Date(2024, 12, 23, 12, 34, 0, 0, time.UTC),
-					Name:        vss.FieldSpeed,
-					Source:      "source1",
-					ValueNumber: 1.0,
+					TokenID: 1,
+					Source:  "source1",
+					SignalValue: vss.SignalValue{
+						Timestamp:   time.Date(2024, 12, 23, 12, 34, 0, 0, time.UTC),
+						Name:        vss.FieldSpeed,
+						ValueNumber: 1.0,
+					},
 				},
 			},
 			expectedErr: nil,
@@ -53,11 +57,13 @@ func TestVersionComparison(t *testing.T) {
 			jsonData: []byte(`{"dataschema":"dimo.zone.status/v1.0", "time": "2024-12-23T12:34:00Z", "source": "source1", "subject": "1" "data"{"speed": 1.0}}`),
 			expected: []vss.Signal{
 				{
-					TokenID:     1,
-					Timestamp:   time.Date(2024, 12, 23, 12, 34, 0, 0, time.UTC),
-					Name:        vss.FieldSpeed,
-					Source:      "source1",
-					ValueNumber: 1.0,
+					TokenID: 1,
+					Source:  "source1",
+					SignalValue: vss.SignalValue{
+						Timestamp:   time.Date(2024, 12, 23, 12, 34, 0, 0, time.UTC),
+						Name:        vss.FieldSpeed,
+						ValueNumber: 1.0,
+					},
 				},
 			},
 			expectedErr: nil,
@@ -67,11 +73,13 @@ func TestVersionComparison(t *testing.T) {
 			jsonData: []byte(`{"dataschema":"dimo.zone.status/v1", "time": "2024-12-23T12:34:00Z", "source": "source1", "subject": "1" "data"{"speed": 1.0}}`),
 			expected: []vss.Signal{
 				{
-					TokenID:     1,
-					Timestamp:   time.Date(2024, 12, 23, 12, 34, 0, 0, time.UTC),
-					Name:        vss.FieldSpeed,
-					Source:      "source1",
-					ValueNumber: 1.0,
+					TokenID: 1,
+					Source:  "source1",
+					SignalValue: vss.SignalValue{
+						Timestamp:   time.Date(2024, 12, 23, 12, 34, 0, 0, time.UTC),
+						Name:        vss.FieldSpeed,
+						ValueNumber: 1.0,
+					},
 				},
 			},
 			expectedErr: nil,
@@ -81,11 +89,13 @@ func TestVersionComparison(t *testing.T) {
 			jsonData: []byte(`{"dataschema":"dimo.zone.status/v1.0.0", "time": "2024-12-23T12:34:00Z", "source": "source1", "subject": "1" "data"{"speed": 1.0}}`),
 			expected: []vss.Signal{
 				{
-					TokenID:     1,
-					Timestamp:   time.Date(2024, 12, 23, 12, 34, 0, 0, time.UTC),
-					Name:        vss.FieldSpeed,
-					Source:      "source1",
-					ValueNumber: 1.0,
+					TokenID: 1,
+					Source:  "source1",
+					SignalValue: vss.SignalValue{
+						Timestamp:   time.Date(2024, 12, 23, 12, 34, 0, 0, time.UTC),
+						Name:        vss.FieldSpeed,
+						ValueNumber: 1.0,
+					},
 				},
 			},
 			expectedErr: nil,
@@ -95,11 +105,13 @@ func TestVersionComparison(t *testing.T) {
 			jsonData: []byte(`{"dataschema":"dimo.zone.status/v1.1", "time": "2024-12-23T12:34:00Z", "source": "source1", "subject": "1" "data"{"speed": 1.0}}`),
 			expected: []vss.Signal{
 				{
-					TokenID:     1,
-					Timestamp:   time.Date(2024, 12, 23, 12, 34, 0, 0, time.UTC),
-					Name:        vss.FieldSpeed,
-					Source:      "source1",
-					ValueNumber: 1.0,
+					TokenID: 1,
+					Source:  "source1",
+					SignalValue: vss.SignalValue{
+						Timestamp:   time.Date(2024, 12, 23, 12, 34, 0, 0, time.UTC),
+						Name:        vss.FieldSpeed,
+						ValueNumber: 1.0,
+					},
 				},
 			},
 			expectedErr: nil,
@@ -109,11 +121,13 @@ func TestVersionComparison(t *testing.T) {
 			jsonData: []byte(`{"dataschema":"dimo.zone.status/v1.1.0", "time": "2024-12-23T12:34:00Z", "source": "source1", "subject": "1" "data"{"speed": 1.0}}`),
 			expected: []vss.Signal{
 				{
-					TokenID:     1,
-					Timestamp:   time.Date(2024, 12, 23, 12, 34, 0, 0, time.UTC),
-					Name:        vss.FieldSpeed,
-					Source:      "source1",
-					ValueNumber: 1.0,
+					TokenID: 1,
+					Source:  "source1",
+					SignalValue: vss.SignalValue{
+						Timestamp:   time.Date(2024, 12, 23, 12, 34, 0, 0, time.UTC),
+						Name:        vss.FieldSpeed,
+						ValueNumber: 1.0,
+					},
 				},
 			},
 			expectedErr: nil,
@@ -123,11 +137,13 @@ func TestVersionComparison(t *testing.T) {
 			jsonData: []byte(`{"specversion":"1.0", "time": "2024-12-23T12:34:00Z", "source": "source1", "subject": "1" "data"{"speed": 1.0}}`),
 			expected: []vss.Signal{
 				{
-					TokenID:     1,
-					Timestamp:   time.Date(2024, 12, 23, 12, 34, 0, 0, time.UTC),
-					Name:        vss.FieldSpeed,
-					Source:      "source1",
-					ValueNumber: 1.0,
+					TokenID: 1,
+					Source:  "source1",
+					SignalValue: vss.SignalValue{
+						Timestamp:   time.Date(2024, 12, 23, 12, 34, 0, 0, time.UTC),
+						Name:        vss.FieldSpeed,
+						ValueNumber: 1.0,
+					},
 				},
 			},
 			expectedErr: nil,

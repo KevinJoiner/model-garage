@@ -15,7 +15,7 @@ import (
 func SignalsFromLocationPayload(jsonData []byte) ([]vss.SignalValue, error) {
 	signals := gjson.GetBytes(jsonData, "data.location")
 	if !signals.Exists() {
-		return nil, convert.ConversionError{
+		return nil, convert.SignalValueConversionError{
 			Errors: []error{convert.FieldNotFoundError{Field: "signals", Lookup: "data.location"}},
 		}
 	}
@@ -24,23 +24,23 @@ func SignalsFromLocationPayload(jsonData []byte) ([]vss.SignalValue, error) {
 			// If the signals array is NULL treat it like an empty array.
 			return []vss.SignalValue{}, nil
 		}
-		return nil, convert.ConversionError{
+		return nil, convert.SignalValueConversionError{
 			Errors: []error{errors.New("signals field is not an array")},
 		}
 	}
 	retSignals := []vss.SignalValue{}
-	conversionErrors := convert.ConversionError{}
+	SignalValueConversionErrors := convert.SignalValueConversionError{}
 	for _, sigData := range signals.Array() {
 		if !sigData.IsObject() {
 			err := errors.New("signal data is not an object")
-			conversionErrors.Errors = append(conversionErrors.Errors, err)
+			SignalValueConversionErrors.Errors = append(SignalValueConversionErrors.Errors, err)
 			continue
 		}
 		// first get the timestamp field from the signal object
 		ts, err := TimestampFromLocationSignal(sigData)
 		if err != nil {
 			err = fmt.Errorf("error getting location signal: %w", err)
-			conversionErrors.Errors = append(conversionErrors.Errors, err)
+			SignalValueConversionErrors.Errors = append(SignalValueConversionErrors.Errors, err)
 			continue
 		}
 		// loop over other fields in the signal object and create a signal for each.
@@ -51,7 +51,7 @@ func SignalsFromLocationPayload(jsonData []byte) ([]vss.SignalValue, error) {
 			}
 			sigs, err := ruptela.SignalsFromLocationData(jsonData, ts, key.String(), value)
 			if err != nil {
-				conversionErrors.Errors = append(conversionErrors.Errors, err)
+				SignalValueConversionErrors.Errors = append(SignalValueConversionErrors.Errors, err)
 				return true
 			}
 			retSignals = append(retSignals, sigs...)
@@ -59,9 +59,9 @@ func SignalsFromLocationPayload(jsonData []byte) ([]vss.SignalValue, error) {
 		})
 	}
 
-	if len(conversionErrors.Errors) > 0 {
-		conversionErrors.DecodedSignals = retSignals
-		return nil, conversionErrors
+	if len(SignalValueConversionErrors.Errors) > 0 {
+		SignalValueConversionErrors.DecodedSignals = retSignals
+		return nil, SignalValueConversionErrors
 	}
 	return retSignals, nil
 }

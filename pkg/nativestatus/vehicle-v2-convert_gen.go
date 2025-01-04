@@ -26,10 +26,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'altitude': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "currentLocationAltitude",
+				SignalValue: vss.SignalValue{
+					Name:      "currentLocationAltitude",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -40,10 +42,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'ambientAirTemp': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "exteriorAirTemperature",
+				SignalValue: vss.SignalValue{
+					Name:      "exteriorAirTemperature",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -54,10 +58,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'ambientTemp': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "exteriorAirTemperature",
+				SignalValue: vss.SignalValue{
+					Name:      "exteriorAirTemperature",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -68,10 +74,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'atfTemperature': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainTransmissionTemperature",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainTransmissionTemperature",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -82,10 +90,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'barometricPressure': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "obdBarometricPressure",
+				SignalValue: vss.SignalValue{
+					Name:      "obdBarometricPressure",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -96,10 +106,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'batteryCapacity': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainTractionBatteryGrossCapacity",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainTractionBatteryGrossCapacity",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -110,10 +122,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'batteryVoltage': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "lowVoltageBatteryCurrentVoltage",
+				SignalValue: vss.SignalValue{
+					Name:      "lowVoltageBatteryCurrentVoltage",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -124,10 +138,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'chargeLimit': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainTractionBatteryChargingChargeLimit",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainTractionBatteryChargingChargeLimit",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -138,10 +154,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'charger.power': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainTractionBatteryCurrentPower",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainTractionBatteryCurrentPower",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -152,10 +170,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'charging': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainTractionBatteryChargingIsCharging",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainTractionBatteryChargingIsCharging",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -166,10 +186,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'commandedEgr': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "obdCommandedEGR",
+				SignalValue: vss.SignalValue{
+					Name:      "obdCommandedEGR",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -180,10 +202,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'coolantTemp': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainCombustionEngineECT",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainCombustionEngineECT",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -194,10 +218,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'distanceSinceDtcClear': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "obdDistanceSinceDTCClear",
+				SignalValue: vss.SignalValue{
+					Name:      "obdDistanceSinceDTCClear",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -208,10 +234,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'distanceWMil': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "obdDistanceWithMIL",
+				SignalValue: vss.SignalValue{
+					Name:      "obdDistanceWithMIL",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -222,10 +250,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'engineLoad': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "obdEngineLoad",
+				SignalValue: vss.SignalValue{
+					Name:      "obdEngineLoad",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -236,10 +266,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'engineSpeed': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainCombustionEngineSpeed",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainCombustionEngineSpeed",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -250,10 +282,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'engineTorque': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainCombustionEngineTorque",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainCombustionEngineTorque",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -264,10 +298,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'evap': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "obdCommandedEVAP",
+				SignalValue: vss.SignalValue{
+					Name:      "obdCommandedEVAP",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -278,10 +314,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'frontRightWheelSpeed': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "chassisAxleRow1WheelRightSpeed",
+				SignalValue: vss.SignalValue{
+					Name:      "chassisAxleRow1WheelRightSpeed",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -292,10 +330,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'frontlLeftWheelSpeed': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "chassisAxleRow1WheelLeftSpeed",
+				SignalValue: vss.SignalValue{
+					Name:      "chassisAxleRow1WheelLeftSpeed",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -306,10 +346,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'fuelLevel': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainFuelSystemRelativeLevel",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainFuelSystemRelativeLevel",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -320,10 +362,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'fuelLevelLiters': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainFuelSystemAbsoluteLevel",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainFuelSystemAbsoluteLevel",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -334,10 +378,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'fuelPercentRemaining': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainFuelSystemRelativeLevel",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainFuelSystemRelativeLevel",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -348,10 +394,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'fuelTankPressure': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "obdFuelPressure",
+				SignalValue: vss.SignalValue{
+					Name:      "obdFuelPressure",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -362,10 +410,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'fuelType': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainFuelSystemSupportedFuelTypes",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainFuelSystemSupportedFuelTypes",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -375,10 +425,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'fuelType': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainType",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainType",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val1)
 			ret = append(ret, sig)
@@ -389,10 +441,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'gearSelection': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainTransmissionCurrentGear",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainTransmissionCurrentGear",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -403,10 +457,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'hdop': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "dimoAftermarketHDOP",
+				SignalValue: vss.SignalValue{
+					Name:      "dimoAftermarketHDOP",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -417,10 +473,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'hvBatteryCoolantTemperature': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainTractionBatteryTemperatureAverage",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainTractionBatteryTemperatureAverage",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -431,10 +489,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'hvBatteryVoltage': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainTractionBatteryCurrentVoltage",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainTractionBatteryCurrentVoltage",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -445,10 +505,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'intakePressure': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "obdMAP",
+				SignalValue: vss.SignalValue{
+					Name:      "obdMAP",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -459,10 +521,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'intakeTemp': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "obdIntakeTemp",
+				SignalValue: vss.SignalValue{
+					Name:      "obdIntakeTemp",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -473,10 +537,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'isRedacted': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "currentLocationIsRedacted",
+				SignalValue: vss.SignalValue{
+					Name:      "currentLocationIsRedacted",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -487,10 +553,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'latitude': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "currentLocationLatitude",
+				SignalValue: vss.SignalValue{
+					Name:      "currentLocationLatitude",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -501,10 +569,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'longTermFuelTrim1': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "obdLongTermFuelTrim1",
+				SignalValue: vss.SignalValue{
+					Name:      "obdLongTermFuelTrim1",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -515,10 +585,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'longitude': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "currentLocationLongitude",
+				SignalValue: vss.SignalValue{
+					Name:      "currentLocationLongitude",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -529,10 +601,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'maf': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainCombustionEngineMAF",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainCombustionEngineMAF",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -543,10 +617,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'nsat': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "dimoAftermarketNSAT",
+				SignalValue: vss.SignalValue{
+					Name:      "dimoAftermarketNSAT",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -557,10 +633,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'odometer': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainTransmissionTravelledDistance",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainTransmissionTravelledDistance",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -571,10 +649,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'oil': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainCombustionEngineEngineOilLevel",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainCombustionEngineEngineOilLevel",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -584,10 +664,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'oil': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainCombustionEngineEngineOilRelativeLevel",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainCombustionEngineEngineOilRelativeLevel",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val1)
 			ret = append(ret, sig)
@@ -598,10 +680,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'oilLife': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainCombustionEngineEngineOilLevel",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainCombustionEngineEngineOilLevel",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -612,10 +696,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'oxygenSensor1': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "obdO2WRSensor1Voltage",
+				SignalValue: vss.SignalValue{
+					Name:      "obdO2WRSensor1Voltage",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -626,10 +712,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'oxygenSensor2': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "obdO2WRSensor2Voltage",
+				SignalValue: vss.SignalValue{
+					Name:      "obdO2WRSensor2Voltage",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -640,10 +728,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'range': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainRange",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainRange",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -654,10 +744,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'rpm': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainCombustionEngineSpeed",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainCombustionEngineSpeed",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -668,10 +760,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'runTime': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "obdRunTime",
+				SignalValue: vss.SignalValue{
+					Name:      "obdRunTime",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -682,10 +776,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'serviceInterval': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "serviceDistanceToService",
+				SignalValue: vss.SignalValue{
+					Name:      "serviceDistanceToService",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -696,10 +792,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'shortTermFuelTrim1': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "obdShortTermFuelTrim1",
+				SignalValue: vss.SignalValue{
+					Name:      "obdShortTermFuelTrim1",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -710,10 +808,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'soc': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainTractionBatteryStateOfChargeCurrent",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainTractionBatteryStateOfChargeCurrent",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -724,10 +824,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'speed': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "speed",
+				SignalValue: vss.SignalValue{
+					Name:      "speed",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -738,10 +840,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'ssid': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "dimoAftermarketSSID",
+				SignalValue: vss.SignalValue{
+					Name:      "dimoAftermarketSSID",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -752,10 +856,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'throttlePosition': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "powertrainCombustionEngineTPS",
+				SignalValue: vss.SignalValue{
+					Name:      "powertrainCombustionEngineTPS",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -766,10 +872,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'tires.backLeft': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "chassisAxleRow2WheelLeftTirePressure",
+				SignalValue: vss.SignalValue{
+					Name:      "chassisAxleRow2WheelLeftTirePressure",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -780,10 +888,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'tires.backRight': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "chassisAxleRow2WheelRightTirePressure",
+				SignalValue: vss.SignalValue{
+					Name:      "chassisAxleRow2WheelRightTirePressure",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -794,10 +904,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'tires.frontLeft': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "chassisAxleRow1WheelLeftTirePressure",
+				SignalValue: vss.SignalValue{
+					Name:      "chassisAxleRow1WheelLeftTirePressure",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -808,10 +920,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'tires.frontRight': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "chassisAxleRow1WheelRightTirePressure",
+				SignalValue: vss.SignalValue{
+					Name:      "chassisAxleRow1WheelRightTirePressure",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -822,10 +936,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'tiresBackLeft': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "chassisAxleRow2WheelLeftTirePressure",
+				SignalValue: vss.SignalValue{
+					Name:      "chassisAxleRow2WheelLeftTirePressure",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -836,10 +952,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'tiresBackRight': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "chassisAxleRow2WheelRightTirePressure",
+				SignalValue: vss.SignalValue{
+					Name:      "chassisAxleRow2WheelRightTirePressure",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -850,10 +968,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'tiresFrontLeft': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "chassisAxleRow1WheelLeftTirePressure",
+				SignalValue: vss.SignalValue{
+					Name:      "chassisAxleRow1WheelLeftTirePressure",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -864,10 +984,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'tiresFrontRight': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "chassisAxleRow1WheelRightTirePressure",
+				SignalValue: vss.SignalValue{
+					Name:      "chassisAxleRow1WheelRightTirePressure",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -878,10 +1000,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'vehicleSpeed': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "speed",
+				SignalValue: vss.SignalValue{
+					Name:      "speed",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -892,10 +1016,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'warmupsSinceDtcClear': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "obdWarmupsSinceDTCClear",
+				SignalValue: vss.SignalValue{
+					Name:      "obdWarmupsSinceDTCClear",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -906,10 +1032,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'wifi.ssid': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "dimoAftermarketSSID",
+				SignalValue: vss.SignalValue{
+					Name:      "dimoAftermarketSSID",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -920,10 +1048,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'wifi.wpaState': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "dimoAftermarketWPAState",
+				SignalValue: vss.SignalValue{
+					Name:      "dimoAftermarketWPAState",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -934,10 +1064,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'wpa_state': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "dimoAftermarketWPAState",
+				SignalValue: vss.SignalValue{
+					Name:      "dimoAftermarketWPAState",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
@@ -948,10 +1080,12 @@ func SignalsFromV2Data(originalDoc []byte, baseSignal vss.Signal, signalName str
 			retErrs = errors.Join(retErrs, fmt.Errorf("failed to convert 'yawRate': %w", err))
 		} else {
 			sig := vss.Signal{
-				TokenID:   baseSignal.TokenID,
-				Timestamp: baseSignal.Timestamp,
-				Source:    baseSignal.Source,
-				Name:      "angularVelocityYaw",
+				SignalValue: vss.SignalValue{
+					Name:      "angularVelocityYaw",
+					Timestamp: baseSignal.Timestamp,
+				},
+				TokenID: baseSignal.TokenID,
+				Source:  baseSignal.Source,
 			}
 			sig.SetValue(val0)
 			ret = append(ret, sig)
