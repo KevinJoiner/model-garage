@@ -14,10 +14,10 @@ import (
 
 var errNotFound = errors.New("field not found")
 
-// SignalsFromV1Data creates a slice of vss.Signal from the given v1 status JSON data.
+// SignalsFromV1Data creates a slice of vss.SignalValue from the given v1 status JSON data.
 // On error, partial results may be returned.
-func SignalsFromTesla(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []error) {
-	var retSignals []vss.Signal
+func SignalsFromTesla(jsonData []byte) ([]vss.SignalValue, []error) {
+	var retSignals []vss.SignalValue
 
 	var val any
 	var ts time.Time
@@ -30,11 +30,9 @@ func SignalsFromTesla(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []e
 			errs = append(errs, fmt.Errorf("failed to convert 'ChassisAxleRow1WheelLeftTirePressure': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "chassisAxleRow1WheelLeftTirePressure",
-			TokenID:   baseSignal.TokenID,
 			Timestamp: ts,
-			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -46,11 +44,9 @@ func SignalsFromTesla(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []e
 			errs = append(errs, fmt.Errorf("failed to convert 'ChassisAxleRow1WheelRightTirePressure': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "chassisAxleRow1WheelRightTirePressure",
-			TokenID:   baseSignal.TokenID,
 			Timestamp: ts,
-			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -62,11 +58,9 @@ func SignalsFromTesla(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []e
 			errs = append(errs, fmt.Errorf("failed to convert 'ChassisAxleRow2WheelLeftTirePressure': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "chassisAxleRow2WheelLeftTirePressure",
-			TokenID:   baseSignal.TokenID,
 			Timestamp: ts,
-			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -78,11 +72,9 @@ func SignalsFromTesla(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []e
 			errs = append(errs, fmt.Errorf("failed to convert 'ChassisAxleRow2WheelRightTirePressure': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "chassisAxleRow2WheelRightTirePressure",
-			TokenID:   baseSignal.TokenID,
 			Timestamp: ts,
-			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -94,11 +86,9 @@ func SignalsFromTesla(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []e
 			errs = append(errs, fmt.Errorf("failed to convert 'CurrentLocationLatitude': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "currentLocationLatitude",
-			TokenID:   baseSignal.TokenID,
 			Timestamp: ts,
-			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -110,11 +100,9 @@ func SignalsFromTesla(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []e
 			errs = append(errs, fmt.Errorf("failed to convert 'CurrentLocationLongitude': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "currentLocationLongitude",
-			TokenID:   baseSignal.TokenID,
 			Timestamp: ts,
-			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -126,11 +114,9 @@ func SignalsFromTesla(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []e
 			errs = append(errs, fmt.Errorf("failed to convert 'ExteriorAirTemperature': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "exteriorAirTemperature",
-			TokenID:   baseSignal.TokenID,
 			Timestamp: ts,
-			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -142,11 +128,9 @@ func SignalsFromTesla(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []e
 			errs = append(errs, fmt.Errorf("failed to convert 'PowertrainRange': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainRange",
-			TokenID:   baseSignal.TokenID,
 			Timestamp: ts,
-			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -158,11 +142,9 @@ func SignalsFromTesla(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []e
 			errs = append(errs, fmt.Errorf("failed to convert 'PowertrainTractionBatteryChargingAddedEnergy': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainTractionBatteryChargingAddedEnergy",
-			TokenID:   baseSignal.TokenID,
 			Timestamp: ts,
-			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -174,11 +156,9 @@ func SignalsFromTesla(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []e
 			errs = append(errs, fmt.Errorf("failed to convert 'PowertrainTractionBatteryChargingChargeLimit': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainTractionBatteryChargingChargeLimit",
-			TokenID:   baseSignal.TokenID,
 			Timestamp: ts,
-			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -190,11 +170,9 @@ func SignalsFromTesla(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []e
 			errs = append(errs, fmt.Errorf("failed to convert 'PowertrainTractionBatteryChargingIsCharging': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainTractionBatteryChargingIsCharging",
-			TokenID:   baseSignal.TokenID,
 			Timestamp: ts,
-			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -206,11 +184,9 @@ func SignalsFromTesla(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []e
 			errs = append(errs, fmt.Errorf("failed to convert 'PowertrainTractionBatteryCurrentPower': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainTractionBatteryCurrentPower",
-			TokenID:   baseSignal.TokenID,
 			Timestamp: ts,
-			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -222,11 +198,9 @@ func SignalsFromTesla(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []e
 			errs = append(errs, fmt.Errorf("failed to convert 'PowertrainTractionBatteryStateOfChargeCurrent': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainTractionBatteryStateOfChargeCurrent",
-			TokenID:   baseSignal.TokenID,
 			Timestamp: ts,
-			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -238,11 +212,9 @@ func SignalsFromTesla(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []e
 			errs = append(errs, fmt.Errorf("failed to convert 'PowertrainTransmissionTravelledDistance': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "powertrainTransmissionTravelledDistance",
-			TokenID:   baseSignal.TokenID,
 			Timestamp: ts,
-			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
@@ -254,11 +226,9 @@ func SignalsFromTesla(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []e
 			errs = append(errs, fmt.Errorf("failed to convert 'Speed': %w", err))
 		}
 	} else {
-		sig := vss.Signal{
+		sig := vss.SignalValue{
 			Name:      "speed",
-			TokenID:   baseSignal.TokenID,
 			Timestamp: ts,
-			Source:    baseSignal.Source,
 		}
 		sig.SetValue(val)
 		retSignals = append(retSignals, sig)
