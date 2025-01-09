@@ -93,6 +93,30 @@ func Convert107(rawValue string) (float64, error) {
 	return float64(rawInt)*multiplier + offset, nil
 }
 
+// Convert108 converts the given raw value to a float64.
+// Unit: '-' Min: '0'.
+func Convert108(rawValue string) (float64, error) {
+	const byteSize = 2
+	const offset = float64(0)
+	const maxSize = 1<<(byteSize*bitsInByte) - 1
+	const multiplier = float64(1)
+	rawInt, err := strconv.ParseUint(rawValue, 16, 64)
+	if err != nil {
+		return 0, fmt.Errorf("could not parse uint: %w", err)
+	}
+
+	// Check if the value is equal to the maximum value for the given size.
+	if rawInt == maxSize {
+		return 0, errNotFound
+	}
+
+	// Check if the value is less than the minimum value.
+	if rawInt < 0 {
+		return 0, errNotFound
+	}
+	return float64(rawInt)*multiplier + offset, nil
+}
+
 // Convert114 converts the given raw value to a float64.
 // Unit: 'm' Min: '0' Max: '4211081215'.
 func Convert114(rawValue string) (float64, error) {
@@ -465,6 +489,66 @@ func Convert723(rawValue string) (float64, error) {
 	return float64(rawInt)*multiplier + offset, nil
 }
 
+// Convert754 converts the given raw value to a float64.
+// Unit: 'l' Min: '0' Max: '4211081215'.
+func Convert754(rawValue string) (float64, error) {
+	const byteSize = 4
+	const offset = float64(0)
+	const maxSize = 1<<(byteSize*bitsInByte) - 1
+	const multiplier = float64(0.001)
+	rawInt, err := strconv.ParseUint(rawValue, 16, 64)
+	if err != nil {
+		return 0, fmt.Errorf("could not parse uint: %w", err)
+	}
+
+	// Check if the value is equal to the maximum value for the given size.
+	if rawInt == maxSize {
+		return 0, errNotFound
+	}
+
+	// Check if the value is within the error range.
+	if 4261412864 <= rawInt && rawInt <= 4278190079 {
+		return 0, errNotFound
+	}
+	// Check if the value is less than the minimum value.
+	if rawInt < 0 {
+		return 0, errNotFound
+	}
+	// Check if the value is greater than the maximum value.
+	if rawInt > 4211081215 {
+		return 0, errNotFound
+	}
+	return float64(rawInt)*multiplier + offset, nil
+}
+
+// Convert93 converts the given raw value to a float64.
+// Unit: '-' Min: '0' Max: '0xFFFFFFFF'.
+func Convert93(rawValue string) (float64, error) {
+	const byteSize = 4
+	const offset = float64(0)
+	const maxSize = 1<<(byteSize*bitsInByte) - 1
+	const multiplier = float64(1)
+	rawInt, err := strconv.ParseUint(rawValue, 16, 64)
+	if err != nil {
+		return 0, fmt.Errorf("could not parse uint: %w", err)
+	}
+
+	// Check if the value is equal to the maximum value for the given size.
+	if rawInt == maxSize {
+		return 0, errNotFound
+	}
+
+	// Check if the value is less than the minimum value.
+	if rawInt < 0 {
+		return 0, errNotFound
+	}
+	// Check if the value is greater than the maximum value.
+	if rawInt > 4294967295 {
+		return 0, errNotFound
+	}
+	return float64(rawInt)*multiplier + offset, nil
+}
+
 // Convert94 converts the given raw value to a float64.
 // Unit: 'RPM' Min: '0' Max: '65,535'.
 func Convert94(rawValue string) (float64, error) {
@@ -516,6 +600,38 @@ func Convert95(rawValue string) (float64, error) {
 	}
 	// Check if the value is greater than the maximum value.
 	if rawInt > 255 {
+		return 0, errNotFound
+	}
+	return float64(rawInt)*multiplier + offset, nil
+}
+
+// Convert950 converts the given raw value to a float64.
+// Unit: '%' Min: '0' Max: '10000'.
+func Convert950(rawValue string) (float64, error) {
+	const byteSize = 2
+	const offset = float64(0)
+	const maxSize = 1<<(byteSize*bitsInByte) - 1
+	const multiplier = float64(0.01)
+	rawInt, err := strconv.ParseUint(rawValue, 16, 64)
+	if err != nil {
+		return 0, fmt.Errorf("could not parse uint: %w", err)
+	}
+
+	// Check if the value is equal to the maximum value for the given size.
+	if rawInt == maxSize {
+		return 0, errNotFound
+	}
+
+	// Check if the value is in the error set.
+	if slices.Contains([]uint64{65535}, rawInt) {
+		return 0, errNotFound
+	}
+	// Check if the value is less than the minimum value.
+	if rawInt < 0 {
+		return 0, errNotFound
+	}
+	// Check if the value is greater than the maximum value.
+	if rawInt > 10000 {
 		return 0, errNotFound
 	}
 	return float64(rawInt)*multiplier + offset, nil

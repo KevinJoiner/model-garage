@@ -168,6 +168,96 @@
     - originalName: "signals.1150" # OBD AdBlue level
       originalType: string
 
+- vspecName: Vehicle.OBD.DTCList
+  conversions:
+    - originalName: "signals.93" # OBD DTC and MIL
+      originalType: string
+
+- vspecName: Vehicle.OBD.Status.DTCCount
+  conversions:
+    - originalName: "signals.108" # OBD DTC count
+      originalType: string
+
+- vspecName: Vehicle.Powertrain.FuelSystem.ConsumptionSinceStart
+  conversions:
+    - originalName: "signals.754" # OBD CAN total fuel used
+      originalType: string
+
+- vspecName: Vehicle.Powertrain.TractionBattery.StateOfHealth
+  conversions:
+    - originalName: "signals.950" # OBD EV State of health (SOH)
+      originalType: string
+
+- vspecName: GsmUmtsSignalLevel
+  conversions:
+    - originalName: "signals.27" # GSM/UMTS signal level
+      originalType: string
+
+- vspecName: Power.BatteryVoltage
+  conversions:
+    - originalName: "signals.30" # Battery Voltage (Device)
+      originalType: string
+
+- vspecName: ECO.BrakeCounter
+  conversions:
+    - originalName: "signals.134" # ECO brake counter
+      originalType: string
+
+- vspecName: ECO.HarshBrakeCounter
+  conversions:
+    - originalName: "signals.135" # ECO extreme and harsh brake counter
+      originalType: string
+
+- vspecName: ECO.HarshAccelerationCounter
+  conversions:
+    - originalName: "signals.136" # ECO harsh acceleration counter
+      originalType: string
+
+- vspecName: ECO.IdlingTimer
+  conversions:
+    - originalName: "signals.137" # ECO idling timer
+      originalType: string
+
+- vspecName: ECO.IdlingEvent
+  conversions:
+    - originalName: "signals.169" # ECO idling event
+      originalType: string
+
+- vspecName: MovementSensor
+  conversions:
+    - originalName: "signals.173" # Movement sensor
+      originalType: string
+
+- vspecName: ECO.BrakingValue
+  conversions:
+    - originalName: "signals.402" # ECO braking value
+      originalType: string
+
+- vspecName: ECO acceleration value
+  conversions:
+    - originalName: "signals.403" # ECO.AccelerationValue
+      originalType: string                  
+
+- vspecName: ECO.CorneringValue
+  conversions:
+    - originalName: "signals.404" # ECO cornering value
+      originalType: string  
+
+- vspecName: VehicleIgnitionStatus
+  conversions:
+    - originalName: "signals.409" # Custom ignition
+      originalType: string
+
+- vspecName: UnplugDetection
+  conversions:
+    - originalName: "signals.985" # Unplug Detection
+      originalType: string
+
+- vspecName: CurrentLTEBand
+  conversions:
+    - originalName: "signals.999" # Current LTE band
+      originalType: string      
+
 # TODO we only get batteryCapacity in percent SOH
 # - vspecName: Vehicle.Powertrain.TractionBattery.GrossCapacity
 #   conversions:
