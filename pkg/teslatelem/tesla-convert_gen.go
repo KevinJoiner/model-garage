@@ -11,6 +11,7 @@ import (
 )
 
 type Value_StringValue = protos.Value_StringValue
+type Value_LocationValue = protos.Value_LocationValue
 
 func SignalsFromPayload(baseSignal vss.Signal, data []byte) ([]vss.Signal, []error) {
 	var pl protos.Payload
@@ -24,6 +25,184 @@ func SignalsFromPayload(baseSignal vss.Signal, data []byte) ([]vss.Signal, []err
 
 	for _, data := range pl.GetData() {
 		switch data.Key.String() {
+		case "ACChargingEnergyIn":
+			val0, err := PowertrainTractionBatteryChargingAddedEnergyFromV2Data(data.GetValue())
+			if err != nil {
+				retErrs = append(retErrs, fmt.Errorf("failed to convert 'ACChargingEnergyIn': %w", err))
+			} else {
+				sig := vss.Signal{
+					TokenID:   baseSignal.TokenID,
+					Timestamp: ts,
+					Source:    baseSignal.Source,
+					Name:      "powertrainTractionBatteryChargingAddedEnergy",
+				}
+				sig.SetValue(val0)
+				ret = append(ret, sig)
+			}
+
+		case "ACChargingPower":
+			val0, err := PowertrainTractionBatteryCurrentPowerFromV2Data(data.GetValue())
+			if err != nil {
+				retErrs = append(retErrs, fmt.Errorf("failed to convert 'ACChargingPower': %w", err))
+			} else {
+				sig := vss.Signal{
+					TokenID:   baseSignal.TokenID,
+					Timestamp: ts,
+					Source:    baseSignal.Source,
+					Name:      "powertrainTractionBatteryCurrentPower",
+				}
+				sig.SetValue(val0)
+				ret = append(ret, sig)
+			}
+
+		case "ChargeLimitSoc":
+			val0, err := PowertrainTractionBatteryChargingChargeLimitFromV2Data(data.GetValue())
+			if err != nil {
+				retErrs = append(retErrs, fmt.Errorf("failed to convert 'ChargeLimitSoc': %w", err))
+			} else {
+				sig := vss.Signal{
+					TokenID:   baseSignal.TokenID,
+					Timestamp: ts,
+					Source:    baseSignal.Source,
+					Name:      "powertrainTractionBatteryChargingChargeLimit",
+				}
+				sig.SetValue(val0)
+				ret = append(ret, sig)
+			}
+
+		case "ChargeState":
+			val0, err := PowertrainTractionBatteryChargingIsChargingFromV2Data(data.GetValue())
+			if err != nil {
+				retErrs = append(retErrs, fmt.Errorf("failed to convert 'ChargeState': %w", err))
+			} else {
+				sig := vss.Signal{
+					TokenID:   baseSignal.TokenID,
+					Timestamp: ts,
+					Source:    baseSignal.Source,
+					Name:      "powertrainTractionBatteryChargingIsCharging",
+				}
+				sig.SetValue(val0)
+				ret = append(ret, sig)
+			}
+
+		case "DCChargingEnergyIn":
+			val0, err := PowertrainTractionBatteryChargingAddedEnergyFromV2Data(data.GetValue())
+			if err != nil {
+				retErrs = append(retErrs, fmt.Errorf("failed to convert 'DCChargingEnergyIn': %w", err))
+			} else {
+				sig := vss.Signal{
+					TokenID:   baseSignal.TokenID,
+					Timestamp: ts,
+					Source:    baseSignal.Source,
+					Name:      "powertrainTractionBatteryChargingAddedEnergy",
+				}
+				sig.SetValue(val0)
+				ret = append(ret, sig)
+			}
+
+		case "DCChargingPower":
+			val0, err := PowertrainTractionBatteryCurrentPowerFromV2Data(data.GetValue())
+			if err != nil {
+				retErrs = append(retErrs, fmt.Errorf("failed to convert 'DCChargingPower': %w", err))
+			} else {
+				sig := vss.Signal{
+					TokenID:   baseSignal.TokenID,
+					Timestamp: ts,
+					Source:    baseSignal.Source,
+					Name:      "powertrainTractionBatteryCurrentPower",
+				}
+				sig.SetValue(val0)
+				ret = append(ret, sig)
+			}
+
+		case "EstBatteryRange":
+			val0, err := PowertrainRangeFromV2Data(data.GetValue())
+			if err != nil {
+				retErrs = append(retErrs, fmt.Errorf("failed to convert 'EstBatteryRange': %w", err))
+			} else {
+				sig := vss.Signal{
+					TokenID:   baseSignal.TokenID,
+					Timestamp: ts,
+					Source:    baseSignal.Source,
+					Name:      "powertrainRange",
+				}
+				sig.SetValue(val0)
+				ret = append(ret, sig)
+			}
+
+		case "Location":
+			val0, err := CurrentLocationLatitudeFromV2Data(data.GetValue())
+			if err != nil {
+				retErrs = append(retErrs, fmt.Errorf("failed to convert 'Location': %w", err))
+			} else {
+				sig := vss.Signal{
+					TokenID:   baseSignal.TokenID,
+					Timestamp: ts,
+					Source:    baseSignal.Source,
+					Name:      "currentLocationLatitude",
+				}
+				sig.SetValue(val0)
+				ret = append(ret, sig)
+			}
+			val1, err := CurrentLocationLongitudeFromV2Data(data.GetValue())
+			if err != nil {
+				retErrs = append(retErrs, fmt.Errorf("failed to convert 'Location': %w", err))
+			} else {
+				sig := vss.Signal{
+					TokenID:   baseSignal.TokenID,
+					Timestamp: ts,
+					Source:    baseSignal.Source,
+					Name:      "currentLocationLongitude",
+				}
+				sig.SetValue(val1)
+				ret = append(ret, sig)
+			}
+
+		case "Odometer":
+			val0, err := PowertrainTransmissionTravelledDistanceFromV2Data(data.GetValue())
+			if err != nil {
+				retErrs = append(retErrs, fmt.Errorf("failed to convert 'Odometer': %w", err))
+			} else {
+				sig := vss.Signal{
+					TokenID:   baseSignal.TokenID,
+					Timestamp: ts,
+					Source:    baseSignal.Source,
+					Name:      "powertrainTransmissionTravelledDistance",
+				}
+				sig.SetValue(val0)
+				ret = append(ret, sig)
+			}
+
+		case "OutsideTemp":
+			val0, err := ExteriorAirTemperatureFromV2Data(data.GetValue())
+			if err != nil {
+				retErrs = append(retErrs, fmt.Errorf("failed to convert 'OutsideTemp': %w", err))
+			} else {
+				sig := vss.Signal{
+					TokenID:   baseSignal.TokenID,
+					Timestamp: ts,
+					Source:    baseSignal.Source,
+					Name:      "exteriorAirTemperature",
+				}
+				sig.SetValue(val0)
+				ret = append(ret, sig)
+			}
+
+		case "Soc":
+			val0, err := PowertrainTractionBatteryStateOfChargeCurrentFromV2Data(data.GetValue())
+			if err != nil {
+				retErrs = append(retErrs, fmt.Errorf("failed to convert 'Soc': %w", err))
+			} else {
+				sig := vss.Signal{
+					TokenID:   baseSignal.TokenID,
+					Timestamp: ts,
+					Source:    baseSignal.Source,
+					Name:      "powertrainTractionBatteryStateOfChargeCurrent",
+				}
+				sig.SetValue(val0)
+				ret = append(ret, sig)
+			}
+
 		case "TpmsPressureFl":
 			val0, err := ChassisAxleRow1WheelLeftTirePressureFromV2Data(data.GetValue())
 			if err != nil {
@@ -84,6 +263,21 @@ func SignalsFromPayload(baseSignal vss.Signal, data []byte) ([]vss.Signal, []err
 				ret = append(ret, sig)
 			}
 
+		case "VehicleSpeed":
+			val0, err := SpeedFromV2Data(data.GetValue())
+			if err != nil {
+				retErrs = append(retErrs, fmt.Errorf("failed to convert 'VehicleSpeed': %w", err))
+			} else {
+				sig := vss.Signal{
+					TokenID:   baseSignal.TokenID,
+					Timestamp: ts,
+					Source:    baseSignal.Source,
+					Name:      "speed",
+				}
+				sig.SetValue(val0)
+				ret = append(ret, sig)
+			}
+
 		}
 	}
 
@@ -93,59 +287,225 @@ func SignalsFromPayload(baseSignal vss.Signal, data []byte) ([]vss.Signal, []err
 // ChassisAxleRow1WheelLeftTirePressureFromData converts the given JSON data to a float64.
 func ChassisAxleRow1WheelLeftTirePressureFromV2Data(result *protos.Value) (ret float64, err error) {
 	var errs error
-	val0, ok := result.Value().(*protos.Value_StringValue)
+	val0, ok := result.GetValue().(*Value_StringValue)
 	if ok {
-		ret, err = ToChassisAxleRow1WheelLeftTirePressure0(val0)
+		ret, err = ToChassisAxleRow1WheelLeftTirePressure0(nil, val0)
 		if err == nil {
 			return ret, nil
 		}
-		errs = errors.Join(errs, fmt.Errorf("failed to convert 'TpmsPressureFl': %w", err))
+		errs = errors.Join(err, fmt.Errorf("failed to convert 'TpmsPressureFl': %w", err))
 	}
-
 	return ret, errs
 }
 
 // ChassisAxleRow1WheelRightTirePressureFromData converts the given JSON data to a float64.
 func ChassisAxleRow1WheelRightTirePressureFromV2Data(result *protos.Value) (ret float64, err error) {
 	var errs error
-	val0, ok := result.Value().(*protos.Value_StringValue)
+	val0, ok := result.GetValue().(*Value_StringValue)
 	if ok {
-		ret, err = ToChassisAxleRow1WheelRightTirePressure0(val0)
+		ret, err = ToChassisAxleRow1WheelRightTirePressure0(nil, val0)
 		if err == nil {
 			return ret, nil
 		}
-		errs = errors.Join(errs, fmt.Errorf("failed to convert 'TpmsPressureFr': %w", err))
+		errs = errors.Join(err, fmt.Errorf("failed to convert 'TpmsPressureFr': %w", err))
 	}
-
 	return ret, errs
 }
 
 // ChassisAxleRow2WheelLeftTirePressureFromData converts the given JSON data to a float64.
 func ChassisAxleRow2WheelLeftTirePressureFromV2Data(result *protos.Value) (ret float64, err error) {
 	var errs error
-	val0, ok := result.Value().(*protos.Value_StringValue)
+	val0, ok := result.GetValue().(*Value_StringValue)
 	if ok {
-		ret, err = ToChassisAxleRow2WheelLeftTirePressure0(val0)
+		ret, err = ToChassisAxleRow2WheelLeftTirePressure0(nil, val0)
 		if err == nil {
 			return ret, nil
 		}
-		errs = errors.Join(errs, fmt.Errorf("failed to convert 'TpmsPressureRl': %w", err))
+		errs = errors.Join(err, fmt.Errorf("failed to convert 'TpmsPressureRl': %w", err))
 	}
-
 	return ret, errs
 }
 
 // ChassisAxleRow2WheelRightTirePressureFromData converts the given JSON data to a float64.
 func ChassisAxleRow2WheelRightTirePressureFromV2Data(result *protos.Value) (ret float64, err error) {
 	var errs error
-	val0, ok := result.Value().(*protos.Value_StringValue)
+	val0, ok := result.GetValue().(*Value_StringValue)
 	if ok {
-		ret, err = ToChassisAxleRow2WheelRightTirePressure0(val0)
+		ret, err = ToChassisAxleRow2WheelRightTirePressure0(nil, val0)
 		if err == nil {
 			return ret, nil
 		}
-		errs = errors.Join(errs, fmt.Errorf("failed to convert 'TpmsPressureRr': %w", err))
+		errs = errors.Join(err, fmt.Errorf("failed to convert 'TpmsPressureRr': %w", err))
 	}
+	return ret, errs
+}
 
+// CurrentLocationLatitudeFromData converts the given JSON data to a float64.
+func CurrentLocationLatitudeFromV2Data(result *protos.Value) (ret float64, err error) {
+	var errs error
+	val0, ok := result.GetValue().(*Value_LocationValue)
+	if ok {
+		ret, err = ToCurrentLocationLatitude0(nil, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(err, fmt.Errorf("failed to convert 'Location': %w", err))
+	}
+	return ret, errs
+}
+
+// CurrentLocationLongitudeFromData converts the given JSON data to a float64.
+func CurrentLocationLongitudeFromV2Data(result *protos.Value) (ret float64, err error) {
+	var errs error
+	val0, ok := result.GetValue().(*Value_LocationValue)
+	if ok {
+		ret, err = ToCurrentLocationLongitude0(nil, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(err, fmt.Errorf("failed to convert 'Location': %w", err))
+	}
+	return ret, errs
+}
+
+// ExteriorAirTemperatureFromData converts the given JSON data to a float64.
+func ExteriorAirTemperatureFromV2Data(result *protos.Value) (ret float64, err error) {
+	var errs error
+	val0, ok := result.GetValue().(*Value_StringValue)
+	if ok {
+		ret, err = ToExteriorAirTemperature0(nil, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(err, fmt.Errorf("failed to convert 'OutsideTemp': %w", err))
+	}
+	return ret, errs
+}
+
+// PowertrainRangeFromData converts the given JSON data to a float64.
+func PowertrainRangeFromV2Data(result *protos.Value) (ret float64, err error) {
+	var errs error
+	val0, ok := result.GetValue().(*Value_StringValue)
+	if ok {
+		ret, err = ToPowertrainRange0(nil, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(err, fmt.Errorf("failed to convert 'EstBatteryRange': %w", err))
+	}
+	return ret, errs
+}
+
+// PowertrainTractionBatteryChargingAddedEnergyFromData converts the given JSON data to a float64.
+func PowertrainTractionBatteryChargingAddedEnergyFromV2Data(result *protos.Value) (ret float64, err error) {
+	var errs error
+	val0, ok := result.GetValue().(*Value_StringValue)
+	if ok {
+		ret, err = ToPowertrainTractionBatteryChargingAddedEnergy0(nil, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(err, fmt.Errorf("failed to convert 'ACChargingEnergyIn': %w", err))
+	}
+	val1, ok := result.GetValue().(*Value_StringValue)
+	if ok {
+		ret, err = ToPowertrainTractionBatteryChargingAddedEnergy1(nil, val1)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(err, fmt.Errorf("failed to convert 'DCChargingEnergyIn': %w", err))
+	}
+	return ret, errs
+}
+
+// PowertrainTractionBatteryChargingChargeLimitFromData converts the given JSON data to a float64.
+func PowertrainTractionBatteryChargingChargeLimitFromV2Data(result *protos.Value) (ret float64, err error) {
+	var errs error
+	val0, ok := result.GetValue().(*Value_StringValue)
+	if ok {
+		ret, err = ToPowertrainTractionBatteryChargingChargeLimit0(nil, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(err, fmt.Errorf("failed to convert 'ChargeLimitSoc': %w", err))
+	}
+	return ret, errs
+}
+
+// PowertrainTractionBatteryChargingIsChargingFromData converts the given JSON data to a float64.
+func PowertrainTractionBatteryChargingIsChargingFromV2Data(result *protos.Value) (ret float64, err error) {
+	var errs error
+	val0, ok := result.GetValue().(*Value_StringValue)
+	if ok {
+		ret, err = ToPowertrainTractionBatteryChargingIsCharging0(nil, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(err, fmt.Errorf("failed to convert 'ChargeState': %w", err))
+	}
+	return ret, errs
+}
+
+// PowertrainTractionBatteryCurrentPowerFromData converts the given JSON data to a float64.
+func PowertrainTractionBatteryCurrentPowerFromV2Data(result *protos.Value) (ret float64, err error) {
+	var errs error
+	val0, ok := result.GetValue().(*Value_StringValue)
+	if ok {
+		ret, err = ToPowertrainTractionBatteryCurrentPower0(nil, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(err, fmt.Errorf("failed to convert 'ACChargingPower': %w", err))
+	}
+	val1, ok := result.GetValue().(*Value_StringValue)
+	if ok {
+		ret, err = ToPowertrainTractionBatteryCurrentPower1(nil, val1)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(err, fmt.Errorf("failed to convert 'DCChargingPower': %w", err))
+	}
+	return ret, errs
+}
+
+// PowertrainTractionBatteryStateOfChargeCurrentFromData converts the given JSON data to a float64.
+func PowertrainTractionBatteryStateOfChargeCurrentFromV2Data(result *protos.Value) (ret float64, err error) {
+	var errs error
+	val0, ok := result.GetValue().(*Value_StringValue)
+	if ok {
+		ret, err = ToPowertrainTractionBatteryStateOfChargeCurrent0(nil, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(err, fmt.Errorf("failed to convert 'Soc': %w", err))
+	}
+	return ret, errs
+}
+
+// PowertrainTransmissionTravelledDistanceFromData converts the given JSON data to a float64.
+func PowertrainTransmissionTravelledDistanceFromV2Data(result *protos.Value) (ret float64, err error) {
+	var errs error
+	val0, ok := result.GetValue().(*Value_StringValue)
+	if ok {
+		ret, err = ToPowertrainTransmissionTravelledDistance0(nil, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(err, fmt.Errorf("failed to convert 'Odometer': %w", err))
+	}
+	return ret, errs
+}
+
+// SpeedFromData converts the given JSON data to a float64.
+func SpeedFromV2Data(result *protos.Value) (ret float64, err error) {
+	var errs error
+	val0, ok := result.GetValue().(*Value_StringValue)
+	if ok {
+		ret, err = ToSpeed0(nil, val0)
+		if err == nil {
+			return ret, nil
+		}
+		errs = errors.Join(err, fmt.Errorf("failed to convert 'VehicleSpeed': %w", err))
+	}
 	return ret, errs
 }
