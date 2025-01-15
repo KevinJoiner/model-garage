@@ -103,6 +103,12 @@ func ToLowVoltageBatteryCurrentVoltage0(originalDoc []byte, val string) (float64
 	return mV / 1000, nil
 }
 
+// ToOBDDTCList0 converts data from field 'signals.93' of type string to 'Vehicle.OBD.DTCList' of type string.
+// Vehicle.OBD.DTCList: List of currently active DTCs formatted according OBD II (SAE-J2012DA_201812) standard ([P|C|B|U]XXXXX )
+func ToOBDDTCList0(originalDoc []byte, val string) (string, error) {
+	return ignoreZero(Convert93(val))
+}
+
 // ToOBDDistanceWithMIL0 converts data from field 'signals.102' of type string to 'Vehicle.OBD.DistanceWithMIL' of type float64.
 // Vehicle.OBD.DistanceWithMIL: PID 21 - Distance traveled with MIL on
 // Unit: 'km'
@@ -115,6 +121,12 @@ func ToOBDDistanceWithMIL0(originalDoc []byte, val string) (float64, error) {
 // Unit: 's'
 func ToOBDRunTime0(originalDoc []byte, val string) (float64, error) {
 	return ignoreZero(Convert107(val))
+}
+
+// ToOBDStatusDTCCount0 converts data from field 'signals.108' of type string to 'Vehicle.OBD.Status.DTCCount' of type float64.
+// Vehicle.OBD.Status.DTCCount: Number of Diagnostic Trouble Codes (DTC)
+func ToOBDStatusDTCCount0(originalDoc []byte, val string) (float64, error) {
+	return ignoreZero(Convert108(val))
 }
 
 // ToPowertrainCombustionEngineDieselExhaustFluidCapacity0 converts data from field 'signals.1148' of type string to 'Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Capacity' of type float64.
@@ -204,6 +216,13 @@ func ToPowertrainFuelSystemAbsoluteLevel1(originalDoc []byte, val string) (float
 	return ignoreZero(Convert205(val))
 }
 
+// ToPowertrainFuelSystemConsumptionSinceStart0 converts data from field 'signals.754' of type string to 'Vehicle.Powertrain.FuelSystem.ConsumptionSinceStart' of type float64.
+// Vehicle.Powertrain.FuelSystem.ConsumptionSinceStart: Fuel amount in liters consumed since start of current trip.
+// Unit: 'l'
+func ToPowertrainFuelSystemConsumptionSinceStart0(originalDoc []byte, val string) (float64, error) {
+	return Convert754(val)
+}
+
 // ToPowertrainFuelSystemRelativeLevel0 converts data from field 'signals.98' of type string to 'Vehicle.Powertrain.FuelSystem.RelativeLevel' of type float64.
 // Vehicle.Powertrain.FuelSystem.RelativeLevel: Level in fuel tank as percent of capacity. 0 = empty. 100 = full.
 // Unit: 'percent' Min: '0' Max: '100'
@@ -235,6 +254,13 @@ func ToPowertrainTractionBatteryRange0(originalDoc []byte, val string) (float64,
 // Unit: 'percent' Min: '0' Max: '100.0'
 func ToPowertrainTractionBatteryStateOfChargeCurrent0(originalDoc []byte, val string) (float64, error) {
 	return Convert722(val)
+}
+
+// ToPowertrainTractionBatteryStateOfHealth0 converts data from field 'signals.950' of type string to 'Vehicle.Powertrain.TractionBattery.StateOfHealth' of type float64.
+// Vehicle.Powertrain.TractionBattery.StateOfHealth: Calculated battery state of health at standard conditions.
+// Unit: 'percent' Min: '0' Max: '100'
+func ToPowertrainTractionBatteryStateOfHealth0(originalDoc []byte, val string) (float64, error) {
+	return ignoreZero(Convert950(val))
 }
 
 // ToPowertrainTransmissionTravelledDistance0 converts data from field 'signals.645' of type string to 'Vehicle.Powertrain.Transmission.TravelledDistance' of type float64.

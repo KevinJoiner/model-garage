@@ -197,6 +197,22 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 		retSignals = append(retSignals, sig)
 	}
 
+	val, err = OBDDTCListFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'OBDDTCList': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "obdDTCList",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
 	val, err = OBDDistanceWithMILFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -221,6 +237,22 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 	} else {
 		sig := vss.Signal{
 			Name:      "obdRunTime",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = OBDStatusDTCCountFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'OBDStatusDTCCount': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "obdStatusDTCCount",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -357,6 +389,22 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 		retSignals = append(retSignals, sig)
 	}
 
+	val, err = PowertrainFuelSystemConsumptionSinceStartFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainFuelSystemConsumptionSinceStart': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "powertrainFuelSystemConsumptionSinceStart",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
 	val, err = PowertrainFuelSystemRelativeLevelFromV1Data(jsonData)
 	if err != nil {
 		if !errors.Is(err, errNotFound) {
@@ -397,6 +445,22 @@ func SignalsFromV1Data(baseSignal vss.Signal, jsonData []byte) ([]vss.Signal, []
 	} else {
 		sig := vss.Signal{
 			Name:      "powertrainTractionBatteryStateOfChargeCurrent",
+			TokenID:   baseSignal.TokenID,
+			Timestamp: baseSignal.Timestamp,
+			Source:    baseSignal.Source,
+		}
+		sig.SetValue(val)
+		retSignals = append(retSignals, sig)
+	}
+
+	val, err = PowertrainTractionBatteryStateOfHealthFromV1Data(jsonData)
+	if err != nil {
+		if !errors.Is(err, errNotFound) {
+			errs = append(errs, fmt.Errorf("failed to get 'PowertrainTractionBatteryStateOfHealth': %w", err))
+		}
+	} else {
+		sig := vss.Signal{
+			Name:      "powertrainTractionBatteryStateOfHealth",
 			TokenID:   baseSignal.TokenID,
 			Timestamp: baseSignal.Timestamp,
 			Source:    baseSignal.Source,
@@ -730,6 +794,31 @@ func LowVoltageBatteryCurrentVoltageFromV1Data(jsonData []byte) (ret float64, er
 	return ret, errs
 }
 
+// OBDDTCListFromV1Data converts the given JSON data to a string.
+func OBDDTCListFromV1Data(jsonData []byte) (ret string, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.signals.93")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToOBDDTCList0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.93': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.93' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'OBDDTCList'", errNotFound)
+	}
+
+	return ret, errs
+}
+
 // OBDDistanceWithMILFromV1Data converts the given JSON data to a float64.
 func OBDDistanceWithMILFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
@@ -775,6 +864,31 @@ func OBDRunTimeFromV1Data(jsonData []byte) (ret float64, err error) {
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'OBDRunTime'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// OBDStatusDTCCountFromV1Data converts the given JSON data to a float64.
+func OBDStatusDTCCountFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.signals.108")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToOBDStatusDTCCount0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.108': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.108' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'OBDStatusDTCCount'", errNotFound)
 	}
 
 	return ret, errs
@@ -1006,6 +1120,31 @@ func PowertrainFuelSystemAbsoluteLevelFromV1Data(jsonData []byte) (ret float64, 
 	return ret, errs
 }
 
+// PowertrainFuelSystemConsumptionSinceStartFromV1Data converts the given JSON data to a float64.
+func PowertrainFuelSystemConsumptionSinceStartFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.signals.754")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToPowertrainFuelSystemConsumptionSinceStart0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.754': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.754' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'PowertrainFuelSystemConsumptionSinceStart'", errNotFound)
+	}
+
+	return ret, errs
+}
+
 // PowertrainFuelSystemRelativeLevelFromV1Data converts the given JSON data to a float64.
 func PowertrainFuelSystemRelativeLevelFromV1Data(jsonData []byte) (ret float64, err error) {
 	var errs error
@@ -1089,6 +1228,31 @@ func PowertrainTractionBatteryStateOfChargeCurrentFromV1Data(jsonData []byte) (r
 
 	if errs == nil {
 		return ret, fmt.Errorf("%w 'PowertrainTractionBatteryStateOfChargeCurrent'", errNotFound)
+	}
+
+	return ret, errs
+}
+
+// PowertrainTractionBatteryStateOfHealthFromV1Data converts the given JSON data to a float64.
+func PowertrainTractionBatteryStateOfHealthFromV1Data(jsonData []byte) (ret float64, err error) {
+	var errs error
+	var result gjson.Result
+	result = gjson.GetBytes(jsonData, "data.signals.950")
+	if result.Exists() && result.Value() != nil {
+		val, ok := result.Value().(string)
+		if ok {
+			retVal, err := ToPowertrainTractionBatteryStateOfHealth0(jsonData, val)
+			if err == nil {
+				return retVal, nil
+			}
+			errs = errors.Join(errs, fmt.Errorf("failed to convert 'data.signals.950': %w", err))
+		} else {
+			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.signals.950' is not of type 'string' got '%v' of type '%T'", convert.InvalidTypeError(), result.Value(), result.Value()))
+		}
+	}
+
+	if errs == nil {
+		return ret, fmt.Errorf("%w 'PowertrainTractionBatteryStateOfHealth'", errNotFound)
 	}
 
 	return ret, errs
