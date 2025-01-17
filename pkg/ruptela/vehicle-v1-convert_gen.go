@@ -762,11 +762,11 @@ func OBDDTCListFromV1Data(jsonData []byte) (ret string, err error) {
 					errs = errors.Join(errs, fmt.Errorf("%w, field 'data.dtc_codes' array element %d is not of type 'any' got '%v' of type '%T'", convert.InvalidTypeError(), i, res.Value(), res.Value()))
 				}
 			}
-			retVal, errFromConv := ToOBDDTCList0(jsonData, sliceOBDDTCList)
-			if errFromConv == nil {
+			retVal, err := ToOBDDTCList0(jsonData, sliceOBDDTCList)
+			if err == nil {
 				return retVal, nil
 			}
-			errs = errors.Join(errs, fmt.Errorf("failed to convert ': %w", errFromConv))
+			errs = errors.Join(errs, fmt.Errorf("failed to convert ': %w", err))
 		} else {
 			errs = errors.Join(errs, fmt.Errorf("%w, field 'data.dtc_codes' is not an array", convert.InvalidTypeError()))
 		}
